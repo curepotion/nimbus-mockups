@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full" style="background: var(--color-bg-main);">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile - Nimbus Trading Platform</title>
+
+  <!-- Fonts: Geist + Geist Mono -->
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/600.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/700.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/600.css" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="assets/css/components.css">
+</head>
+
+<body class="h-full text-gray-200 antialiased bg-gradient-main">
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-header shadow-glass border-b" style="border-color: var(--color-border-subtle);">
+      <div class="h-14 flex items-center px-4 gap-3">
+        <!-- Brand -->
+        <div class="header-brand">
+          <div class="header-brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3l7 4v10l-7 4-7-4V7l7-4z" stroke="#6EE7B7" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="text-sm font-semibold tracking-tight">Nimbus</span>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="hidden lg:flex items-center gap-1 ml-2">
+          <a href="index.html" class="nav-tab">Charts</a>
+          <a href="community.html" class="nav-tab">Community</a>
+          <a href="bots.html" class="nav-tab">Bots</a>
+          <a href="chats.html" class="nav-tab">Nimbus Chats</a>
+          <a href="rewards.html" class="nav-tab">Rewards</a>
+          <a href="learn.html" class="nav-tab">Learn</a>
+          <a href="leaderboard.html" class="nav-tab">Leaderboard</a>
+          <a href="portfolio.html" class="nav-tab active">Portfolio Book</a>
+        </nav>
+
+        <!-- Search -->
+        <div class="flex-1 flex items-center justify-center gap-3">
+          <button id="searchBtn" class="header-search flex items-center gap-2 h-9 px-3 rounded-md glass text-[13px] text-gray-300 focus-ring hover:text-white transition-all">
+            <i data-lucide="search" class="w-4 h-4"></i>
+            <span class="truncate">Search...</span>
+            <span class="ml-auto text-[11px] text-gray-400">⌘K</span>
+          </button>
+        </div>
+
+        <!-- User Actions -->
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center gap-2 h-9 px-2 rounded-md glass">
+            <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=48&auto=format&fit=crop" class="w-5 h-5 rounded-full" alt="Avatar">
+            <span class="mono text-[12px]">0x0b5C...59C8</span>
+            <img src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80" class="w-4 h-4 rounded-sm" alt="Chain">
+          </div>
+          
+          <button class="btn-primary btn-sm">Deposit</button>
+          
+          <button class="btn-secondary btn-sm w-9 h-9 p-0" title="Notifications">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+          </button>
+          
+          <button class="btn-secondary btn-sm w-9 h-9 p-0" title="Settings">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+      
+      <!-- Profile Header -->
+      <div class="card mb-8">
+        <div class="card-body">
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+            
+            <!-- Avatar & Basic Info -->
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=96&auto=format&fit=crop" alt="Profile" class="w-20 h-20 rounded-full ring-4 ring-emerald-400/30">
+                <button class="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">
+                  <i data-lucide="camera" class="w-3 h-3 text-white"></i>
+                </button>
+              </div>
+              <div>
+                <h1 class="text-2xl font-bold mb-1">John Trader</h1>
+                <p class="text-gray-400 mb-2">Professional Trader</p>
+                <div class="flex items-center gap-2">
+                  <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs font-semibold">Gold VIP</span>
+                  <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">Verified</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="text-center">
+                <div class="text-2xl font-bold text-emerald-400">+23.4%</div>
+                <div class="text-sm text-gray-400">Total PNL</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold">$124K</div>
+                <div class="text-sm text-gray-400">Volume</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold">89</div>
+                <div class="text-sm text-gray-400">Trades</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold">78%</div>
+                <div class="text-sm text-gray-400">Win Rate</div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2">
+              <button class="btn-secondary">
+                <i data-lucide="share" class="w-4 h-4 mr-1"></i>
+                Share
+              </button>
+              <button class="btn-primary">
+                <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
+                Edit Profile
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-8">
+          
+          <!-- Trading Performance -->
+          <div>
+            <h2 class="text-xl font-bold mb-4">Trading Performance</h2>
+            
+            <div class="card mb-6">
+              <div class="card-body">
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="font-semibold">Portfolio Value</h3>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-400">Last 30 days</span>
+                    <select class="form-input w-auto text-sm">
+                      <option>30 days</option>
+                      <option>7 days</option>
+                      <option>24 hours</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <!-- Chart Placeholder -->
+                <div class="h-64 rounded-lg glass flex items-center justify-center mb-4">
+                  <div class="text-center">
+                    <i data-lucide="trending-up" class="w-12 h-12 text-emerald-400 mx-auto mb-2"></i>
+                    <p class="text-gray-400">Portfolio performance chart</p>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                  <div>
+                    <div class="text-lg font-bold text-emerald-400">$2,847</div>
+                    <div class="text-sm text-gray-400">Current Value</div>
+                  </div>
+                  <div>
+                    <div class="text-lg font-bold text-emerald-400">+$534</div>
+                    <div class="text-sm text-gray-400">Today's P&L</div>
+                  </div>
+                  <div>
+                    <div class="text-lg font-bold">$124K</div>
+                    <div class="text-sm text-gray-400">Total Volume</div>
+                  </div>
+                  <div>
+                    <div class="text-lg font-bold">47</div>
+                    <div class="text-sm text-gray-400">Rank</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Trades -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="font-semibold">Recent Trades</h3>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="border-b" style="border-color: var(--color-border-subtle);">
+                      <th class="text-left py-3 px-4 font-semibold text-sm">Pair</th>
+                      <th class="text-left py-3 px-4 font-semibold text-sm">Side</th>
+                      <th class="text-right py-3 px-4 font-semibold text-sm">Size</th>
+                      <th class="text-right py-3 px-4 font-semibold text-sm">Price</th>
+                      <th class="text-right py-3 px-4 font-semibold text-sm">PNL</th>
+                      <th class="text-right py-3 px-4 font-semibold text-sm">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b hover:bg-white/5" style="border-color: var(--color-border-row);">
+                      <td class="py-3 px-4 font-semibold">BTC/USDT</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs">Long</span>
+                      </td>
+                      <td class="py-3 px-4 text-right mono">0.1250</td>
+                      <td class="py-3 px-4 text-right mono">$67,845</td>
+                      <td class="py-3 px-4 text-right mono text-emerald-400">+$234.50</td>
+                      <td class="py-3 px-4 text-right text-sm text-gray-400">2m ago</td>
+                    </tr>
+                    <tr class="border-b hover:bg-white/5" style="border-color: var(--color-border-row);">
+                      <td class="py-3 px-4 font-semibold">ETH/USDT</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs">Short</span>
+                      </td>
+                      <td class="py-3 px-4 text-right mono">2.4500</td>
+                      <td class="py-3 px-4 text-right mono">$3,456</td>
+                      <td class="py-3 px-4 text-right mono text-red-400">-$89.20</td>
+                      <td class="py-3 px-4 text-right text-sm text-gray-400">1h ago</td>
+                    </tr>
+                    <tr class="border-b hover:bg-white/5" style="border-color: var(--color-border-row);">
+                      <td class="py-3 px-4 font-semibold">SOL/USDT</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs">Long</span>
+                      </td>
+                      <td class="py-3 px-4 text-right mono">45.0000</td>
+                      <td class="py-3 px-4 text-right mono">$156.78</td>
+                      <td class="py-3 px-4 text-right mono text-emerald-400">+$167.80</td>
+                      <td class="py-3 px-4 text-right text-sm text-gray-400">3h ago</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer">
+                <button class="btn-secondary w-full">View All Trades</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div>
+            <h2 class="text-xl font-bold mb-4">Achievements</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              <div class="card">
+                <div class="card-body">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400/40 to-yellow-300/20 flex items-center justify-center">
+                      <i data-lucide="trophy" class="w-6 h-6 text-yellow-300"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold">First Profit</h3>
+                      <p class="text-sm text-gray-400">Made your first profitable trade</p>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-400">Earned 2 months ago</div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-400/40 to-emerald-300/20 flex items-center justify-center">
+                      <i data-lucide="target" class="w-6 h-6 text-emerald-300"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold">Precision Trader</h3>
+                      <p class="text-sm text-gray-400">Achieved 80%+ win rate</p>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-400">Earned 1 week ago</div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-400/40 to-blue-300/20 flex items-center justify-center">
+                      <i data-lucide="trending-up" class="w-6 h-6 text-blue-300"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold">Volume Milestone</h3>
+                      <p class="text-sm text-gray-400">Traded over $100K volume</p>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-400">Earned 3 days ago</div>
+                </div>
+              </div>
+
+              <div class="card opacity-50">
+                <div class="card-body">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400/40 to-purple-300/20 flex items-center justify-center">
+                      <i data-lucide="crown" class="w-6 h-6 text-purple-300"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold">VIP Status</h3>
+                      <p class="text-sm text-gray-400">Reach Platinum tier</p>
+                    </div>
+                  </div>
+                  <div class="text-xs text-gray-400">Progress: 67%</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+          
+          <!-- Quick Stats -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-sm font-semibold">Quick Stats</h3>
+            </div>
+            <div class="card-body space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Account Age</span>
+                <span class="font-semibold">127 days</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Total Trades</span>
+                <span class="font-semibold">89</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Profitable Days</span>
+                <span class="font-semibold">78%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Max Drawdown</span>
+                <span class="font-semibold text-red-400">-8.4%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Best Trade</span>
+                <span class="font-semibold text-emerald-400">+$1,234</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Strategies -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-sm font-semibold">Active Strategies</h3>
+            </div>
+            <div class="card-body space-y-3">
+              
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400/40 to-emerald-300/20 flex items-center justify-center">
+                  <i data-lucide="grid" class="w-4 h-4 text-emerald-300"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-semibold">Grid Bot #1</div>
+                  <div class="text-xs text-gray-400">BTC/USDT • +12.4%</div>
+                </div>
+                <div class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">Active</div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-400/40 to-purple-300/20 flex items-center justify-center">
+                  <i data-lucide="repeat" class="w-4 h-4 text-purple-300"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-semibold">DCA Bot #1</div>
+                  <div class="text-xs text-gray-400">ETH/USDT • +8.7%</div>
+                </div>
+                <div class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">Active</div>
+              </div>
+
+            </div>
+            <div class="card-footer">
+              <button class="btn-secondary w-full btn-sm">Manage Strategies</button>
+            </div>
+          </div>
+
+          <!-- Social -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-sm font-semibold">Social</h3>
+            </div>
+            <div class="card-body space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Followers</span>
+                <span class="font-semibold">1,247</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Following</span>
+                <span class="font-semibold">89</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Posts</span>
+                <span class="font-semibold">156</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-400">Likes Received</span>
+                <span class="font-semibold">2,847</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button class="btn-secondary w-full btn-sm">View Social Profile</button>
+            </div>
+          </div>
+
+          <!-- Settings -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-sm font-semibold">Account Settings</h3>
+            </div>
+            <div class="card-body space-y-2">
+              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
+                <i data-lucide="user" class="w-4 h-4"></i>
+                Personal Information
+              </button>
+              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
+                <i data-lucide="shield" class="w-4 h-4"></i>
+                Security Settings
+              </button>
+              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
+                <i data-lucide="bell" class="w-4 h-4"></i>
+                Notifications
+              </button>
+              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                Payment Methods
+              </button>
+              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                Export Data
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="editProfileModal" class="fixed inset-0 hidden items-center justify-center z-[80]">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="hideModal('editProfileModal')"></div>
+    <div class="relative w-full max-w-md rounded-lg glass-strong shadow-elevated p-6 m-4">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold">Edit Profile</h2>
+        <button class="btn-secondary btn-sm w-8 h-8 p-0" onclick="hideModal('editProfileModal')">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      
+      <form class="space-y-4">
+        <div>
+          <label class="form-label">Display Name</label>
+          <input type="text" class="form-input" value="John Trader">
+        </div>
+        <div>
+          <label class="form-label">Bio</label>
+          <textarea class="form-input h-20 resize-none" placeholder="Tell us about yourself...">Professional Trader</textarea>
+        </div>
+        <div>
+          <label class="form-label">Location</label>
+          <input type="text" class="form-input" placeholder="City, Country">
+        </div>
+        <div>
+          <label class="form-label">Website</label>
+          <input type="url" class="form-input" placeholder="https://example.com">
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" class="btn-secondary flex-1" onclick="hideModal('editProfileModal')">Cancel</button>
+          <button type="submit" class="btn-primary flex-1">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/components.js"></script>
+  <script>
+    // Initialize icons
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    });
+
+    function hideModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+      document.getElementById(modalId).classList.remove('flex');
+    }
+
+    // Edit profile functionality
+    document.addEventListener('click', (e) => {
+      if (e.target.textContent === 'Edit Profile' || e.target.closest('button')?.textContent.includes('Edit Profile')) {
+        document.getElementById('editProfileModal').classList.remove('hidden');
+        document.getElementById('editProfileModal').classList.add('flex');
+      }
+      
+      if (e.target.textContent === 'Share' || e.target.closest('button')?.textContent.includes('Share')) {
+        nimbus.showToast('Profile link copied to clipboard!', 'success', 2000);
+      }
+      
+      if (e.target.textContent === 'View All Trades') {
+        nimbus.showToast('Opening trade history...', 'info', 2000);
+      }
+      
+      if (e.target.textContent === 'Manage Strategies') {
+        nimbus.showToast('Redirecting to strategies...', 'info', 2000);
+      }
+      
+      if (e.target.textContent === 'View Social Profile') {
+        nimbus.showToast('Opening social profile...', 'info', 2000);
+      }
+    });
+
+    // Form submission
+    document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      nimbus.showToast('Profile updated successfully!', 'success', 2000);
+      hideModal('editProfileModal');
+    });
+
+    // Settings menu
+    document.addEventListener('click', (e) => {
+      const settingButton = e.target.closest('button');
+      if (settingButton && settingButton.querySelector('[data-lucide]')) {
+        const settingName = settingButton.textContent.trim();
+        if (['Personal Information', 'Security Settings', 'Notifications', 'Payment Methods', 'Export Data'].includes(settingName)) {
+          nimbus.showToast(`Opening ${settingName}...`, 'info', 2000);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

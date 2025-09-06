@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full" style="background: var(--color-bg-main);">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Leaderboard - Nimbus Trading Platform</title>
+
+  <!-- Fonts: Geist + Geist Mono -->
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/600.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/700.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/600.css" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="assets/css/components.css">
+</head>
+
+<body class="h-full text-gray-200 antialiased bg-gradient-main">
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-header shadow-glass border-b" style="border-color: var(--color-border-subtle);">
+      <div class="h-14 flex items-center px-4 gap-3">
+        <!-- Brand -->
+        <div class="header-brand">
+          <div class="header-brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3l7 4v10l-7 4-7-4V7l7-4z" stroke="#6EE7B7" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="text-sm font-semibold tracking-tight">Nimbus</span>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="hidden lg:flex items-center gap-1 ml-2">
+          <a href="index.html" class="nav-tab">Charts</a>
+          <a href="community.html" class="nav-tab">Community</a>
+          <a href="bots.html" class="nav-tab">Bots</a>
+          <a href="chats.html" class="nav-tab">Nimbus Chats</a>
+          <a href="rewards.html" class="nav-tab">Rewards</a>
+          <a href="learn.html" class="nav-tab">Learn</a>
+          <a href="leaderboard.html" class="nav-tab active">Leaderboard</a>
+          <a href="portfolio.html" class="nav-tab">Portfolio Book</a>
+        </nav>
+
+        <!-- Search -->
+        <div class="flex-1 flex items-center justify-center gap-3">
+          <button id="searchBtn" class="header-search flex items-center gap-2 h-9 px-3 rounded-md glass text-[13px] text-gray-300 focus-ring hover:text-white transition-all">
+            <i data-lucide="search" class="w-4 h-4"></i>
+            <span class="truncate">Search traders...</span>
+            <span class="ml-auto text-[11px] text-gray-400">⌘K</span>
+          </button>
+        </div>
+
+        <!-- User Actions -->
+        <div class="flex items-center gap-2">
+          <div class="hidden md:flex items-center gap-2 h-9 px-2 rounded-md glass">
+            <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=48&auto=format&fit=crop" class="w-5 h-5 rounded-full" alt="Avatar">
+            <span class="mono text-[12px]">0x0b5C...59C8</span>
+            <img src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80" class="w-4 h-4 rounded-sm" alt="Chain">
+          </div>
+          
+          <button class="btn-primary btn-sm">Deposit</button>
+          
+          <button class="btn-secondary btn-sm w-9 h-9 p-0" title="Notifications">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+          </button>
+          
+          <button class="btn-secondary btn-sm w-9 h-9 p-0" title="Settings">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+      
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">Leaderboard</h1>
+        <p class="text-gray-400">Top performing traders on Nimbus</p>
+      </div>
+
+      <!-- Top 3 Podium -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        
+        <!-- 2nd Place -->
+        <div class="order-2 md:order-1">
+          <div class="card relative">
+            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+              <div class="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-lg">2</div>
+            </div>
+            <div class="card-body text-center pt-6">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=96&auto=format&fit=crop" alt="TraderJoe" class="w-16 h-16 rounded-full mx-auto mb-3">
+              <h3 class="font-bold text-lg">TraderJoe</h3>
+              <p class="text-sm text-gray-400 mb-3">Futures Expert</p>
+              <div class="text-2xl font-bold text-emerald-400 mb-1">+189.4%</div>
+              <div class="text-sm text-gray-400">30-day PNL</div>
+              <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <div class="font-semibold">$2.4M</div>
+                  <div class="text-gray-400">Volume</div>
+                </div>
+                <div>
+                  <div class="font-semibold">87%</div>
+                  <div class="text-gray-400">Win Rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1st Place -->
+        <div class="order-1 md:order-2">
+          <div class="card relative transform md:scale-105">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold text-xl shadow-lg">
+                <i data-lucide="crown" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="card-body text-center pt-8">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=96&auto=format&fit=crop" alt="CryptoMaster" class="w-20 h-20 rounded-full mx-auto mb-4 ring-4 ring-yellow-400/30">
+              <h3 class="font-bold text-xl">CryptoMaster</h3>
+              <div class="flex items-center justify-center gap-1 mb-3">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400"></i>
+                <p class="text-sm text-gray-400">Verified Pro</p>
+              </div>
+              <div class="text-3xl font-bold text-emerald-400 mb-1">+247.8%</div>
+              <div class="text-sm text-gray-400">30-day PNL</div>
+              <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <div class="font-semibold">$5.2M</div>
+                  <div class="text-gray-400">Volume</div>
+                </div>
+                <div>
+                  <div class="font-semibold">94%</div>
+                  <div class="text-gray-400">Win Rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3rd Place -->
+        <div class="order-3">
+          <div class="card relative">
+            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+              <div class="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-lg">3</div>
+            </div>
+            <div class="card-body text-center pt-6">
+              <img src="https://images.unsplash.com/photo-1494790108755-2616b332c108?q=80&w=96&auto=format&fit=crop" alt="Luna" class="w-16 h-16 rounded-full mx-auto mb-3">
+              <h3 class="font-bold text-lg">Luna</h3>
+              <p class="text-sm text-gray-400 mb-3">DeFi Specialist</p>
+              <div class="text-2xl font-bold text-emerald-400 mb-1">+156.2%</div>
+              <div class="text-sm text-gray-400">30-day PNL</div>
+              <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <div class="font-semibold">$1.8M</div>
+                  <div class="text-gray-400">Volume</div>
+                </div>
+                <div>
+                  <div class="font-semibold">91%</div>
+                  <div class="text-gray-400">Win Rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Leaderboard Filters -->
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-400">Time Period:</span>
+          <select class="form-input w-auto min-w-[120px] text-sm">
+            <option>30 Days</option>
+            <option>7 Days</option>
+            <option>24 Hours</option>
+            <option>All Time</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-400">Category:</span>
+          <select class="form-input w-auto min-w-[120px] text-sm">
+            <option>All Traders</option>
+            <option>Spot Trading</option>
+            <option>Futures Trading</option>
+            <option>Copy Trading</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-400">Minimum Volume:</span>
+          <select class="form-input w-auto min-w-[100px] text-sm">
+            <option>$0</option>
+            <option>$10K</option>
+            <option>$100K</option>
+            <option>$1M</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Leaderboard Table -->
+      <div class="card">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b" style="border-color: var(--color-border-subtle);">
+                <th class="text-left py-4 px-4 font-semibold text-sm">Rank</th>
+                <th class="text-left py-4 px-4 font-semibold text-sm">Trader</th>
+                <th class="text-right py-4 px-4 font-semibold text-sm">PNL (%)</th>
+                <th class="text-right py-4 px-4 font-semibold text-sm">Volume</th>
+                <th class="text-right py-4 px-4 font-semibold text-sm">Trades</th>
+                <th class="text-right py-4 px-4 font-semibold text-sm">Win Rate</th>
+                <th class="text-center py-4 px-4 font-semibold text-sm">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <!-- Rank 4 -->
+              <tr class="hover:bg-white/5 transition-colors border-b" style="border-color: var(--color-border-row);">
+                <td class="py-4 px-4 text-center">
+                  <span class="font-semibold text-lg">4</span>
+                </td>
+                <td class="py-4 px-4">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=48&auto=format&fit=crop" alt="AlgoTrader" class="w-10 h-10 rounded-full">
+                    <div>
+                      <div class="font-semibold">AlgoTrader</div>
+                      <div class="text-sm text-gray-400">Algorithmic Expert</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono text-emerald-400">+134.7%</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">$3.1M</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold">1,247</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">89%</span>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <button class="btn-secondary btn-sm">Follow</button>
+                </td>
+              </tr>
+
+              <!-- Rank 5 -->
+              <tr class="hover:bg-white/5 transition-colors border-b" style="border-color: var(--color-border-row);">
+                <td class="py-4 px-4 text-center">
+                  <span class="font-semibold text-lg">5</span>
+                </td>
+                <td class="py-4 px-4">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=48&auto=format&fit=crop" alt="SwingMaster" class="w-10 h-10 rounded-full">
+                    <div>
+                      <div class="font-semibold">SwingMaster</div>
+                      <div class="text-sm text-gray-400">Swing Trader</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono text-emerald-400">+98.3%</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">$1.9M</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold">834</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">85%</span>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <button class="btn-secondary btn-sm">Follow</button>
+                </td>
+              </tr>
+
+              <!-- Rank 6 -->
+              <tr class="hover:bg-white/5 transition-colors border-b" style="border-color: var(--color-border-row);">
+                <td class="py-4 px-4 text-center">
+                  <span class="font-semibold text-lg">6</span>
+                </td>
+                <td class="py-4 px-4">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=48&auto=format&fit=crop" alt="CryptoQueen" class="w-10 h-10 rounded-full">
+                    <div>
+                      <div class="font-semibold">CryptoQueen</div>
+                      <div class="text-sm text-gray-400">Options Trader</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono text-emerald-400">+87.9%</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">$2.3M</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold">692</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">82%</span>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <button class="btn-secondary btn-sm">Follow</button>
+                </td>
+              </tr>
+
+              <!-- Your Position -->
+              <tr class="bg-emerald-500/10 border border-emerald-400/20 hover:bg-emerald-500/15 transition-colors">
+                <td class="py-4 px-4 text-center">
+                  <span class="font-semibold text-lg text-emerald-400">47</span>
+                </td>
+                <td class="py-4 px-4">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=48&auto=format&fit=crop" alt="You" class="w-10 h-10 rounded-full ring-2 ring-emerald-400/30">
+                    <div>
+                      <div class="font-semibold text-emerald-400">You</div>
+                      <div class="text-sm text-gray-400">0x0b5C...59C8</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono text-emerald-400">+23.4%</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">$124K</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold">89</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">78%</span>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <span class="text-sm text-emerald-400">Your Rank</span>
+                </td>
+              </tr>
+
+              <!-- More traders -->
+              <tr class="hover:bg-white/5 transition-colors border-b" style="border-color: var(--color-border-row);">
+                <td class="py-4 px-4 text-center">
+                  <span class="font-semibold text-lg">48</span>
+                </td>
+                <td class="py-4 px-4">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=48&auto=format&fit=crop" alt="DeFiExplorer" class="w-10 h-10 rounded-full">
+                    <div>
+                      <div class="font-semibold">DeFiExplorer</div>
+                      <div class="text-sm text-gray-400">Yield Farmer</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono text-emerald-400">+22.8%</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">$98K</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold">156</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">75%</span>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <button class="btn-secondary btn-sm">Follow</button>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-white/5 transition-colors border-b" style="border-color: var(--color-border-row);">
+                <td class="py-4 px-4 text-center">
+                  <span class="font-semibold text-lg">49</span>
+                </td>
+                <td class="py-4 px-4">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?q=80&w=48&auto=format&fit=crop" alt="TechAnalyst" class="w-10 h-10 rounded-full">
+                    <div>
+                      <div class="font-semibold">TechAnalyst</div>
+                      <div class="text-sm text-gray-400">Technical Analysis</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono text-emerald-400">+21.5%</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">$87K</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold">234</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">73%</span>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <button class="btn-secondary btn-sm">Follow</button>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="py-4 px-4 text-center">
+                  <span class="font-semibold text-lg">50</span>
+                </td>
+                <td class="py-4 px-4">
+                  <div class="flex items-center gap-3">
+                    <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?q=80&w=48&auto=format&fit=crop" alt="RiskManager" class="w-10 h-10 rounded-full">
+                    <div>
+                      <div class="font-semibold">RiskManager</div>
+                      <div class="text-sm text-gray-400">Conservative Trader</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono text-emerald-400">+20.3%</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">$156K</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold">67</span>
+                </td>
+                <td class="py-4 px-4 text-right">
+                  <span class="font-semibold mono">88%</span>
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <button class="btn-secondary btn-sm">Follow</button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="p-4 border-t" style="border-color: var(--color-border-subtle);">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-gray-400">
+              Showing top 50 traders
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="btn-secondary btn-sm">Previous</button>
+              <button class="btn-secondary btn-sm">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="assets/js/components.js"></script>
+  <script>
+    // Initialize icons
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    });
+
+    // Follow functionality
+    document.addEventListener('click', (e) => {
+      if (e.target.textContent === 'Follow') {
+        const button = e.target;
+        if (button.textContent === 'Follow') {
+          button.textContent = 'Following';
+          button.classList.remove('btn-secondary');
+          button.classList.add('btn-primary');
+          nimbus.showToast('Now following trader!', 'success', 2000);
+        }
+      }
+    });
+
+    // Filter changes
+    document.addEventListener('change', (e) => {
+      if (e.target.tagName === 'SELECT') {
+        nimbus.showToast('Leaderboard updated', 'info', 2000);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full" style="background: var(--color-bg-main);">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Community - Nimbus Trading Platform</title>
+
+  <!-- Fonts: Geist + Geist Mono -->
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/600.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/700.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/600.css" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/components.css">
+  <script src="assets/js/navbar.js"></script>
+
+  <style>
+    .post-card {
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .post-card:hover {
+      background: rgba(255,255,255,0.02);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .kol-badge {
+      background: linear-gradient(135deg, #6EE7B7, #3B82F6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .signal-card {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+    .strategy-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    .video-card {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(168, 85, 247, 0.05));
+      border: 1px solid rgba(168, 85, 247, 0.2);
+    }
+    .article-card {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+      border: 1px solid rgba(251, 191, 36, 0.2);
+    }
+  </style>
+</head>
+
+<body class="h-full text-gray-200 antialiased bg-gradient-main">
+  <div class="min-h-screen flex flex-col">
+    <!-- Navbar Container -->
+    <div id="navbar-container"></div>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col">
+      <!-- Full Width Header Bar -->
+      <div class="bg-gray-900/80 border-b border-gray-700 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-8">
+            <div>
+              <h1 class="text-xl font-bold text-white">Trading Community</h1>
+              <p class="text-gray-400 text-xs mt-0.5">Live signals • Strategies • Education • 24/7</p>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="hidden lg:flex items-center gap-6 text-xs">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-gray-300">1,247 Active Traders</span>
+              </div>
+              <div class="text-gray-400">•</div>
+              <div class="text-green-400 font-mono">+$2.4M Profit Today</div>
+              <div class="text-gray-400">•</div>
+              <div class="text-blue-400">89% Signal Win Rate</div>
+            </div>
+          </div>
+
+          
+        </div>
+
+                 <!-- Enhanced Tabs/Filters -->
+         <div class="flex items-center justify-between mt-4">
+           <div class="flex items-center gap-4">
+             <!-- Filter Tabs -->
+             <div class="flex items-center gap-1 bg-gray-800/50 rounded-lg p-1">
+               <button class="filter-btn px-3 py-1.5 text-[11px] font-medium rounded-md bg-gray-700 text-white" data-filter="all">All</button>
+               <button class="filter-btn px-3 py-1.5 text-[11px] font-medium rounded-md text-gray-400 hover:text-gray-200 hover:bg-gray-700/50" data-filter="signal">Signals</button>
+               <button class="filter-btn px-3 py-1.5 text-[11px] font-medium rounded-md text-gray-400 hover:text-gray-200 hover:bg-gray-700/50" data-filter="bot">Bots</button>
+               <button class="filter-btn px-3 py-1.5 text-[11px] font-medium rounded-md text-gray-400 hover:text-gray-200 hover:bg-gray-700/50" data-filter="strategy">Strategies</button>
+             </div>
+             
+             <!-- Sorting Options -->
+             <div class="flex items-center gap-2">
+               <select id="sortSelect" class="bg-gray-800 border border-gray-700 rounded text-[11px] px-2 py-1 text-gray-300">
+                 <option value="newest">Latest First</option>
+                 <option value="trending">Trending (Most Liked)</option>
+                 <option value="oldest">Oldest First</option>
+                 <option value="most_comments">Most Discussed</option>
+               </select>
+               <select class="bg-gray-800 border border-gray-700 rounded text-[11px] px-2 py-1 text-gray-300">
+                 <option>All Assets</option>
+                 <option>BTC</option>
+                 <option>ETH</option>
+                 <option>SOL</option>
+                 <option>Altcoins</option>
+               </select>
+               <select class="bg-gray-800 border border-gray-700 rounded text-[11px] px-2 py-1 text-gray-300">
+                 <option>All Time</option>
+                 <option>Today</option>
+                 <option>This Week</option>
+                 <option>This Month</option>
+               </select>
+             </div>
+           </div>
+           
+           <!-- User Action Buttons -->
+           <div class="flex items-center gap-3">
+             <!-- My Posts Button -->
+             <button class="px-3 py-1.5 rounded-md text-xs font-medium text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors flex items-center gap-2">
+               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                 <polyline points="14,2 14,8 20,8"/>
+                 <line x1="16" y1="13" x2="8" y2="13"/>
+                 <line x1="16" y1="17" x2="8" y2="17"/>
+                 <polyline points="10,9 9,9 8,9"/>
+               </svg>
+               My Posts
+             </button>
+             
+             <!-- Saved Posts Button -->
+             <button class="px-3 py-1.5 rounded-md text-xs font-medium text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors flex items-center gap-2">
+               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                 <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+               </svg>
+               Saved Posts
+             </button>
+             
+             <!-- Create Post Button -->
+             <button class="btn-primary px-4 py-1.5 rounded-md text-xs font-medium flex items-center gap-2">
+               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                 <path d="M12 5v14"/>
+                 <path d="M5 12h14"/>
+               </svg>
+               Create Post
+             </button>
+           </div>
+        </div>
+      </div>
+
+      <!-- Full Width Content Grid -->
+      <div class="flex-1 flex">
+        <!-- Left Sidebar - Live Data -->
+        <div class="w-80 bg-gray-900/40 border-r border-gray-700 p-4 space-y-4 overflow-y-auto">
+          
+          <!-- Live Signals Panel -->
+          <div class="bg-gradient-to-br from-green-900/20 to-green-600/10 border border-green-500/30 rounded-lg p-3">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-white font-semibold text-sm flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                Live Signals
+              </h3>
+              <span class="text-xs text-green-400 font-mono">89% Win Rate</span>
+            </div>
+            
+            <div class="space-y-2">
+              <div class="bg-gray-800/50 rounded p-2">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-white text-xs font-mono">BTC/USDT</span>
+                  <span class="text-green-400 text-xs">LONG</span>
+                </div>
+                <div class="text-xs text-gray-400">Entry: $65,420 • TP: $66,800</div>
+                <div class="text-xs text-green-400 mt-1">+2.1% • 5m ago • Kenji Sato</div>
+              </div>
+              
+              <div class="bg-gray-800/50 rounded p-2">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-white text-xs font-mono">ETH/USDT</span>
+                  <span class="text-red-400 text-xs">SHORT</span>
+                </div>
+                <div class="text-xs text-gray-400">Entry: $2,480 • TP: $2,420</div>
+                <div class="text-xs text-blue-400 mt-1">Active • 12m ago • Evelyn Chen</div>
+              </div>
+              
+              <div class="bg-gray-800/50 rounded p-2">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-white text-xs font-mono">SOL/USDT</span>
+                  <span class="text-green-400 text-xs">LONG</span>
+                </div>
+                <div class="text-xs text-gray-400">Entry: $128.5 • TP: $135.2</div>
+                <div class="text-xs text-green-400 mt-1">+5.2% • 1h ago • Marcus Li</div>
+              </div>
+            </div>
+            
+            <button class="w-full mt-3 text-xs text-green-400 hover:text-green-300 font-medium">View All Signals →</button>
+          </div>
+
+          <!-- Top Performers -->
+          <div class="bg-gray-800/30 border border-gray-700 rounded-lg p-3">
+            <h3 class="text-white font-semibold text-sm mb-3">Top Performers</h3>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b647?w=24&q=80" class="w-6 h-6 rounded-full" alt="Evelyn">
+                <div class="flex-1">
+                  <div class="text-white text-xs font-medium">Evelyn Chen</div>
+                  <div class="text-green-400 text-xs font-mono">+47.3% This Week</div>
+                </div>
+                <div class="text-xs text-gray-400">#1</div>
+              </div>
+              
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=24&q=80" class="w-6 h-6 rounded-full" alt="Marcus">
+                <div class="flex-1">
+                  <div class="text-white text-xs font-medium">Marcus Li</div>
+                  <div class="text-green-400 text-xs font-mono">+32.1% This Week</div>
+                </div>
+                <div class="text-xs text-gray-400">#2</div>
+              </div>
+              
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=24&q=80" class="w-6 h-6 rounded-full" alt="Kenji">
+                <div class="flex-1">
+                  <div class="text-white text-xs font-medium">Kenji Sato</div>
+                  <div class="text-green-400 text-xs font-mono">+28.7% This Week</div>
+                </div>
+                <div class="text-xs text-gray-400">#3</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="bg-gray-800/30 border border-gray-700 rounded-lg p-3">
+            <h3 class="text-white font-semibold text-sm mb-3">Community Stats</h3>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="bg-gray-700/50 rounded p-2 text-center">
+                <div class="text-white font-mono">1,247</div>
+                <div class="text-gray-400">Active Now</div>
+              </div>
+              <div class="bg-gray-700/50 rounded p-2 text-center">
+                <div class="text-green-400 font-mono">89%</div>
+                <div class="text-gray-400">Win Rate</div>
+              </div>
+              <div class="bg-gray-700/50 rounded p-2 text-center">
+                <div class="text-blue-400 font-mono">342</div>
+                <div class="text-gray-400">Signals Today</div>
+              </div>
+              <div class="bg-gray-700/50 rounded p-2 text-center">
+                <div class="text-yellow-400 font-mono">$2.4M</div>
+                <div class="text-gray-400">Profit Today</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trending Topics -->
+          <div class="bg-gray-800/30 border border-gray-700 rounded-lg p-3">
+            <h3 class="text-white font-semibold text-sm mb-3">Trending Now</h3>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-300">#BTCBreakout</span>
+                <span class="text-xs text-gray-400">1.2k posts</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-300">#ETHMerge</span>
+                <span class="text-xs text-gray-400">847 posts</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-300">#SOLSummer</span>
+                <span class="text-xs text-gray-400">623 posts</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-300">#AltSeason</span>
+                <span class="text-xs text-gray-400">456 posts</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex">
+          <!-- Primary Feed -->
+          <div class="flex-1 p-4 overflow-y-auto">
+            
+            
+            
+                         <!-- Articles Grid Layout -->
+             <div id="communityFeed" class="flex flex-wrap gap-4">
+               <!-- Content will be populated by JavaScript -->
+             </div>
+
+             <!-- Article Detail View (Hidden by default) -->
+             <div id="articleView" class="hidden">
+               <div class="w-full px-4 lg:px-8">
+                 <!-- Back Button -->
+                 <button id="backToFeed" class="mb-4 flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                     <path d="M19 12H5"/>
+                     <path d="m12 19-7-7 7-7"/>
+                   </svg>
+                   Back to Feed
+                 </button>
+
+                 <!-- Article Content -->
+                 <article id="articleContent" class="bg-gray-800/30 border border-gray-700 rounded-lg p-6">
+                   <!-- Content will be populated by JavaScript -->
+                 </article>
+               </div>
+             </div>
+
+
+
+          </div>
+
+          <!-- Right Sidebar - Advanced Analytics -->
+          <div class="w-80 bg-gray-900/40 border-l border-gray-700 p-4 space-y-4 overflow-y-auto">
+            
+            <!-- Market Sentiment -->
+            <div class="bg-gray-800/30 border border-gray-700 rounded-lg p-3">
+              <h3 class="text-white font-semibold text-sm mb-3">Market Sentiment</h3>
+              <div class="space-y-3">
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-xs text-gray-300">Fear & Greed Index</span>
+                    <span class="text-xs text-green-400 font-mono">76</span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-1.5">
+                    <div class="bg-green-400 h-1.5 rounded-full" style="width: 76%"></div>
+                  </div>
+                  <div class="text-xs text-green-400 mt-1">Extreme Greed</div>
+                </div>
+                
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-xs text-gray-300">Community Mood</span>
+                    <span class="text-xs text-blue-400 font-mono">Bullish</span>
+                  </div>
+                  <div class="flex gap-1">
+                    <div class="flex-1 bg-green-500 h-1 rounded"></div>
+                    <div class="flex-1 bg-green-400 h-1 rounded"></div>
+                    <div class="flex-1 bg-yellow-400 h-1 rounded"></div>
+                    <div class="flex-1 bg-gray-600 h-1 rounded"></div>
+                    <div class="flex-1 bg-gray-600 h-1 rounded"></div>
+                  </div>
+                  <div class="text-xs text-blue-400 mt-1">68% Bullish • 32% Bearish</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Top KOLs -->
+            <div class="bg-gray-800/30 rounded-lg p-3 border border-gray-700">
+              <h3 class="text-white font-semibold text-sm mb-3">Top KOLs</h3>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                  <img src="https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80" class="w-8 h-8 rounded-full" alt="Evelyn Chen">
+                  <div class="flex-1">
+                    <div class="text-white text-sm font-medium">Evelyn Chen</div>
+                    <div class="text-xs text-gray-400">Signals hit rate 72%</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80" class="w-8 h-8 rounded-full" alt="Marcus Li">
+                  <div class="flex-1">
+                    <div class="text-white text-sm font-medium">Marcus Li</div>
+                    <div class="text-xs text-gray-400">48k views on videos</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80" class="w-8 h-8 rounded-full" alt="Kenji Sato">
+                  <div class="flex-1">
+                    <div class="text-white text-sm font-medium">Kenji Sato</div>
+                    <div class="text-xs text-gray-400">12.4k article reads</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hot Strategies -->
+            <div class="bg-gray-800/30 border border-gray-700 rounded-lg p-3">
+              <h3 class="text-white font-semibold text-sm mb-3">Hot Strategies</h3>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between p-2 bg-gray-700/30 rounded">
+                  <div>
+                    <div class="text-white text-xs font-medium">BTC Grid Bot</div>
+                    <div class="text-green-400 text-xs">+12.4% avg return</div>
+                  </div>
+                  <div class="text-xs text-gray-400">1.2k users</div>
+                </div>
+                
+                <div class="flex items-center justify-between p-2 bg-gray-700/30 rounded">
+                  <div>
+                    <div class="text-white text-xs font-medium">ETH DCA</div>
+                    <div class="text-green-400 text-xs">+8.7% avg return</div>
+                  </div>
+                  <div class="text-xs text-gray-400">847 users</div>
+                </div>
+                
+                <div class="flex items-center justify-between p-2 bg-gray-700/30 rounded">
+                  <div>
+                    <div class="text-white text-xs font-medium">SOL Momentum</div>
+                    <div class="text-green-400 text-xs">+15.2% avg return</div>
+                  </div>
+                  <div class="text-xs text-gray-400">623 users</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Learning Resources -->
+            <div class="bg-gray-800/30 border border-gray-700 rounded-lg p-3">
+              <h3 class="text-white font-semibold text-sm mb-3">Learning Hub</h3>
+              <div class="space-y-2">
+                <div class="p-2 bg-gray-700/30 rounded">
+                  <div class="text-gray-300 text-xs font-medium">Trading 101</div>
+                  <div class="text-gray-400 text-xs">Complete beginner guide</div>
+                  <div class="text-xs text-gray-400 mt-1">12 lessons • 2h duration</div>
+                </div>
+                
+                <div class="p-2 bg-gray-700/30 rounded">
+                  <div class="text-gray-300 text-xs font-medium">Psychology</div>
+                  <div class="text-gray-400 text-xs">Master your emotions</div>
+                  <div class="text-xs text-gray-400 mt-1">8 lessons • 1.5h duration</div>
+                </div>
+                
+                <div class="p-2 bg-gray-700/30 rounded">
+                  <div class="text-gray-300 text-xs font-medium">Bot Setup</div>
+                  <div class="text-gray-400 text-xs">Automated trading guide</div>
+                  <div class="text-xs text-gray-400 mt-1">15 lessons • 3h duration</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Chat -->
+            <div class="bg-gray-800/30 border border-gray-700 rounded-lg p-3">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-white font-semibold text-sm">Live Chat</h3>
+                <div class="flex items-center gap-1">
+                  <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span class="text-xs text-green-400">247 online</span>
+                </div>
+              </div>
+              <div class="space-y-2 text-xs max-h-32 overflow-y-auto">
+                <div class="p-1.5 bg-gray-700/30 rounded">
+                  <div class="text-gray-300 font-medium">TradeMaster: BTC looking strong above 65k</div>
+                </div>
+                <div class="p-1.5 bg-gray-700/30 rounded">
+                  <div class="text-gray-300 font-medium">CryptoQueen: My grid bot is printing money</div>
+                </div>
+                <div class="p-1.5 bg-gray-700/30 rounded">
+                  <div class="text-gray-300 font-medium">Analyst_Pro: Watch ETH 2500 level closely</div>
+                </div>
+              </div>
+              <button class="w-full mt-2 text-xs text-gray-400 hover:text-gray-300 font-medium">Join Chat →</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Fake community data
+    const communityData = [
+      // LONG Signals
+      {
+        type: 'signal',
+        direction: 'long',
+        author: 'Evelyn Chen',
+        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+        time: '2h',
+        pair: 'ETH/USDT',
+        title: 'ETH Bull Flag Breakout Setup',
+        entry: '$2,480',
+        target: '$2,560',
+        stopLoss: '$2,440',
+        takeProfit: '$2,580',
+        likes: 122,
+        comments: 48
+      },
+      {
+        type: 'signal',
+        direction: 'long',
+        author: 'Marcus Li',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+        time: '4h',
+        pair: 'BTC/USDT',
+        title: 'BTC Support Zone Long',
+        entry: '$64,200',
+        target: '$66,800',
+        stopLoss: '$63,500',
+        takeProfit: '$67,500',
+        likes: 89,
+        comments: 34
+      },
+      {
+        type: 'signal',
+        direction: 'long',
+        author: 'CryptoNinja',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+        time: '6h',
+        pair: 'SOL/USDT',
+        title: 'SOL Ascending Triangle',
+        entry: '$128.50',
+        target: '$135.20',
+        stopLoss: '$125.80',
+        takeProfit: '$138.40',
+        likes: 156,
+        comments: 67
+      },
+      {
+        type: 'signal',
+        direction: 'long',
+        author: 'TradeGuru',
+        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+        time: '8h',
+        pair: 'ADA/USDT',
+        title: 'ADA Double Bottom Pattern',
+        entry: '$0.485',
+        target: '$0.520',
+        stopLoss: '$0.465',
+        takeProfit: '$0.535',
+        likes: 78,
+        comments: 23
+      },
+      {
+        type: 'signal',
+        direction: 'long',
+        author: 'AlgoTrader',
+        avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+        time: '10h',
+        pair: 'MATIC/USDT',
+        title: 'MATIC Cup and Handle',
+        entry: '$0.845',
+        target: '$0.920',
+        stopLoss: '$0.810',
+        takeProfit: '$0.950',
+        likes: 134,
+        comments: 45
+      },
+      
+      // SHORT Signals
+      {
+        type: 'signal',
+        direction: 'short',
+        author: 'Kenji Sato',
+        avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+        time: '3h',
+        pair: 'BTC/USDT',
+        title: 'BTC Rejection at Resistance',
+        entry: '$65,800',
+        target: '$63,200',
+        stopLoss: '$66,500',
+        takeProfit: '$62,100',
+        likes: 89,
+        comments: 23
+      },
+      {
+        type: 'signal',
+        direction: 'short',
+        author: 'BearHunter',
+        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+        time: '5h',
+        pair: 'ETH/USDT',
+        title: 'ETH Head and Shoulders',
+        entry: '$2,520',
+        target: '$2,380',
+        stopLoss: '$2,580',
+        takeProfit: '$2,320',
+        likes: 67,
+        comments: 19
+      },
+      {
+        type: 'signal',
+        direction: 'short',
+        author: 'ShortMaster',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+        time: '7h',
+        pair: 'AVAX/USDT',
+        title: 'AVAX Bearish Divergence',
+        entry: '$28.50',
+        target: '$26.20',
+        stopLoss: '$29.80',
+        takeProfit: '$25.10',
+        likes: 92,
+        comments: 31
+      },
+      {
+        type: 'signal',
+        direction: 'short',
+        author: 'RedCandle',
+        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+        time: '9h',
+        pair: 'DOT/USDT',
+        title: 'DOT Breakdown Setup',
+        entry: '$6.85',
+        target: '$6.20',
+        stopLoss: '$7.15',
+        takeProfit: '$5.95',
+        likes: 45,
+        comments: 12
+      },
+      {
+        type: 'signal',
+        direction: 'short',
+        author: 'TechAnalyst',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+        time: '11h',
+        pair: 'LINK/USDT',
+        title: 'LINK Triple Top Formation',
+        entry: '$14.80',
+        target: '$13.50',
+        stopLoss: '$15.40',
+        takeProfit: '$12.90',
+        likes: 73,
+        comments: 28
+      },
+
+             // Bot Setup Guides
+       {
+         type: 'bot',
+         author: 'Marcus Li',
+         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+         time: '1d',
+         title: 'Grid Bot Setup Guide for Beginners',
+         content: 'Learn how to set up automated grid trading bots for consistent profits in sideways markets. Complete step-by-step tutorial.',
+         steps: ['Choose sideways market', 'Set 15-20 grid levels', 'Risk 2-3% per grid', 'Monitor funding rates'],
+         likes: 186,
+         comments: 73
+       },
+      {
+        type: 'tutorial',
+        author: 'CryptoEducator',
+        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+        time: '2d',
+        title: 'Understanding Support and Resistance',
+        content: 'Master the fundamentals of technical analysis with this comprehensive guide to support and resistance levels.',
+        steps: ['Identify key levels', 'Draw trend lines', 'Confirm with volume', 'Plan entry/exit points'],
+        likes: 234,
+        comments: 89
+      },
+      {
+        type: 'tutorial',
+        author: 'TradingMentor',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+        time: '3d',
+        title: 'Candlestick Pattern Recognition',
+        content: 'Learn to identify and trade the most profitable candlestick patterns with real market examples.',
+        steps: ['Study basic patterns', 'Practice identification', 'Combine with indicators', 'Execute trades'],
+        likes: 298,
+        comments: 112
+      },
+      {
+        type: 'tutorial',
+        author: 'ChartWizard',
+        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+        time: '4d',
+        title: 'Moving Average Strategies',
+        content: 'Discover powerful moving average crossover strategies for trend following and mean reversion trading.',
+        steps: ['Choose MA periods', 'Identify crossovers', 'Filter false signals', 'Manage positions'],
+        likes: 167,
+        comments: 56
+      },
+      {
+        type: 'tutorial',
+        author: 'ProTrader',
+        avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+        time: '5d',
+        title: 'Volume Analysis Masterclass',
+        content: 'Understand how volume confirms price movements and use it to improve your trading accuracy.',
+        steps: ['Read volume patterns', 'Spot accumulation', 'Identify breakouts', 'Confirm reversals'],
+        likes: 145,
+        comments: 67
+      },
+
+      // Strategies
+      {
+        type: 'strategy',
+        author: 'TraderMax88',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+        time: '6h',
+        title: '15-Min Scalping Setup (87% Win Rate)',
+        content: 'High-frequency scalping strategy using EMA crossovers and RSI divergence for quick profits.',
+        indicators: 'EMA9, RSI, MACD',
+        risk: '0.5% account',
+        timeframe: '15m charts',
+        sessions: 'NY + London',
+        likes: 94,
+        comments: 27
+      },
+      {
+        type: 'strategy',
+        author: 'SwingKing',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+        time: '12h',
+        title: 'Weekly Swing Trading System',
+        content: 'Capture major price swings with this proven weekly timeframe strategy using multiple confirmations.',
+        indicators: 'EMA21, MACD, Stoch',
+        risk: '2% account',
+        timeframe: '1W charts',
+        sessions: 'All sessions',
+        likes: 156,
+        comments: 43
+      },
+      {
+        type: 'strategy',
+        author: 'MomentumTrader',
+        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+        time: '1d',
+        title: 'Breakout Momentum Strategy',
+        content: 'Trade powerful breakouts with volume confirmation and momentum indicators for maximum profit potential.',
+        indicators: 'Bollinger Bands, Volume, ATR',
+        risk: '1.5% account',
+        timeframe: '4H charts',
+        sessions: 'Asian + London',
+        likes: 189,
+        comments: 62
+      },
+             {
+         type: 'bot',
+         author: 'GridMaster',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '2d',
+         title: 'DCA Grid Bot Complete Setup',
+         content: 'Automated dollar-cost averaging with grid levels for consistent returns in volatile markets. Learn to configure, optimize and monitor your DCA bot.',
+         steps: ['Set DCA intervals', 'Configure grid spacing', 'Set safety orders', 'Monitor performance'],
+         likes: 267,
+         comments: 98
+       },
+      {
+        type: 'strategy',
+        author: 'TrendFollower',
+        avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+        time: '3d',
+        title: 'Multi-Timeframe Trend Strategy',
+        content: 'Align multiple timeframes to catch major trends with high probability setups and optimal entries.',
+        indicators: 'EMA suite, ADX, MACD',
+        risk: '1% account',
+        timeframe: 'Daily + 4H',
+        sessions: 'London + NY',
+        likes: 134,
+        comments: 51
+      },
+
+             // Articles
+       {
+         type: 'article',
+         author: 'CryptoNina',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '8h',
+         title: 'Risk Management Masterclass',
+         content: 'Learn the essential risk management techniques that separate profitable traders from the rest. Position sizing, stop losses, and portfolio allocation strategies that protect your capital while maximizing returns.',
+         likes: 156,
+         comments: 89
+       },
+       {
+         type: 'article',
+         author: 'MarketAnalyst',
+         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+         time: '1d',
+         title: 'Psychology of Trading Success',
+         content: 'Discover the mental frameworks and psychological principles that drive consistent trading performance. Learn to overcome fear, greed, and emotional decision-making.',
+         likes: 298,
+         comments: 134
+       },
+       {
+         type: 'article',
+         author: 'TechAnalyst',
+         avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+         time: '2d',
+         title: 'Market Structure Analysis',
+         content: 'Understanding market structure is crucial for timing entries and exits. Learn to identify accumulation, distribution, and trending phases.',
+         likes: 187,
+         comments: 76
+       },
+       {
+         type: 'article',
+         author: 'DefiExplorer',
+         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+         time: '3d',
+         title: 'DeFi Yield Farming Strategies',
+         content: 'Navigate the world of decentralized finance with proven yield farming strategies. Learn about risks, rewards, and optimal protocols.',
+         likes: 223,
+         comments: 91
+       },
+       {
+         type: 'article',
+         author: 'CryptoResearcher',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '4d',
+         title: 'Fundamental Analysis in Crypto',
+         content: 'Beyond technical analysis lies fundamental research. Learn to evaluate projects, tokenomics, and market adoption for long-term investments.',
+         likes: 165,
+         comments: 58
+       },
+       {
+         type: 'article',
+         author: 'BlockchainDev',
+         avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+         time: '5d',
+         title: 'Layer 2 Scaling Solutions',
+         content: 'Explore the latest developments in blockchain scalability. From rollups to sidechains, understand the future of crypto infrastructure.',
+         likes: 142,
+         comments: 47
+       },
+       {
+         type: 'article',
+         author: 'NFTCollector',
+         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+         time: '6d',
+         title: 'NFT Trading Strategies',
+         content: 'Navigate the volatile NFT market with proven strategies for identifying valuable collections and timing your trades effectively.',
+         likes: 189,
+         comments: 83
+       },
+       {
+         type: 'article',
+         author: 'MetaversePro',
+         avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+         time: '1w',
+         title: 'Metaverse Investment Guide',
+         content: 'Discover investment opportunities in virtual worlds. From virtual real estate to gaming tokens, learn to navigate the metaverse economy.',
+         likes: 267,
+         comments: 112
+       },
+
+       // Additional LONG Signals
+       {
+         type: 'signal',
+         direction: 'long',
+         author: 'CryptoWhale',
+         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+         time: '1h',
+         pair: 'UNI/USDT',
+         title: 'UNI Bullish Pennant',
+         entry: '$7.25',
+         target: '$7.85',
+         stopLoss: '$6.95',
+         takeProfit: '$8.10',
+         likes: 98,
+         comments: 35
+       },
+       {
+         type: 'signal',
+         direction: 'long',
+         author: 'TechnicalPro',
+         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+         time: '3h',
+         pair: 'AAVE/USDT',
+         title: 'AAVE Inverse Head & Shoulders',
+         entry: '$89.50',
+         target: '$96.20',
+         stopLoss: '$85.80',
+         takeProfit: '$99.40',
+         likes: 112,
+         comments: 41
+       },
+       {
+         type: 'signal',
+         direction: 'long',
+         author: 'BullRun2024',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '5h',
+         pair: 'NEAR/USDT',
+         title: 'NEAR Breakout Above MA200',
+         entry: '$3.45',
+         target: '$3.78',
+         stopLoss: '$3.25',
+         takeProfit: '$3.95',
+         likes: 87,
+         comments: 29
+       },
+       {
+         type: 'signal',
+         direction: 'long',
+         author: 'ChartMaster',
+         avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+         time: '7h',
+         pair: 'FTM/USDT',
+         title: 'FTM Golden Cross Formation',
+         entry: '$0.385',
+         target: '$0.420',
+         stopLoss: '$0.365',
+         takeProfit: '$0.445',
+         likes: 134,
+         comments: 52
+       },
+       {
+         type: 'signal',
+         direction: 'long',
+         author: 'AltcoinKing',
+         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+         time: '9h',
+         pair: 'ATOM/USDT',
+         title: 'ATOM Bullish Flag Pattern',
+         entry: '$12.40',
+         target: '$13.20',
+         stopLoss: '$11.95',
+         takeProfit: '$13.65',
+         likes: 76,
+         comments: 31
+       },
+
+       // Additional SHORT Signals
+       {
+         type: 'signal',
+         direction: 'short',
+         author: 'BearMarket',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '2h',
+         pair: 'XRP/USDT',
+         title: 'XRP Double Top Reversal',
+         entry: '$0.625',
+         target: '$0.585',
+         stopLoss: '$0.650',
+         takeProfit: '$0.560',
+         likes: 67,
+         comments: 21
+       },
+       {
+         type: 'signal',
+         direction: 'short',
+         author: 'PatternMaster',
+         avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+         time: '4h',
+         pair: 'LTC/USDT',
+         title: 'LTC Descending Triangle',
+         entry: '$72.50',
+         target: '$68.20',
+         stopLoss: '$75.80',
+         takeProfit: '$65.40',
+         likes: 89,
+         comments: 33
+       },
+       {
+         type: 'signal',
+         direction: 'short',
+         author: 'RedBear',
+         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+         time: '6h',
+         pair: 'BCH/USDT',
+         title: 'BCH Bearish Engulfing',
+         entry: '$285.00',
+         target: '$265.00',
+         stopLoss: '$295.00',
+         takeProfit: '$250.00',
+         likes: 54,
+         comments: 18
+       },
+       {
+         type: 'signal',
+         direction: 'short',
+         author: 'ShortSqueeze',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '8h',
+         pair: 'ICP/USDT',
+         title: 'ICP Failed Breakout',
+         entry: '$8.95',
+         target: '$8.20',
+         stopLoss: '$9.35',
+         takeProfit: '$7.80',
+         likes: 71,
+         comments: 26
+       },
+       {
+         type: 'signal',
+         direction: 'short',
+         author: 'TrendReverse',
+         avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+         time: '10h',
+         pair: 'ALGO/USDT',
+         title: 'ALGO Rising Wedge Break',
+         entry: '$0.195',
+         target: '$0.175',
+         stopLoss: '$0.205',
+         takeProfit: '$0.165',
+         likes: 83,
+         comments: 29
+       },
+
+       // Additional Tutorials
+       {
+         type: 'tutorial',
+         author: 'TradingAcademy',
+         avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+         time: '1d',
+         title: 'Fibonacci Retracement Guide',
+         content: 'Master Fibonacci retracements for precise entry and exit points in trending markets.',
+         steps: ['Draw from swing high/low', 'Identify key levels', 'Wait for confluence', 'Execute with confirmation'],
+         likes: 178,
+         comments: 64
+       },
+       {
+         type: 'tutorial',
+         author: 'OptionsTrader',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '2d',
+         title: 'Crypto Options Trading Basics',
+         content: 'Introduction to crypto options trading, including calls, puts, and basic strategies for risk management.',
+         steps: ['Understand options basics', 'Learn Greeks', 'Practice paper trading', 'Start with covered calls'],
+         likes: 156,
+         comments: 73
+       },
+       {
+         type: 'tutorial',
+         author: 'DayTrader',
+         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+         time: '3d',
+         title: 'Scalping Techniques Masterclass',
+         content: 'Learn advanced scalping techniques for quick profits in volatile crypto markets.',
+         steps: ['Choose liquid pairs', 'Set tight stops', 'Use level 2 data', 'Manage emotions'],
+         likes: 203,
+         comments: 89
+       },
+       {
+         type: 'tutorial',
+         author: 'CryptoTeacher',
+         avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+         time: '4d',
+         title: 'Order Book Analysis',
+         content: 'Understand market depth and order flow to predict short-term price movements.',
+         steps: ['Read bid/ask spread', 'Spot large orders', 'Identify support/resistance', 'Time your entries'],
+         likes: 167,
+         comments: 56
+       },
+       {
+         type: 'tutorial',
+         author: 'TechnicalGuru',
+         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+         time: '5d',
+         title: 'Elliott Wave Theory Simplified',
+         content: 'Master Elliott Wave patterns to predict major market moves and trend changes.',
+         steps: ['Learn 5-wave structure', 'Identify corrections', 'Use Fibonacci ratios', 'Practice on charts'],
+         likes: 189,
+         comments: 78
+       },
+
+       // Additional Strategies
+       {
+         type: 'strategy',
+         author: 'ArbitrageKing',
+         avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+         time: '1d',
+         title: 'Cross-Exchange Arbitrage',
+         content: 'Profit from price differences across exchanges with this low-risk arbitrage strategy.',
+         indicators: 'Price spreads, Volume',
+         risk: 'Low risk',
+         timeframe: 'Real-time',
+         sessions: '24/7',
+         likes: 198,
+         comments: 76
+       },
+       {
+         type: 'bot',
+         author: 'AlgoBot',
+         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+         time: '8h',
+         title: 'Mean Reversion Bot Configuration',
+         content: 'Automated mean reversion bot setup for ranging markets with statistical edge and risk controls. Complete configuration guide.',
+         steps: ['Configure Bollinger Bands', 'Set RSI parameters', 'Define position sizing', 'Set stop conditions'],
+         likes: 143,
+         comments: 52
+       },
+       {
+         type: 'bot',
+         author: 'BotMaster',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '3d',
+         title: 'Martingale Bot Setup & Risk Management',
+         content: 'Learn to configure Martingale bots with proper risk controls. Understand position sizing, safety orders, and when to stop.',
+         steps: ['Set base order size', 'Configure safety orders', 'Set max active deals', 'Define stop conditions'],
+         likes: 198,
+         comments: 87
+       },
+       {
+         type: 'bot',
+         author: 'FlywheelPro',
+         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+         time: '4d',
+         title: 'Flywheel Bot Configuration Guide',
+         content: 'Master the flywheel bot strategy for consistent profits. Learn optimal settings, pair selection, and performance monitoring.',
+         steps: ['Choose volatile pairs', 'Set profit targets', 'Configure take profit levels', 'Monitor drawdown'],
+         likes: 156,
+         comments: 64
+       },
+       {
+         type: 'bot',
+         author: 'ArbitrageBot',
+         avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+         time: '5d',
+         title: 'Cross-Exchange Arbitrage Bot Setup',
+         content: 'Configure arbitrage bots to profit from price differences across exchanges. API setup, latency optimization, and risk management.',
+         steps: ['Setup exchange APIs', 'Configure price thresholds', 'Set minimum profit margins', 'Monitor execution speed'],
+         likes: 234,
+         comments: 91
+       },
+       {
+         type: 'bot',
+         author: 'ScalpBot',
+         avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+         time: '6d',
+         title: 'High-Frequency Scalping Bot',
+         content: 'Build and configure scalping bots for quick profits. Learn about latency, order types, and market making strategies.',
+         steps: ['Optimize latency', 'Set tight spreads', 'Configure order sizes', 'Monitor fill rates'],
+         likes: 178,
+         comments: 73
+       },
+       {
+         type: 'strategy',
+         author: 'NewsTrader',
+         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+         time: '2d',
+         title: 'Event-Driven Trading Strategy',
+         content: 'Trade major announcements and events with this systematic approach to news trading.',
+         indicators: 'News feeds, Volume spikes',
+         risk: '2% per event',
+         timeframe: 'Event-based',
+         sessions: 'Global markets',
+         likes: 167,
+         comments: 89
+       },
+       {
+         type: 'strategy',
+         author: 'QuantTrader',
+         avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+         time: '3d',
+         title: 'Statistical Arbitrage Model',
+         content: 'Advanced quantitative strategy using statistical models to identify trading opportunities.',
+         indicators: 'Correlation, Cointegration',
+         risk: '1.2% account',
+         timeframe: 'Multiple TFs',
+         sessions: 'Automated',
+         likes: 234,
+         comments: 98
+       },
+       {
+         type: 'strategy',
+         author: 'VolatilityTrader',
+         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+         time: '4d',
+         title: 'Volatility Breakout System',
+         content: 'Capture explosive moves with this volatility-based breakout strategy.',
+         indicators: 'ATR, Bollinger Bands, Volume',
+         risk: '1.8% account',
+         timeframe: '4H + Daily',
+         sessions: 'High volatility periods',
+         likes: 178,
+         comments: 67
+       },
+
+       // More Articles
+       {
+         type: 'article',
+         author: 'MacroAnalyst',
+         avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+         time: '3d',
+         title: 'Macro Economic Impact on Crypto',
+         content: 'Understand how global economic events, inflation, and monetary policy affect cryptocurrency markets and trading strategies.',
+         likes: 234,
+         comments: 97
+       },
+       {
+         type: 'article',
+         author: 'RegulationExpert',
+         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+         time: '4d',
+         title: 'Crypto Regulation Update 2024',
+         content: 'Stay informed about the latest regulatory developments affecting cryptocurrency trading and investment worldwide.',
+         likes: 189,
+         comments: 84
+       }
+          ];
+
+     // Article content generation components
+     const ArticleComponents = {
+       // Generate signal article content
+       generateSignalContent: (item) => {
+         const direction = item.direction;
+         const directionColor = direction === 'long' ? 'green' : 'red';
+         const oppositeColor = direction === 'long' ? 'red' : 'green';
+         
+         
+         // Create trading setup for copy functionality
+         const setupText = `Signal: ${item.title}
+Pair: ${item.pair}
+Direction: ${direction.toUpperCase()}
+Entry: ${item.entry}
+Target: ${item.target}
+Stop Loss: ${item.stopLoss}
+Take Profit: ${item.takeProfit}
+Timeframe: ${item.timeframe || '4H'}
+Confidence: ${item.confidence || '85%'}`;
+         
+         return `
+           <!-- Signal Header with Direction Badge -->
+           <div class="flex items-center gap-3 mb-6">
+             <span class="px-3 py-1 bg-${directionColor}-600 text-${directionColor}-100 rounded-full text-sm font-medium">
+               ${direction.toUpperCase()}
+             </span>
+           </div>
+           
+           <h2 class="text-xl font-bold text-white mb-4">Technical Analysis Overview</h2>
+           <p class="text-gray-300 mb-4">This ${direction.toUpperCase()} signal for ${item.pair} presents a compelling ${direction === 'long' ? 'bullish' : 'bearish'} setup based on technical analysis and market structure. The setup offers excellent risk-to-reward potential for active traders.</p>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Trading Levels</h3>
+           <div class="grid grid-cols-2 gap-4 mb-6">
+             <div class="bg-gray-700/40 rounded p-3">
+               <div class="text-gray-400 text-sm">Entry Zone</div>
+               <div class="font-mono text-white font-bold">${item.entry}</div>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3">
+               <div class="text-gray-400 text-sm">Target</div>
+               <div class="font-mono text-${directionColor}-400 font-bold">${item.target}</div>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3">
+               <div class="text-gray-400 text-sm">Stop Loss</div>
+               <div class="font-mono text-red-400 font-bold">${item.stopLoss}</div>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3">
+               <div class="text-gray-400 text-sm">Take Profit</div>
+               <div class="font-mono text-${directionColor}-400 font-bold">${item.takeProfit}</div>
+             </div>
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Market Analysis</h3>
+           <p class="text-gray-300 mb-4">The ${item.pair} pair is showing strong ${direction === 'long' ? 'bullish momentum' : 'bearish pressure'} with clear technical confirmation. Key indicators are aligning for this ${direction} opportunity.</p>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Risk Management</h3>
+           <ul class="text-gray-300 space-y-2 mb-6">
+             <li>• Position size: 1-2% of portfolio</li>
+             <li>• Risk-to-reward ratio: 1:${direction === 'long' ? '2.1' : '1.8'}</li>
+             <li>• Time horizon: 2-7 days</li>
+             <li>• Invalidation: Break ${direction === 'long' ? 'below' : 'above'} ${item.stopLoss}</li>
+           </ul>
+           
+           <div class="bg-${directionColor}-900/20 border border-${directionColor}-500/30 rounded p-4">
+             <h4 class="text-${directionColor}-400 font-semibold mb-2">Signal Status</h4>
+             <p class="text-gray-300 text-sm">This ${direction.toUpperCase()} signal is currently active and being monitored. Entry conditions have been met based on our technical criteria.</p>
+           </div>
+         `;
+       },
+       
+       // Generate bot tutorial content
+       generateBotContent: (item) => {
+         const botType = item.title.toLowerCase().includes('grid') ? 'Grid' : 
+                        item.title.toLowerCase().includes('dca') ? 'DCA' :
+                        item.title.toLowerCase().includes('martingale') ? 'Martingale' :
+                        item.title.toLowerCase().includes('flywheel') ? 'Flywheel' :
+                        item.title.toLowerCase().includes('arbitrage') ? 'Arbitrage' : 'Trading';
+         
+         return `
+           <h2 class="text-xl font-bold text-white mb-4">What is ${botType} Bot Trading?</h2>
+           <p class="text-gray-300 mb-4">${botType} bots are automated trading systems that execute trades based on predetermined parameters. This comprehensive guide will walk you through the complete setup process for optimal performance.</p>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Step-by-Step Setup</h3>
+           <div class="space-y-4 mb-6">
+             ${item.steps.map((step, index) => `
+               <div class="bg-gray-700/40 rounded p-4">
+                 <h4 class="text-blue-400 font-semibold mb-2">Step ${index + 1}: ${step}</h4>
+                 <p class="text-gray-300 text-sm">Detailed instructions for ${step.toLowerCase()}. This step is crucial for ${botType.toLowerCase()} bot optimization and requires careful attention to market conditions.</p>
+               </div>
+             `).join('')}
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Recommended Settings</h3>
+           <div class="bg-gray-700/40 rounded p-4 mb-6">
+             <div class="grid grid-cols-2 gap-4">
+               <div>
+                 <div class="text-gray-400 text-sm">Bot Type</div>
+                 <div class="text-white font-mono">${botType} Bot</div>
+               </div>
+               <div>
+                 <div class="text-gray-400 text-sm">Risk Level</div>
+                 <div class="text-white font-mono">Moderate</div>
+               </div>
+               <div>
+                 <div class="text-gray-400 text-sm">Min Investment</div>
+                 <div class="text-white font-mono">$100</div>
+               </div>
+               <div>
+                 <div class="text-gray-400 text-sm">Expected ROI</div>
+                 <div class="text-green-400 font-mono">8-15% monthly</div>
+               </div>
+             </div>
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Performance Monitoring</h3>
+           <div class="grid grid-cols-3 gap-4 mb-6">
+             <div class="bg-gray-700/40 rounded p-3 text-center">
+               <div class="text-gray-400 text-sm">Total Trades</div>
+               <div class="text-white font-mono font-bold">247</div>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3 text-center">
+               <div class="text-gray-400 text-sm">Win Rate</div>
+               <div class="text-green-400 font-mono font-bold">78%</div>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3 text-center">
+               <div class="text-gray-400 text-sm">Profit</div>
+               <div class="text-green-400 font-mono font-bold">+12.4%</div>
+             </div>
+           </div>
+           
+           <div class="bg-blue-900/20 border border-blue-500/30 rounded p-4">
+             <h4 class="text-blue-400 font-semibold mb-2">Pro Tips</h4>
+             <p class="text-gray-300 text-sm">Start with smaller amounts while learning. ${botType} bots require patience and proper market conditions. Always monitor performance and adjust settings based on market volatility.</p>
+           </div>
+         `;
+       },
+       
+       // Generate strategy content
+       generateStrategyContent: (item) => {
+         return `
+           <h2 class="text-xl font-bold text-white mb-4">Strategy Overview</h2>
+           <p class="text-gray-300 mb-4">${item.content} This systematic approach has been tested across multiple market conditions and timeframes.</p>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Technical Setup</h3>
+           <div class="grid grid-cols-2 gap-4 mb-6">
+             <div class="bg-gray-700/40 rounded p-3">
+               <h4 class="text-white font-semibold mb-2">Indicators</h4>
+               <p class="text-gray-300 text-sm">${item.indicators}</p>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3">
+               <h4 class="text-white font-semibold mb-2">Timeframe</h4>
+               <p class="text-gray-300 text-sm">${item.timeframe}</p>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3">
+               <h4 class="text-white font-semibold mb-2">Risk Management</h4>
+               <p class="text-gray-300 text-sm">${item.risk}</p>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3">
+               <h4 class="text-white font-semibold mb-2">Best Sessions</h4>
+               <p class="text-gray-300 text-sm">${item.sessions}</p>
+             </div>
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Entry Conditions</h3>
+           <div class="bg-green-900/20 border border-green-500/30 rounded p-4 mb-6">
+             <h4 class="text-green-400 font-semibold mb-2">Long Entry Criteria</h4>
+             <ul class="text-gray-300 text-sm space-y-1">
+               <li>• Primary indicator alignment</li>
+               <li>• Volume confirmation</li>
+               <li>• Market structure support</li>
+               <li>• Risk-reward ratio minimum 1:2</li>
+             </ul>
+           </div>
+           
+           <div class="bg-red-900/20 border border-red-500/30 rounded p-4 mb-6">
+             <h4 class="text-red-400 font-semibold mb-2">Short Entry Criteria</h4>
+             <ul class="text-gray-300 text-sm space-y-1">
+               <li>• Bearish indicator signals</li>
+               <li>• Volume confirmation</li>
+               <li>• Resistance level rejection</li>
+               <li>• Risk-reward ratio minimum 1:2</li>
+             </ul>
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Performance Metrics</h3>
+           <div class="grid grid-cols-3 gap-4 mb-6">
+             <div class="bg-gray-700/40 rounded p-3 text-center">
+               <div class="text-gray-400 text-sm">Win Rate</div>
+               <div class="text-green-400 font-mono font-bold">73%</div>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3 text-center">
+               <div class="text-gray-400 text-sm">Avg R:R</div>
+               <div class="text-blue-400 font-mono font-bold">1:2.3</div>
+             </div>
+             <div class="bg-gray-700/40 rounded p-3 text-center">
+               <div class="text-gray-400 text-sm">Max DD</div>
+               <div class="text-red-400 font-mono font-bold">8.2%</div>
+             </div>
+           </div>
+           
+           <div class="bg-yellow-900/20 border border-yellow-500/30 rounded p-4">
+             <h4 class="text-yellow-400 font-semibold mb-2">Important Notes</h4>
+             <p class="text-gray-300 text-sm">This strategy requires discipline and patience. Always backtest before live trading and adjust position sizes based on your risk tolerance and account size.</p>
+           </div>
+         `;
+       },
+       
+       // Generate tutorial content
+       generateTutorialContent: (item) => {
+         return `
+           <h2 class="text-xl font-bold text-white mb-4">Educational Overview</h2>
+           <p class="text-gray-300 mb-4">${item.content} This comprehensive tutorial covers everything you need to know to master this concept.</p>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Learning Objectives</h3>
+           <div class="bg-gray-700/40 rounded p-4 mb-6">
+             <ul class="text-gray-300 space-y-2">
+               ${item.steps.map(step => `<li>• Understand ${step.toLowerCase()}</li>`).join('')}
+             </ul>
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Step-by-Step Guide</h3>
+           <div class="space-y-4 mb-6">
+             ${item.steps.map((step, index) => `
+               <div class="bg-gray-700/40 rounded p-4">
+                 <h4 class="text-white font-semibold mb-2">${index + 1}. ${step}</h4>
+                 <p class="text-gray-300 text-sm">Detailed explanation of ${step.toLowerCase()}. This step builds upon previous concepts and prepares you for advanced techniques.</p>
+               </div>
+             `).join('')}
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Practical Application</h3>
+           <p class="text-gray-300 mb-4">Apply these concepts in real trading scenarios. Start with paper trading to practice without risk.</p>
+           
+           <div class="bg-blue-900/20 border border-blue-500/30 rounded p-4">
+             <h4 class="text-blue-400 font-semibold mb-2">Next Steps</h4>
+             <p class="text-gray-300 text-sm">Continue your learning journey with advanced topics. Practice these fundamentals until they become second nature.</p>
+           </div>
+         `;
+       },
+       
+       // Generate article content
+       generateArticleContent: (item) => {
+         return `
+           <h2 class="text-xl font-bold text-white mb-4">In-Depth Analysis</h2>
+           <p class="text-gray-300 mb-6">${item.content}</p>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Key Concepts</h3>
+           <div class="grid grid-cols-1 gap-4 mb-6">
+             <div class="bg-gray-700/40 rounded p-4">
+               <h4 class="text-blue-400 font-semibold mb-2">Fundamental Principles</h4>
+               <p class="text-gray-300 text-sm">Core concepts that form the foundation of this topic. Understanding these principles is essential for practical application.</p>
+             </div>
+             <div class="bg-gray-700/40 rounded p-4">
+               <h4 class="text-green-400 font-semibold mb-2">Practical Applications</h4>
+               <p class="text-gray-300 text-sm">Real-world scenarios where these concepts apply. Learn how to implement these ideas in your trading practice.</p>
+             </div>
+             <div class="bg-gray-700/40 rounded p-4">
+               <h4 class="text-yellow-400 font-semibold mb-2">Advanced Techniques</h4>
+               <p class="text-gray-300 text-sm">Advanced methods for experienced practitioners. These techniques can significantly improve your results when applied correctly.</p>
+             </div>
+           </div>
+           
+           <h3 class="text-lg font-semibold text-white mb-3">Best Practices</h3>
+           <ul class="text-gray-300 space-y-2 mb-6">
+             <li>• Start with solid fundamentals</li>
+             <li>• Practice consistently</li>
+             <li>• Keep detailed records</li>
+             <li>• Continuously educate yourself</li>
+             <li>• Learn from mistakes</li>
+           </ul>
+           
+           <div class="bg-green-900/20 border border-green-500/30 rounded p-4">
+             <h4 class="text-green-400 font-semibold mb-2">Key Takeaway</h4>
+             <p class="text-gray-300 text-sm">Success in this area requires patience, discipline, and continuous learning. Focus on consistent application rather than perfection.</p>
+           </div>
+         `;
+       }
+     };
+
+     // Generate dynamic article content for any item
+     function generateArticleDetails(item) {
+       const readTime = item.type === 'signal' ? '5 min read' : 
+                       item.type === 'bot' ? '12 min read' :
+                       item.type === 'strategy' ? '8 min read' :
+                       item.type === 'tutorial' ? '10 min read' : '7 min read';
+       
+       let content = '';
+       switch(item.type) {
+         case 'signal':
+           content = ArticleComponents.generateSignalContent(item);
+           break;
+         case 'bot':
+           content = ArticleComponents.generateBotContent(item);
+           break;
+         case 'strategy':
+           content = ArticleComponents.generateStrategyContent(item);
+           break;
+         case 'tutorial':
+           content = ArticleComponents.generateTutorialContent(item);
+           break;
+         case 'article':
+           content = ArticleComponents.generateArticleContent(item);
+           break;
+         default:
+           content = ArticleComponents.generateArticleContent(item);
+       }
+       
+       return {
+         type: item.type,
+         title: `${item.title} - Complete Guide`,
+         author: item.author,
+         avatar: item.avatar,
+         time: item.time,
+         readTime: readTime,
+         content: content
+       };
+     };
+
+     // Current filter state
+     let currentFilter = 'all';
+
+     // Function to render community cards
+     function renderCommunityFeed(filter = 'all', sort = 'newest') {
+       const feedContainer = document.getElementById('communityFeed');
+       if (!feedContainer) return;
+       
+       // Clear existing content
+       feedContainer.innerHTML = '';
+       
+       // Filter data based on selected filter
+       let filteredData = communityData;
+       if (filter !== 'all') {
+         filteredData = communityData.filter(item => item.type === filter);
+       }
+       
+       // Sort data based on selected sort
+       filteredData = [...filteredData];
+       switch(sort) {
+         case 'trending':
+           filteredData.sort((a, b) => b.likes - a.likes);
+           break;
+         case 'oldest':
+           filteredData.reverse(); // Since data is already in newest first order
+           break;
+         case 'most_comments':
+           filteredData.sort((a, b) => b.comments - a.comments);
+           break;
+         case 'newest':
+         default:
+           // Already in newest first order
+           break;
+       }
+       
+       // Render filtered items
+       filteredData.forEach(item => {
+         const card = document.createElement('div');
+         card.className = 'flex-1 min-w-[280px] max-w-[320px] bg-gray-800/30 rounded-lg p-3';
+         
+         // Add border based on type
+         if (item.type === 'signal') {
+           card.className += item.direction === 'long' ? ' border border-green-500/30' : ' border border-red-500/30';
+         } else {
+           card.className += ' border border-gray-600';
+         }
+         
+         card.innerHTML = createCardHTML(item);
+         card.addEventListener('click', () => openArticle(item));
+         card.style.cursor = 'pointer';
+         feedContainer.appendChild(card);
+       });
+     }
+
+     // Function to open article detail view
+     function openArticle(item) {
+       const article = generateArticleDetails(item);
+       
+       // Create trading setup for copy functionality (for signals)
+       const setupText = item.type === 'signal' ? `Signal: ${item.title}
+Pair: ${item.pair}
+Direction: ${item.direction.toUpperCase()}
+Entry: ${item.entry}
+Target: ${item.target}
+Stop Loss: ${item.stopLoss}
+Take Profit: ${item.takeProfit}
+Timeframe: ${item.timeframe || '4H'}
+Confidence: ${item.confidence || '85%'}` : '';
+
+       const feedContainer = document.getElementById('communityFeed');
+       const articleView = document.getElementById('articleView');
+       const articleContent = document.getElementById('articleContent');
+
+       // Hide feed and show article view
+       feedContainer.classList.add('hidden');
+       articleView.classList.remove('hidden');
+
+       // Populate article content
+       articleContent.innerHTML = `
+         <!-- Article Header -->
+         <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-700">
+           <img src="${article.avatar}" class="w-12 h-12 rounded-full" alt="${article.author}">
+           <div class="flex-1">
+             <h1 class="text-2xl font-bold text-white mb-2">${article.title}</h1>
+             <div class="flex items-center gap-4 text-sm text-gray-400">
+               <span>By ${article.author}</span>
+               <span>Dec 15, 2024 • 14:30 UTC</span>
+               <span>${article.readTime}</span>
+               ${item.type === 'signal' && item.direction ? `<span class="px-3 py-1 bg-${item.direction === 'long' ? 'green' : 'red'}-600 text-${item.direction === 'long' ? 'green' : 'red'}-100 rounded-full text-xs font-medium">${item.direction.toUpperCase()}</span>` : ''}
+             </div>
+           </div>
+         </div>
+
+         <!-- Full Width Flex Layout -->
+         <div class="flex flex-col lg:flex-row gap-8 w-full">
+           <!-- Chart Section (Signals Only) -->
+           ${item.type === 'signal' ? `
+             <div class="lg:w-2/5 flex-shrink-0">
+               <!-- Chart Display Setup -->
+               <div class="bg-gray-800/50 border border-gray-600 rounded-lg p-4 mb-6">
+                 <div class="flex items-center justify-between mb-3">
+                   <h3 class="text-lg font-semibold text-white">Chart Setup</h3>
+                   <button onclick="copySetupToClipboard(\`${setupText}\`)" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors">
+                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                     </svg>
+                     Copy Setup
+                   </button>
+                 </div>
+                 
+                 <!-- Professional Fake Chart Display -->
+                 <div class="bg-black rounded p-4 mb-4">
+                   <div class="flex items-center justify-between mb-3">
+                     <div class="flex items-center gap-3">
+                       <span class="text-white font-mono font-bold text-lg">${item.pair}</span>
+                       <span class="text-${item.direction === 'long' ? 'green' : 'red'}-400 font-mono">${item.direction === 'long' ? '↗' : '↘'} ${item.direction.toUpperCase()}</span>
+                       <span class="text-gray-400 text-sm">${item.timeframe || '4H'}</span>
+                     </div>
+                     <div class="text-right">
+                       <div class="text-white font-mono font-bold">$${parseFloat(item.entry.replace('$', '')).toFixed(2)}</div>
+                       <div class="text-${item.direction === 'long' ? 'green' : 'red'}-400 text-sm font-mono">${item.direction === 'long' ? '+2.3%' : '-1.8%'}</div>
+                     </div>
+                   </div>
+                   
+                   <!-- Fake Candlestick Chart -->
+                   <div class="relative h-64 bg-gray-900/50 rounded mb-3" id="chart-${item.title.replace(/\\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}">
+                     <canvas class="w-full h-full rounded" width="600" height="256"></canvas>
+                     
+                     <!-- Price Level Lines Overlay -->
+                     <div class="absolute inset-0 pointer-events-none">
+                       <!-- Take Profit Line -->
+                       <div class="absolute left-0 right-0 border-t border-dashed border-${item.direction === 'long' ? 'green' : 'red'}-400" style="top: 15%;">
+                         <span class="absolute right-2 -top-4 text-xs text-${item.direction === 'long' ? 'green' : 'red'}-400 bg-black px-1">TP: ${item.takeProfit}</span>
+                       </div>
+                       
+                       <!-- Target Line -->
+                       <div class="absolute left-0 right-0 border-t border-dashed border-${item.direction === 'long' ? 'green' : 'red'}-400" style="top: 25%;">
+                         <span class="absolute right-2 -top-4 text-xs text-${item.direction === 'long' ? 'green' : 'red'}-400 bg-black px-1">Target: ${item.target}</span>
+                       </div>
+                       
+                       <!-- Entry Zone -->
+                       <div class="absolute left-0 right-0 border-t-2 border-white" style="top: 50%;">
+                         <span class="absolute right-2 -top-4 text-xs text-white bg-black px-1 font-semibold">Entry: ${item.entry}</span>
+                       </div>
+                       
+                       <!-- Stop Loss Line -->
+                       <div class="absolute left-0 right-0 border-t border-dashed border-red-400" style="top: 75%;">
+                         <span class="absolute right-2 -top-4 text-xs text-red-400 bg-black px-1">SL: ${item.stopLoss}</span>
+                       </div>
+                     </div>
+                   </div>
+                   
+                   <!-- Chart Controls -->
+                   <div class="flex items-center justify-between text-xs">
+                     <div class="flex items-center gap-4 text-gray-400">
+                       <span>Volume: 24.7K</span>
+                       <span>MA(20): $${(parseFloat(item.entry.replace('$', '')) * 0.98).toFixed(2)}</span>
+                       <span>RSI: ${item.direction === 'long' ? '58.2' : '42.8'}</span>
+                     </div>
+                     <div class="text-gray-400">
+                       R:R 1:${item.direction === 'long' ? '2.1' : '1.8'} • ${item.confidence || '85%'} Confidence
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           ` : ''}
+           
+           <!-- Content Section (Full Width or Remaining Space) -->
+           <div class="flex-1 min-w-0">
+             <div class="prose prose-invert max-w-none w-full">
+               ${article.content}
+             </div>
+           </div>
+         </div>
+
+         <!-- Article Footer -->
+         <div class="mt-8 pt-6 border-t border-gray-700 flex items-center justify-between">
+           <div class="flex items-center gap-4">
+             <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+               </svg>
+               <span>Like</span>
+             </button>
+             <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+               </svg>
+               <span>Comment</span>
+             </button>
+             <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                 <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                 <path d="M16 6l-4-4-4 4"/>
+                 <path d="M12 2v15"/>
+               </svg>
+               <span>Share</span>
+             </button>
+           </div>
+           <button class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+             </svg>
+             <span>Save</span>
+           </button>
+         </div>
+       `;
+       
+       // Draw chart for signal articles
+       if (item.type === 'signal') {
+         setTimeout(() => {
+           const chartId = `chart-${item.title.replace(/\\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}`;
+           drawFakeChart(chartId, item.direction, item.entry);
+         }, 200);
+       }
+     }
+
+     // Function to go back to feed
+     function backToFeed() {
+       const feedContainer = document.getElementById('communityFeed');
+       const articleView = document.getElementById('articleView');
+
+       // Show feed and hide article view
+       feedContainer.classList.remove('hidden');
+       articleView.classList.add('hidden');
+     }
+
+     // Function to draw fake candlestick chart
+     function drawFakeChart(canvasId, direction, entry) {
+       const chartContainer = document.getElementById(canvasId);
+       if (!chartContainer) return;
+       
+       const canvas = chartContainer.querySelector('canvas');
+       if (!canvas) return;
+       
+       const ctx = canvas.getContext('2d');
+       const width = canvas.width;
+       const height = canvas.height;
+       
+       // Clear canvas
+       ctx.clearRect(0, 0, width, height);
+       
+       // Generate fake price data based on direction
+       const entryPrice = parseFloat(entry.replace('$', ''));
+       const priceData = [];
+       let currentPrice = entryPrice * (direction === 'long' ? 0.92 : 1.08);
+       
+       // Generate 30 candles leading to the setup
+       for (let i = 0; i < 30; i++) {
+         const volatility = 0.015 + (Math.random() * 0.01); // 1.5-2.5% volatility
+         const trend = direction === 'long' ? 0.002 : -0.002; // Stronger trend
+         const momentum = i > 20 ? trend * 2 : trend; // Accelerate near entry
+         
+         const open = currentPrice;
+         const baseChange = (Math.random() - 0.5) * volatility;
+         const trendChange = momentum + (Math.random() * 0.001);
+         const close = open + (open * (baseChange + trendChange));
+         
+         // Create more realistic high/low with proper wicks
+         const bodyRange = Math.abs(close - open);
+         const wickMultiplier = 0.3 + (Math.random() * 0.7); // 30-100% wick extension
+         
+         const high = Math.max(open, close) + (bodyRange * wickMultiplier * Math.random());
+         const low = Math.min(open, close) - (bodyRange * wickMultiplier * Math.random());
+         
+         priceData.push({ 
+           open: parseFloat(open.toFixed(2)), 
+           high: parseFloat(high.toFixed(2)), 
+           low: parseFloat(low.toFixed(2)), 
+           close: parseFloat(close.toFixed(2)) 
+         });
+         currentPrice = close;
+       }
+       
+       // Find price range
+       const allPrices = priceData.flatMap(d => [d.open, d.high, d.low, d.close]);
+       const minPrice = Math.min(...allPrices);
+       const maxPrice = Math.max(...allPrices);
+       const priceRange = maxPrice - minPrice;
+       
+       // Draw candlesticks
+       const candleWidth = Math.max(width / priceData.length * 0.6, 2);
+       const spacing = width / priceData.length;
+       
+       priceData.forEach((candle, i) => {
+         const x = i * spacing + spacing * 0.2;
+         const openY = height - ((candle.open - minPrice) / priceRange) * (height * 0.8);
+         const closeY = height - ((candle.close - minPrice) / priceRange) * (height * 0.8);
+         const highY = height - ((candle.high - minPrice) / priceRange) * (height * 0.8);
+         const lowY = height - ((candle.low - minPrice) / priceRange) * (height * 0.8);
+         
+         // Determine candle color
+         const isGreen = candle.close > candle.open;
+         ctx.strokeStyle = isGreen ? '#10b981' : '#ef4444';
+         ctx.fillStyle = isGreen ? '#10b981' : '#ef4444';
+         ctx.lineWidth = 1;
+         
+         // Draw wick (high-low line)
+         ctx.beginPath();
+         ctx.moveTo(x + candleWidth/2, highY);
+         ctx.lineTo(x + candleWidth/2, lowY);
+         ctx.stroke();
+         
+         // Draw candle body
+         const bodyTop = Math.min(openY, closeY);
+         const bodyHeight = Math.max(Math.abs(closeY - openY), 1);
+         
+         ctx.beginPath();
+         if (isGreen) {
+           // Green candles are filled
+           ctx.fillRect(x, bodyTop, candleWidth, bodyHeight);
+         } else {
+           // Red candles are hollow with red outline
+           ctx.fillStyle = '#000000'; // Black fill for hollow effect
+           ctx.fillRect(x, bodyTop, candleWidth, bodyHeight);
+           ctx.strokeRect(x, bodyTop, candleWidth, bodyHeight);
+         }
+       });
+       
+       // Add volume bars at bottom
+       ctx.fillStyle = '#374151';
+       const volumeHeight = height * 0.15;
+       priceData.forEach((candle, i) => {
+         const x = i * spacing + spacing * 0.2;
+         const volume = Math.random() * volumeHeight;
+         ctx.fillRect(x, height - volume, candleWidth, volume);
+       });
+     }
+
+     // Function to copy trading setup to clipboard
+     function copySetupToClipboard(setupText) {
+       navigator.clipboard.writeText(setupText).then(() => {
+         // Show success feedback
+         const button = event.target.closest('button');
+         const originalHTML = button.innerHTML;
+         button.innerHTML = `
+           <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+           </svg>
+           Copied!
+         `;
+         button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+         button.classList.add('bg-green-600');
+         
+         setTimeout(() => {
+           button.innerHTML = originalHTML;
+           button.classList.remove('bg-green-600');
+           button.classList.add('bg-blue-600', 'hover:bg-blue-700');
+         }, 2000);
+       }).catch(err => {
+         console.error('Failed to copy setup: ', err);
+         // Fallback for older browsers
+         const textArea = document.createElement('textarea');
+         textArea.value = setupText;
+         document.body.appendChild(textArea);
+         textArea.select();
+         document.execCommand('copy');
+         document.body.removeChild(textArea);
+         
+         // Show success feedback
+         const button = event.target.closest('button');
+         const originalHTML = button.innerHTML;
+         button.innerHTML = `
+           <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+           </svg>
+           Copied!
+         `;
+         button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+         button.classList.add('bg-green-600');
+         
+         setTimeout(() => {
+           button.innerHTML = originalHTML;
+           button.classList.remove('bg-green-600');
+           button.classList.add('bg-blue-600', 'hover:bg-blue-700');
+         }, 2000);
+       });
+     }
+
+     // Current sort state
+     let currentSort = 'newest';
+
+     // Function to handle filter button clicks
+     function handleFilterClick(filter) {
+       currentFilter = filter;
+       
+       // Update button states
+       document.querySelectorAll('.filter-btn').forEach(btn => {
+         btn.classList.remove('bg-gray-700', 'text-white');
+         btn.classList.add('text-gray-400', 'hover:text-gray-200', 'hover:bg-gray-700/50');
+       });
+       
+       // Activate clicked button
+       const activeBtn = document.querySelector(`[data-filter="${filter}"]`);
+       if (activeBtn) {
+         activeBtn.classList.add('bg-gray-700', 'text-white');
+         activeBtn.classList.remove('text-gray-400', 'hover:text-gray-200', 'hover:bg-gray-700/50');
+       }
+       
+       // Re-render feed with filter and current sort
+       renderCommunityFeed(filter, currentSort);
+     }
+
+     // Function to handle sort changes
+     function handleSortChange(sort) {
+       currentSort = sort;
+       // Re-render feed with current filter and new sort
+       renderCommunityFeed(currentFilter, sort);
+     }
+
+     // Add event listeners for filter buttons and sort dropdown
+     function initializeFilters() {
+       document.querySelectorAll('.filter-btn').forEach(btn => {
+         btn.addEventListener('click', () => {
+           const filter = btn.getAttribute('data-filter');
+           handleFilterClick(filter);
+         });
+       });
+
+       // Add event listener for sort dropdown
+       const sortSelect = document.getElementById('sortSelect');
+       if (sortSelect) {
+         sortSelect.addEventListener('change', (e) => {
+           handleSortChange(e.target.value);
+         });
+       }
+     }
+
+    // Function to create card HTML
+    function createCardHTML(item) {
+      return `
+        <div class="flex items-start gap-3">
+          <img src="${item.avatar}" class="w-8 h-8 rounded-full" alt="${item.author}">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-semibold text-white text-sm">${item.author}</h3>
+              <span class="text-xs text-gray-400">${item.time}</span>
+            </div>
+            ${getTypeSpecificHTML(item)}
+            <div class="flex items-center justify-between pt-2 border-t border-gray-700">
+              <div class="flex items-center gap-2 text-xs text-gray-400">
+                <span>${item.likes} likes</span>
+                <span>${item.comments} comments</span>
+              </div>
+              <button class="bg-gray-600 text-gray-300 hover:bg-gray-500 hover:text-white px-2 py-1 rounded text-xs">Read</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Function to get type-specific HTML
+    function getTypeSpecificHTML(item) {
+      switch(item.type) {
+        case 'signal':
+          const directionClass = item.direction === 'long' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400';
+          const targetColor = item.direction === 'long' ? 'text-green-400' : 'text-red-400';
+          return `
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs ${directionClass} px-2 py-1 rounded">${item.direction.toUpperCase()}</span>
+              <span class="text-xs text-gray-300">${item.pair}</span>
+            </div>
+            <h4 class="text-white font-medium mb-2 text-sm">${item.title}</h4>
+            <div class="grid grid-cols-2 gap-2 mb-2 text-xs">
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Entry</div>
+                <div class="font-mono text-white font-semibold">${item.entry}</div>
+              </div>
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Target</div>
+                <div class="font-mono ${targetColor} font-semibold">${item.target}</div>
+              </div>
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Stop Loss</div>
+                <div class="font-mono text-red-400 font-semibold">${item.stopLoss}</div>
+              </div>
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Take Profit</div>
+                <div class="font-mono ${targetColor} font-semibold">${item.takeProfit}</div>
+              </div>
+            </div>
+          `;
+        
+                 case 'tutorial':
+           return `
+             <div class="flex items-center gap-2 mb-2">
+               <span class="text-xs bg-gray-600 text-gray-300 px-2 py-1 rounded">Tutorial</span>
+             </div>
+             <h4 class="text-white font-medium mb-2 text-sm">${item.title}</h4>
+             <div class="bg-gray-700/30 rounded p-2 mb-2 text-xs">
+               <div class="text-gray-300 space-y-1">
+                 ${item.steps.map((step, index) => `<div>${index + 1}. ${step}</div>`).join('')}
+               </div>
+             </div>
+           `;
+
+         case 'bot':
+           return `
+             <div class="flex items-center gap-2 mb-2">
+               <span class="text-xs bg-blue-600 text-blue-300 px-2 py-1 rounded">Bot Setup</span>
+             </div>
+             <h4 class="text-white font-medium mb-2 text-sm">${item.title}</h4>
+             <div class="bg-gray-700/30 rounded p-2 mb-2 text-xs">
+               <div class="text-gray-300 space-y-1">
+                 ${item.steps.map((step, index) => `<div>${index + 1}. ${step}</div>`).join('')}
+               </div>
+             </div>
+           `;
+        
+        case 'strategy':
+          return `
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs bg-gray-600 text-gray-300 px-2 py-1 rounded">Strategy</span>
+            </div>
+            <h4 class="text-white font-medium mb-2 text-sm">${item.title}</h4>
+            <div class="grid grid-cols-2 gap-2 mb-2 text-xs">
+              <div class="bg-gray-700/40 rounded p-1.5">
+                <div class="text-gray-400">Indicators</div>
+                <div class="text-white">${item.indicators}</div>
+              </div>
+              <div class="bg-gray-700/40 rounded p-1.5">
+                <div class="text-gray-400">Risk</div>
+                <div class="text-white">${item.risk}</div>
+              </div>
+            </div>
+          `;
+        
+        case 'article':
+          return `
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs bg-gray-600 text-gray-300 px-2 py-1 rounded">Article</span>
+            </div>
+            <h4 class="text-white font-medium mb-2 text-sm">${item.title}</h4>
+            <p class="text-gray-400 text-xs mb-2 line-clamp-3">${item.content}</p>
+          `;
+        
+        default:
+          return '';
+      }
+    }
+
+         // Initialize the feed when page loads
+     document.addEventListener('DOMContentLoaded', () => {
+       renderCommunityFeed();
+       initializeFilters();
+       
+       // Add back button event listener
+       const backBtn = document.getElementById('backToFeed');
+       if (backBtn) {
+         backBtn.addEventListener('click', backToFeed);
+       }
+     });
+  </script>
+</body>
+</html>
