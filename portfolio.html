@@ -16,7 +16,73 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="assets/css/components.css">
+
+  <style>
+    /* Portfolio Book Styles */
+    input[type="radio"] {
+      width: 1rem;
+      height: 1rem;
+      accent-color: #10B981;
+    }
+
+    .border {
+      border-color: var(--color-border-subtle);
+    }
+
+    .tab-btn {
+      position: relative;
+      font-size: 0.875rem;
+      color: #9CA3AF;
+      transition-property: color;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+    }
+    .tab-btn:hover {
+      color: #FFFFFF;
+    }
+
+    .tab-btn.active {
+      color: #FFFFFF;
+      border-color: var(--color-accent);
+    }
+
+    .calendar-day {
+      height: 5rem;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      border-width: 1px;
+      text-align: center;
+      font-size: 0.875rem;
+      transition-property: background-color;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+    }
+    .calendar-day:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .calendar-day.profit {
+      border-color: rgba(16, 185, 129, 0.3);
+      background-color: rgba(16, 185, 129, 0.1);
+    }
+
+    .calendar-day.loss {
+      border-color: rgba(239, 68, 68, 0.3);
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+
+    .calendar-day.today {
+      border-color: var(--color-accent);
+    }
+
+    .calendar-day.empty {
+      border-color: transparent;
+      background-color: transparent;
+      pointer-events: none;
+    }
+  </style>
 </head>
 
 <body class="h-full text-gray-200 antialiased bg-gradient-main">
@@ -77,467 +143,547 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
-      
-      <!-- Profile Header -->
-      <div class="card mb-8">
-        <div class="card-body">
-          <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-            
-            <!-- Avatar & Basic Info -->
-            <div class="flex items-center gap-4">
-              <div class="relative">
-                <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=96&auto=format&fit=crop" alt="Profile" class="w-20 h-20 rounded-full ring-4 ring-emerald-400/30">
-                <button class="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center hover:bg-emerald-600 transition-colors">
-                  <i data-lucide="camera" class="w-3 h-3 text-white"></i>
-                </button>
-              </div>
-              <div>
-                <h1 class="text-2xl font-bold mb-1">John Trader</h1>
-                <p class="text-gray-400 mb-2">Professional Trader</p>
-                <div class="flex items-center gap-2">
-                  <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs font-semibold">Gold VIP</span>
-                  <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">Verified</span>
-                </div>
-              </div>
+    <main id="portfolio-book" class="min-h-screen">
+      <!-- PAGE CONTAINER -->
+      <section class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-6 space-y-6">
+        <!-- ================= TRADING ANALYSIS ================= -->
+        <section id="trading-analysis" class="space-y-4">
+          <!-- Title + Segmented Controls -->
+          <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div class="space-y-1">
+              <h1 class="text-2xl md:text-3xl font-semibold">Trading Analysis</h1>
+              <p class="text-sm">Detailed performance and bias across spot and derivatives.</p>
             </div>
 
-            <!-- Stats -->
-            <div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div class="text-center">
-                <div class="text-2xl font-bold text-emerald-400">+23.4%</div>
-                <div class="text-sm text-gray-400">Total PNL</div>
+            <form id="ta-controls" class="grid grid-cols-1 gap-2 sm:grid-cols-3 md:auto-cols-max md:grid-flow-col">
+              <!-- Metric -->
+              <fieldset class="flex flex-wrap items-center gap-2">
+                <legend class="text-xs uppercase tracking-wide">Metric</legend>
+                <div class="flex gap-1">
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="metric" value="pnl" checked />
+                    <span class="text-sm">P&amp;L</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="metric" value="roi" />
+                    <span class="text-sm">ROI</span>
+                  </label>
               </div>
-              <div class="text-center">
-                <div class="text-2xl font-bold">$124K</div>
-                <div class="text-sm text-gray-400">Volume</div>
-              </div>
-              <div class="text-center">
-                <div class="text-2xl font-bold">89</div>
-                <div class="text-sm text-gray-400">Trades</div>
-              </div>
-              <div class="text-center">
-                <div class="text-2xl font-bold">78%</div>
-                <div class="text-sm text-gray-400">Win Rate</div>
-              </div>
-            </div>
+              </fieldset>
 
-            <!-- Actions -->
-            <div class="flex gap-2">
-              <button class="btn-secondary">
-                <i data-lucide="share" class="w-4 h-4 mr-1"></i>
-                Share
-              </button>
-              <button class="btn-primary">
-                <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
-                Edit Profile
-              </button>
-            </div>
+              <!-- Market -->
+              <fieldset class="flex flex-wrap items-center gap-2">
+                <legend class="text-xs uppercase tracking-wide">Market</legend>
+                <div class="flex gap-1">
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="market" value="combined" checked />
+                    <span class="text-sm">Combined</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="market" value="perp" />
+                    <span class="text-sm">Perp</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="market" value="spot" />
+                    <span class="text-sm">Spot</span>
+                  </label>
+              </div>
+              </fieldset>
 
+              <!-- Timeframe -->
+              <fieldset class="flex flex-wrap items-center gap-2">
+                <legend class="text-xs uppercase tracking-wide">Timeframe</legend>
+                <div class="flex gap-1">
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="tf" value="24h" checked />
+                    <span class="text-sm">24H</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="tf" value="7d" />
+                    <span class="text-sm">7D</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="tf" value="30d" />
+                    <span class="text-sm">30D</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                    <input type="radio" name="tf" value="all" />
+                    <span class="text-sm">All</span>
+                  </label>
+            </div>
+              </fieldset>
+            </form>
           </div>
-        </div>
-      </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-8">
-          
-          <!-- Trading Performance -->
-          <div>
-            <h2 class="text-xl font-bold mb-4">Trading Performance</h2>
-            
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-semibold">Portfolio Value</h3>
-                  <div class="flex items-center gap-2">
-                    <span class="text-sm text-gray-400">Last 30 days</span>
-                    <select class="form-input w-auto text-sm">
-                      <option>30 days</option>
-                      <option>7 days</option>
-                      <option>24 hours</option>
-                    </select>
+          <!-- Left metrics + Right chart/KPIs -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- Left -->
+            <div class="space-y-4">
+              <article class="p-4 rounded border">
+                <p class="text-sm">Account Value</p>
+                <p id="account-value-amount" class="text-3xl font-semibold tracking-tight">$87,607.37</p>
+                <div class="mt-2 text-sm">24H change: <span id="account-value-change">+3.59%</span></div>
+              </article>
+
+              <article class="p-4 rounded border space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm">Recently Traded</span>
+                  <div class="flex -space-x-2">
+                    <div class="h-6 w-6 rounded overflow-hidden border"></div>
+                    <div class="h-6 w-6 rounded overflow-hidden border"></div>
+                    <div class="h-6 w-6 rounded overflow-hidden border"></div>
                   </div>
                 </div>
                 
-                <!-- Chart Placeholder -->
-                <div class="h-64 rounded-lg glass flex items-center justify-center mb-4">
-                  <div class="text-center">
-                    <i data-lucide="trending-up" class="w-12 h-12 text-emerald-400 mx-auto mb-2"></i>
-                    <p class="text-gray-400">Portfolio performance chart</p>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm">Directional Bias</span>
+                  <span class="text-sm font-medium">Mostly Long</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="p-3 rounded border">
+                    <p class="text-xs">Win Rate</p>
+                    <p class="text-lg font-semibold tracking-tight">54.0%</p>
+                  </div>
+                  <div class="p-3 rounded border">
+                    <p class="text-xs">Sharpe (30D)</p>
+                    <p class="text-lg font-semibold tracking-tight">1.12</p>
                   </div>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                  <div>
-                    <div class="text-lg font-bold text-emerald-400">$2,847</div>
-                    <div class="text-sm text-gray-400">Current Value</div>
-                  </div>
-                  <div>
-                    <div class="text-lg font-bold text-emerald-400">+$534</div>
-                    <div class="text-sm text-gray-400">Today's P&L</div>
-                  </div>
-                  <div>
-                    <div class="text-lg font-bold">$124K</div>
-                    <div class="text-sm text-gray-400">Total Volume</div>
-                  </div>
-                  <div>
-                    <div class="text-lg font-bold">47</div>
-                    <div class="text-sm text-gray-400">Rank</div>
-                  </div>
-                </div>
-              </div>
+                <label class="flex items-center gap-2">
+                  <input id="feesToggle" type="checkbox" />
+                  <span class="text-xs">Include fees in P&amp;L</span>
+                </label>
+              </article>
             </div>
 
-            <!-- Recent Trades -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="font-semibold">Recent Trades</h3>
+            <!-- Right -->
+            <div class="lg:col-span-2 space-y-4">
+              <article class="p-4 rounded border">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs">P&amp;L vs Benchmark</div>
+                </div>
+                <div class="mt-3 h-[300px]">
+                  <canvas id="pnlChart" class="h-full w-full"></canvas>
+                </div>
+              </article>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="p-3 rounded border">
+                  <p class="text-xs">Total P&amp;L</p>
+                  <p id="kpiTotal" class="text-lg font-semibold tracking-tight">-$304.88</p>
+                </div>
+                <div class="p-3 rounded border">
+                  <p class="text-xs">Perpetual P&amp;L</p>
+                  <p id="kpiPerp" class="text-lg font-semibold tracking-tight">-$205.45</p>
+                </div>
+                <div class="p-3 rounded border">
+                  <p class="text-xs">Spot P&amp;L</p>
+                  <p id="kpiSpot" class="text-lg font-semibold tracking-tight">-$99.43</p>
               </div>
-              <div class="overflow-x-auto">
-                <table class="w-full">
-                  <thead>
-                    <tr class="border-b" style="border-color: var(--color-border-subtle);">
-                      <th class="text-left py-3 px-4 font-semibold text-sm">Pair</th>
-                      <th class="text-left py-3 px-4 font-semibold text-sm">Side</th>
-                      <th class="text-right py-3 px-4 font-semibold text-sm">Size</th>
-                      <th class="text-right py-3 px-4 font-semibold text-sm">Price</th>
-                      <th class="text-right py-3 px-4 font-semibold text-sm">PNL</th>
-                      <th class="text-right py-3 px-4 font-semibold text-sm">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="border-b hover:bg-white/5" style="border-color: var(--color-border-row);">
-                      <td class="py-3 px-4 font-semibold">BTC/USDT</td>
-                      <td class="py-3 px-4">
-                        <span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs">Long</span>
-                      </td>
-                      <td class="py-3 px-4 text-right mono">0.1250</td>
-                      <td class="py-3 px-4 text-right mono">$67,845</td>
-                      <td class="py-3 px-4 text-right mono text-emerald-400">+$234.50</td>
-                      <td class="py-3 px-4 text-right text-sm text-gray-400">2m ago</td>
-                    </tr>
-                    <tr class="border-b hover:bg-white/5" style="border-color: var(--color-border-row);">
-                      <td class="py-3 px-4 font-semibold">ETH/USDT</td>
-                      <td class="py-3 px-4">
-                        <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs">Short</span>
-                      </td>
-                      <td class="py-3 px-4 text-right mono">2.4500</td>
-                      <td class="py-3 px-4 text-right mono">$3,456</td>
-                      <td class="py-3 px-4 text-right mono text-red-400">-$89.20</td>
-                      <td class="py-3 px-4 text-right text-sm text-gray-400">1h ago</td>
-                    </tr>
-                    <tr class="border-b hover:bg-white/5" style="border-color: var(--color-border-row);">
-                      <td class="py-3 px-4 font-semibold">SOL/USDT</td>
-                      <td class="py-3 px-4">
-                        <span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs">Long</span>
-                      </td>
-                      <td class="py-3 px-4 text-right mono">45.0000</td>
-                      <td class="py-3 px-4 text-right mono">$156.78</td>
-                      <td class="py-3 px-4 text-right mono text-emerald-400">+$167.80</td>
-                      <td class="py-3 px-4 text-right text-sm text-gray-400">3h ago</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="p-3 rounded border">
+                  <p class="text-xs">Avg Trade Duration</p>
+                  <p class="text-lg font-semibold tracking-tight">6h 12m</p>
               </div>
-              <div class="card-footer">
-                <button class="btn-secondary w-full">View All Trades</button>
               </div>
             </div>
           </div>
+        </section>
 
-          <!-- Achievements -->
+        <!-- ================= HISTORICAL BREAKDOWN ================= -->
+        <section id="historical-breakdown" class="space-y-4">
           <div>
-            <h2 class="text-xl font-bold mb-4">Achievements</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              
-              <div class="card">
-                <div class="card-body">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-400/40 to-yellow-300/20 flex items-center justify-center">
-                      <i data-lucide="trophy" class="w-6 h-6 text-yellow-300"></i>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight">Historical Breakdown</h2>
+            <p class="text-sm">Calendar returns, asset profitability, and trade history.</p>
+          </div>
+
+          <!-- Tabs -->
+          <div class="flex items-center gap-6 border-b">
+            <button id="tabbtn-calendar" class="py-2 text-sm -mb-px border-b-2">Trading Calendar</button>
+            <button id="tabbtn-assets"   class="py-2 text-sm">Asset Profitability</button>
+            <button id="tabbtn-trades"   class="py-2 text-sm">Completed Trades</button>
+            <button id="tabbtn-fills"    class="py-2 text-sm">Fills History</button>
+            <button id="tabbtn-funding"  class="py-2 text-sm">Funding History</button>
+          </div>
+
+          <!-- TAB: Calendar -->
+          <div id="tab-calendar" class="space-y-4">
+            <!-- Calendar controls -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button id="prevMonth" class="h-9 w-9 rounded border">&lt;</button>
+                <div id="monthLabel" class="px-3 h-9 rounded border grid place-items-center">August 2025</div>
+                <button id="nextMonth" class="h-9 w-9 rounded border">&gt;</button>
                     </div>
-                    <div>
-                      <h3 class="font-semibold">First Profit</h3>
-                      <p class="text-sm text-gray-400">Made your first profitable trade</p>
+              <div class="flex items-center gap-3 text-xs">
+                <span>Legend</span>
+                <span class="inline-flex items-center gap-1">● Profit</span>
+                <span class="inline-flex items-center gap-1">● Loss</span>
                     </div>
                   </div>
-                  <div class="text-xs text-gray-400">Earned 2 months ago</div>
-                </div>
-              </div>
 
-              <div class="card">
-                <div class="card-body">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-400/40 to-emerald-300/20 flex items-center justify-center">
-                      <i data-lucide="target" class="w-6 h-6 text-emerald-300"></i>
-                    </div>
-                    <div>
-                      <h3 class="font-semibold">Precision Trader</h3>
-                      <p class="text-sm text-gray-400">Achieved 80%+ win rate</p>
-                    </div>
-                  </div>
-                  <div class="text-xs text-gray-400">Earned 1 week ago</div>
+            <!-- Month summary -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <div class="p-3 rounded border">
+                <p class="text-xs">P&amp;L (Month)</p>
+                <p id="calPnl" class="text-lg font-semibold tracking-tight">-$12,632.20</p>
                 </div>
+              <div class="p-3 rounded border">
+                <p class="text-xs">Volume</p>
+                <p id="calVol" class="text-lg font-semibold tracking-tight">$613,606.91</p>
               </div>
-
-              <div class="card">
-                <div class="card-body">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-400/40 to-blue-300/20 flex items-center justify-center">
-                      <i data-lucide="trending-up" class="w-6 h-6 text-blue-300"></i>
+              <div class="p-3 rounded border">
+                <p class="text-xs">Most Profitable</p>
+                <p id="calBest" class="text-lg font-semibold tracking-tight">ETH +$422.42</p>
                     </div>
-                    <div>
-                      <h3 class="font-semibold">Volume Milestone</h3>
-                      <p class="text-sm text-gray-400">Traded over $100K volume</p>
+              <div class="p-3 rounded border">
+                <p class="text-xs">Win Rate</p>
+                <p id="calWin" class="text-lg font-semibold tracking-tight">50%</p>
                     </div>
                   </div>
-                  <div class="text-xs text-gray-400">Earned 3 days ago</div>
-                </div>
-              </div>
 
-              <div class="card opacity-50">
-                <div class="card-body">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400/40 to-purple-300/20 flex items-center justify-center">
-                      <i data-lucide="crown" class="w-6 h-6 text-purple-300"></i>
-                    </div>
-                    <div>
-                      <h3 class="font-semibold">VIP Status</h3>
-                      <p class="text-sm text-gray-400">Reach Platinum tier</p>
+            <!-- Calendar grid -->
+            <div class="p-3 md:p-4 rounded border space-y-2">
+              <div class="grid grid-cols-7 gap-2 text-xs">
+                <div class="text-center">Sun</div>
+                <div class="text-center">Mon</div>
+                <div class="text-center">Tue</div>
+                <div class="text-center">Wed</div>
+                <div class="text-center">Thu</div>
+                <div class="text-center">Fri</div>
+                <div class="text-center">Sat</div>
+              </div>
+              <div id="calendarGrid" class="grid grid-cols-7 gap-2"></div>
                     </div>
                   </div>
-                  <div class="text-xs text-gray-400">Progress: 67%</div>
-                </div>
-              </div>
 
+          <!-- TAB: Assets -->
+          <div id="tab-assets" class="hidden space-y-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <article class="p-4 rounded border">
+                <h3 class="text-lg font-semibold tracking-tight">Allocation</h3>
+                <p class="text-xs">Holdings distribution</p>
+                <div class="mt-3 h-[260px]">
+                  <canvas id="allocChart" class="h-full w-full"></canvas>
+                </div>
+              </article>
+
+              <article class="p-4 rounded border lg:col-span-2">
+                <h3 class="text-lg font-semibold tracking-tight">Asset Profitability</h3>
+                <p class="text-xs">Top performers this month</p>
+                <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div class="p-3 rounded border">
+                    <div class="flex items-center justify-between text-xs"><span>BTC</span><span>+4.2%</span></div>
+                    <p class="mt-1 text-lg font-semibold tracking-tight">$42,106</p>
+              </div>
+                  <div class="p-3 rounded border">
+                    <div class="flex items-center justify-between text-xs"><span>ETH</span><span>+6.8%</span></div>
+                    <p class="mt-1 text-lg font-semibold tracking-tight">$21,488</p>
+                    </div>
+                  <div class="p-3 rounded border">
+                    <div class="flex items-center justify-between text-xs"><span>SOL</span><span>-1.3%</span></div>
+                    <p class="mt-1 text-lg font-semibold tracking-tight">$8,911</p>
+                    </div>
+                  <div class="p-3 rounded border">
+                    <div class="flex items-center justify-between text-xs"><span>USDT</span><span>—</span></div>
+                    <p class="mt-1 text-lg font-semibold tracking-tight">$15,102</p>
+                  </div>
+                </div>
+              </article>
             </div>
           </div>
 
-        </div>
-
-        <!-- Sidebar -->
-        <div class="space-y-6">
-          
-          <!-- Quick Stats -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="text-sm font-semibold">Quick Stats</h3>
-            </div>
-            <div class="card-body space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Account Age</span>
-                <span class="font-semibold">127 days</span>
+          <!-- TAB: Trades -->
+          <div id="tab-trades" class="hidden space-y-3">
+            <div class="rounded border overflow-hidden">
+              <div class="grid grid-cols-12 px-4 py-3 text-xs border-b">
+                <div class="col-span-3">Time</div>
+                <div class="col-span-2">Pair</div>
+                <div class="col-span-2">Side</div>
+                <div class="col-span-2">Size</div>
+                <div class="col-span-3 text-right">P&amp;L</div>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Total Trades</span>
-                <span class="font-semibold">89</span>
+              <div class="divide-y">
+                <div class="grid grid-cols-12 px-4 py-3 text-sm">
+                  <div class="col-span-3">2025-08-14 10:22</div>
+                  <div class="col-span-2">ETH/USDT</div>
+                  <div class="col-span-2">Long</div>
+                  <div class="col-span-2">$12,500</div>
+                  <div class="col-span-3 text-right">+$422.42</div>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Profitable Days</span>
-                <span class="font-semibold">78%</span>
+                <div class="grid grid-cols-12 px-4 py-3 text-sm">
+                  <div class="col-span-3">2025-08-14 15:04</div>
+                  <div class="col-span-2">BTC/USDT</div>
+                  <div class="col-span-2">Short</div>
+                  <div class="col-span-2">$35,000</div>
+                  <div class="col-span-3 text-right">-$356.22</div>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Max Drawdown</span>
-                <span class="font-semibold text-red-400">-8.4%</span>
+                <div class="grid grid-cols-12 px-4 py-3 text-sm">
+                  <div class="col-span-3">2025-08-12 08:40</div>
+                  <div class="col-span-2">SOL/USDT</div>
+                  <div class="col-span-2">Long</div>
+                  <div class="col-span-2">$4,800</div>
+                  <div class="col-span-3 text-right">+$98.60</div>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Best Trade</span>
-                <span class="font-semibold text-emerald-400">+$1,234</span>
               </div>
             </div>
           </div>
 
-          <!-- Active Strategies -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="text-sm font-semibold">Active Strategies</h3>
-            </div>
-            <div class="card-body space-y-3">
-              
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400/40 to-emerald-300/20 flex items-center justify-center">
-                  <i data-lucide="grid" class="w-4 h-4 text-emerald-300"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-sm font-semibold">Grid Bot #1</div>
-                  <div class="text-xs text-gray-400">BTC/USDT • +12.4%</div>
-                </div>
-                <div class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">Active</div>
+          <!-- TAB: Fills -->
+          <div id="tab-fills" class="hidden space-y-3">
+            <div class="rounded border overflow-hidden">
+              <div class="grid grid-cols-12 px-4 py-3 text-xs border-b">
+                <div class="col-span-3">Time</div>
+                <div class="col-span-3">Pair</div>
+                <div class="col-span-3">Price</div>
+                <div class="col-span-3 text-right">Fee</div>
               </div>
-
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-400/40 to-purple-300/20 flex items-center justify-center">
-                  <i data-lucide="repeat" class="w-4 h-4 text-purple-300"></i>
+              <div class="divide-y text-sm">
+                <div class="grid grid-cols-12 px-4 py-3">
+                  <div class="col-span-3">2025-08-14 10:22:19</div>
+                  <div class="col-span-3">ETH/USDT</div>
+                  <div class="col-span-3">$2,498.12</div>
+                  <div class="col-span-3 text-right">$-1.12</div>
                 </div>
-                <div class="flex-1">
-                  <div class="text-sm font-semibold">DCA Bot #1</div>
-                  <div class="text-xs text-gray-400">ETH/USDT • +8.7%</div>
+                <div class="grid grid-cols-12 px-4 py-3">
+                  <div class="col-span-3">2025-08-14 15:04:02</div>
+                  <div class="col-span-3">BTC/USDT</div>
+                  <div class="col-span-3">$61,202.30</div>
+                  <div class="col-span-3 text-right">$-2.44</div>
                 </div>
-                <div class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">Active</div>
               </div>
-
-            </div>
-            <div class="card-footer">
-              <button class="btn-secondary w-full btn-sm">Manage Strategies</button>
             </div>
           </div>
 
-          <!-- Social -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="text-sm font-semibold">Social</h3>
-            </div>
-            <div class="card-body space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Followers</span>
-                <span class="font-semibold">1,247</span>
+          <!-- TAB: Funding -->
+          <div id="tab-funding" class="hidden space-y-3">
+            <div class="rounded border overflow-hidden">
+              <div class="grid grid-cols-12 px-4 py-3 text-xs border-b">
+                <div class="col-span-4">Time</div>
+                <div class="col-span-4">Market</div>
+                <div class="col-span-4 text-right">Funding</div>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Following</span>
-                <span class="font-semibold">89</span>
+              <div class="divide-y text-sm">
+                <div class="grid grid-cols-12 px-4 py-3">
+                  <div class="col-span-4">2025-08-14 04:00</div>
+                  <div class="col-span-4">BTC-PERP</div>
+                  <div class="col-span-4 text-right">+$6.20</div>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Posts</span>
-                <span class="font-semibold">156</span>
+                <div class="grid grid-cols-12 px-4 py-3">
+                  <div class="col-span-4">2025-08-13 20:00</div>
+                  <div class="col-span-4">ETH-PERP</div>
+                  <div class="col-span-4 text-right">-$3.42</div>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-400">Likes Received</span>
-                <span class="font-semibold">2,847</span>
               </div>
-            </div>
-            <div class="card-footer">
-              <button class="btn-secondary w-full btn-sm">View Social Profile</button>
             </div>
           </div>
-
-          <!-- Settings -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="text-sm font-semibold">Account Settings</h3>
+        </section>
+        <!-- ================= SECONDARY CHARTS ================= -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <article class="p-4 rounded border">
+            <h3 class="text-lg font-semibold tracking-tight">Drawdown (30D)</h3>
+            <p class="text-xs">Max vs current</p>
+            <div class="mt-3 h-[220px]">
+              <canvas id="ddChart" class="h-full w-full"></canvas>
             </div>
-            <div class="card-body space-y-2">
-              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
-                <i data-lucide="user" class="w-4 h-4"></i>
-                Personal Information
-              </button>
-              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
-                <i data-lucide="shield" class="w-4 h-4"></i>
-                Security Settings
-              </button>
-              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
-                <i data-lucide="bell" class="w-4 h-4"></i>
-                Notifications
-              </button>
-              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
-                <i data-lucide="credit-card" class="w-4 h-4"></i>
-                Payment Methods
-              </button>
-              <button class="w-full text-left p-2 rounded-md hover:bg-white/5 text-sm flex items-center gap-2">
-                <i data-lucide="download" class="w-4 h-4"></i>
-                Export Data
-              </button>
+          </article>
+
+          <article class="p-4 rounded border">
+            <h3 class="text-lg font-semibold tracking-tight">Win/Loss by Weekday</h3>
+            <p class="text-xs">Trade outcomes</p>
+            <div class="mt-3 h-[220px]">
+              <canvas id="wlChart" class="h-full w-full"></canvas>
             </div>
-          </div>
+          </article>
 
+          <article class="p-4 rounded border">
+            <h3 class="text-lg font-semibold tracking-tight">Fees (30D)</h3>
+            <p class="text-xs">Impact on net returns</p>
+            <div class="mt-3 h-[220px]">
+              <canvas id="feeChart" class="h-full w-full"></canvas>
         </div>
+          </article>
+        </section>
+      </section>
 
-      </div>
-    </main>
-  </div>
-
-  <!-- Edit Profile Modal -->
-  <div id="editProfileModal" class="fixed inset-0 hidden items-center justify-center z-[80]">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="hideModal('editProfileModal')"></div>
-    <div class="relative w-full max-w-md rounded-lg glass-strong shadow-elevated p-6 m-4">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-bold">Edit Profile</h2>
-        <button class="btn-secondary btn-sm w-8 h-8 p-0" onclick="hideModal('editProfileModal')">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-      
-      <form class="space-y-4">
-        <div>
-          <label class="form-label">Display Name</label>
-          <input type="text" class="form-input" value="John Trader">
-        </div>
-        <div>
-          <label class="form-label">Bio</label>
-          <textarea class="form-input h-20 resize-none" placeholder="Tell us about yourself...">Professional Trader</textarea>
-        </div>
-        <div>
-          <label class="form-label">Location</label>
-          <input type="text" class="form-input" placeholder="City, Country">
-        </div>
-        <div>
-          <label class="form-label">Website</label>
-          <input type="url" class="form-input" placeholder="https://example.com">
-        </div>
-        <div class="flex gap-2 pt-2">
-          <button type="button" class="btn-secondary flex-1" onclick="hideModal('editProfileModal')">Cancel</button>
-          <button type="submit" class="btn-primary flex-1">Save Changes</button>
-        </div>
-      </form>
+      <!-- TOAST -->
+      <div id="toast" class="fixed bottom-4 right-4 hidden items-center gap-3 px-4 h-12 rounded border">
+        <span class="text-sm">Updated time range</span>
     </div>
   </div>
 
   <script src="assets/js/components.js"></script>
   <script>
-    // Initialize icons
+    // Initialize icons and charts
     document.addEventListener('DOMContentLoaded', () => {
       if (window.lucide && lucide.createIcons) {
         lucide.createIcons();
       }
+      initCharts();
+      initTabs();
+      initCalendar();
     });
 
-    function hideModal(modalId) {
-      document.getElementById(modalId).classList.add('hidden');
-      document.getElementById(modalId).classList.remove('flex');
+    // Initialize all charts
+    function initCharts() {
+      // P&L vs Benchmark Chart
+      const pnlCtx = document.getElementById('pnlChart').getContext('2d');
+      new Chart(pnlCtx, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: 30}, (_, i) => i + 1),
+          datasets: [{
+            label: 'P&L',
+            data: Array.from({length: 30}, () => Math.random() * 100 - 50),
+            borderColor: '#10B981',
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // Allocation Chart
+      const allocCtx = document.getElementById('allocChart').getContext('2d');
+      new Chart(allocCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['BTC', 'ETH', 'SOL', 'USDT'],
+          datasets: [{
+            data: [42, 21, 8, 15],
+            backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#6B7280']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+
+      // Drawdown Chart
+      const ddCtx = document.getElementById('ddChart').getContext('2d');
+      new Chart(ddCtx, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: 30}, (_, i) => i + 1),
+          datasets: [{
+            label: 'Drawdown',
+            data: Array.from({length: 30}, () => Math.random() * -10),
+            borderColor: '#EF4444',
+            fill: true,
+            backgroundColor: 'rgba(239, 68, 68, 0.1)'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // Win/Loss Chart
+      const wlCtx = document.getElementById('wlChart').getContext('2d');
+      new Chart(wlCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          datasets: [{
+            label: 'Win Rate',
+            data: [65, 45, 73, 58, 62],
+            backgroundColor: '#10B981'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // Fees Chart
+      const feeCtx = document.getElementById('feeChart').getContext('2d');
+      new Chart(feeCtx, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: 30}, (_, i) => i + 1),
+          datasets: [{
+            label: 'Fees',
+            data: Array.from({length: 30}, () => Math.random() * 20),
+            borderColor: '#8B5CF6'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
     }
 
-    // Edit profile functionality
-    document.addEventListener('click', (e) => {
-      if (e.target.textContent === 'Edit Profile' || e.target.closest('button')?.textContent.includes('Edit Profile')) {
-        document.getElementById('editProfileModal').classList.remove('hidden');
-        document.getElementById('editProfileModal').classList.add('flex');
-      }
-      
-      if (e.target.textContent === 'Share' || e.target.closest('button')?.textContent.includes('Share')) {
-        nimbus.showToast('Profile link copied to clipboard!', 'success', 2000);
-      }
-      
-      if (e.target.textContent === 'View All Trades') {
-        nimbus.showToast('Opening trade history...', 'info', 2000);
-      }
-      
-      if (e.target.textContent === 'Manage Strategies') {
-        nimbus.showToast('Redirecting to strategies...', 'info', 2000);
-      }
-      
-      if (e.target.textContent === 'View Social Profile') {
-        nimbus.showToast('Opening social profile...', 'info', 2000);
-      }
-    });
+    // Initialize tab switching
+    function initTabs() {
+      const tabs = ['calendar', 'assets', 'trades', 'fills', 'funding'];
+      tabs.forEach(tab => {
+        document.getElementById(`tabbtn-${tab}`).addEventListener('click', () => {
+          // Hide all tabs
+          tabs.forEach(t => {
+            document.getElementById(`tab-${t}`).classList.add('hidden');
+            document.getElementById(`tabbtn-${t}`).classList.remove('border-accent');
+          });
+          // Show selected tab
+          document.getElementById(`tab-${tab}`).classList.remove('hidden');
+          document.getElementById(`tabbtn-${tab}`).classList.add('border-accent');
+        });
+      });
+    }
 
-    // Form submission
-    document.querySelector('form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      nimbus.showToast('Profile updated successfully!', 'success', 2000);
-      hideModal('editProfileModal');
-    });
-
-    // Settings menu
-    document.addEventListener('click', (e) => {
-      const settingButton = e.target.closest('button');
-      if (settingButton && settingButton.querySelector('[data-lucide]')) {
-        const settingName = settingButton.textContent.trim();
-        if (['Personal Information', 'Security Settings', 'Notifications', 'Payment Methods', 'Export Data'].includes(settingName)) {
-          nimbus.showToast(`Opening ${settingName}...`, 'info', 2000);
+    // Initialize calendar
+    function initCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      const days = Array.from({length: 35}, (_, i) => {
+        const day = document.createElement('div');
+        day.className = 'calendar-day';
+        if (i < 3 || i > 30) {
+          day.classList.add('empty');
+        } else {
+          day.innerHTML = `
+            <div class="text-right mb-2">${i - 2}</div>
+            <div class="text-xs text-right ${Math.random() > 0.5 ? 'text-emerald-400' : 'text-red-400'}">
+              ${(Math.random() * 1000 - 500).toFixed(2)}
+            </div>
+          `;
+          day.classList.add(Math.random() > 0.5 ? 'profit' : 'loss');
         }
+        return day;
+      });
+      grid.append(...days);
+    }
+
+    // Show toast message
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.querySelector('span').textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      setTimeout(() => {
+        toast.classList.remove('flex');
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    // Form controls
+    document.getElementById('ta-controls').addEventListener('change', (e) => {
+      if (e.target.matches('input[type="radio"]')) {
+        showToast('Updating time range...');
       }
+    });
+
+    document.getElementById('feesToggle').addEventListener('change', (e) => {
+      showToast(e.target.checked ? 'Including fees in P&L' : 'Excluding fees from P&L');
     });
   </script>
 </body>

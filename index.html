@@ -121,6 +121,7 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      line-clamp: 2;
       overflow: hidden;
     }
 
@@ -136,6 +137,129 @@
         transform: rotate(360deg);
       }
     }
+
+    /* Layout Classes - No more inline styles */
+    .panel-height {
+      height: calc(100vh - 60px);
+    }
+    
+    .border-subtle {
+      border-color: var(--color-border-subtle);
+    }
+    
+    .text-primary {
+      color: var(--color-text-primary);
+    }
+    
+    .border-row {
+      border-color: var(--border-row);
+    }
+    
+    .tab-switch-width {
+      width: 200px;
+    }
+    
+    .tab-slider-left {
+      left: 0.25rem;
+    }
+    
+    .order-slider-left {
+      left: 0%;
+    }
+    
+    .side-slider-bg {
+      background: rgba(52, 211, 153, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(110,231,183,0.30);
+    }
+    
+    .grid-slider-left {
+      left: 0.25rem;
+    }
+    
+    .portfolio-layout {
+      display: flex;
+      flex-direction: column;
+      height: 320px; /* h-80 equivalent */
+    }
+
+    /* Dynamic Position Classes */
+    .tab-left { left: 0.25rem !important; }
+    .tab-right { left: calc(50% + 0.25rem) !important; }
+    
+    .order-market { left: 0% !important; }
+    .order-limit { left: 33.333% !important; }
+    .order-pro { left: 66.666% !important; }
+    
+    .side-long { 
+      left: 0.25rem !important;
+      background: rgba(52,211,153,0.18) !important;
+      box-shadow: inset 0 0 0 1px rgba(110,231,183,0.30) !important;
+    }
+    .side-short { 
+      left: calc(50% + 0.25rem) !important;
+      background: rgba(244,63,94,0.18) !important;
+      box-shadow: inset 0 0 0 1px rgba(248,113,113,0.30) !important;
+    }
+
+    /* Dynamic width utility */
+    .dynamic-width {
+      width: var(--width, 0%);
+    }
+
+    /* 2-Column Layout */
+    .main-layout {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    
+    .left-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+    
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      width: 420px;
+      min-width: 380px;
+      max-width: 460px;
+      overflow: hidden;
+    }
+    
+    .chart-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    
+    .portfolio-section {
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    
+    .trading-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    
+    .token-list {
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
   </style>
 </head>
 
@@ -147,15 +271,16 @@
     
     <!-- Main Workspace -->
     <main class="flex-1 flex flex-col min-h-0">
-      <!-- Chart and Trading Panel Section -->
-      <section class="flex-1 flex flex-col overflow-hidden">
-        <!-- Top Row: Chart + Right Panels -->
-        <div class="flex-1 flex overflow-hidden">
-          <!-- Core Chart Area -->
-          <div id="coreArea" class="flex-1 min-w-0 flex flex-col">
+      <!-- 2-Column Layout -->
+      <div class="main-layout">
+        <!-- Left Column: Chart + Portfolio -->
+        <div class="left-column">
+          <!-- Chart Section -->
+          <div class="chart-section">
+            <div id="coreArea" class="flex-1 min-w-0 flex flex-col">
           <!-- Chart header controls -->
           <!-- KOL News Header -->
-          <div class="glass-header border-b overflow-hidden" style="border-color: var(--color-border-subtle);">
+          <div class="glass-header border-b overflow-hidden border-subtle">
             <div class="flex items-center h-12 px-3 md:px-4">
               <!-- KOL Articles Section -->
               <div class="flex items-center gap-4 mr-6">
@@ -221,25 +346,34 @@
               </div>
             </div>
 
-          <!-- TradingView Chart Container -->
-          <div class="relative flex-1 overflow-hidden">
-            <div id="tradingview_widget" class="w-full h-full"></div>
-              </div>
-              </div>
+            <!-- TradingView Chart Container -->
+            <div class="relative flex-1 overflow-hidden">
+              <div id="tradingview_widget" class="w-full h-full"></div>
+            </div>
+            </div>
+          </div>
 
-        <!-- Enhanced Trading & Strategies Panel -->
-        <aside id="tradesPanel" class="relative w-[420px] min-w-[380px] max-w-[460px] border-l glass-strong hidden-scroll md:flex md:flex-col" style="border-color: var(--color-border-subtle); height: calc(100vh - 60px);">
+          <!-- Portfolio Section in Left Column -->
+          <div class="portfolio-section glass border-t border-subtle">
+            <!-- Portfolio content will be moved here via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Right Column: Trading Panel + Token List -->
+        <div class="right-column">
+          <!-- Trading Panel -->
+          <aside id="tradesPanel" class="trading-panel relative border-l glass-strong hidden-scroll md:flex md:flex-col border-subtle">
           <!-- Resizer handle -->
           <div id="tpResizer" class="absolute -left-1 top-0 bottom-0 w-2 cursor-col-resize hover:bg-emerald-400/20 transition-colors"></div>
 
           <!-- Header with Tabs and Leverage -->
-          <header class="relative px-3 py-3 border-b" style="border-color: var(--color-border-subtle);">
+          <header class="relative px-3 py-3 border-b border-subtle">
             <div class="flex items-center gap-3">
               <!-- Mode Switch -->
-              <div class="relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5 p-1" style="width: 200px;">
+              <div class="relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5 p-1 tab-switch-width">
                 <button id="tabTrade" class="group relative z-10 text-center py-1.5 text-[12px] font-semibold tracking-tight">Trade</button>
                 <button id="tabStrategies" class="group relative z-10 text-center py-1.5 text-[12px] font-semibold tracking-tight text-neutral-400">Strategies</button>
-                <div id="tabSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 backdrop-blur-md shadow-[inset_0_0_0_1px_rgba(255,255,255,0.10)] transition-all duration-200 ease-out" style="left: 0.25rem;"></div>
+                <div id="tabSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 backdrop-blur-md shadow-[inset_0_0_0_1px_rgba(255,255,255,0.10)] transition-all duration-200 ease-out tab-slider-left"></div>
               </div>
               
               <!-- Spacer to push leverage button to the right -->
@@ -287,7 +421,7 @@
                           <button data-pro="TWAP" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">TWAP</button>
                 </div>
               </div>
-                      <div id="orderTypeSlider" class="absolute inset-y-0 left-0 w-1/3 rounded-md bg-white/10 transition-all duration-200" style="left: 0%;"></div>
+                      <div id="orderTypeSlider" class="absolute inset-y-0 left-0 w-1/3 rounded-md bg-white/10 transition-all duration-200 order-slider-left"></div>
             </div>
           </div>
 
@@ -296,7 +430,7 @@
                     <div class="grid grid-cols-2 relative">
                       <button id="longBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-emerald-300">Long</button>
                       <button id="shortBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-rose-300 opacity-60">Short</button>
-                      <div id="sideSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-8px)] rounded-md transition-all duration-200 ease-out" style="left: 0.25rem; background: rgba(52, 211, 153, 0.18); box-shadow: inset 0 0 0 1px rgba(110,231,183,0.30);"></div>
+                      <div id="sideSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-8px)] rounded-md transition-all duration-200 ease-out tab-slider-left side-slider-bg"></div>
                 </div>
               </div>
             </div>
@@ -369,7 +503,7 @@
                   <!-- Reduce-only toggle -->
                   <button id="reduceToggle" class="group inline-flex items-center gap-2 rounded-md px-2 py-1.5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition">
                     <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
-                      <span id="reduceKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform" style="transform: translate(0px, -50%);"></span>
+                      <span id="reduceKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
                     </span>
                     <span class="text-[12px] font-medium">Reduce Only</span>
                   </button>
@@ -635,7 +769,7 @@
                     <button id="gridLong" class="relative z-10 py-1.5 text-[12px] font-medium text-neutral-200">Long</button>
                     <button id="gridNeutral" class="relative z-10 py-1.5 text-[12px] font-medium text-neutral-400">Neutral</button>
                     <button id="gridShort" class="relative z-10 py-1.5 text-[12px] font-medium text-neutral-400">Short</button>
-                    <div id="gridSideSlider" class="absolute top-1 bottom-1 left-1 w-[calc(33.333%-8px)] rounded-md bg-white/10 transition-all duration-200" style="left: 0.25rem;"></div>
+                    <div id="gridSideSlider" class="absolute top-1 bottom-1 left-1 w-[calc(33.333%-8px)] rounded-md bg-white/10 transition-all duration-200 grid-slider-left"></div>
     </div>
   </div>
 
@@ -698,7 +832,7 @@
                       <span class="text-[12px] font-medium">Deposit</span>
                     </button>
             </div>
-                  <div class="mt-1 border-t pt-2" style="border-color: var(--border-row);">
+                  <div class="mt-1 border-t pt-2 border-row">
                     <div class="flex items-center justify-between">
                       <div class="text-[12px] font-medium text-neutral-200">Reserved Margin</div>
                       <label class="inline-flex items-center gap-2">
@@ -777,12 +911,12 @@
             </div>
 
           </div> <!-- /content -->
-        </aside>
+          </aside>
 
-                 <!-- Token List Panel -->
-        <aside class="w-full md:w-[360px] lg:w-[380px] shrink-0 flex flex-col glass" style="height: calc(100vh - 60px);">
+          <!-- Token List Panel -->
+          <aside class="token-list border-l glass border-subtle">
           <!-- Header -->
-          <div class="shrink-0 px-3 py-3 border-b" style="border-color: var(--color-border-subtle);">
+          <div class="shrink-0 px-3 py-3 border-b border-subtle">
             <div class="flex items-center justify-between mb-2">
               <div class="text-[13px] font-semibold">Market</div>
               <button id="refreshBtn" class="h-7 w-7 rounded-md btn-secondary flex items-center justify-center" title="Refresh tokens">
@@ -814,7 +948,7 @@
           </div>
 
           <!-- Column Headers -->
-          <div id="sortBar" class="grid grid-cols-12 gap-1 px-3 pb-1 text-[10px] text-gray-500 font-medium border-b" style="border-color: var(--color-border-subtle);">
+          <div id="sortBar" class="grid grid-cols-12 gap-1 px-3 pb-1 text-[10px] text-gray-500 font-medium border-b border-subtle">
             <div class="col-span-6 flex items-center gap-2">
               <button data-sort="rank" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
                 <span>Rank</span>
@@ -861,15 +995,16 @@
             <!-- Sentinel for infinite load -->
             <div id="sentinel" class="h-4"></div>
           </div>
-        </aside>
+          </aside>
+        </div>
 
         <!-- Auxiliary Panels Column -->
-        <div id="auxColumn" class="hidden md:flex flex-row overflow-x-auto border-l glass" style="border-color: var(--color-border-subtle); height: calc(100vh - 60px);">
+        <div id="auxColumn" class="hidden md:flex flex-row overflow-x-auto border-l glass border-subtle panel-height">
           <!-- Panels will be injected here -->
         </div>
 
         <!-- Utility Icon Rail -->
-        <div class="w-14 border-l glass flex flex-col items-center py-3 gap-3" style="border-color: var(--color-border-subtle); height: calc(100vh - 60px);">
+        <div class="w-14 border-l glass flex flex-col items-center py-3 gap-3 border-subtle panel-height">
           <button class="h-12 w-12 rounded-md btn-secondary flex items-center justify-center" title="Order Book" onclick="toggleAux('book')">
             <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -895,17 +1030,18 @@
             </svg>
           </button>
         </div>
-        </div>
+      </div>
+    </main>
+  </div>
 
-            <!-- Portfolio Panel (aligned with chart width) -->
-      <section class="h-80 flex flex-col" style="margin-right: calc(420px + 380px + 56px); /* Trading panel + Token list + Utility rail widths */">
-        <!-- Portfolio Container -->
-        <div class="flex-1 flex flex-col min-h-0 glass" style="border-top: 1px solid var(--color-border-subtle);">
+    <!-- Portfolio Section Template (to be moved via JavaScript) -->
+    <div id="portfolioSection" style="display: none;">
+        <div class="portfolio-section glass border-t border-subtle">
 
           <!-- Header (48px) -->
-          <div class="shrink-0 z-40 glass-header" style="border-bottom: 1px solid var(--color-border-subtle);">
+          <div class="shrink-0 z-40 glass-header border-b border-subtle">
             <div class="h-12 flex items-center justify-between px-4">
-              <div class="text-[13px] font-semibold" style="color: var(--color-text-primary);">Portfolio</div>
+              <div class="text-[13px] font-semibold text-primary">Portfolio</div>
               <div class="flex items-center gap-3">
                 <!-- Filter -->
                 <div class="relative">
@@ -945,7 +1081,7 @@
   </div>
 
           <!-- Tabs (36px) -->
-          <div class="shrink-0 z-30 glass-header" style="border-bottom: 1px solid var(--color-border-subtle);">
+          <div class="shrink-0 z-30 glass-header border-b border-subtle">
             <div class="h-9 flex overflow-x-auto scrollbar-thin px-4">
               <button data-tab="balances" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Balances</button>
               <button data-tab="positions" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Positions</button>
@@ -1725,26 +1861,8 @@
 
           </div>
         </div>
-          </section>
-
-          <!-- Right Panels Extension (matches portfolio height) -->
-          <div class="flex">
-            <!-- Trading Panel Extension -->
-            <div class="w-[420px] min-w-[380px] max-w-[460px] border-l glass-strong h-80" style="border-color: var(--color-border-subtle);"></div>
-            
-            <!-- Token List Extension -->
-            <div class="w-full md:w-[360px] lg:w-[380px] shrink-0 border-l glass h-80" style="border-color: var(--color-border-subtle);"></div>
-            
-            <!-- Auxiliary Panels Extension -->
-            <div id="auxColumnExtension" class="hidden md:flex flex-row overflow-x-auto border-l glass h-80" style="border-color: var(--color-border-subtle);"></div>
-            
-            <!-- Utility Rail Extension -->
-            <div class="w-14 border-l glass h-80" style="border-color: var(--color-border-subtle);"></div>
-          </div>
         </div>
-      </section>
-    </main>
-  </div>
+    </div>
 
   <!-- Enhanced Modals -->
 
@@ -1752,7 +1870,7 @@
   <div id="commandPalette" class="fixed inset-0 hidden items-start justify-center pt-24 z-[70]">
     <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleCommandPalette(false)"></div>
     <div class="relative w-full max-w-xl rounded-lg glass-strong shadow-elevated p-2">
-      <div class="h-10 px-2 rounded-md border flex items-center gap-2" style="border-color: var(--color-border-subtle);">
+      <div class="h-10 px-2 rounded-md border flex items-center gap-2 border-subtle">
         <i data-lucide="search" class="w-4 h-4"></i>
         <input id="commandInput" placeholder="Search pairs, actions..." class="flex-1 bg-transparent outline-none text-[13px]" />
         <span class="text-[11px] text-gray-400">ESC</span>
@@ -1821,7 +1939,7 @@
 
   <!-- Mobile Trade Sheet -->
   <div id="mobileTradeSheet" class="md:hidden fixed left-0 right-0 bottom-0 translate-y-full transition-transform duration-200 z-[85]">
-    <div class="rounded-t-2xl glass-strong border-t p-3" style="border-color: var(--color-border-subtle);">
+    <div class="rounded-t-2xl glass-strong border-t p-3 border-subtle">
       <div class="flex items-center justify-between mb-3">
         <div class="text-[14px] font-semibold">Quick Trade</div>
         <button class="h-8 w-8 rounded-md btn-secondary flex items-center justify-center" onclick="toggleMobileTradeSheet(false)">
@@ -1834,7 +1952,26 @@
 
   <script>
     // Initialize icons and TradingView
+    // Move portfolio to left column
+    function movePortfolioToLeftColumn() {
+      const portfolioTemplate = document.getElementById('portfolioSection');
+      const portfolioTarget = document.querySelector('.left-column .portfolio-section');
+      
+      if (portfolioTemplate && portfolioTarget) {
+        // Move the content from template to target
+        const portfolioContent = portfolioTemplate.querySelector('.portfolio-section');
+        if (portfolioContent) {
+          portfolioTarget.innerHTML = portfolioContent.innerHTML;
+        }
+        // Remove the template
+        portfolioTemplate.remove();
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      // Move portfolio to correct position first
+      movePortfolioToLeftColumn();
+      
       if (window.lucide && lucide.createIcons) {
         lucide.createIcons();
       }
@@ -1979,7 +2116,7 @@
         tradeMode.classList.remove('hidden');
         strategiesMode.classList.add('hidden');
         gridSetup.classList.add('hidden');
-        tabSlider.style.left = '0.25rem';
+        tabSlider.className = tabSlider.className.replace(/tab-(left|right)/g, '') + ' tab-left';
         $('#tabTrade').classList.remove('text-neutral-400');
         $('#tabStrategies').classList.add('text-neutral-400');
       });
@@ -1989,7 +2126,7 @@
         strategiesMode.classList.remove('hidden');
         tradeMode.classList.add('hidden');
         gridSetup.classList.add('hidden');
-        tabSlider.style.left = 'calc(50% + 0.25rem)';
+        tabSlider.className = tabSlider.className.replace(/tab-(left|right)/g, '') + ' tab-right';
         $('#tabStrategies').classList.remove('text-neutral-400');
         $('#tabTrade').classList.add('text-neutral-400');
       });
@@ -2020,7 +2157,7 @@
       $('#orderMarket').addEventListener('click', () => {
         appState.orderType = 'Market'; 
         appState.proType = null;
-        orderTypeSlider.style.left = '0%';
+        orderTypeSlider.className = orderTypeSlider.className.replace(/order-(market|limit|pro)/g, '') + ' order-market';
         $('#orderMarket').classList.remove('text-neutral-400');
         $('#orderLimit').classList.add('text-neutral-400');
         $('#orderPro').classList.add('text-neutral-400');
@@ -2031,7 +2168,7 @@
       $('#orderLimit').addEventListener('click', () => {
         appState.orderType = 'Limit'; 
         appState.proType = null;
-        orderTypeSlider.style.left = '33.333%';
+        orderTypeSlider.className = orderTypeSlider.className.replace(/order-(market|limit|pro)/g, '') + ' order-limit';
         $('#orderMarket').classList.add('text-neutral-400');
         $('#orderLimit').classList.remove('text-neutral-400');
         $('#orderPro').classList.add('text-neutral-400');
@@ -2043,7 +2180,7 @@
       const proMenu = $('#proMenu');
       $('#orderPro').addEventListener('click', (e) => {
         e.stopPropagation();
-        orderTypeSlider.style.left = '66.666%';
+        orderTypeSlider.className = orderTypeSlider.className.replace(/order-(market|limit|pro)/g, '') + ' order-pro';
         $('#orderMarket').classList.add('text-neutral-400');
         $('#orderLimit').classList.add('text-neutral-400');
         $('#orderPro').classList.remove('text-neutral-400');
@@ -2085,18 +2222,14 @@
       function setSide(side) {
         appState.side = side;
         if (side === 'long') {
-          sideSlider.style.left = '0.25rem';
-          sideSlider.style.background = 'rgba(52,211,153,0.18)';
-          sideSlider.style.boxShadow = 'inset 0 0 0 1px rgba(110,231,183,0.30)';
+          sideSlider.className = sideSlider.className.replace(/side-(long|short)/g, '') + ' side-long';
           longBtn.classList.remove('opacity-60'); 
           longBtn.classList.add('text-emerald-300');
           shortBtn.classList.add('opacity-60');
           placeOrder.querySelector('span').textContent = 'Place Long';
           placeOrder.style.background = 'var(--cta-color)';
       } else {
-          sideSlider.style.left = 'calc(50% + 0.25rem)';
-          sideSlider.style.background = 'rgba(244,63,94,0.18)';
-          sideSlider.style.boxShadow = 'inset 0 0 0 1px rgba(248,113,113,0.30)';
+          sideSlider.className = sideSlider.className.replace(/side-(long|short)/g, '') + ' side-short';
           shortBtn.classList.remove('opacity-60'); 
           shortBtn.classList.add('text-rose-300');
           longBtn.classList.add('opacity-60');
@@ -2439,7 +2572,7 @@
         };
 
         panel.innerHTML = `
-          <div class="shrink-0 px-3 py-3 border-b" style="border-color: var(--color-border-subtle);">
+          <div class="shrink-0 px-3 py-3 border-b border-subtle">
       <div class="flex items-center justify-between">
               <div class="text-[13px] font-semibold">${titles[type] || type}</div>
               <button class="h-7 w-7 rounded-md btn-secondary flex items-center justify-center" onclick="closeAuxPanel(this)">
@@ -2541,7 +2674,7 @@
                     <span>Sell Orders</span>
           </div>
                   <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
-                    <div id="buyRatio" class="h-full bg-green-500 transition-all duration-300 ease-in-out" style="width: 62%"></div>
+                    <div id="buyRatio" class="h-full bg-green-500 transition-all duration-300 ease-in-out w-[62%]"></div>
             </div>
                   <div class="flex items-center justify-between text-[10px] text-gray-500 mt-1">
                     <span id="buyPercent">62%</span>
@@ -2748,7 +2881,7 @@
           return `
             <div class="order-row relative grid grid-cols-3 gap-1 px-1 py-0.5 text-[10px] mono hover:bg-red-500/5 cursor-pointer" data-id="${order.id}">
               <div class="absolute inset-0 flex items-center justify-end pointer-events-none">
-                <div class="h-full bg-red-500/10 transition-all duration-300 ease-in-out" style="width: ${barWidth}%"></div>
+                <div class="h-full bg-red-500/10 transition-all duration-300 ease-in-out dynamic-width" style="--width: ${barWidth}%"></div>
           </div>
               <div class="relative text-right text-red-400 font-medium">${order.price.toFixed(2)}</div>
               <div class="relative text-right text-gray-300">${order.amount.toFixed(3)}</div>
@@ -2763,7 +2896,7 @@
           return `
             <div class="order-row relative grid grid-cols-3 gap-1 px-1 py-0.5 text-[10px] mono hover:bg-green-500/5 cursor-pointer" data-id="${order.id}">
               <div class="absolute inset-0 flex items-center justify-end pointer-events-none">
-                <div class="h-full bg-green-500/10 transition-all duration-300 ease-in-out" style="width: ${barWidth}%"></div>
+                <div class="h-full bg-green-500/10 transition-all duration-300 ease-in-out dynamic-width" style="--width: ${barWidth}%"></div>
           </div>
               <div class="relative text-right text-green-400 font-medium">${order.price.toFixed(2)}</div>
               <div class="relative text-right text-gray-300">${order.amount.toFixed(3)}</div>
@@ -2806,7 +2939,8 @@
         const sellPercentElement = document.getElementById('sellPercent');
         
         if (buyRatioElement) {
-          buyRatioElement.style.width = `${buyPercentage}%`;
+          buyRatioElement.style.setProperty('--width', `${buyPercentage}%`);
+          buyRatioElement.className = buyRatioElement.className + ' dynamic-width';
         }
         
         if (buyPercentElement) {
