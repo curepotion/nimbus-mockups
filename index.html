@@ -969,6 +969,13 @@
 
         <!-- Utility Icon Rail -->
         <div class="w-12 border-l glass flex flex-col items-center border-subtle panel-height">
+          <button class="h-10 w-full flex items-center justify-center border-b border-white/5 hover:bg-white/5 hover:border-white/10 transition-all group" title="Toggle Trading Panel" onclick="toggleTradingPanel()">
+            <svg class="w-5 h-5 text-neutral-400/70 group-hover:text-neutral-200 transition-all drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 12h18m-9-9v18"/>
+              <path d="M8 8l4-4 4 4"/>
+              <path d="M16 16l-4 4-4-4"/>
+            </svg>
+          </button>
           <button class="h-10 w-full flex items-center justify-center border-b border-white/5 hover:bg-white/5 hover:border-white/10 transition-all group" title="Order Book" onclick="toggleAux('book')">
             <svg class="w-5 h-5 text-neutral-400/70 group-hover:text-neutral-200 transition-all drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -2518,6 +2525,37 @@
         }
         
         panel.remove();
+      };
+
+      // Toggle Trading Panel (Trade + Token List)
+      window.toggleTradingPanel = function() {
+        const rightColumn = document.querySelector('.right-column');
+        if (rightColumn) {
+          const isHidden = rightColumn.style.display === 'none';
+          rightColumn.style.display = isHidden ? 'flex' : 'none';
+          
+          // Update button appearance
+          const toggleBtn = document.querySelector('[onclick="toggleTradingPanel()"]');
+          if (toggleBtn) {
+            const svg = toggleBtn.querySelector('svg');
+            if (isHidden) {
+              // Show panel - use expand icon
+              svg.innerHTML = `
+                <path d="M3 12h18m-9-9v18"/>
+                <path d="M8 8l4-4 4 4"/>
+                <path d="M16 16l-4 4-4-4"/>
+              `;
+              toggleBtn.title = "Hide Trading Panel";
+            } else {
+              // Hide panel - use collapse icon
+              svg.innerHTML = `
+                <path d="M18 6L6 18"/>
+                <path d="M6 6l12 12"/>
+              `;
+              toggleBtn.title = "Show Trading Panel";
+            }
+          }
+        }
       };
 
       function createAuxPanel(type) {
