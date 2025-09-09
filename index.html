@@ -255,8 +255,7 @@
     }
     
     .token-list {
-      height: 280px;
-      width: 240px;
+      height: 320px;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -886,14 +885,13 @@
           <!-- Token List Panel -->
           <aside class="token-list border-l glass border-subtle">
           <!-- Header -->
-          <div class="shrink-0 px-2 py-2 border-b border-subtle">
+          <div class="shrink-0 px-3 py-3 border-b border-subtle">
 
             <!-- Tabs -->
-            <div class="flex items-center">
-              <button id="tab-spot" class="px-2 py-0.5 text-[9px] font-medium text-gray-200 border-b border-gray-600">Spot</button>
-              <div class="w-px h-4 bg-gray-600 mx-1"></div>
-              <button id="tab-perp" class="px-2 py-0.5 text-[9px] font-medium text-gray-400 hover:text-gray-200">Perp</button>
-            </div>
+            <div class="flex items-center gap-1 bg-gray-800/50 rounded-md p-0.5">
+              <button id="tab-spot" class="px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200">Spot</button>
+              <button id="tab-perp" class="px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200">Perp</button>
+              </div>
 
             <!-- Search -->
             <div class="mt-2 relative">
@@ -964,25 +962,25 @@
         </div>
 
         <!-- Utility Icon Rail -->
-        <div class="w-14 border-l glass flex flex-col items-center py-3 gap-3 border-subtle panel-height">
-          <button class="h-12 w-12 rounded-md btn-secondary flex items-center justify-center" title="Order Book" onclick="toggleAux('book')">
-            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="w-10 border-l glass flex flex-col items-center py-2 gap-0 border-subtle panel-height">
+          <button class="h-8 w-8 flex items-center justify-center border-b border-white/10 hover:bg-white/5 transition-colors" title="Order Book" onclick="toggleAux('book')">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
               <rect x="7" y="7" width="3" height="9"/>
               <rect x="14" y="7" width="3" height="5"/>
               <path d="M7 12h10"/>
             </svg>
           </button>
-          <button class="h-12 w-12 rounded-md btn-secondary flex items-center justify-center" title="News" onclick="toggleAux('news')">
-            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="h-8 w-8 flex items-center justify-center border-b border-white/10 hover:bg-white/5 transition-colors" title="News" onclick="toggleAux('news')">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
               <path d="M18 14h-8"/>
               <path d="M15 18h-5"/>
               <path d="M10 6h8v4h-8z"/>
             </svg>
           </button>
-          <button class="h-12 w-12 rounded-md btn-secondary flex items-center justify-center" title="Analytics" onclick="toggleAux('analytics')">
-            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="h-8 w-8 flex items-center justify-center hover:bg-white/5 transition-colors" title="Analytics" onclick="toggleAux('analytics')">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 3v18h18"/>
               <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
               <circle cx="18.5" cy="8.5" r="2.5"/>
@@ -3994,11 +3992,11 @@
     // Tabs
     function applyTabUI(){
       if (state.marketType === 'spot') {
-        els.tabSpot.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-200 border-b border-gray-600';
-        els.tabPerp.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-400 hover:text-gray-200';
+        els.tabSpot.className = 'px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200';
+        els.tabPerp.className = 'px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200';
       } else {
-        els.tabPerp.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-200 border-b border-gray-600';
-        els.tabSpot.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-400 hover:text-gray-200';
+        els.tabPerp.className = 'px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200';
+        els.tabSpot.className = 'px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200';
       }
       if (state.active) {
         const tvSymbol = state.marketType === 'perp' ? state.active.tvPerp : state.active.tvSpot;
