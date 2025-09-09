@@ -45,23 +45,20 @@ class NimbusNavbar {
           <!-- Trading Status -->
           <div class="flex-1 flex items-center justify-center gap-6">
             <!-- Market Info -->
-            <div class="hidden md:flex items-center text-xs text-gray-300">
-              <span class="hover:underline hover:text-white cursor-pointer">Markets</span>
-              <span class="mx-2">/</span>
-              <span class="text-white">BTC-PERP</span>
-            </div>
-            
-            <!-- Trading Metrics -->
-            <div class="hidden lg:flex items-center gap-4">
-              <!-- 1) Trading Status -->
-              <div class="relative group">
-                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
-                  <span class="text-neutral-400">Slippage:</span>
-                  <span id="navbar-slippage" class="text-white mono font-medium">Est 0.00%</span>
-                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                  </svg>
-                </button>
+
+              <!-- Trading Metrics -->
+              <div class="hidden lg:flex items-center gap-6">
+                <!-- 1) Trading Status -->
+                <div class="relative group">
+                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                    <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Slippage</span>
+                    <div class="flex items-center gap-1">
+                      <span id="navbar-slippage" class="text-white mono font-medium text-[11px]">Est 0.00%</span>
+                      <svg class="w-2.5 h-2.5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                      </svg>
+                    </div>
+                  </button>
                 <div class="absolute top-full left-0 mt-1 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   <div class="p-2 space-y-1 text-xs">
                     <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="slippage-est">
@@ -86,15 +83,17 @@ class NimbusNavbar {
                 </div>
               </div>
               
-              <!-- 2) Account Equity -->
-              <div class="relative group">
-                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
-                  <span class="text-neutral-400">Equity:</span>
-                  <span id="navbar-equity" class="text-emerald-300 mono font-medium">$2,829.23</span>
-                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                  </svg>
-                </button>
+                <!-- 2) Account Equity -->
+                <div class="relative group">
+                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                    <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Equity</span>
+                    <div class="flex items-center gap-1">
+                      <span id="navbar-equity" class="text-emerald-300 mono font-medium text-[11px]">$2,829.23</span>
+                      <svg class="w-2.5 h-2.5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                      </svg>
+                    </div>
+                  </button>
                 <div class="absolute top-full left-0 mt-1 w-40 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   <div class="p-2 space-y-1 text-xs">
                     <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="total-equity">
@@ -110,15 +109,17 @@ class NimbusNavbar {
                 </div>
               </div>
               
-              <!-- 3) Balance & PnL -->
-              <div class="relative group">
-                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
-                  <span class="text-neutral-400">Balance:</span>
-                  <span id="navbar-balance" class="text-white mono font-medium">$2,829.23</span>
-                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                  </svg>
-                </button>
+                <!-- 3) Balance & PnL -->
+                <div class="relative group">
+                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                    <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Balance</span>
+                    <div class="flex items-center gap-1">
+                      <span id="navbar-balance" class="text-white mono font-medium text-[11px]">$2,829.23</span>
+                      <svg class="w-2.5 h-2.5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                      </svg>
+                    </div>
+                  </button>
                 <div class="absolute top-full left-0 mt-1 w-44 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   <div class="p-2 space-y-1 text-xs">
                     <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="available-balance">
@@ -131,15 +132,17 @@ class NimbusNavbar {
                 </div>
               </div>
               
-              <!-- 4) Risk & Leverage -->
-              <div class="relative group">
-                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
-                  <span class="text-neutral-400">Margin:</span>
-                  <span id="navbar-margin" class="text-white mono font-medium">0.00%</span>
-                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-              </svg>
-            </button>
+                <!-- 4) Risk & Leverage -->
+                <div class="relative group">
+                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                    <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Margin</span>
+                    <div class="flex items-center gap-1">
+                      <span id="navbar-margin" class="text-white mono font-medium text-[11px]">0.00%</span>
+                      <svg class="w-2.5 h-2.5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                      </svg>
+                    </div>
+                  </button>
                 <div class="absolute top-full right-0 mt-1 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   <div class="p-2 space-y-1 text-xs">
                     <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="cross-margin-ratio">
@@ -382,22 +385,28 @@ class NimbusNavbar {
     if (mainElement && valueElement) {
       mainElement.textContent = valueElement.textContent;
       
-      // Update label if needed for different metrics
-      const labelElement = mainElement.previousElementSibling;
+      // Update label if needed for different metrics - find the label in the stacked layout
+      const buttonElement = mainElement.closest('button');
+      const labelElement = buttonElement ? buttonElement.querySelector('span:first-child') : null;
+      
       if (labelElement) {
         const customLabels = {
-          'slippage-max': 'Max Slip:',
-          'fees': 'Fees:',
-          'order-value': 'Order:',
-          'margin-required': 'Margin Req:',
-          'liq-price': 'Liq Price:',
-          'spot-equity': 'SPOT:',
-          'perps-equity': 'PERPS:',
-          'unrealized-pnl': 'PnL:',
-          'cross-leverage': 'Leverage:',
-          'maintenance-margin': 'Maint:'
+          'slippage-max': 'Max Slip',
+          'fees': 'Fees',
+          'order-value': 'Order',
+          'margin-required': 'Margin Req',
+          'liq-price': 'Liq Price',
+          'spot-equity': 'SPOT',
+          'perps-equity': 'PERPS',
+          'unrealized-pnl': 'PnL',
+          'cross-leverage': 'Leverage',
+          'maintenance-margin': 'Maint'
         };
-        labelElement.textContent = customLabels[metric] || labelElement.textContent;
+        
+        const newLabel = customLabels[metric];
+        if (newLabel) {
+          labelElement.textContent = newLabel;
+        }
       }
     }
   }
