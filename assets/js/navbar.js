@@ -42,17 +42,10 @@ class NimbusNavbar {
             </nav>
           </div>
 
-          <!-- Center Content -->
-          <div class="flex-1 flex items-center justify-center gap-3">
-            <div class="hidden md:flex items-center text-xs text-gray-300">
-              <span class="hover:underline hover:text-white cursor-pointer">Markets</span>
-              <span class="mx-2">/</span>
-              <span class="text-white">BTC-PERP</span>
-            </div>
-          </div>
+  
 
           <!-- Right cluster -->
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 ml-auto">
             <div class="hidden md:flex items-center gap-2 h-9 px-2 rounded-md glass">
               <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=48&auto=format&fit=crop" class="w-5 h-5 rounded-full" alt="Avatar">
               <span class="mono text-[12px]">0x0b5C...59C8</span>
@@ -63,20 +56,7 @@ class NimbusNavbar {
               Deposit
             </button>
             
-            <button class="h-9 w-9 rounded-md btn-secondary flex items-center justify-center hover:brightness-110" title="Notifications">
-              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-              </svg>
-            </button>
-            
-            <button class="h-9 w-9 rounded-md btn-secondary flex items-center justify-center hover:brightness-110" title="Settings">
-              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m15.5-3.5L19 10l1.5-1.5M5 14l1.5-1.5L5 10L3.5 8.5"/>
-              </svg>
-            </button>
-            
+
             <!-- Mobile Trade button -->
             <button id="openMobileTrade" class="md:hidden h-9 px-3 rounded-md btn-secondary text-[13px]">Trade</button>
           </div>
