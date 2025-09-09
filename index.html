@@ -2278,6 +2278,7 @@
           $('#marginRequired').textContent = 'N/A';
           $('#liqPrice').textContent = 'N/A';
           $('#feesValue').textContent = '—';
+          updateNavbarTradingData();
           return;
         }
         
@@ -2295,6 +2296,43 @@
           ? px * (1 - (1 / lev)) * 0.99
           : px * (1 + (1 / lev)) * 1.01;
         $('#liqPrice').textContent = '$' + fmt(liqueSafe(liq));
+        
+        // Update navbar with new data
+        updateNavbarTradingData();
+      }
+      
+      // Function to update navbar trading data
+      function updateNavbarTradingData() {
+        if (window.nimbusNavbar) {
+          // Update dropdown values
+          updateNavbarDropdownValues();
+          // Sync current display values
+          window.nimbusNavbar.syncFromSidebar();
+        }
+      }
+      
+      // Update all dropdown values in navbar
+      function updateNavbarDropdownValues() {
+        const updates = [
+          { selector: '[data-metric="order-value"] .mono', source: '#orderValue' },
+          { selector: '[data-metric="margin-required"] .mono', source: '#marginRequired' },
+          { selector: '[data-metric="liq-price"] .mono', source: '#liqPrice' },
+          { selector: '[data-metric="fees"] .mono', source: '#feesValue' },
+          { selector: '[data-metric="total-equity"] .mono', source: '#perpsBalance' },
+          { selector: '[data-metric="perps-equity"] .mono', source: '#perpsBalance' },
+          { selector: '[data-metric="available-balance"] .mono', source: '#perpsBalance2' },
+          { selector: '[data-metric="cross-margin-ratio"] .mono', source: '#crossMarginRatio' },
+          { selector: '[data-metric="cross-leverage"] .mono', source: '#crossLev' },
+          { selector: '[data-metric="maintenance-margin"] .mono', source: '#maintMargin' }
+        ];
+        
+        updates.forEach(({ selector, source }) => {
+          const targetEl = document.querySelector(selector);
+          const sourceEl = document.querySelector(source);
+          if (targetEl && sourceEl) {
+            targetEl.textContent = sourceEl.textContent;
+          }
+        });
       }
       
       function liqueSafe(n){ 

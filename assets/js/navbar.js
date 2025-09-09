@@ -42,21 +42,134 @@ class NimbusNavbar {
             </nav>
           </div>
 
-  
+          <!-- Trading Status -->
+          <div class="flex-1 flex items-center justify-center gap-6">
+            <!-- Market Info -->
+            <div class="hidden md:flex items-center text-xs text-gray-300">
+              <span class="hover:underline hover:text-white cursor-pointer">Markets</span>
+              <span class="mx-2">/</span>
+              <span class="text-white">BTC-PERP</span>
+            </div>
+            
+            <!-- Trading Metrics -->
+            <div class="hidden lg:flex items-center gap-4">
+              <!-- 1) Trading Status -->
+              <div class="relative group">
+                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
+                  <span class="text-neutral-400">Slippage:</span>
+                  <span id="navbar-slippage" class="text-white mono font-medium">Est 0.00%</span>
+                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+                <div class="absolute top-full left-0 mt-1 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  <div class="p-2 space-y-1 text-xs">
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="slippage-est">
+                      <span class="text-neutral-400">Est Slippage:</span> <span class="text-white mono">0.00%</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="slippage-max">
+                      <span class="text-neutral-400">Max Slippage:</span> <span class="text-white mono">8.00%</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="fees">
+                      <span class="text-neutral-400">Fees:</span> <span class="text-white mono">—</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="order-value">
+                      <span class="text-neutral-400">Order Value:</span> <span class="text-white mono">N/A</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="margin-required">
+                      <span class="text-neutral-400">Margin Required:</span> <span class="text-white mono">N/A</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="liq-price">
+                      <span class="text-neutral-400">Liq Price:</span> <span class="text-white mono">N/A</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 2) Account Equity -->
+              <div class="relative group">
+                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
+                  <span class="text-neutral-400">Equity:</span>
+                  <span id="navbar-equity" class="text-emerald-300 mono font-medium">$2,829.23</span>
+                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+                <div class="absolute top-full left-0 mt-1 w-40 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  <div class="p-2 space-y-1 text-xs">
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="total-equity">
+                      <span class="text-neutral-400">Total:</span> <span class="text-emerald-300 mono">$2,829.23</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="spot-equity">
+                      <span class="text-neutral-400">SPOT:</span> <span class="text-white mono">$0.00</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="perps-equity">
+                      <span class="text-neutral-400">PERPS:</span> <span class="text-emerald-300 mono">$2,829.23</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 3) Balance & PnL -->
+              <div class="relative group">
+                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
+                  <span class="text-neutral-400">Balance:</span>
+                  <span id="navbar-balance" class="text-white mono font-medium">$2,829.23</span>
+                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+                <div class="absolute top-full left-0 mt-1 w-44 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  <div class="p-2 space-y-1 text-xs">
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="available-balance">
+                      <span class="text-neutral-400">Available:</span> <span class="text-white mono">$2,829.23</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="unrealized-pnl">
+                      <span class="text-neutral-400">Unrealized PnL:</span> <span class="text-white mono">$0.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 4) Risk & Leverage -->
+              <div class="relative group">
+                <button class="flex items-center gap-1.5 px-2 py-1 text-xs hover:bg-white/5 rounded transition-colors">
+                  <span class="text-neutral-400">Margin:</span>
+                  <span id="navbar-margin" class="text-white mono font-medium">0.00%</span>
+                  <svg class="w-3 h-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+                <div class="absolute top-full right-0 mt-1 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  <div class="p-2 space-y-1 text-xs">
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="cross-margin-ratio">
+                      <span class="text-neutral-400">Cross Margin:</span> <span class="text-white mono">0.00%</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="cross-leverage">
+                      <span class="text-neutral-400">Cross Leverage:</span> <span class="text-white mono">0.00x</span>
+                    </div>
+                    <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="maintenance-margin">
+                      <span class="text-neutral-400">Maintenance:</span> <span class="text-white mono">$0.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Right cluster -->
           <div class="flex items-center gap-2 ml-auto">
+
+            
+            <button class="btn-primary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
+              Deposit
+            </button>
             <div class="hidden md:flex items-center gap-2 h-9 px-2 rounded-md glass">
               <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=48&auto=format&fit=crop" class="w-5 h-5 rounded-full" alt="Avatar">
               <span class="mono text-[12px]">0x0b5C...59C8</span>
               <img src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80" class="w-4 h-4 rounded-sm" alt="Chain">
             </div>
             
-            <button class="btn-primary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
-              Deposit
-            </button>
-            
-
             <!-- Mobile Trade button -->
             <button id="openMobileTrade" class="md:hidden h-9 px-3 rounded-md btn-secondary text-[13px]">Trade</button>
           </div>
@@ -187,6 +300,132 @@ class NimbusNavbar {
     
     // Add mobile menu functionality if needed
     this.initMobileMenu();
+    
+    // Setup trading status functionality
+    this.setupTradingStatus();
+  }
+  
+  // Setup trading status functionality
+  setupTradingStatus() {
+    // Store user preferences for default metrics
+    this.preferences = {
+      tradingStatus: 'slippage-est',
+      accountEquity: 'total-equity', 
+      balance: 'available-balance',
+      risk: 'cross-margin-ratio'
+    };
+    
+    // Load saved preferences
+    const saved = localStorage.getItem('navbar-preferences');
+    if (saved) {
+      this.preferences = { ...this.preferences, ...JSON.parse(saved) };
+    }
+    
+    // Setup dropdown click handlers
+    document.addEventListener('click', (e) => {
+      const metricItem = e.target.closest('[data-metric]');
+      if (metricItem) {
+        const metric = metricItem.getAttribute('data-metric');
+        this.setDefaultMetric(metric, metricItem);
+      }
+    });
+    
+    // Initial sync with sidebar data (delayed to ensure DOM is ready)
+    setTimeout(() => this.syncTradingData(), 100);
+  }
+  
+  // Set a metric as default for its group
+  setDefaultMetric(metric, element) {
+    const group = this.getMetricGroup(metric);
+    if (group) {
+      this.preferences[group] = metric;
+      this.updateNavbarDisplay(group, metric, element);
+      // Store preference
+      localStorage.setItem('navbar-preferences', JSON.stringify(this.preferences));
+    }
+  }
+  
+  // Get which group a metric belongs to
+  getMetricGroup(metric) {
+    const groups = {
+      'slippage-est': 'tradingStatus',
+      'slippage-max': 'tradingStatus', 
+      'fees': 'tradingStatus',
+      'order-value': 'tradingStatus',
+      'margin-required': 'tradingStatus',
+      'liq-price': 'tradingStatus',
+      'total-equity': 'accountEquity',
+      'spot-equity': 'accountEquity',
+      'perps-equity': 'accountEquity',
+      'available-balance': 'balance',
+      'unrealized-pnl': 'balance',
+      'cross-margin-ratio': 'risk',
+      'cross-leverage': 'risk',
+      'maintenance-margin': 'risk'
+    };
+    return groups[metric];
+  }
+  
+  // Update navbar display based on selected metric
+  updateNavbarDisplay(group, metric, element) {
+    const selectors = {
+      'tradingStatus': '#navbar-slippage',
+      'accountEquity': '#navbar-equity', 
+      'balance': '#navbar-balance',
+      'risk': '#navbar-margin'
+    };
+    
+    // Update the main display
+    const mainElement = document.querySelector(selectors[group]);
+    const valueElement = element.querySelector('.mono');
+    
+    if (mainElement && valueElement) {
+      mainElement.textContent = valueElement.textContent;
+      
+      // Update label if needed for different metrics
+      const labelElement = mainElement.previousElementSibling;
+      if (labelElement) {
+        const customLabels = {
+          'slippage-max': 'Max Slip:',
+          'fees': 'Fees:',
+          'order-value': 'Order:',
+          'margin-required': 'Margin Req:',
+          'liq-price': 'Liq Price:',
+          'spot-equity': 'SPOT:',
+          'perps-equity': 'PERPS:',
+          'unrealized-pnl': 'PnL:',
+          'cross-leverage': 'Leverage:',
+          'maintenance-margin': 'Maint:'
+        };
+        labelElement.textContent = customLabels[metric] || labelElement.textContent;
+      }
+    }
+  }
+  
+  // Sync data from sidebar elements (for index.html)
+  syncTradingData() {
+    // This will sync data from the sidebar trading panel
+    if (typeof window !== 'undefined' && (window.location.pathname.includes('index.html') || window.location.pathname === '/')) {
+      this.syncFromSidebar();
+    }
+  }
+  
+  // Sync specific values from sidebar elements
+  syncFromSidebar() {
+    const mappings = [
+      { sidebar: '#slippageValue', navbar: '#navbar-slippage' },
+      { sidebar: '#perpsBalance', navbar: '#navbar-equity' },
+      { sidebar: '#perpsBalance2', navbar: '#navbar-balance' },
+      { sidebar: '#crossMarginRatio', navbar: '#navbar-margin' }
+    ];
+    
+    mappings.forEach(({ sidebar, navbar }) => {
+      const sidebarEl = document.querySelector(sidebar);
+      const navbarEl = document.querySelector(navbar);
+      if (sidebarEl && navbarEl) {
+        navbarEl.textContent = sidebarEl.textContent;
+      }
+    });
   }
 
   // Mobile menu functionality (optional)
