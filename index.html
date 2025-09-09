@@ -52,19 +52,6 @@
       width: 100% !important; 
     }
 
-    /* KOL Marquee Animation */
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    
-    .animate-marquee {
-      animation: marquee 30s linear infinite;
-    }
-    
-    .animate-marquee:hover {
-      animation-play-state: paused;
-    }
 
     /* Order Book Animations */
     .order-row {
@@ -281,72 +268,6 @@
           <div class="chart-section">
             <div id="coreArea" class="flex-1 min-w-0 flex flex-col">
           <!-- Chart header controls -->
-          <!-- KOL News Header -->
-          <div class="glass-header border-b overflow-hidden border-subtle">
-            <div class="flex items-center h-12 px-3 md:px-4">
-              <!-- KOL Articles Section -->
-              <div class="flex items-center gap-4 mr-6">
-                <!-- KOL Signal 1 -->
-                <div class="flex items-center gap-3 cursor-pointer">
-                  <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80" class="w-6 h-6 rounded-full object-cover" alt="KOL">
-                <div class="flex items-center gap-2">
-                    <span class="text-[12px] font-medium text-gray-200">Michael Saylor</span>
-                    <span class="px-1.5 py-0.5 rounded text-[9px] font-medium bg-green-500/20 text-green-400">BUY</span>
-                    <span class="text-[11px] text-gray-400">BTC target $80K</span>
-                  </div>
-                </div>
-
-                <!-- KOL Signal 2 -->
-                <div class="flex items-center gap-3 cursor-pointer">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80" class="w-6 h-6 rounded-full object-cover" alt="KOL">
-                  <div class="flex items-center gap-2">
-                    <span class="text-[12px] font-medium text-gray-200">Plan B</span>
-                    <span class="px-1.5 py-0.5 rounded text-[9px] font-medium bg-red-500/20 text-red-400">SELL</span>
-                    <span class="text-[11px] text-gray-400">Short-term correction</span>
-                </div>
-              </div>
-                </div>
-
-              <!-- Scrolling KOL Marquee -->
-              <div class="flex-1 overflow-hidden">
-                <div class="flex items-center gap-4 animate-marquee">
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@CryptoBull +5.2%</span>
-              </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@BitcoinMaxi +2.1%</span>
-            </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@ChartMaster -0.8%</span>
-          </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@CryptoQueen +4.7%</span>
-            </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@HODLKing +1.9%</span>
-                  </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@TechAnalyst -2.3%</span>
-                  </div>
-                  <!-- Duplicate for seamless loop -->
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@CryptoBull +5.2%</span>
-                  </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=20&q=80" class="w-5 h-5 rounded-full" alt="KOL">
-                    <span class="text-[11px] text-gray-300">@BitcoinMaxi +2.1%</span>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
 
             <!-- TradingView Chart Container -->
             <div class="relative flex-1 overflow-hidden">
