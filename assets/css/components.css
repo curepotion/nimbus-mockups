@@ -663,10 +663,6 @@ input[type="range"]::-moz-range-thumb {
   justify-content: center;
 }
 
-.header-search {
-  max-width: 420px;
-  width: 100%;
-}
 
 /* Stats Card */
 .stats-card {

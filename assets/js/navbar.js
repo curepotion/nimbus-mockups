@@ -42,22 +42,13 @@ class NimbusNavbar {
             </nav>
           </div>
 
-          <!-- Center Search -->
+          <!-- Center Content -->
           <div class="flex-1 flex items-center justify-center gap-3">
             <div class="hidden md:flex items-center text-xs text-gray-300">
               <span class="hover:underline hover:text-white cursor-pointer">Markets</span>
               <span class="mx-2">/</span>
               <span class="text-white">BTC-PERP</span>
             </div>
-            
-            <button id="searchBtn" class="flex items-center gap-2 w-full max-w-[420px] h-9 px-3 rounded-md glass text-[13px] text-gray-300 focus-ring hover:text-white transition-all">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="M21 21l-4.35-4.35"/>
-              </svg>
-              <span class="truncate">Search markets, actions...</span>
-              <span class="ml-auto text-[11px] text-gray-400">⌘K</span>
-            </button>
           </div>
 
           <!-- Right cluster -->

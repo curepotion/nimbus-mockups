@@ -265,11 +265,6 @@ NimbusComponents.prototype.components = {
             <span class="text-white">${props.currentMarket || 'BTC-PERP'}</span>
           </div>
           
-          <button id="searchBtn" class="header-search flex items-center gap-2 h-9 px-3 rounded-md glass text-[13px] text-gray-300 focus-ring hover:text-white transition-all">
-            <i data-lucide="search" class="w-4 h-4"></i>
-            <span class="truncate">Search markets, actions...</span>
-            <span class="ml-auto text-[11px] text-gray-400">⌘K</span>
-          </button>
         </div>
 
         <!-- User Actions -->

@@ -1038,47 +1038,7 @@
     <div id="portfolioSection" style="display: none;">
         <div class="portfolio-section glass border-t border-subtle">
 
-          <!-- Header (48px) -->
-          <div class="shrink-0 z-40 glass-header border-b border-subtle">
-            <div class="h-12 flex items-center justify-between px-4">
-              <div class="text-[13px] font-semibold text-primary">Portfolio</div>
-              <div class="flex items-center gap-3">
-                <!-- Filter -->
-                <div class="relative">
-                  <button id="filterBtn" class="flex items-center gap-2 h-8 px-3 rounded-md text-[12px] btn-secondary">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="4" x2="4" y1="21" y2="14"/>
-                      <line x1="4" x2="4" y1="10" y2="3"/>
-                      <line x1="12" x2="12" y1="21" y2="12"/>
-                      <line x1="12" x2="12" y1="8" y2="3"/>
-                      <line x1="20" x2="20" y1="21" y2="16"/>
-                      <line x1="20" x2="20" y1="12" y2="3"/>
-                      <line x1="1" x2="7" y1="14" y2="14"/>
-                      <line x1="9" x2="15" y1="8" y2="8"/>
-                      <line x1="17" x2="23" y1="16" y2="16"/>
-                    </svg>
-                    <span>Filter</span>
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M6 9l6 6 6-6"/>
-                    </svg>
-                  </button>
-                  <div id="filterMenu" class="absolute right-0 mt-2 w-44 rounded-md p-2 hidden z-50 glass-strong">
-                    <button data-filter="all" class="w-full text-left px-2 py-1.5 rounded hover:bg-white/5 text-[12px]">All</button>
-                    <button data-filter="perp" class="w-full text-left px-2 py-1.5 rounded hover:bg-white/5 text-[12px]">Perps</button>
-                    <button data-filter="spot" class="w-full text-left px-2 py-1.5 rounded hover:bg-white/5 text-[12px]">Spot</button>
-      </div>
-        </div>
-                <!-- Hide Small Balances Toggle -->
-                <button id="hideSmallToggle" class="flex items-center gap-2 px-2 py-1.5 rounded-md">
-                  <span class="relative toggle-off flex items-center">
-                    <span class="toggle-track border border-white/10"></span>
-                    <span class="toggle-knob absolute left-[2px]"></span>
-                  </span>
-                  <span class="text-[12px]">Hide Small Balances</span>
-                </button>
-      </div>
-    </div>
-  </div>
+
 
           <!-- Tabs (36px) -->
           <div class="shrink-0 z-30 glass-header border-b border-subtle">
@@ -2087,8 +2047,6 @@
         palette.classList.toggle('flex', show);
         if (show) $('#commandInput').focus();
       }
-
-      $('#searchBtn').addEventListener('click', () => toggleCommandPalette(true));
       
     document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
