@@ -255,7 +255,8 @@
     }
     
     .token-list {
-      height: 320px;
+      height: 280px;
+      width: 240px;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -885,13 +886,14 @@
           <!-- Token List Panel -->
           <aside class="token-list border-l glass border-subtle">
           <!-- Header -->
-          <div class="shrink-0 px-3 py-3 border-b border-subtle">
+          <div class="shrink-0 px-2 py-2 border-b border-subtle">
 
             <!-- Tabs -->
-            <div class="flex items-center gap-1 bg-gray-800/50 rounded-md p-0.5">
-              <button id="tab-spot" class="px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200">Spot</button>
-              <button id="tab-perp" class="px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200">Perp</button>
-              </div>
+            <div class="flex items-center">
+              <button id="tab-spot" class="px-2 py-0.5 text-[9px] font-medium text-gray-200 border-b border-gray-600">Spot</button>
+              <div class="w-px h-4 bg-gray-600 mx-1"></div>
+              <button id="tab-perp" class="px-2 py-0.5 text-[9px] font-medium text-gray-400 hover:text-gray-200">Perp</button>
+            </div>
 
             <!-- Search -->
             <div class="mt-2 relative">
@@ -3992,11 +3994,11 @@
     // Tabs
     function applyTabUI(){
       if (state.marketType === 'spot') {
-        els.tabSpot.className = 'px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200';
-        els.tabPerp.className = 'px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200';
+        els.tabSpot.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-200 border-b border-gray-600';
+        els.tabPerp.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-400 hover:text-gray-200';
       } else {
-        els.tabPerp.className = 'px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200';
-        els.tabSpot.className = 'px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200';
+        els.tabPerp.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-200 border-b border-gray-600';
+        els.tabSpot.className = 'px-2 py-0.5 text-[9px] font-medium text-gray-400 hover:text-gray-200';
       }
       if (state.active) {
         const tvSymbol = state.marketType === 'perp' ? state.active.tvPerp : state.active.tvSpot;
