@@ -50,7 +50,7 @@ class NimbusNavbar {
               <div class="hidden lg:flex items-center gap-6">
                 <!-- 1) Trading Status -->
                 <div class="relative group">
-                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                  <button class="flex flex-col items-start px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
                     <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Slippage</span>
                     <div class="flex items-center gap-1">
                       <span id="navbar-slippage" class="text-white mono font-medium text-[11px]">Est 0.00%</span>
@@ -85,7 +85,7 @@ class NimbusNavbar {
               
                 <!-- 2) Account Equity -->
                 <div class="relative group">
-                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                  <button class="flex flex-col items-start px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
                     <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Equity</span>
                     <div class="flex items-center gap-1">
                       <span id="navbar-equity" class="text-emerald-300 mono font-medium text-[11px]">$2,829.23</span>
@@ -111,7 +111,7 @@ class NimbusNavbar {
               
                 <!-- 3) Balance & PnL -->
                 <div class="relative group">
-                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                  <button class="flex flex-col items-start px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
                     <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Balance</span>
                     <div class="flex items-center gap-1">
                       <span id="navbar-balance" class="text-white mono font-medium text-[11px]">$2,829.23</span>
@@ -130,19 +130,19 @@ class NimbusNavbar {
                     </div>
                   </div>
                 </div>
-              </div>
-              
+            </div>
+            
                 <!-- 4) Risk & Leverage -->
                 <div class="relative group">
-                  <button class="flex flex-col items-center px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
+                  <button class="flex flex-col items-start px-3 py-1 hover:bg-white/5 rounded transition-colors min-w-[80px]">
                     <span class="text-neutral-400 text-[10px] uppercase tracking-wide mb-0.5">Margin</span>
                     <div class="flex items-center gap-1">
                       <span id="navbar-margin" class="text-white mono font-medium text-[11px]">0.00%</span>
                       <svg class="w-2.5 h-2.5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                      </svg>
+              </svg>
                     </div>
-                  </button>
+            </button>
                 <div class="absolute top-full right-0 mt-1 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   <div class="p-2 space-y-1 text-xs">
                     <div class="px-2 py-1 hover:bg-white/10 rounded cursor-pointer" data-metric="cross-margin-ratio">
