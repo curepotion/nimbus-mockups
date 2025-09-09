@@ -914,12 +914,19 @@
               <path d="M10 6h8v4h-8z"/>
             </svg>
           </button>
-          <button id="analyticsToggle" class="h-10 w-full flex items-center justify-center hover:bg-white/5 transition-all group" title="Analytics" onclick="toggleAux('analytics')">
+          <button id="analyticsToggle" class="h-10 w-full flex items-center justify-center border-b border-white/5 hover:bg-white/5 hover:border-white/10 transition-all group" title="Analytics" onclick="toggleAux('analytics')">
             <svg class="w-5 h-5 text-neutral-400/70 group-hover:text-neutral-200 transition-all drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M3 3v18h18"/>
               <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
               <circle cx="18.5" cy="8.5" r="2.5"/>
               <circle cx="10.5" cy="10.5" r="1.5"/>
+            </svg>
+          </button>
+          <button id="signalsToggle" class="h-10 w-full flex items-center justify-center hover:bg-white/5 transition-all group" title="Community Signals" onclick="toggleAux('signals')">
+            <svg class="w-5 h-5 text-neutral-400/70 group-hover:text-neutral-200 transition-all drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              <path d="M8 12h8"/>
+              <path d="M12 8v8"/>
             </svg>
           </button>
         </div>
@@ -2429,6 +2436,8 @@
           setTimeout(() => initAnalyticsTabs(), 100);
         } else if (type === 'news') {
           setTimeout(() => startNewsUpdates(), 100);
+        } else if (type === 'signals') {
+          setTimeout(() => initSignalsPanel(), 100);
         }
       };
 
@@ -2512,7 +2521,8 @@
         const titles = {
           book: 'Order Book', 
           news: 'Market News',
-          analytics: 'Analytics'
+          analytics: 'Analytics',
+          signals: 'Community Signals'
         };
 
         panel.innerHTML = `
@@ -3227,6 +3237,26 @@
   </div>
           </div>
         `;
+
+          case 'signals':
+            return `
+              <div class="flex flex-col h-full">
+                <!-- Filter Tabs -->
+                <div class="shrink-0 mb-3">
+                  <div class="flex gap-1 bg-gray-800/50 rounded-md p-0.5">
+                    <button class="signal-filter flex-1 px-2 py-1 text-[11px] font-medium rounded-sm bg-gray-700 text-gray-200" data-filter="all">All</button>
+                    <button class="signal-filter flex-1 px-2 py-1 text-[11px] font-medium rounded-sm text-gray-400 hover:text-gray-200" data-filter="long">Long</button>
+                    <button class="signal-filter flex-1 px-2 py-1 text-[11px] font-medium rounded-sm text-gray-400 hover:text-gray-200" data-filter="short">Short</button>
+                  </div>
+                </div>
+
+                <!-- Signals Container -->
+                <div id="signalsContainer" class="flex-1 overflow-auto space-y-3">
+                  <!-- Signal cards will be populated here -->
+                </div>
+              </div>
+            `;
+
           default:
             return `<div class="text-center text-gray-400 py-8 text-[12px]">Content for ${type}</div>`;
         }
@@ -3473,6 +3503,102 @@
       let newsUpdateInterval;
       let newsSearchTags = [];
       let newsTimeFilter = 'all';
+
+      // Community Signals Data
+      const communitySignalsData = [
+        // LONG Signals
+        {
+          type: 'signal',
+          direction: 'long',
+          author: 'Evelyn Chen',
+          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+          time: '2h',
+          pair: 'ETH/USDT',
+          title: 'ETH Bull Flag Breakout Setup',
+          entry: '$2,480',
+          target: '$2,560',
+          stopLoss: '$2,440',
+          takeProfit: '$2,580',
+          likes: 122,
+          comments: 48
+        },
+        {
+          type: 'signal',
+          direction: 'long',
+          author: 'Marcus Li',
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+          time: '4h',
+          pair: 'BTC/USDT',
+          title: 'BTC Support Zone Long',
+          entry: '$64,200',
+          target: '$66,800',
+          stopLoss: '$63,500',
+          takeProfit: '$67,500',
+          likes: 89,
+          comments: 34
+        },
+        {
+          type: 'signal',
+          direction: 'long',
+          author: 'CryptoNinja',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+          time: '6h',
+          pair: 'SOL/USDT',
+          title: 'SOL Ascending Triangle',
+          entry: '$128.50',
+          target: '$135.20',
+          stopLoss: '$125.80',
+          takeProfit: '$138.40',
+          likes: 156,
+          comments: 67
+        },
+        // SHORT Signals
+        {
+          type: 'signal',
+          direction: 'short',
+          author: 'BearTrader',
+          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+          time: '3h',
+          pair: 'DOGE/USDT',
+          title: 'DOGE Bearish Divergence',
+          entry: '$0.08200',
+          target: '$0.07800',
+          stopLoss: '$0.08450',
+          takeProfit: '$0.07600',
+          likes: 94,
+          comments: 32
+        },
+        {
+          type: 'signal',
+          direction: 'short',
+          author: 'MarketBear',
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+          time: '5h',
+          pair: 'ADA/USDT',
+          title: 'ADA Head & Shoulders',
+          entry: '$0.485',
+          target: '$0.445',
+          stopLoss: '$0.505',
+          takeProfit: '$0.420',
+          likes: 73,
+          comments: 28
+        },
+        {
+          type: 'signal',
+          direction: 'short',
+          author: 'TechAnalyst',
+          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&q=80',
+          time: '7h',
+          pair: 'LINK/USDT',
+          title: 'LINK Rising Wedge Break',
+          entry: '$14.80',
+          target: '$13.90',
+          stopLoss: '$15.20',
+          takeProfit: '$13.40',
+          likes: 108,
+          comments: 41
+        }
+      ];
 
       const newsFeeds = [
         { name: 'CoinDesk', url: 'https://www.coindesk.com/arc/outboundfeeds/rss/', color: 'orange' },
@@ -4719,6 +4845,105 @@
       initTwapTabs();
       initCopyOrderIds();
     });
+
+    // Community Signals Functionality
+    function renderCommunitySignals(filter = 'all') {
+      const container = document.getElementById('signalsContainer');
+      if (!container) return;
+
+      // Filter signals based on selected filter
+      let filteredSignals = communitySignalsData;
+      if (filter !== 'all') {
+        filteredSignals = communitySignalsData.filter(signal => signal.direction === filter);
+      }
+
+      // Clear container
+      container.innerHTML = '';
+
+      // Render each signal
+      filteredSignals.forEach(signal => {
+        const signalCard = createSignalCard(signal);
+        container.appendChild(signalCard);
+      });
+    }
+
+    function createSignalCard(signal) {
+      const card = document.createElement('div');
+      const directionClass = signal.direction === 'long' ? 'border-green-500/30' : 'border-red-500/30';
+      const directionBadgeClass = signal.direction === 'long' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400';
+      const targetColor = signal.direction === 'long' ? 'text-green-400' : 'text-red-400';
+      
+      card.className = `bg-gray-800/30 rounded-lg p-3 border ${directionClass} cursor-pointer hover:bg-gray-800/50 transition-colors`;
+      
+      card.innerHTML = `
+        <div class="flex items-start gap-3">
+          <img src="${signal.avatar}" class="w-8 h-8 rounded-full" alt="${signal.author}">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-semibold text-white text-[11px] truncate">${signal.author}</h3>
+              <span class="text-[10px] text-gray-400">${signal.time}</span>
+            </div>
+            
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] ${directionBadgeClass} px-1.5 py-0.5 rounded font-medium">${signal.direction.toUpperCase()}</span>
+              <span class="text-[10px] text-gray-300">${signal.pair}</span>
+            </div>
+            
+            <h4 class="text-white font-medium mb-2 text-[11px] leading-tight">${signal.title}</h4>
+            
+            <div class="grid grid-cols-2 gap-1.5 mb-2 text-[10px]">
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Entry</div>
+                <div class="font-mono text-white font-semibold">${signal.entry}</div>
+              </div>
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Target</div>
+                <div class="font-mono ${targetColor} font-semibold">${signal.target}</div>
+              </div>
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Stop Loss</div>
+                <div class="font-mono text-red-400 font-semibold">${signal.stopLoss}</div>
+              </div>
+              <div class="bg-gray-700/40 rounded p-1.5 text-center">
+                <div class="text-gray-400">Take Profit</div>
+                <div class="font-mono ${targetColor} font-semibold">${signal.takeProfit}</div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between pt-2 border-t border-gray-700">
+              <div class="flex items-center gap-2 text-[10px] text-gray-400">
+                <span>${signal.likes} likes</span>
+                <span>${signal.comments} comments</span>
+              </div>
+              <button class="bg-gray-600 text-gray-300 hover:bg-gray-500 hover:text-white px-2 py-1 rounded text-[10px] transition-colors">View</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    function initSignalsPanel() {
+      // Initialize filter buttons
+      const filterButtons = document.querySelectorAll('.signal-filter');
+      filterButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          // Update active state
+          filterButtons.forEach(btn => {
+            btn.className = 'signal-filter flex-1 px-2 py-1 text-[11px] font-medium rounded-sm text-gray-400 hover:text-gray-200';
+          });
+          e.target.className = 'signal-filter flex-1 px-2 py-1 text-[11px] font-medium rounded-sm bg-gray-700 text-gray-200';
+          
+          // Filter signals
+          const filter = e.target.getAttribute('data-filter');
+          renderCommunitySignals(filter);
+        });
+      });
+
+      // Initial render
+      renderCommunitySignals();
+    }
 
   </script>
 </body>
