@@ -4959,13 +4959,18 @@
     // Community Signals Functionality
     function renderCommunitySignals(filter = 'all') {
       const container = document.getElementById('signalsContainer');
-      if (!container) return;
+      if (!container) {
+        console.log('signalsContainer not found');
+        return;
+      }
 
       // Filter signals based on selected filter
       let filteredSignals = communitySignalsData;
       if (filter !== 'all') {
         filteredSignals = communitySignalsData.filter(signal => signal.direction === filter);
       }
+
+      console.log('Rendering signals:', filteredSignals.length, 'signals with filter:', filter);
 
       // Clear container
       container.innerHTML = '';
@@ -4975,6 +4980,11 @@
         const signalCard = createSignalCard(signal);
         container.appendChild(signalCard);
       });
+
+      // If no signals, show a message
+      if (filteredSignals.length === 0) {
+        container.innerHTML = '<div class="text-center text-gray-400 py-8 text-[12px]">No signals found</div>';
+      }
     }
 
     function createSignalCard(signal) {
@@ -5047,8 +5057,13 @@
     }
 
     function initSignalsPanel() {
+      console.log('initSignalsPanel called');
+      console.log('communitySignalsData length:', communitySignalsData.length);
+      
       // Initialize filter buttons
       const filterButtons = document.querySelectorAll('.signal-filter');
+      console.log('Found filter buttons:', filterButtons.length);
+      
       filterButtons.forEach(button => {
         button.addEventListener('click', (e) => {
           // Update active state
