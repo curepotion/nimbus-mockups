@@ -60,6 +60,20 @@
       transform: translateX(0);
     }
 
+    /* Portfolio Section Table Borders */
+    .portfolio-section table thead tr {
+      border-bottom-color: #222222 !important;
+    }
+    
+    .portfolio-section table tbody tr {
+      border-bottom-color: #222222 !important;
+    }
+    
+    .portfolio-section table tbody {
+      --tw-divide-opacity: 1;
+      --tw-divide-color: #222222;
+    }
+
     .order-row.updating {
       background-color: rgba(255, 255, 255, 0.1);
     }
@@ -963,7 +977,7 @@
               <!-- Balances Table -->
               <div class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-10 text-neutral-400">
                       <th class="text-left px-3 font-medium cursor-pointer hover:text-white">Coin</th>
                       <th class="text-right px-3 font-medium cursor-pointer hover:text-white">Total Balance</th>
@@ -975,7 +989,7 @@
                       <th class="text-left px-3 font-medium">Contract</th>
                     </tr>
                   </thead>
-                   <tbody id="balancesBody" class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody id="balancesBody" class="divide-y divide-white/6">
                     <tr class="h-10 hover:bg-white/6" data-type="perp" data-usdc="221.58">
                       <td class="px-3">USDC (Perps)</td>
                       <td class="px-3 text-right mono font-semibold">221.58 USDC</td>
@@ -1055,20 +1069,20 @@
             <section id="panel-positions" class="hidden">
               <!-- Metrics Strip -->
               <div class="flex flex-wrap gap-2 mb-4">
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">IP · <span class="mono">3x</span></div>
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">Position Value <span class="mono font-semibold">$599.88</span></div>
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">Entry <span class="mono">7.5160</span></div>
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">Mark <span class="mono">7.8416</span></div>
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">PNL <span class="mono text-emerald-400">+$24.91 (+13.0%)</span></div>
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">Liq <span class="mono">5.9332</span></div>
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">Margin <span class="mono">$199.96</span> (Cross)</div>
-                 <div class="px-3 py-1.5 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">Funding <span class="mono">$0.09</span></div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">IP · <span class="mono">3x</span></div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">Position Value <span class="mono font-semibold">$599.88</span></div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">Entry <span class="mono">7.5160</span></div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">Mark <span class="mono">7.8416</span></div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">PNL <span class="mono text-emerald-400">+$24.91 (+13.0%)</span></div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">Liq <span class="mono">5.9332</span></div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">Margin <span class="mono">$199.96</span> (Cross)</div>
+                <div class="px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px]">Funding <span class="mono">$0.09</span></div>
   </div>
 
               <!-- Positions Table -->
               <div class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-10 text-neutral-400">
                       <th class="text-left px-3 font-medium">Coin</th>
                       <th class="text-right px-3 font-medium">Size</th>
@@ -1083,7 +1097,7 @@
                       <th class="text-left px-3 font-medium">TP/SL</th>
                     </tr>
                   </thead>
-                   <tbody class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody class="divide-y divide-white/6">
                     <tr class="h-10 hover:bg-white/6">
                       <td class="px-3">IP (3x)</td>
                       <td class="px-3 text-right mono font-semibold">76.5 IP</td>
@@ -1133,7 +1147,7 @@
             <section id="panel-openOrders" class="hidden">
               <div class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-10 text-neutral-400">
                       <th class="text-left px-3 font-medium">Time</th>
                       <th class="text-left px-3 font-medium">Type</th>
@@ -1149,7 +1163,7 @@
                       <th class="text-left px-3 font-medium">Cancel</th>
                     </tr>
                   </thead>
-                   <tbody class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody class="divide-y divide-white/6">
                     <tr class="h-10 hover:bg-white/6">
                       <td class="px-3 mono">2025/9/03 10:02:11</td>
                       <td class="px-3">Limit</td>
@@ -1215,15 +1229,15 @@
             <section id="panel-twap" class="hidden">
               <!-- Sub-tabs -->
               <div class="flex gap-2 mb-4">
-                 <button data-twap-tab="active" class="twap-tab px-3 py-1.5 rounded-md border bg-emerald-400 text-black text-[12px] font-medium" style="border-color: #222222;">Active</button>
-                 <button data-twap-tab="history" class="twap-tab px-3 py-1.5 rounded-md border bg-white/5 text-[12px] font-medium" style="border-color: #222222;">History</button>
-                 <button data-twap-tab="fills" class="twap-tab px-3 py-1.5 rounded-md border bg-white/5 text-[12px] font-medium" style="border-color: #222222;">Fill History</button>
+                <button data-twap-tab="active" class="twap-tab px-3 py-1.5 rounded-md border border-white/10 bg-emerald-400 text-black text-[12px] font-medium">Active</button>
+                <button data-twap-tab="history" class="twap-tab px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px] font-medium">History</button>
+                <button data-twap-tab="fills" class="twap-tab px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-[12px] font-medium">Fill History</button>
             </div>
 
               <!-- Active -->
               <div id="twap-active" class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-10 text-neutral-400">
                       <th class="text-left px-3 font-medium">Coin</th>
                       <th class="text-right px-3 font-medium">Size</th>
@@ -1235,7 +1249,7 @@
                       <th class="text-left px-3 font-medium">Terminate</th>
                     </tr>
                   </thead>
-                   <tbody class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody class="divide-y divide-white/6">
                     <tr class="h-10 hover:bg-white/6">
                       <td class="px-3">BTC</td>
                       <td class="px-3 text-right mono">0.120</td>
@@ -1262,7 +1276,7 @@
 
               <!-- History -->
               <div id="twap-history" class="hidden">
-                 <div class="p-3 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">
+                <div class="p-3 rounded-md border border-white/10 bg-white/5 text-[12px]">
                   <div class="text-neutral-400 mb-2">Recent TWAP History</div>
                   <ul class="space-y-1">
                     <li><span class="mono">2025/9/03 10:00:02</span> BTC filled 0.012 @ 66,020</li>
@@ -1274,7 +1288,7 @@
 
               <!-- Fills -->
               <div id="twap-fills" class="hidden">
-                 <div class="p-3 rounded-md border bg-white/5 text-[12px]" style="border-color: #222222;">
+                <div class="p-3 rounded-md border border-white/10 bg-white/5 text-[12px]">
                   <div class="text-neutral-400 mb-2">Fill History</div>
                   <ul class="space-y-1">
                     <li><span class="mono">09:59:01</span> BTC 0.008 @ 66,010</li>
@@ -1289,7 +1303,7 @@
             <section id="panel-tradeHistory" class="hidden">
               <div class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-9 text-neutral-400">
                       <th class="text-left px-3 font-medium">Time</th>
                       <th class="text-left px-3 font-medium">Coin</th>
@@ -1301,7 +1315,7 @@
                       <th class="text-right px-3 font-medium">Closed PNL</th>
                     </tr>
                   </thead>
-                   <tbody class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody class="divide-y divide-white/6">
                     <tr class="h-9 hover:bg-white/6">
                       <td class="px-3 mono">2025/9/03 10:05:30</td>
                       <td class="px-3">SOL</td>
@@ -1411,7 +1425,7 @@
             <section id="panel-fundingHistory" class="hidden">
               <div class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-9 text-neutral-400">
                       <th class="text-left px-3 font-medium">Time</th>
                       <th class="text-left px-3 font-medium">Coin</th>
@@ -1421,7 +1435,7 @@
                       <th class="text-right px-3 font-medium">Rate</th>
                     </tr>
                   </thead>
-                   <tbody class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody class="divide-y divide-white/6">
                     <tr class="h-9 hover:bg-white/6">
                       <td class="px-3 mono">2025/9/03 10:00</td>
                       <td class="px-3">SOL</td>
@@ -1511,7 +1525,7 @@
             <section id="panel-orderHistory" class="hidden">
               <div class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-9 text-neutral-400">
                       <th class="text-left px-3 font-medium">Time</th>
                       <th class="text-left px-3 font-medium">Type</th>
@@ -1528,7 +1542,7 @@
                       <th class="text-left px-3 font-medium">Order ID</th>
                     </tr>
                   </thead>
-                   <tbody class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody class="divide-y divide-white/6">
                     <tr class="h-9 hover:bg-white/6">
                       <td class="px-3 mono">2025/9/03 10:05:29</td>
                       <td class="px-3">Take Profit Market</td>
@@ -1599,7 +1613,7 @@
               <!-- Running Bots Table -->
               <div class="overflow-x-auto">
                 <table class="w-full text-[12px]">
-                  <thead class="border-b" style="border-color: #222222;" class="glass-header">
+                  <thead class="border-b border-white/10" class="glass-header">
                     <tr class="h-10 text-neutral-400">
                       <th class="text-left px-3 font-medium">Bot</th>
                       <th class="text-left px-3 font-medium">Market</th>
@@ -1613,7 +1627,7 @@
                       <th class="text-left px-3 font-medium">Actions</th>
                     </tr>
                   </thead>
-                   <tbody class="divide-y" style="--tw-divide-opacity: 1; --tw-divide-color: #222222;">
+                  <tbody class="divide-y divide-white/6">
                     <tr class="h-10 hover:bg-white/6 cursor-pointer bot-row" data-bot="gridbot-perp">
                       <td class="px-3">
                         <div class="font-medium">Gridbot (Perp)</div>
