@@ -544,9 +544,8 @@
                   <span class="relative z-10">Place Long</span>
                 </button>
 
-                <!-- Order Summary - HIDDEN: Now displayed in navbar -->
-                <!-- 
-                <div class="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px]">
+                <!-- Order Summary -->
+                <!-- <div class="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px]">
                   <div class="text-neutral-400">Liquidation Price</div>
                   <div id="liqPrice" class="text-neutral-100 mono font-semibold">N/A</div>
 
@@ -561,64 +560,14 @@
 
                   <div class="text-neutral-400">Fees</div>
                   <div id="feesValue" class="text-neutral-100 mono font-semibold">—</div>
-                </div>
-                -->
-                
-                <!-- Keep hidden elements for navbar data sync -->
-                <div class="hidden">
-                  <div id="liqPrice">N/A</div>
-                  <div id="orderValue">N/A</div>
-                  <div id="marginRequired">N/A</div>
-                  <div id="slippageValue">Est 0.00% / Max 8.00%</div>
-                  <div id="feesValue">—</div>
-                </div>
+                </div> -->
               </div>
 
-              <!-- Account Equity & Perps Overview - HIDDEN: Now displayed in navbar -->
-              <!--
-              <div class="py-2.5">
-              <div class="mt-2 flex items-center">
-                  <div class="text-[12px] text-neutral-300">Account Equity</div>
-                  </div>
-
-                <div class="mt-1 grid grid-cols-2 gap-2.5">
-                  <div class="flex items-center justify-between rounded-sm px-1.5 py-1 bg-white/0">
-                    <div class="text-[11px] uppercase text-neutral-400">Spot</div>
-                    <div class="text-[12px] text-neutral-100 mono font-semibold">$0.00</div>
-                </div>
-                  <div class="flex items-center justify-between rounded-sm px-1.5 py-1 bg-white/0">
-                    <div class="text-[11px] uppercase text-neutral-400">Perps</div>
-                    <div id="perpsBalance" class="text-[12px] text-emerald-200 mono font-semibold">$2,829.23</div>
-              </div>
-            </div>
-
-                <div class="mt-1 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px]">
-                  <div class="text-neutral-400">Balance</div>
-                  <div id="perpsBalance2" class="text-neutral-100 mono font-semibold">$2,829.23</div>
-
-                  <div class="text-neutral-400">Unrealized PNL</div>
-                  <div class="text-neutral-100 mono font-semibold">$0.00</div>
-
-                  <div class="text-neutral-400">Cross Margin Ratio</div>
-                  <div id="crossMarginRatio" class="text-neutral-100 mono font-semibold">0.00%</div>
-
-                  <div class="text-neutral-400">Maintenance Margin</div>
-                  <div id="maintMargin" class="text-neutral-100 mono font-semibold">$0.00</div>
-
-                  <div class="text-neutral-400 col-span-1">Cross Account Leverage</div>
-                  <div id="crossLev" class="text-neutral-100 col-span-1 mono font-semibold">0.00x</div>
-                  </div>
-                </div>
-              </div>
-              -->
+              <!-- Deposit / Accounts -->
               
-              <!-- Keep hidden elements for navbar data sync -->
-              <div class="hidden">
-                <div id="perpsBalance">$2,829.23</div>
-                <div id="perpsBalance2">$2,829.23</div>
-                <div id="crossMarginRatio">0.00%</div>
-                <div id="maintMargin">$0.00</div>
-                <div id="crossLev">0.00x</div>
+
+
+                
               </div>
 
             <!-- STRATEGIES MODE -->
@@ -937,17 +886,6 @@
           <aside class="token-list border-l glass border-subtle">
           <!-- Header -->
           <div class="shrink-0 px-3 py-3 border-b border-subtle">
-            <div class="flex items-center justify-between mb-2">
-              <div class="text-[13px] font-semibold">Market</div>
-              <button id="refreshBtn" class="h-7 w-7 rounded-md btn-secondary flex items-center justify-center" title="Refresh tokens">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                  <path d="M21 3v5h-5"/>
-                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-                  <path d="M8 16H3v5"/>
-                </svg>
-              </button>
-              </div>
 
             <!-- Tabs -->
             <div class="flex items-center gap-1 bg-gray-800/50 rounded-md p-0.5">
@@ -3787,7 +3725,6 @@
       tabSpot: document.getElementById('tab-spot'),
       tabPerp: document.getElementById('tab-perp'),
       search: document.getElementById('searchInput'),
-      refresh: document.getElementById('refreshBtn'),
       activeBadge: document.getElementById('activeBadge'),
       toast: document.getElementById('toast'),
       toastText: document.getElementById('toastText'),
@@ -4094,7 +4031,6 @@
     els.tabSpot.addEventListener('click', () => { state.marketType = 'spot'; applyTabUI(); });
     els.tabPerp.addEventListener('click', () => { state.marketType = 'perp'; applyTabUI(); });
     els.search.addEventListener('input', (e) => applySearch(e.target.value));
-    els.refresh.addEventListener('click', async () => { await bootstrap(true); toast('List refreshed.'); });
 
     // Sorting events
     els.sortBar.addEventListener('click', (e) => {
