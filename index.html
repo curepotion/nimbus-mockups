@@ -3504,7 +3504,7 @@
       let newsSearchTags = [];
       let newsTimeFilter = 'all';
 
-      // Community Signals Data
+      // Community Signals Data - Using the exact same data from communityFeed
       const communitySignalsData = [
         // LONG Signals
         {
@@ -3552,51 +3552,161 @@
           likes: 156,
           comments: 67
         },
+        {
+          type: 'signal',
+          direction: 'long',
+          author: 'TradeGuru',
+          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+          time: '8h',
+          pair: 'ADA/USDT',
+          title: 'ADA Double Bottom Pattern',
+          entry: '$0.485',
+          target: '$0.520',
+          stopLoss: '$0.465',
+          takeProfit: '$0.535',
+          likes: 78,
+          comments: 23
+        },
+        {
+          type: 'signal',
+          direction: 'long',
+          author: 'AlgoTrader',
+          avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
+          time: '10h',
+          pair: 'MATIC/USDT',
+          title: 'MATIC Cup and Handle',
+          entry: '$0.845',
+          target: '$0.920',
+          stopLoss: '$0.810',
+          takeProfit: '$0.950',
+          likes: 134,
+          comments: 45
+        },
+        
         // SHORT Signals
         {
           type: 'signal',
           direction: 'short',
-          author: 'BearTrader',
-          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+          author: 'Kenji Sato',
+          avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=32&q=80',
           time: '3h',
-          pair: 'DOGE/USDT',
-          title: 'DOGE Bearish Divergence',
-          entry: '$0.08200',
-          target: '$0.07800',
-          stopLoss: '$0.08450',
-          takeProfit: '$0.07600',
-          likes: 94,
-          comments: 32
+          pair: 'BTC/USDT',
+          title: 'BTC Rejection at Resistance',
+          entry: '$65,800',
+          target: '$63,200',
+          stopLoss: '$66,500',
+          takeProfit: '$62,100',
+          likes: 89,
+          comments: 23
         },
         {
           type: 'signal',
           direction: 'short',
-          author: 'MarketBear',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&q=80',
+          author: 'BearHunter',
+          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
           time: '5h',
-          pair: 'ADA/USDT',
-          title: 'ADA Head & Shoulders',
-          entry: '$0.485',
-          target: '$0.445',
-          stopLoss: '$0.505',
-          takeProfit: '$0.420',
-          likes: 73,
+          pair: 'ETH/USDT',
+          title: 'ETH Head and Shoulders',
+          entry: '$2,520',
+          target: '$2,380',
+          stopLoss: '$2,580',
+          takeProfit: '$2,320',
+          likes: 67,
+          comments: 19
+        },
+        {
+          type: 'signal',
+          direction: 'short',
+          author: 'ShortMaster',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+          time: '7h',
+          pair: 'AVAX/USDT',
+          title: 'AVAX Bearish Divergence',
+          entry: '$28.50',
+          target: '$26.20',
+          stopLoss: '$29.80',
+          takeProfit: '$25.10',
+          likes: 92,
+          comments: 31
+        },
+        {
+          type: 'signal',
+          direction: 'short',
+          author: 'CryptoVulture',
+          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+          time: '9h',
+          pair: 'DOT/USDT',
+          title: 'DOT Rising Wedge Breakdown',
+          entry: '$6.85',
+          target: '$6.20',
+          stopLoss: '$7.15',
+          takeProfit: '$5.90',
+          likes: 76,
           comments: 28
         },
+        
+        // Additional LONG Signals
+        {
+          type: 'signal',
+          direction: 'long',
+          author: 'CryptoWhale',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+          time: '1h',
+          pair: 'UNI/USDT',
+          title: 'UNI Bullish Pennant',
+          entry: '$7.25',
+          target: '$7.85',
+          stopLoss: '$6.95',
+          takeProfit: '$8.10',
+          likes: 98,
+          comments: 35
+        },
+        {
+          type: 'signal',
+          direction: 'long',
+          author: 'TechnicalPro',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&q=80',
+          time: '3h',
+          pair: 'AAVE/USDT',
+          title: 'AAVE Inverse Head & Shoulders',
+          entry: '$89.50',
+          target: '$96.20',
+          stopLoss: '$85.80',
+          takeProfit: '$99.40',
+          likes: 112,
+          comments: 41
+        },
+        
+        // Additional SHORT Signals
         {
           type: 'signal',
           direction: 'short',
-          author: 'TechAnalyst',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&q=80',
-          time: '7h',
-          pair: 'LINK/USDT',
-          title: 'LINK Rising Wedge Break',
-          entry: '$14.80',
-          target: '$13.90',
-          stopLoss: '$15.20',
-          takeProfit: '$13.40',
-          likes: 108,
-          comments: 41
+          author: 'BearMarket',
+          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&q=80',
+          time: '2h',
+          pair: 'XRP/USDT',
+          title: 'XRP Double Top Reversal',
+          entry: '$0.625',
+          target: '$0.585',
+          stopLoss: '$0.650',
+          takeProfit: '$0.560',
+          likes: 67,
+          comments: 21
+        },
+        {
+          type: 'signal',
+          direction: 'short',
+          author: 'PatternMaster',
+          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=32&q=80',
+          time: '4h',
+          pair: 'LTC/USDT',
+          title: 'LTC Descending Triangle',
+          entry: '$72.50',
+          target: '$68.20',
+          stopLoss: '$75.80',
+          takeProfit: '$65.40',
+          likes: 89,
+          comments: 33
         }
       ];
 
@@ -4870,58 +4980,70 @@
     function createSignalCard(signal) {
       const card = document.createElement('div');
       const directionClass = signal.direction === 'long' ? 'border-green-500/30' : 'border-red-500/30';
-      const directionBadgeClass = signal.direction === 'long' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400';
-      const targetColor = signal.direction === 'long' ? 'text-green-400' : 'text-red-400';
       
       card.className = `bg-gray-800/30 rounded-lg p-3 border ${directionClass} cursor-pointer hover:bg-gray-800/50 transition-colors`;
       
-      card.innerHTML = `
+      // Use the exact same HTML structure as community.html
+      card.innerHTML = createCardHTML(signal);
+      
+      return card;
+    }
+
+    // Function to create card HTML - same as community.html
+    function createCardHTML(item) {
+      return `
         <div class="flex items-start gap-3">
-          <img src="${signal.avatar}" class="w-8 h-8 rounded-full" alt="${signal.author}">
-          <div class="flex-1 min-w-0">
+          <img src="${item.avatar}" class="w-8 h-8 rounded-full" alt="${item.author}">
+          <div class="flex-1">
             <div class="flex items-center gap-2 mb-1">
-              <h3 class="font-semibold text-white text-[11px] truncate">${signal.author}</h3>
-              <span class="text-[10px] text-gray-400">${signal.time}</span>
+              <h3 class="font-semibold text-white text-[11px]">${item.author}</h3>
+              <span class="text-[10px] text-gray-400">${item.time}</span>
             </div>
-            
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-[10px] ${directionBadgeClass} px-1.5 py-0.5 rounded font-medium">${signal.direction.toUpperCase()}</span>
-              <span class="text-[10px] text-gray-300">${signal.pair}</span>
-            </div>
-            
-            <h4 class="text-white font-medium mb-2 text-[11px] leading-tight">${signal.title}</h4>
-            
-            <div class="grid grid-cols-2 gap-1.5 mb-2 text-[10px]">
-              <div class="bg-gray-700/40 rounded p-1.5 text-center">
-                <div class="text-gray-400">Entry</div>
-                <div class="font-mono text-white font-semibold">${signal.entry}</div>
-              </div>
-              <div class="bg-gray-700/40 rounded p-1.5 text-center">
-                <div class="text-gray-400">Target</div>
-                <div class="font-mono ${targetColor} font-semibold">${signal.target}</div>
-              </div>
-              <div class="bg-gray-700/40 rounded p-1.5 text-center">
-                <div class="text-gray-400">Stop Loss</div>
-                <div class="font-mono text-red-400 font-semibold">${signal.stopLoss}</div>
-              </div>
-              <div class="bg-gray-700/40 rounded p-1.5 text-center">
-                <div class="text-gray-400">Take Profit</div>
-                <div class="font-mono ${targetColor} font-semibold">${signal.takeProfit}</div>
-              </div>
-            </div>
-            
+            ${getTypeSpecificHTML(item)}
             <div class="flex items-center justify-between pt-2 border-t border-gray-700">
               <div class="flex items-center gap-2 text-[10px] text-gray-400">
-                <span>${signal.likes} likes</span>
-                <span>${signal.comments} comments</span>
+                <span>${item.likes} likes</span>
+                <span>${item.comments} comments</span>
               </div>
-              <button class="bg-gray-600 text-gray-300 hover:bg-gray-500 hover:text-white px-2 py-1 rounded text-[10px] transition-colors">View</button>
+              <button class="bg-gray-600 text-gray-300 hover:bg-gray-500 hover:text-white px-2 py-1 rounded text-[10px]">Read</button>
             </div>
           </div>
         </div>
       `;
-      
-      return card;
+    }
+
+    // Function to get type-specific HTML - same as community.html
+    function getTypeSpecificHTML(item) {
+      if (item.type === 'signal') {
+        const directionClass = item.direction === 'long' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400';
+        const targetColor = item.direction === 'long' ? 'text-green-400' : 'text-red-400';
+        return `
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-[10px] ${directionClass} px-2 py-1 rounded">${item.direction.toUpperCase()}</span>
+            <span class="text-[10px] text-gray-300">${item.pair}</span>
+          </div>
+          <h4 class="text-white font-medium mb-2 text-[11px]">${item.title}</h4>
+          <div class="grid grid-cols-2 gap-2 mb-2 text-[10px]">
+            <div class="bg-gray-700/40 rounded p-1.5 text-center">
+              <div class="text-gray-400">Entry</div>
+              <div class="font-mono text-white font-semibold">${item.entry}</div>
+            </div>
+            <div class="bg-gray-700/40 rounded p-1.5 text-center">
+              <div class="text-gray-400">Target</div>
+              <div class="font-mono ${targetColor} font-semibold">${item.target}</div>
+            </div>
+            <div class="bg-gray-700/40 rounded p-1.5 text-center">
+              <div class="text-gray-400">Stop Loss</div>
+              <div class="font-mono text-red-400 font-semibold">${item.stopLoss}</div>
+            </div>
+            <div class="bg-gray-700/40 rounded p-1.5 text-center">
+              <div class="text-gray-400">Take Profit</div>
+              <div class="font-mono ${targetColor} font-semibold">${item.takeProfit}</div>
+            </div>
+          </div>
+        `;
+      }
+      return '';
     }
 
     function initSignalsPanel() {
