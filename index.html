@@ -228,6 +228,7 @@
       width: 420px;
       min-width: 380px;
       max-width: 460px;
+      height: calc(100vh - 60px);
       overflow: hidden;
     }
     
@@ -247,18 +248,19 @@
     }
     
     .trading-panel {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: visible;
+    }
+    
+    .token-list {
       flex: 1;
       display: flex;
       flex-direction: column;
       min-height: 0;
       overflow: hidden;
-    }
-    
-    .token-list {
-      height: 320px;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
     }
   </style>
 </head>
