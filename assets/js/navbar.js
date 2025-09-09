@@ -52,7 +52,7 @@ class NimbusNavbar {
               <img src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80" class="w-4 h-4 rounded-sm" alt="Chain">
             </div>
             
-            <button class="btn-primary h-9 px-3 rounded-md text-[13px] font-medium">
+            <button class="btn-primary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
               Deposit
             </button>
             
