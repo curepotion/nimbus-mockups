@@ -434,23 +434,106 @@
                   <!-- Bottom Row: Total Orders and Size Skew -->
                   <div class="grid grid-cols-2 gap-2.5">
                     <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                <div class="flex items-center justify-between">
+                      <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Total Orders</span>
                       </div>
                       <input type="number" placeholder="10" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-              </div>
-
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
+                    </div>
+                    
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Size Skew</span>
                         <span class="text-[12px] mono font-semibold text-white">1.00</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Enable Trading Button for Scale -->
+                  <div class="mt-3">
+                    <button id="enableScaleTrading" class="w-full group relative inline-flex overflow-hidden text-[13px] ring-1 ring-emerald-400/40 bg-emerald-400/10 hover:bg-emerald-400/20 transition-all hover:opacity-95 active:opacity-90 font-semibold text-emerald-300 tracking-tight rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 items-center justify-center">
+                      <span class="relative z-10">Enable Scale Trading</span>
+                    </button>
                 </div>
+              </div>
+                
+                <!-- TWAP Trading UI -->
+                <div id="twapUI" class="mt-2 space-y-3 hidden">
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Duration (minutes)</span>
+                  </div>
+                    <input type="number" placeholder="60" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                </div>
+                  
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Interval (seconds)</span>
+              </div>
+                    <input type="number" placeholder="30" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+            </div>
+                  
+                  <div class="grid grid-cols-2 gap-2.5">
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Price (USD)</span>
+                      </div>
+                      <input type="number" placeholder="Enter price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                    </div>
+                    
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
+                      </div>
+                      <input type="number" placeholder="Enter amount" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
                     </div>
                   </div>
                 </div>
                 
-                <!-- Regular Trading Inputs (Price and Size inputs) -->
-                <div id="regularInputs" class="mt-2 space-y-3">
+                <!-- Stop Limit Trading UI -->
+                <div id="stopLimitUI" class="mt-2 space-y-3 hidden">
+                  <div class="grid grid-cols-2 gap-2.5">
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Price</span>
+                      </div>
+                      <input type="number" placeholder="Enter stop price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                    </div>
+                    
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Limit Price</span>
+                      </div>
+                      <input type="number" placeholder="Enter limit price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                    </div>
+                  </div>
+                  
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
+                    </div>
+                    <input type="number" placeholder="Enter amount" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                  </div>
+                </div>
+                
+                <!-- Stop Market Trading UI -->
+                <div id="stopMarketUI" class="mt-2 space-y-3 hidden">
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Price</span>
+                    </div>
+                    <input type="number" placeholder="Enter stop price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                  </div>
+                  
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
+                    </div>
+                    <input type="number" placeholder="Enter amount" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                  </div>
+                </div>
+                
+                <!-- Market/Limit Trading Inputs -->
+                <div id="marketLimitUI" class="mt-2 space-y-3">
                 <div class="grid grid-cols-2 gap-2.5">
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2 transition-opacity opacity-60" id="priceField">
                     <div class="flex items-center justify-between">
@@ -472,7 +555,7 @@
         </div>
 
                 </div>
-                <!-- End Regular Inputs -->
+                <!-- End Market/Limit Inputs -->
 
               <!-- Options -->
               <div id="optionsSection" class="py-2.5">
@@ -2148,6 +2231,37 @@
       const priceHint = $('#priceHint');
       const orderTypeSlider = $('#orderTypeSlider');
       
+      // Function to show only the specified UI and hide all others
+      function showOnlyUI(uiType) {
+        // Hide all UIs first
+        $('#marketLimitUI').classList.add('hidden');
+        $('#scaleUI').classList.add('hidden');
+        $('#twapUI').classList.add('hidden');
+        $('#stopLimitUI').classList.add('hidden');
+        $('#stopMarketUI').classList.add('hidden');
+        $('#optionsSection').classList.add('hidden');
+        
+        // Show the requested UI
+        switch(uiType) {
+          case 'marketLimit':
+            $('#marketLimitUI').classList.remove('hidden');
+            $('#optionsSection').classList.remove('hidden'); // Only Market/Limit have TP/SL
+            break;
+          case 'scale':
+            $('#scaleUI').classList.remove('hidden');
+            break;
+          case 'twap':
+            $('#twapUI').classList.remove('hidden');
+            break;
+          case 'stopLimit':
+            $('#stopLimitUI').classList.remove('hidden');
+            break;
+          case 'stopMarket':
+            $('#stopMarketUI').classList.remove('hidden');
+            break;
+        }
+      }
+      
       $('#orderMarket').addEventListener('click', () => {
         appState.orderType = 'Market'; 
         appState.proType = null;
@@ -2155,11 +2269,8 @@
         $('#orderMarket').classList.remove('text-neutral-400');
         $('#orderLimit').classList.add('text-neutral-400');
         $('#orderPro').classList.add('text-neutral-400');
-        // Show regular inputs, hide scale UI
-        $('#regularInputs').classList.remove('hidden');
-        $('#scaleUI').classList.add('hidden');
-        // Show TP/SL options for Market
-        $('#optionsSection').classList.remove('hidden');
+        // Show Market/Limit UI, hide all others
+        showOnlyUI('marketLimit');
         disablePrice(true, 'auto for Market');
         updateSummary();
       });
@@ -2171,11 +2282,8 @@
         $('#orderMarket').classList.add('text-neutral-400');
         $('#orderLimit').classList.remove('text-neutral-400');
         $('#orderPro').classList.add('text-neutral-400');
-        // Show regular inputs, hide scale UI
-        $('#regularInputs').classList.remove('hidden');
-        $('#scaleUI').classList.add('hidden');
-        // Show TP/SL options for Limit
-        $('#optionsSection').classList.remove('hidden');
+        // Show Market/Limit UI, hide all others
+        showOnlyUI('marketLimit');
         disablePrice(false, 'enter price');
         updateSummary();
       });
@@ -2198,21 +2306,15 @@
         appState.proType = b.dataset.pro;
         $('#orderPro span:first-child').textContent = appState.proType;
         
-        // Show/hide Scale UI vs Regular Inputs
-        const scaleUI = $('#scaleUI');
-        const regularInputs = $('#regularInputs');
-        const optionsSection = $('#optionsSection');
-        
+        // Show appropriate UI based on Pro type
         if (appState.proType === 'Scale') {
-          scaleUI.classList.remove('hidden');
-          regularInputs.classList.add('hidden');
-          // Hide TP/SL options for all Pro types (including Scale)
-          optionsSection.classList.add('hidden');
-        } else {
-          scaleUI.classList.add('hidden');
-          regularInputs.classList.remove('hidden');
-          // Hide TP/SL options for all Pro types (Stop Limit, TWAP, etc.)
-          optionsSection.classList.add('hidden');
+          showOnlyUI('scale');
+        } else if (appState.proType === 'TWAP') {
+          showOnlyUI('twap');
+        } else if (appState.proType === 'Stop Limit') {
+          showOnlyUI('stopLimit');
+        } else if (appState.proType === 'Stop Market') {
+          showOnlyUI('stopMarket');
         }
         
         // Price enable rules
