@@ -2495,24 +2495,28 @@
       window.togglePortfolioSection = function() {
         const portfolioContent = document.getElementById('portfolioContent');
         const portfolioToggle = document.getElementById('portfolioToggle');
-        const chartArea = document.getElementById('coreArea');
+        const portfolioSection = document.querySelector('.portfolio-section');
         
-        if (portfolioContent && portfolioToggle && chartArea) {
+        if (portfolioContent && portfolioToggle) {
           const isCollapsed = portfolioContent.style.display === 'none';
           
           if (isCollapsed) {
             // Expand portfolio section
             portfolioContent.style.display = 'block';
-            chartArea.style.height = 'calc(100vh - 120px)'; // Normal height
+            if (portfolioSection) {
+              portfolioSection.style.height = 'auto';
+            }
             portfolioToggle.title = 'Collapse Portfolio';
             portfolioToggle.querySelector('svg').innerHTML = `
               <path d="M18 6L6 18"/>
               <path d="M6 6l12 12"/>
             `;
           } else {
-            // Collapse portfolio section
+            // Collapse portfolio section  
             portfolioContent.style.display = 'none';
-            chartArea.style.height = 'calc(100vh - 80px)'; // Expand chart to full height
+            if (portfolioSection) {
+              portfolioSection.style.height = '36px'; // Only show tabs height
+            }
             portfolioToggle.title = 'Expand Portfolio';
             portfolioToggle.querySelector('svg').innerHTML = `
               <path d="M6 9l6 6 6-6"/>
