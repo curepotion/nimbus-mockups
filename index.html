@@ -2085,11 +2085,12 @@
           shortBtn.classList.add('opacity-60');
           shortBtn.classList.remove('text-rose-300');
           placeOrder.querySelector('span').textContent = 'Place Long';
-          // Set place order button to green for long
-          placeOrder.style.background = '#10B981';
-          placeOrder.style.color = 'white';
-          placeOrder.classList.remove('text-black', 'bg-red-600');
-          placeOrder.classList.add('text-white', 'bg-emerald-600');
+          // Set place order button to solid green with dark text
+          placeOrder.style.background = '#22C55E';
+          placeOrder.style.color = '#064E3B';
+          placeOrder.style.fontWeight = 'bold';
+          placeOrder.classList.remove('text-white', 'text-black', 'bg-red-600');
+          placeOrder.classList.add('text-emerald-900', 'bg-emerald-500', 'font-bold');
       } else {
           sideSlider.className = sideSlider.className.replace(/side-(long|short)/g, '') + ' side-short';
           shortBtn.classList.remove('opacity-60'); 
@@ -2097,11 +2098,12 @@
           longBtn.classList.add('opacity-60');
           longBtn.classList.remove('text-emerald-300');
           placeOrder.querySelector('span').textContent = 'Place Short';
-          // Set place order button to red for short
+          // Set place order button to solid red with dark text
           placeOrder.style.background = '#EF4444';
-          placeOrder.style.color = 'white';
-          placeOrder.classList.remove('text-black', 'bg-emerald-600');
-          placeOrder.classList.add('text-white', 'bg-red-600');
+          placeOrder.style.color = '#7F1D1D';
+          placeOrder.style.fontWeight = 'bold';
+          placeOrder.classList.remove('text-white', 'text-black', 'bg-emerald-500', 'text-emerald-900');
+          placeOrder.classList.add('text-red-900', 'bg-red-500', 'font-bold');
         }
         updateSummary();
       }
