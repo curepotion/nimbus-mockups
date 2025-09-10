@@ -289,16 +289,9 @@
           <!-- Resizer handle -->
           <div id="tpResizer" class="absolute -left-1 top-0 bottom-0 w-2 cursor-col-resize hover:bg-emerald-400/20 transition-colors"></div>
 
-          <!-- Header with Tabs and Leverage -->
+          <!-- Header -->
           <header class="relative px-3 py-3 border-b border-subtle">
             <div class="flex items-center gap-3">
-              <!-- Mode Switch -->
-              <div class="relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5 p-1 tab-switch-width">
-                <button id="tabTrade" class="group relative z-10 text-center py-1.5 text-[12px] font-semibold tracking-tight">Trade</button>
-                <button id="tabStrategies" class="group relative z-10 text-center py-1.5 text-[12px] font-semibold tracking-tight text-neutral-400">Strategies</button>
-                <div id="tabSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 backdrop-blur-md shadow-[inset_0_0_0_1px_rgba(255,255,255,0.10)] transition-all duration-200 ease-out tab-slider-left"></div>
-              </div>
-              
               <!-- Spacer to push elements to the right -->
               <div class="flex-1"></div>
             </div>
@@ -311,8 +304,15 @@
               <!-- Controls row: Order Type + Buy/Sell -->
               <div class="py-2.5">
                 <div class="grid grid-cols-1 gap-2.5">
-                  <!-- Order Type Tabs & Leverage -->
+                  <!-- Trade/Strategies Tab + Order Type + Leverage -->
                     <div class="p-0 flex items-center gap-2.5">
+                      <!-- Mode Switch -->
+                      <div class="relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5 p-1">
+                        <button id="tabTrade" class="group relative z-10 text-center py-1.5 px-2 text-[12px] font-semibold tracking-tight">Trade</button>
+                        <button id="tabStrategies" class="group relative z-10 text-center py-1.5 px-2 text-[12px] font-semibold tracking-tight text-neutral-400">Strategies</button>
+                        <div id="tabSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 backdrop-blur-md shadow-[inset_0_0_0_1px_rgba(255,255,255,0.10)] transition-all duration-200 ease-out tab-slider-left"></div>
+                      </div>
+                      
                       <div class="flex-1">
                       <div class="relative">
                          <button id="orderTypeDropdown" class="w-full inline-flex items-center justify-between gap-2 py-2 px-3 text-[12px] font-medium rounded-md ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition-all">
