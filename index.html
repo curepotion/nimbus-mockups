@@ -2085,11 +2085,24 @@
           shortBtn.classList.add('opacity-60');
           shortBtn.classList.remove('text-rose-300');
           placeOrder.querySelector('span').textContent = 'Place Long';
-          // Set place order button to emerald-300 style (matching your guidelines)
-          placeOrder.style.background = '#6EE7B7';
+          // Set place order button to bright emerald with glassy hover effect
+          placeOrder.style.background = 'linear-gradient(135deg, #10B981, #34D399)';
           placeOrder.style.color = '#064E3B';
+          placeOrder.style.fontWeight = '700';
+          placeOrder.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.2)';
           placeOrder.classList.remove('text-black', 'btn-primary', 'bg-red-500', 'text-red-900');
-          placeOrder.classList.add('text-emerald-900');
+          placeOrder.classList.add('text-emerald-900', 'font-bold');
+          // Add hover effect
+          placeOrder.onmouseenter = () => {
+            placeOrder.style.background = 'linear-gradient(135deg, #34D399, #6EE7B7)';
+            placeOrder.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.4), 0 0 20px rgba(16,185,129,0.3)';
+            placeOrder.style.transform = 'translateY(-1px)';
+          };
+          placeOrder.onmouseleave = () => {
+            placeOrder.style.background = 'linear-gradient(135deg, #10B981, #34D399)';
+            placeOrder.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.2)';
+            placeOrder.style.transform = 'translateY(0)';
+          };
       } else {
           sideSlider.className = sideSlider.className.replace(/side-(long|short)/g, '') + ' side-short';
           shortBtn.classList.remove('opacity-60'); 
@@ -2097,11 +2110,24 @@
           longBtn.classList.add('opacity-60');
           longBtn.classList.remove('text-emerald-300');
           placeOrder.querySelector('span').textContent = 'Place Short';
-          // Set place order button to red style
-          placeOrder.style.background = '#EF4444';
+          // Set place order button to bright red with glassy hover effect
+          placeOrder.style.background = 'linear-gradient(135deg, #EF4444, #F87171)';
           placeOrder.style.color = '#7F1D1D';
+          placeOrder.style.fontWeight = '700';
+          placeOrder.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.2)';
           placeOrder.classList.remove('text-black', 'btn-primary', 'text-emerald-900');
-          placeOrder.classList.add('text-red-900');
+          placeOrder.classList.add('text-red-900', 'font-bold');
+          // Add hover effect
+          placeOrder.onmouseenter = () => {
+            placeOrder.style.background = 'linear-gradient(135deg, #F87171, #FCA5A5)';
+            placeOrder.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.4), 0 0 20px rgba(239,68,68,0.3)';
+            placeOrder.style.transform = 'translateY(-1px)';
+          };
+          placeOrder.onmouseleave = () => {
+            placeOrder.style.background = 'linear-gradient(135deg, #EF4444, #F87171)';
+            placeOrder.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.2)';
+            placeOrder.style.transform = 'translateY(0)';
+          };
         }
         updateSummary();
       }
