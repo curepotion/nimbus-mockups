@@ -369,16 +369,39 @@
                     Pos: <span class="text-neutral-100 mono font-semibold">0.0000 ETH</span>
               </div>
                 </div>
-                <div class="mt-1.5 flex items-center gap-2.5">
-                  <!-- Slider + % input -->
-                  <div class="flex-1">
-                    <input id="sizeSlider" type="range" min="0" max="100" step="1" value="0">
-                  </div>
-                  <div class="w-[108px]">
-                    <div class="flex items-center gap-1.5 rounded-md ring-1 ring-white/10 bg-white/5 px-2 py-1.5">
-                      <input id="sizeInput" type="number" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-500" value="0" min="0" max="100" step="1">
-                      <span class="text-[11px] text-neutral-400">%</span>
+                <div class="mt-1.5 space-y-3">
+                  <!-- Position Size Slider -->
+                  <div class="flex items-center gap-3">
+                    <!-- Custom Slider Container -->
+                    <div class="flex-1 relative">
+                      <!-- Slider Track -->
+                      <div class="h-2 bg-gray-600/30 rounded-full relative overflow-hidden">
+                        <!-- Active Progress (Orange/Red Gradient) -->
+                        <div id="sliderProgress" class="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full transition-all duration-200" style="width: 0%"></div>
+                        <!-- Slider Handle -->
+                        <div id="sliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white ring-2 ring-orange-400 rounded-full cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
                 </div>
+                      <!-- Hidden Range Input -->
+                      <input id="sizeSlider" type="range" min="0" max="100" step="1" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+              </div>
+                    
+                    <!-- Percentage Input -->
+                    <div class="w-[80px]">
+                      <div class="relative rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm px-3 py-2">
+                        <input id="sizeInput" type="number" class="w-full bg-transparent outline-none text-[14px] mono font-semibold text-white text-center" value="50" min="0" max="100" step="1">
+                        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[12px] text-neutral-400 pointer-events-none">%</span>
+                  </div>
+                </div>
+              </div>
+                  
+                  <!-- Percentage Buttons -->
+                  <div class="flex justify-between items-center px-1">
+                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="25">25%</button>
+                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="33">33%</button>
+                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer bg-orange-500 text-white px-2 py-1 rounded-md" data-percent="50">50%</button>
+                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="66">66%</button>
+                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="75">75%</button>
+                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="100">100%</button>
               </div>
             </div>
                 <!-- Price and Size inputs -->
@@ -2126,15 +2149,24 @@
         }
       });
 
-      // Size controls (% of balance)
+      // Size controls (% of balance) - Custom Slider
       const sizeSlider = $('#sizeSlider');
       const sizeInput = $('#sizeInput');
+      const sliderProgress = $('#sliderProgress');
+      const sliderHandle = $('#sliderHandle');
       const amountInput = $('#amountInput');
       
       function syncPercent(val) {
         val = Math.max(0, Math.min(100, Number(val) || 0));
         sizeSlider.value = val; 
         sizeInput.value = val;
+        
+        // Update custom slider visuals
+        updateSliderVisuals(val);
+        
+        // Update percentage button states
+        updatePercentageButtons(val);
+        
         // Map % of availBalance to amount assuming current input mode
         const avail = parseFloat($('#availBalance').textContent) || 0;
         const px = currentPrice();
@@ -2151,8 +2183,40 @@
         updateSummary();
       }
       
+      function updateSliderVisuals(val) {
+        const percentage = val + '%';
+        sliderProgress.style.width = percentage;
+        sliderHandle.style.left = `calc(${percentage} - 10px)`; // Offset for handle center
+      }
+      
+      function updatePercentageButtons(val) {
+        // Remove active state from all buttons
+        document.querySelectorAll('.percentage-btn').forEach(btn => {
+          btn.classList.remove('bg-orange-500', 'text-white', 'px-2', 'py-1', 'rounded-md');
+          btn.classList.add('text-neutral-400');
+        });
+        
+        // Add active state to current percentage button (if exact match)
+        const activeBtn = document.querySelector(`[data-percent="${val}"]`);
+        if (activeBtn) {
+          activeBtn.classList.remove('text-neutral-400');
+          activeBtn.classList.add('bg-orange-500', 'text-white', 'px-2', 'py-1', 'rounded-md');
+        }
+      }
+      
+      // Initialize slider at 50%
+      syncPercent(50);
+      
       sizeSlider.addEventListener('input', e => syncPercent(e.target.value));
       sizeInput.addEventListener('input', e => syncPercent(e.target.value));
+      
+      // Percentage button clicks
+      document.querySelectorAll('.percentage-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const percent = parseInt(btn.dataset.percent);
+          syncPercent(percent);
+        });
+      });
       amountInput.addEventListener('input', () => {
         updateAmountDisplay();
         updateSummary();
