@@ -942,7 +942,8 @@
 
           <!-- Tabs (36px) -->
           <div class="shrink-0 z-30 glass-header border-b border-subtle">
-            <div class="h-9 flex overflow-x-auto scrollbar-thin px-4">
+            <div class="h-9 flex items-center px-4">
+              <div class="flex-1 flex overflow-x-auto scrollbar-thin">
               <button data-tab="balances" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Balances</button>
               <button data-tab="positions" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Positions</button>
               <button data-tab="openOrders" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Open Orders</button>
@@ -951,10 +952,10 @@
               <button data-tab="fundingHistory" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Funding History</button>
               <button data-tab="orderHistory" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Order History</button>
               <button data-tab="activeBots" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Active Bots</button>
-              
-              <!-- Balance Section Toggle -->
-              <button id="balanceToggle" class="ml-auto px-2 h-9 flex items-center justify-center text-neutral-400 hover:text-neutral-200 transition-colors" title="Toggle Balance Section" onclick="toggleBalanceSection()">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              </div>
+              <!-- Toggle Button -->
+              <button id="portfolioToggle" class="ml-2 h-7 w-7 rounded-md hover:bg-white/5 flex items-center justify-center transition-colors" title="Collapse Portfolio" onclick="togglePortfolioSection()">
+                <svg class="w-4 h-4 text-neutral-400 hover:text-neutral-200 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 6L6 18"/>
                   <path d="M6 6l12 12"/>
                 </svg>
@@ -963,7 +964,7 @@
         </div>
 
                     <!-- Content -->
-          <div id="balanceContent" class="flex-1 overflow-y-auto p-4">
+          <div id="portfolioContent" class="flex-1 overflow-y-auto p-4">
 
             <!-- Balances -->
             <section id="panel-balances">
@@ -2490,32 +2491,32 @@
         }
       });
 
-      // Toggle Balance Section Content
-      window.toggleBalanceSection = function() {
-        const content = document.getElementById('balanceContent');
-        const toggleBtn = document.getElementById('balanceToggle');
+      // Toggle Portfolio Section
+      window.togglePortfolioSection = function() {
+        const portfolioContent = document.getElementById('portfolioContent');
+        const portfolioToggle = document.getElementById('portfolioToggle');
+        const chartArea = document.getElementById('coreArea');
         
-        if (content && toggleBtn) {
-          const isHidden = content.style.display === 'none';
+        if (portfolioContent && portfolioToggle && chartArea) {
+          const isCollapsed = portfolioContent.style.display === 'none';
           
-          // Toggle the content visibility
-          content.style.display = isHidden ? 'block' : 'none';
-          
-          // Update icon
-          const svg = toggleBtn.querySelector('svg');
-          if (isHidden) {
-            // Show content - use close/collapse icon (X)
-            svg.innerHTML = `
+          if (isCollapsed) {
+            // Expand portfolio section
+            portfolioContent.style.display = 'block';
+            chartArea.style.height = 'calc(100vh - 120px)'; // Normal height
+            portfolioToggle.title = 'Collapse Portfolio';
+            portfolioToggle.querySelector('svg').innerHTML = `
               <path d="M18 6L6 18"/>
               <path d="M6 6l12 12"/>
             `;
-            toggleBtn.title = "Hide Balance Section";
           } else {
-            // Hide content - use expand icon (chevron down)
-            svg.innerHTML = `
+            // Collapse portfolio section
+            portfolioContent.style.display = 'none';
+            chartArea.style.height = 'calc(100vh - 80px)'; // Expand chart to full height
+            portfolioToggle.title = 'Expand Portfolio';
+            portfolioToggle.querySelector('svg').innerHTML = `
               <path d="M6 9l6 6 6-6"/>
             `;
-            toggleBtn.title = "Show Balance Section";
           }
         }
       };
