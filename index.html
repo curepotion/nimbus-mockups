@@ -2083,14 +2083,23 @@
           longBtn.classList.remove('opacity-60'); 
           longBtn.classList.add('text-emerald-300');
           shortBtn.classList.add('opacity-60');
+          shortBtn.classList.remove('text-rose-300');
           placeOrder.querySelector('span').textContent = 'Place Long';
+          // Set place order button to green for long
+          placeOrder.style.background = 'var(--emerald-600)';
+          placeOrder.classList.remove('bg-red-600');
+          placeOrder.classList.add('bg-emerald-600');
       } else {
           sideSlider.className = sideSlider.className.replace(/side-(long|short)/g, '') + ' side-short';
           shortBtn.classList.remove('opacity-60'); 
           shortBtn.classList.add('text-rose-300');
           longBtn.classList.add('opacity-60');
+          longBtn.classList.remove('text-emerald-300');
           placeOrder.querySelector('span').textContent = 'Place Short';
-          placeOrder.style.background = '#FF5A5F';
+          // Set place order button to red for short
+          placeOrder.style.background = '#EF4444';
+          placeOrder.classList.remove('bg-emerald-600');
+          placeOrder.classList.add('bg-red-600');
         }
         updateSummary();
       }
