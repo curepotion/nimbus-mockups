@@ -2106,18 +2106,22 @@
         tpSlEnabled = !tpSlEnabled;
         
         if (tpSlEnabled) {
-          // Enable TP/SL - show fields and turn knob green
+          // Enable TP/SL - show fields and turn knob green (exact same styling as Reduce Only)
           tpSlFields.style.display = 'block';
-          tpSlKnob.style.transform = 'translateX(12px) translateY(-50%)';
+          tpSlToggle.classList.add('ring-emerald-400/40');
+          tpSlToggle.querySelector('span.relative').classList.add('bg-emerald-400/20', 'ring-emerald-300/40');
+          tpSlKnob.style.transform = 'translate(12px, -50%)';
           tpSlKnob.classList.remove('bg-neutral-300');
-          tpSlKnob.classList.add('bg-emerald-400');
+          tpSlKnob.classList.add('bg-emerald-300');
           tpSlToggle.querySelector('span.text-[12px]').classList.add('text-emerald-300');
         } else {
-          // Disable TP/SL - hide fields and turn knob neutral
+          // Disable TP/SL - hide fields and turn knob neutral (exact same styling as Reduce Only)
           tpSlFields.style.display = 'none';
-          tpSlKnob.style.transform = 'translateX(0) translateY(-50%)';
+          tpSlToggle.classList.remove('ring-emerald-400/40');
+          tpSlToggle.querySelector('span.relative').classList.remove('bg-emerald-400/20', 'ring-emerald-300/40');
+          tpSlKnob.style.transform = 'translate(0, -50%)';
+          tpSlKnob.classList.remove('bg-emerald-300');
           tpSlKnob.classList.add('bg-neutral-300');
-          tpSlKnob.classList.remove('bg-emerald-400');
           tpSlToggle.querySelector('span.text-[12px]').classList.remove('text-emerald-300');
         }
       });
