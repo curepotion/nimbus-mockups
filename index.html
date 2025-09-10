@@ -311,26 +311,29 @@
               <!-- Controls row: Order Type + Buy/Sell -->
               <div class="py-2.5">
                 <div class="grid grid-cols-1 gap-2.5">
-                  <!-- Order Type Dropdown & Leverage -->
+                  <!-- Order Type Tabs & Leverage -->
                   <div class="p-0 flex items-center gap-2.5">
                     <div class="flex-1">
+                    <div class="relative grid grid-cols-3 rounded-md ring-1 ring-white/10 bg-white/5">
+                      <button id="orderMarket" class="relative z-10 w-full inline-flex items-center justify-center gap-1.5 py-1.5 text-[12px] font-medium text-center">Market</button>
+                      <button id="orderLimit" class="relative z-10 w-full inline-flex items-center justify-center gap-1.5 py-1.5 text-[12px] font-medium text-center text-neutral-400">Limit</button>
                       <div class="relative">
-                        <button id="orderTypeDropdown" class="w-full inline-flex items-center justify-between gap-2 py-2 px-3 text-[12px] font-medium rounded-md ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition-all">
-                          <span id="selectedOrderType">Market</span>
-                          <svg class="w-3.5 h-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <button id="orderPro" class="relative z-10 w-full inline-flex items-center justify-center gap-1.5 py-1.5 text-[12px] font-medium text-center text-neutral-400">
+                          <span>Pro</span>
+                          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M6 9l6 6 6-6"/>
                           </svg>
                         </button>
-                        <!-- Order Type Dropdown Menu -->
-                        <div id="orderTypeMenu" class="hidden absolute left-0 z-20 mt-1 w-full rounded-md glass-strong p-1 shadow-lg">
-                          <button data-order-type="Market" class="w-full text-left px-3 py-2 rounded-[6px] hover:bg-white/10 text-[12px] font-medium">Market</button>
-                          <button data-order-type="Limit" class="w-full text-left px-3 py-2 rounded-[6px] hover:bg-white/10 text-[12px] font-medium">Limit</button>
-                          <button data-order-type="Scale" class="w-full text-left px-3 py-2 rounded-[6px] hover:bg-white/10 text-[12px] font-medium">Scale</button>
-                          <button data-order-type="Stop Limit" class="w-full text-left px-3 py-2 rounded-[6px] hover:bg-white/10 text-[12px] font-medium">Stop Limit</button>
-                          <button data-order-type="Stop Market" class="w-full text-left px-3 py-2 rounded-[6px] hover:bg-white/10 text-[12px] font-medium">Stop Market</button>
-                          <button data-order-type="TWAP" class="w-full text-left px-3 py-2 rounded-[6px] hover:bg-white/10 text-[12px] font-medium">TWAP</button>
+                        <!-- Pro dropdown -->
+                        <div id="proMenu" class="hidden absolute right-0 z-20 mt-1 w-[180px] rounded-md glass-strong p-1">
+                          <button data-pro="Scale" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">Scale</button>
+                          <button data-pro="Stop Limit" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">Stop Limit</button>
+                          <button data-pro="Stop Market" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">Stop Market</button>
+                          <button data-pro="TWAP" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">TWAP</button>
                 </div>
               </div>
+                      <div id="orderTypeSlider" class="absolute inset-y-0 left-0 w-1/3 rounded-md bg-white/10 transition-all duration-200 order-slider-left"></div>
+            </div>
             </div>
             
             <!-- Leverage -->
@@ -414,20 +417,20 @@
                   <!-- Start and End Price Row -->
                   <div class="grid grid-cols-2 gap-2.5">
                     <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
+                      <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Start (USD)</span>
-                  </div>
+                      </div>
                       <input type="number" placeholder="Enter start price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                </div>
+                    </div>
                     
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">End (USD)</span>
-              </div>
+                      </div>
                       <input type="number" placeholder="Enter end price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-          </div>
-        </div>
-
+                    </div>
+                  </div>
+                  
                   <!-- Bottom Row: Total Orders and Size Skew -->
                   <div class="grid grid-cols-2 gap-2.5">
                     <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
@@ -444,93 +447,10 @@
                       </div>
                     </div>
                   </div>
-                  
-                  <!-- Enable Trading Button for Scale -->
-                  <div class="mt-3">
-                    <button id="enableScaleTrading" class="w-full group relative inline-flex overflow-hidden text-[13px] ring-1 ring-emerald-400/40 bg-emerald-400/10 hover:bg-emerald-400/20 transition-all hover:opacity-95 active:opacity-90 font-semibold text-emerald-300 tracking-tight rounded-lg pt-2.5 pr-3 pb-2.5 pl-3 items-center justify-center">
-                      <span class="relative z-10">Enable Scale Trading</span>
-                    </button>
-                </div>
-              </div>
-                
-                <!-- TWAP Trading UI -->
-                <div id="twapUI" class="mt-2 space-y-3 hidden">
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Duration (minutes)</span>
-                  </div>
-                    <input type="number" placeholder="60" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                </div>
-                  
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Interval (seconds)</span>
-              </div>
-                    <input type="number" placeholder="30" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-            </div>
-                  
-                  <div class="grid grid-cols-2 gap-2.5">
-                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Price (USD)</span>
-                      </div>
-                      <input type="number" placeholder="Enter price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
-                    
-                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
-                      </div>
-                      <input type="number" placeholder="Enter amount" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
-                  </div>
                 </div>
                 
-                <!-- Stop Limit Trading UI -->
-                <div id="stopLimitUI" class="mt-2 space-y-3 hidden">
-                  <div class="grid grid-cols-2 gap-2.5">
-                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Price</span>
-                      </div>
-                      <input type="number" placeholder="Enter stop price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
-                    
-                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Limit Price</span>
-                      </div>
-                      <input type="number" placeholder="Enter limit price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
-                  </div>
-                  
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
-                    </div>
-                    <input type="number" placeholder="Enter amount" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                  </div>
-                </div>
-                
-                <!-- Stop Market Trading UI -->
-                <div id="stopMarketUI" class="mt-2 space-y-3 hidden">
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Price</span>
-                    </div>
-                    <input type="number" placeholder="Enter stop price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                  </div>
-                  
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
-                    </div>
-                    <input type="number" placeholder="Enter amount" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                  </div>
-                </div>
-                
-                <!-- Market/Limit Trading Inputs -->
-                <div id="marketLimitUI" class="mt-2 space-y-3">
+                <!-- Regular Trading Inputs (Price and Size inputs) -->
+                <div id="regularInputs" class="mt-2 space-y-3">
                 <div class="grid grid-cols-2 gap-2.5">
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2 transition-opacity opacity-60" id="priceField">
                     <div class="flex items-center justify-between">
@@ -551,11 +471,8 @@
           </div>
         </div>
 
-                </div>
-                <!-- End Market/Limit Inputs -->
-
               <!-- Options -->
-              <div id="optionsSection" class="py-2.5">
+              <div class="py-2.5">
                 <div class="flex items-center justify-between">
                   <!-- Reduce-only toggle -->
                   <button id="reduceToggle" class="group inline-flex items-center gap-2">
@@ -604,14 +521,17 @@
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss $</div>
                         <input id="slLossUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
-                      </div>
+                </div>
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss %</div>
                         <input id="slLossPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
-                      </div>
+            </div>
+          </div>
                 </div>
             </div>
           </div>
+                </div>
+                <!-- End Regular Inputs -->
 
               <!-- Place Order + Summary -->
               <div class="py-2.5">
@@ -2226,104 +2146,85 @@
       const priceField = $('#priceField');
       const priceInput = $('#priceInput');
       const priceHint = $('#priceHint');
+      const orderTypeSlider = $('#orderTypeSlider');
       
-      // Function to show only the specified UI and hide all others
-      function showOnlyUI(uiType) {
-        // Hide all UIs first
-        $('#marketLimitUI').classList.add('hidden');
-        $('#scaleUI').classList.add('hidden');
-        $('#twapUI').classList.add('hidden');
-        $('#stopLimitUI').classList.add('hidden');
-        $('#stopMarketUI').classList.add('hidden');
-        $('#optionsSection').classList.add('hidden');
-        
-        // Show the requested UI
-        switch(uiType) {
-          case 'marketLimit':
-            $('#marketLimitUI').classList.remove('hidden');
-            $('#optionsSection').classList.remove('hidden'); // Only Market/Limit have TP/SL
-            break;
-          case 'scale':
-            $('#scaleUI').classList.remove('hidden');
-            break;
-          case 'twap':
-            $('#twapUI').classList.remove('hidden');
-            break;
-          case 'stopLimit':
-            $('#stopLimitUI').classList.remove('hidden');
-            break;
-          case 'stopMarket':
-            $('#stopMarketUI').classList.remove('hidden');
-            break;
-        }
-      }
-      
-      // Order Type Dropdown
-      const orderTypeDropdown = $('#orderTypeDropdown');
-      const orderTypeMenu = $('#orderTypeMenu');
-      const selectedOrderType = $('#selectedOrderType');
-      
-      orderTypeDropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
-        orderTypeMenu.classList.toggle('hidden');
-      });
-      
-      orderTypeMenu.addEventListener('click', (e) => {
-        const button = e.target.closest('button[data-order-type]');
-        if (!button) return;
-        
-        const orderType = button.dataset.orderType;
-        selectedOrderType.textContent = orderType;
-        orderTypeMenu.classList.add('hidden');
-        
-        // Update app state and show appropriate UI
-        switch(orderType) {
-          case 'Market':
+      $('#orderMarket').addEventListener('click', () => {
         appState.orderType = 'Market'; 
         appState.proType = null;
-            showOnlyUI('marketLimit');
+        orderTypeSlider.className = orderTypeSlider.className.replace(/order-(market|limit|pro)/g, '') + ' order-market';
+        $('#orderMarket').classList.remove('text-neutral-400');
+        $('#orderLimit').classList.add('text-neutral-400');
+        $('#orderPro').classList.add('text-neutral-400');
+         // Show regular inputs, hide scale UI
+         $('#regularInputs').classList.remove('hidden');
+         $('#scaleUI').classList.add('hidden');
+         // Show TP/SL toggles for Market
+         const tpSlToggleSection = $('#tpSlToggle').parentElement;
+         tpSlToggleSection.style.display = 'flex';
         disablePrice(true, 'auto for Market');
-            break;
-          case 'Limit':
-        appState.orderType = 'Limit'; 
-        appState.proType = null;
-            showOnlyUI('marketLimit');
-        disablePrice(false, 'enter price');
-            break;
-          case 'Scale':
-        appState.orderType = 'Pro';
-            appState.proType = 'Scale';
-            showOnlyUI('scale');
-          disablePrice(false, 'enter price');
-            break;
-          case 'TWAP':
-            appState.orderType = 'Pro';
-            appState.proType = 'TWAP';
-            showOnlyUI('twap');
-            disablePrice(false, 'enter price');
-            break;
-          case 'Stop Limit':
-            appState.orderType = 'Pro';
-            appState.proType = 'Stop Limit';
-            showOnlyUI('stopLimit');
-            disablePrice(false, 'enter price');
-            break;
-          case 'Stop Market':
-            appState.orderType = 'Pro';
-            appState.proType = 'Stop Market';
-            showOnlyUI('stopMarket');
-          disablePrice(true, 'auto for Stop Market');
-            break;
-        }
-        
         updateSummary();
       });
       
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!orderTypeDropdown.contains(e.target)) {
-          orderTypeMenu.classList.add('hidden');
+       $('#orderLimit').addEventListener('click', () => {
+         appState.orderType = 'Limit'; 
+         appState.proType = null;
+         orderTypeSlider.className = orderTypeSlider.className.replace(/order-(market|limit|pro)/g, '') + ' order-limit';
+         $('#orderMarket').classList.add('text-neutral-400');
+         $('#orderLimit').classList.remove('text-neutral-400');
+         $('#orderPro').classList.add('text-neutral-400');
+         // Show regular inputs, hide scale UI
+         $('#regularInputs').classList.remove('hidden');
+         $('#scaleUI').classList.add('hidden');
+         // Show TP/SL toggles for Limit
+         const tpSlToggleSection = $('#tpSlToggle').parentElement;
+         tpSlToggleSection.style.display = 'flex';
+         disablePrice(false, 'enter price');
+         updateSummary();
+       });
+
+      // Pro dropdown
+      const proMenu = $('#proMenu');
+      $('#orderPro').addEventListener('click', (e) => {
+        e.stopPropagation();
+        orderTypeSlider.className = orderTypeSlider.className.replace(/order-(market|limit|pro)/g, '') + ' order-pro';
+        $('#orderMarket').classList.add('text-neutral-400');
+        $('#orderLimit').classList.add('text-neutral-400');
+        $('#orderPro').classList.remove('text-neutral-400');
+        proMenu.classList.toggle('hidden');
+      });
+      
+      proMenu.addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-pro]');
+        if (!b) return;
+        appState.orderType = 'Pro';
+        appState.proType = b.dataset.pro;
+        $('#orderPro span:first-child').textContent = appState.proType;
+        
+         // Show/hide Scale UI vs Regular Inputs
+         const scaleUI = $('#scaleUI');
+         const regularInputs = $('#regularInputs');
+         const tpSlToggleSection = $('#tpSlToggle').parentElement; // The div containing both reduce-only and TP/SL toggles
+         
+         if (appState.proType === 'Scale') {
+           scaleUI.classList.remove('hidden');
+           regularInputs.classList.add('hidden');
+           // TP/SL not available for Scale
+           tpSlToggleSection.style.display = 'none';
+         } else {
+           scaleUI.classList.add('hidden');
+           regularInputs.classList.remove('hidden');
+           // TP/SL not available for Pro options (Stop Limit, Stop Market, TWAP)
+           tpSlToggleSection.style.display = 'none';
+         }
+        
+        // Price enable rules
+        if (appState.proType === 'Stop Limit' || appState.proType === 'TWAP' || appState.proType === 'Scale') {
+          disablePrice(false, 'enter price');
+      } else {
+          disablePrice(true, 'auto for Stop Market');
         }
+        proMenu.classList.add('hidden');
+        updateSummary();
       });
 
       function disablePrice(disabled, hint='') {
