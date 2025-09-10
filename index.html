@@ -2678,10 +2678,35 @@
                   <div id="newsSearchTags" class="flex flex-wrap gap-1 mb-2 min-h-[16px]"></div>
                 </div>
                 
-                <!-- News Items -->
+                <!-- News Source Toggle -->
+                <div class="flex gap-1 bg-gray-800/50 rounded-md p-0.5 mb-3">
+                  <button id="rssNewsBtn" class="flex-1 px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200" onclick="switchNewsSource('rss')">RSS Feeds</button>
+                  <button id="tradingViewNewsBtn" class="flex-1 px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200" onclick="switchNewsSource('tradingview')">TradingView</button>
+                </div>
+
+                <!-- RSS News Items -->
                 <div id="newsContainer" class="space-y-2">
                   <div class="text-center text-gray-400 py-4 text-[10px]">
                     Loading news...
+                  </div>
+                </div>
+
+                <!-- TradingView News Widget -->
+                <div id="tradingViewNewsContainer" class="hidden">
+                  <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                    {
+                      "feedMode": "market",
+                      "market": "crypto",
+                      "isTransparent": true,
+                      "displayMode": "compact",
+                      "width": "100%",
+                      "height": "400",
+                      "colorTheme": "dark",
+                      "locale": "en"
+                    }
+                    </script>
                   </div>
                 </div>
               </div>
@@ -3919,10 +3944,11 @@
       ];
 
       const newsFeeds = [
-        { name: 'CoinDesk', url: 'https://www.coindesk.com/arc/outboundfeeds/rss/', color: 'orange' },
-        { name: 'CoinTelegraph', url: 'https://cointelegraph.com/rss', color: 'blue' },
-        { name: 'Decrypt', url: 'https://decrypt.co/feed', color: 'purple' },
-        { name: 'Bitcoin Magazine', url: 'https://bitcoinmagazine.com/.rss/full/', color: 'yellow' }
+        { name: 'CryptoSlate', url: 'https://cryptoslate.com/feed/', color: 'blue' },
+        { name: 'BeInCrypto', url: 'https://beincrypto.com/feed/', color: 'green' },
+        { name: 'NewsBTC', url: 'https://www.newsbtc.com/feed/', color: 'orange' },
+        { name: 'CoinGape', url: 'https://coingape.com/feed/', color: 'purple' },
+        { name: 'U.Today', url: 'https://u.today/rss', color: 'red' }
       ];
 
       async function fetchNews() {
@@ -4419,6 +4445,43 @@
         setTimeout(() => {
           applyNewsFilters();
         }, 100);
+      };
+
+      // Switch between RSS and TradingView news sources
+      window.switchNewsSource = function(source) {
+        const rssBtn = document.getElementById('rssNewsBtn');
+        const tradingViewBtn = document.getElementById('tradingViewNewsBtn');
+        const newsContainer = document.getElementById('newsContainer');
+        const tradingViewContainer = document.getElementById('tradingViewNewsContainer');
+        const searchSection = document.querySelector('#newsSearchInput').closest('.mb-2');
+        
+        if (source === 'tradingview') {
+          // Show TradingView widget
+          if (tradingViewContainer) tradingViewContainer.classList.remove('hidden');
+          if (newsContainer) newsContainer.classList.add('hidden');
+          if (searchSection) searchSection.style.display = 'none';
+          
+          // Update button states
+          if (tradingViewBtn) {
+            tradingViewBtn.className = 'flex-1 px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200';
+          }
+          if (rssBtn) {
+            rssBtn.className = 'flex-1 px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200';
+          }
+        } else {
+          // Show RSS feeds
+          if (newsContainer) newsContainer.classList.remove('hidden');
+          if (tradingViewContainer) tradingViewContainer.classList.add('hidden');
+          if (searchSection) searchSection.style.display = 'block';
+          
+          // Update button states
+          if (rssBtn) {
+            rssBtn.className = 'flex-1 px-2 py-1 text-[10px] font-medium rounded-sm bg-gray-700 text-gray-200';
+          }
+          if (tradingViewBtn) {
+            tradingViewBtn.className = 'flex-1 px-2 py-1 text-[10px] font-medium rounded-sm text-gray-400 hover:text-gray-200';
+          }
+        }
       };
 
       // Mobile Trade Sheet
