@@ -2086,9 +2086,10 @@
           shortBtn.classList.remove('text-rose-300');
           placeOrder.querySelector('span').textContent = 'Place Long';
           // Set place order button to green for long
-          placeOrder.style.background = 'var(--emerald-600)';
-          placeOrder.classList.remove('bg-red-600');
-          placeOrder.classList.add('bg-emerald-600');
+          placeOrder.style.background = '#10B981';
+          placeOrder.style.color = 'white';
+          placeOrder.classList.remove('text-black', 'bg-red-600');
+          placeOrder.classList.add('text-white', 'bg-emerald-600');
       } else {
           sideSlider.className = sideSlider.className.replace(/side-(long|short)/g, '') + ' side-short';
           shortBtn.classList.remove('opacity-60'); 
@@ -2098,8 +2099,9 @@
           placeOrder.querySelector('span').textContent = 'Place Short';
           // Set place order button to red for short
           placeOrder.style.background = '#EF4444';
-          placeOrder.classList.remove('bg-emerald-600');
-          placeOrder.classList.add('bg-red-600');
+          placeOrder.style.color = 'white';
+          placeOrder.classList.remove('text-black', 'bg-emerald-600');
+          placeOrder.classList.add('text-white', 'bg-red-600');
         }
         updateSummary();
       }
