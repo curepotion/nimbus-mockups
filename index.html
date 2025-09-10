@@ -656,10 +656,10 @@
               </div>
               </div>
 
-            <!-- GRID BOT SETUP PANEL (PERP) -->
-            <div id="gridSetup" class="hidden">
-              <div class="rounded-lg bg-transparent ring-0 p-1.5 divide-y divide-white/10">
-                <div class="flex items-center justify-between py-2">
+            <!-- SCALE TRADING SETUP PANEL -->
+            <div id="gridSetup" class="hidden divide-y divide-white/10">
+              <!-- Header -->
+              <div class="flex items-center justify-between py-2.5">
                   <div class="flex items-center gap-2">
                     <button id="gridBack" class="inline-flex h-7 w-7 items-center justify-center rounded-md hover:bg-white/10 ring-1 ring-white/10 transition">
                       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -667,165 +667,112 @@
                         <path d="M19 12H5"/>
                       </svg>
                     </button>
-                    <h3 id="gridTitle" class="text-[14px] font-semibold tracking-tight text-neutral-100">Futures Grid</h3>
+                  <h3 id="gridTitle" class="text-[14px] font-semibold tracking-tight text-neutral-100">Scale Trading</h3>
         </div>
-                  <button id="gridLevOpen" class="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition">
-                    <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
-                      <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                      <path d="M12 2v2"/>
-                      <path d="M12 20v2"/>
-                      <path d="M4.93 4.93l1.41 1.41"/>
-                      <path d="M17.66 17.66l1.41 1.41"/>
-                    </svg>
-                    <span class="text-[12px] font-medium"><span id="gridLevLabel" class="mono font-medium">10x</span></span>
-                  </button>
   </div>
 
-                <div class="py-2">
-                  <div class="grid grid-cols-3 relative">
-                    <button id="gridLong" class="relative z-10 py-1.5 text-[12px] font-medium text-neutral-200">Long</button>
-                    <button id="gridNeutral" class="relative z-10 py-1.5 text-[12px] font-medium text-neutral-400">Neutral</button>
-                    <button id="gridShort" class="relative z-10 py-1.5 text-[12px] font-medium text-neutral-400">Short</button>
-                    <div id="gridSideSlider" class="absolute top-1 bottom-1 left-1 w-[calc(33.333%-8px)] rounded-md bg-white/10 transition-all duration-200 grid-slider-left"></div>
+              <!-- Available to Trade -->
+              <div class="py-2.5 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Available to Trade</span>
+                  <span class="text-[13px] font-semibold mono text-white">3.04</span>
+                </div>
+                
+                <!-- Current Position -->
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Current Position</span>
+                  <span class="text-[13px] font-semibold mono text-white">0.00000 BTC</span>
     </div>
   </div>
 
-                <div class="py-2 space-y-2">
+              <!-- Size Configuration -->
+              <div class="py-2.5 space-y-3">
+                <!-- Size Input -->
+                <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
                 <div class="flex items-center justify-between">
-                    <span class="text-[12px] font-medium uppercase tracking-tight text-neutral-300">Price Range</span>
-                    <button class="inline-flex items-center gap-1 text-[11px] text-neutral-500">
-                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                        <path d="M12 17h.01"/>
+                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Size</span>
+                    <div class="flex items-center gap-1">
+                      <span class="text-[12px] font-semibold mono text-white">56.89</span>
+                      <span class="text-[12px] text-neutral-400">USD</span>
+                      <svg class="w-3.5 h-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
                       </svg>
-                      <span>sync chart</span>
-                    </button>
                   </div>
+                </div>
+                </div>
+
+                <!-- Position Size Slider -->
+                <div class="space-y-2">
                   <div class="flex items-center gap-2">
-                    <div class="flex-1 px-2 py-1.5">
-                      <label class="text-[10px] uppercase text-neutral-500">Lower</label>
-                      <input id="lowerPrice" type="number" class="w-full bg-transparent outline-none text-[12px] text-neutral-100 mono font-medium" value="52000">
+                    <!-- Custom Slider Container -->
+                    <div class="flex-1 relative">
+                      <!-- Slider Track -->
+                      <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
+                        <!-- Active Progress -->
+                        <div id="scaleSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 94%"></div>
+                        <!-- Slider Handle -->
+                        <div id="scaleSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: calc(94% - 10px)"></div>
                 </div>
-                    <div class="flex-1 px-2 py-1.5">
-                      <label class="text-[10px] uppercase text-neutral-500">Upper</label>
-                      <input id="upperPrice" type="number" class="w-full bg-transparent outline-none text-[12px] text-neutral-100 mono font-medium" value="60000">
-                </div>
-                </div>
+                      <!-- Hidden Range Input -->
+                      <input id="scaleSlider" type="range" min="0" max="100" value="94" step="1" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
               </div>
 
-                <div class="py-2 space-y-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-[12px] font-medium uppercase tracking-tight text-neutral-300">Grid Quantity</span>
-                    <span class="text-[12px] text-neutral-500">2–500</span>
+                    <!-- Percentage Input -->
+                    <div class="w-[80px]">
+                      <div class="relative rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm px-3 py-2">
+                        <input id="scalePercentInput" type="number" class="w-full bg-transparent outline-none text-[14px] mono font-semibold text-white text-center" value="94" min="0" max="100" step="1">
+                        <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[12px] text-neutral-400 pointer-events-none">%</span>
                   </div>
-                  <div class="flex items-center gap-2">
-                    <input id="gridQty" type="range" min="2" max="500" value="25" step="1" class="flex-1">
-                    <div class="w-[86px] px-2 py-1.5 ring-1 ring-white/10 rounded-md">
-                      <input id="gridQtyInput" type="number" class="w-full bg-transparent outline-none text-[12px] text-neutral-100 mono font-medium" value="25" min="2" max="500" step="1">
+                    </div>
                 </div>
                 </div>
                 </div>
 
-                <div class="py-2 space-y-2">
+              <!-- Start and End Inputs -->
+              <div class="py-2.5 space-y-2">
+                <!-- Start (USD) -->
+                <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
       <div class="flex items-center justify-between">
-                    <span class="text-[12px] font-medium uppercase tracking-tight text-neutral-300">Invested Margin</span>
-                    <span class="text-[12px] text-neutral-500">USDT</span>
+                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Start (USD)</span>
               </div>
-        <div class="flex items-center gap-2">
-                    <input id="marginSlider" type="range" min="0" max="2829" value="250" step="10" class="flex-1 cursor-pointer">
-                    <div class="w-[110px] px-2 py-1.5 ring-1 ring-white/10 rounded-md">
-                      <input id="marginInput" type="number" class="w-full bg-transparent outline-none text-[12px] text-neutral-100 mono font-medium" value="250" min="0" max="2829" step="10">
+                  <input id="startUSD" type="number" placeholder="Enter start price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
             </div>
-      </div>
+
+                <!-- End (USD) -->
+                <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
                   <div class="flex items-center justify-between">
-                    <div class="text-[12px] text-neutral-400">Balance: <span id="gridBalance" class="mono font-medium">2,829.23</span> USDT</div>
-                    <button class="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition">
-                      <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7,10 12,15 17,10"/>
-                        <line x1="12" x2="12" y1="15" y2="3"/>
-                      </svg>
-                      <span class="text-[12px] font-medium">Deposit</span>
-                    </button>
+                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">End (USD)</span>
             </div>
-                  <div class="mt-1 border-t pt-2 border-row">
-                    <div class="flex items-center justify-between">
-                      <div class="text-[12px] font-medium text-neutral-200">Reserved Margin</div>
-                      <label class="inline-flex items-center gap-2">
-                        <input id="reservedToggle" type="checkbox" class="peer sr-only" aria-label="Toggle reserved margin">
-                        <span class="h-4 w-7 rounded-full ring-1 ring-white/10 bg-white/10 relative after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-0.5 after:h-3 after:w-3 after:rounded-full after:bg-neutral-300 after:transition-all peer-checked:after:translate-x-[12px]"></span>
-                      </label>
-          </div>
-                    <p class="mt-1 text-[11px] text-neutral-400 leading-4">If selected, a margin will be reserved to reduce liquidation risk and support smooth bot operation. Unchecking may increase liquidation risk.</p>
+                  <input id="endUSD" type="number" placeholder="Enter end price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
               </div>
             </div>
 
-                <div class="grid grid-cols-2 gap-2 py-2">
-                  <div class="pr-1">
-                    <div class="text-[11px] uppercase tracking-tight text-neutral-400">Grid Mode</div>
-                    <div class="mt-1 relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5 p-1">
-                      <button id="gmArithPerp" class="relative z-10 py-1 text-[12px] font-medium">Arithmetic</button>
-                      <button id="gmGeoPerp" class="relative z-10 py-1 text-[12px] font-medium text-neutral-400">Geometric</button>
-                      <div id="gmSliderPerp" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 transition-all"></div>
+              <!-- Configuration Grid -->
+              <div class="py-2.5 grid grid-cols-2 gap-2.5">
+                <!-- Total Orders -->
+                <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Total Orders</span>
               </div>
-                  </div>
-                  <div class="pl-1">
-                    <div class="text-[11px] uppercase tracking-tight text-neutral-400">Start Condition</div>
-                    <div class="mt-1 relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5 p-1">
-                      <button id="startInstantPerp" class="relative z-10 py-1 text-[12px] font-medium">Instant</button>
-                      <button id="startPricePerp" class="relative z-10 py-1 text-[12px] font-medium text-neutral-400">Price</button>
-                      <div id="startSliderPerp" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 transition-all"></div>
-          </div>
-                    <div id="startPriceWrapPerp" class="mt-2 hidden">
-                      <div class="px-2 py-1.5">
-                        <label class="text-[10px] uppercase text-neutral-500">Trigger Price</label>
-                        <input id="startPriceInputPerp" type="number" class="w-full bg-transparent outline-none text-[12px] text-neutral-100 mono font-medium" placeholder="e.g. 59000">
-            </div>
-                </div>
-              </div>
+                  <input id="totalOrders" type="number" placeholder="Enter orders" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
               </div>
 
-                <div class="grid grid-cols-2 gap-2 py-2">
-                  <div class="pr-1">
-                    <div class="text-[11px] uppercase tracking-tight text-neutral-400">Preview</div>
-                    <div class="mt-1 h-16 rounded-sm bg-gradient-to-b from-white/[0.06] to-white/[0.02] ring-1 ring-white/10 relative overflow-hidden">
-                      <div id="previewBars" class="absolute inset-0 flex items-end gap-[2px] px-1 pb-1"></div>
+                <!-- Size Skew -->
+                <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Size Skew</span>
+                    <span class="text-[12px] font-semibold mono text-white">1.00</span>
               </div>
-                    <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
-                      <div class="text-neutral-400">Grid Step</div>
-                      <div id="gridStep" class="text-neutral-100 mono font-semibold">$333.33</div>
-                      <div class="text-neutral-400">Est. Daily</div>
-                      <div id="estDaily" class="text-emerald-200 mono font-semibold">0.12%</div>
-                      <div class="text-neutral-400">Est. APR</div>
-                      <div id="estAPR" class="text-neutral-100 mono font-semibold">43.5%</div>
-                      <div class="text-neutral-400">Grids Filled</div>
-                      <div id="gridsFilled" class="text-neutral-100 mono font-semibold">0/25</div>
                   </div>
                 </div>
-                  <div class="pl-1">
-                    <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
-                      <div class="text-neutral-400">Allocated Margin</div>
-                      <div id="gridAlloc" class="text-neutral-100 mono font-semibold">$250.00</div>
-                      <div class="text-neutral-400">Leverage</div>
-                      <div id="gridLevVal" class="text-neutral-100 mono font-semibold">10x</div>
-                      <div class="text-neutral-400">Est. Order Size</div>
-                      <div id="gridOrderSize" class="text-neutral-100 mono font-semibold">$100.00</div>
-                      <div class="text-neutral-400">Fee Estimate</div>
-                      <div id="gridFees" class="text-neutral-100 mono font-semibold">$0.87</div>
-                      <div class="text-neutral-400">Funding Impact</div>
-                      <div id="gridFunding" class="text-neutral-100 mono font-semibold">Medium</div>
-          </div>
-                    <div class="mt-3">
-                      <button id="startGrid" class="w-full group relative inline-flex items-center justify-center overflow-hidden rounded-lg px-3 py-2.5 text-[13px] font-semibold tracking-tight text-black ring-1 ring-white/10 transition-all hover:opacity-95 active:opacity-90 btn-primary">
-                        <span class="relative z-10">Start Grid Bot</span>
+
+              <!-- Action Button -->
+              <div class="py-2.5">
+                <button id="startScale" class="w-full py-2.5 rounded-md font-semibold text-[13px] text-emerald-900 transition-all duration-200" style="background: linear-gradient(135deg, #10B981, #34D399); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);" onmouseenter="this.style.background='linear-gradient(135deg, #34D399, #6EE7B7)'; this.style.boxShadow='inset 0 1px 0 rgba(255,255,255,0.4), 0 0 20px rgba(16,185,129,0.3)'; this.style.transform='translateY(-1px)'" onmouseleave="this.style.background='linear-gradient(135deg, #10B981, #34D399)'; this.style.boxShadow='inset 0 1px 0 rgba(255,255,255,0.2)'; this.style.transform='translateY(0)'">
+                  <span class="relative z-10">Start Scale Trading</span>
                       </button>
-                      <p class="mt-2 text-[11px] text-neutral-500 leading-4">Bot will place staggered orders within range and rebalance as the price oscillates. Monitor margin usage and risk parameters.</p>
             </div>
-          </div>
-          </div>
-              </div>
+
             </div>
 
           </div> <!-- /content -->
@@ -2634,7 +2581,7 @@
           const name = b.dataset.bot;
           if (!name) return;
           appState.grid.context = name;
-          if ($('#gridTitle')) $('#gridTitle').textContent = name;
+          if ($('#gridTitle')) $('#gridTitle').textContent = name === 'Scale' ? 'Scale Trading' : name;
           // If Spot strategy, we can reflect title only; keep UI same
           strategiesMode.classList.add('hidden');
           tradeMode.classList.add('hidden');
@@ -2642,6 +2589,36 @@
           appState.grid.active = true;
         });
       });
+      
+      // Scale Trading Slider functionality
+      const scaleSlider = $('#scaleSlider');
+      const scaleSliderProgress = $('#scaleSliderProgress');
+      const scaleSliderHandle = $('#scaleSliderHandle');
+      const scalePercentInput = $('#scalePercentInput');
+      
+      function updateScaleSliderVisuals(val) {
+        const percentage = val + '%';
+        scaleSliderProgress.style.width = percentage;
+        scaleSliderHandle.style.left = `calc(${percentage} - 10px)`;
+      }
+      
+      if (scaleSlider && scalePercentInput) {
+        scaleSlider.addEventListener('input', (e) => {
+          const val = e.target.value;
+          scalePercentInput.value = val;
+          updateScaleSliderVisuals(val);
+        });
+        
+        scalePercentInput.addEventListener('input', (e) => {
+          const val = Math.max(0, Math.min(100, Number(e.target.value) || 0));
+          e.target.value = val;
+          scaleSlider.value = val;
+          updateScaleSliderVisuals(val);
+        });
+        
+        // Initialize slider visuals
+        updateScaleSliderVisuals(scaleSlider.value);
+      }
       
       // Back from grid
       if ($('#gridBack')) {
