@@ -456,26 +456,26 @@
                     <div class="flex items-center justify-between">
                       <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Price</span>
                       <span id="priceHint" class="text-[11px] text-neutral-500">auto for Market</span>
-                </div>
+                  </div>
                     <input id="priceInput" type="number" placeholder="Market" disabled="" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 disabled:placeholder-neutral-500">
                 </div>
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between">
                       <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
                       <button id="amountToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer" onclick="toggleAmountDisplay()">
                         <span id="amountDisplayValue">0.25</span> <span id="amountDisplayUnit">BTC</span>
                       </button>
-                </div>
+              </div>
                     <input id="amountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                </div>
             </div>
           </div>
+        </div>
 
                 </div>
                 <!-- End Regular Inputs -->
 
               <!-- Options -->
-              <div class="py-2.5">
+              <div id="optionsSection" class="py-2.5">
                 <div class="flex items-center justify-between">
                   <!-- Reduce-only toggle -->
                   <button id="reduceToggle" class="group inline-flex items-center gap-2">
@@ -529,9 +529,9 @@
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss %</div>
                         <input id="slLossPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
                       </div>
-                    </div>
                 </div>
             </div>
+          </div>
 
               <!-- Place Order + Summary -->
               <div class="py-2.5">
@@ -2158,6 +2158,8 @@
         // Show regular inputs, hide scale UI
         $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
+        // Show TP/SL options for Market
+        $('#optionsSection').classList.remove('hidden');
         disablePrice(true, 'auto for Market');
         updateSummary();
       });
@@ -2172,6 +2174,8 @@
         // Show regular inputs, hide scale UI
         $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
+        // Show TP/SL options for Limit
+        $('#optionsSection').classList.remove('hidden');
         disablePrice(false, 'enter price');
         updateSummary();
       });
@@ -2197,13 +2201,18 @@
         // Show/hide Scale UI vs Regular Inputs
         const scaleUI = $('#scaleUI');
         const regularInputs = $('#regularInputs');
+        const optionsSection = $('#optionsSection');
         
         if (appState.proType === 'Scale') {
           scaleUI.classList.remove('hidden');
           regularInputs.classList.add('hidden');
+          // Hide TP/SL options for all Pro types (including Scale)
+          optionsSection.classList.add('hidden');
         } else {
           scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
+          // Hide TP/SL options for all Pro types (Stop Limit, TWAP, etc.)
+          optionsSection.classList.add('hidden');
         }
         
         // Price enable rules
