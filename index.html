@@ -370,29 +370,21 @@
               </div>
                 </div>
                 <div class="mt-1.5 flex items-center gap-2.5">
-                  <!-- Asset Dropdown -->
-                <div class="relative">
-                    <button id="assetBtn" class="inline-flex items-center gap-1.5 rounded-md ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition px-2 py-1.5">
-                      <svg class="w-4 h-4 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="8" cy="8" r="6"/>
-                        <path d="M18.09 10.37A6 6 0 1 1 10.37 18.09"/>
-                        <path d="M7 6h1v4"/>
-                        <path d="M9.5 6.5v3"/>
-                      </svg>
-                      <span class="text-[12px] font-medium">ETH</span>
-                      <svg class="w-3.5 h-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M6 9l6 6 6-6"/>
-                      </svg>
-                    </button>
-                    <div id="assetMenu" class="hidden absolute z-20 mt-1 w-[160px] rounded-md glass-strong p-1">
-                      <button data-asset="ETH" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">ETH</button>
-                      <button data-asset="BTC" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">BTC</button>
-                      <button data-asset="SOL" class="w-full text-left px-2 py-1.5 rounded-[6px] hover:bg-white/10 text-[12px]">SOL</button>
-                </div>
-              </div>
+
                   <!-- Slider + % input -->
                   <div class="flex-1">
+                    <div class="relative">
                     <input id="sizeSlider" type="range" min="0" max="100" step="1" value="0">
+                      <!-- Percentage Labels -->
+                      <div class="flex justify-between items-center mt-1 px-1">
+                        <button class="percentage-label text-[10px] text-neutral-400 hover:text-white cursor-pointer transition-colors" data-percent="25">25%</button>
+                        <button class="percentage-label text-[10px] text-neutral-400 hover:text-white cursor-pointer transition-colors" data-percent="33">33%</button>
+                        <button class="percentage-label text-[10px] text-neutral-400 hover:text-white cursor-pointer transition-colors" data-percent="50">50%</button>
+                        <button class="percentage-label text-[10px] text-neutral-400 hover:text-white cursor-pointer transition-colors" data-percent="66">66%</button>
+                        <button class="percentage-label text-[10px] text-neutral-400 hover:text-white cursor-pointer transition-colors" data-percent="75">75%</button>
+                        <button class="percentage-label text-[10px] text-neutral-400 hover:text-white cursor-pointer transition-colors" data-percent="100">100%</button>
+                      </div>
+                    </div>
                   </div>
                   <div class="w-[108px]">
                     <div class="flex items-center gap-1.5 rounded-md ring-1 ring-white/10 bg-white/5 px-2 py-1.5">
@@ -2186,6 +2178,14 @@
       
       sizeSlider.addEventListener('input', e => syncPercent(e.target.value));
       sizeInput.addEventListener('input', e => syncPercent(e.target.value));
+      
+      // Percentage label clicks
+      document.querySelectorAll('.percentage-label').forEach(label => {
+        label.addEventListener('click', () => {
+          const percent = parseInt(label.dataset.percent);
+          syncPercent(percent);
+        });
+      });
       amountInput.addEventListener('input', () => {
         updateAmountDisplay();
         updateSummary();
