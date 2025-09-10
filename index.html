@@ -428,89 +428,29 @@
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">End (USD)</span>
               </div>
                       <input type="number" placeholder="Enter end price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-            </div>
           </div>
-                  
+        </div>
+
                   <!-- Bottom Row: Total Orders and Size Skew -->
                   <div class="grid grid-cols-2 gap-2.5">
                     <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Total Orders</span>
                       </div>
                       <input type="number" placeholder="10" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-        </div>
-                    
-                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
+              </div>
+
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Size Skew</span>
                         <span class="text-[12px] mono font-semibold text-white">1.00</span>
-                      </div>
+                </div>
                     </div>
                   </div>
                 </div>
                 
                 <!-- Regular Trading Inputs (Price and Size inputs) -->
                 <div id="regularInputs" class="mt-2 space-y-3">
-
-              <!-- Options -->
-              <div class="py-2.5">
-                <div class="flex items-center justify-between">
-                  <!-- Reduce-only toggle -->
-                    <button id="reduceToggle" class="group inline-flex items-center gap-2">
-                    <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
-                      <span id="reduceKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
-                    </span>
-                    <span class="text-[12px] font-medium">Reduce Only</span>
-                  </button>
-                      
-                      <!-- TP / SL Toggle -->
-                      <button id="tpSlToggle" class="group inline-flex items-center gap-2">
-                        <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
-                          <span id="tpSlKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
-                        </span>
-                        <span class="text-[12px] font-medium">TP / SL</span>
-                    </button>
-              </div>
-
-                <!-- TP / SL Grid -->
-                <div id="tpSlFields" class="mt-2 space-y-2">
-                  <!-- TP Row -->
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="grid grid-cols-3 gap-2">
-                      <div class="text-left">
-                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">TP Price</div>
-                        <input id="tpInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
-              </div>
-                      <div class="text-left">
-                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain $</div>
-                        <input id="tpGainUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
-                  </div>
-                      <div class="text-left">
-                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain %</div>
-                        <input id="tpGainPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
-                </div>
-              </div>
-            </div>
-                  
-                  <!-- SL Row -->
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="grid grid-cols-3 gap-2">
-                      <div class="text-left">
-                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">SL Price</div>
-                        <input id="slInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
-                </div>
-                      <div class="text-left">
-                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss $</div>
-                        <input id="slLossUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
-                      </div>
-                      <div class="text-left">
-                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss %</div>
-                        <input id="slLossPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
-                      </div>
-                    </div>
-                </div>
-            </div>
-                
                 <div class="grid grid-cols-2 gap-2.5">
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2 transition-opacity opacity-60" id="priceField">
                     <div class="flex items-center justify-between">
@@ -533,6 +473,65 @@
 
                 </div>
                 <!-- End Regular Inputs -->
+
+              <!-- Options -->
+              <div class="py-2.5">
+                <div class="flex items-center justify-between">
+                  <!-- Reduce-only toggle -->
+                  <button id="reduceToggle" class="group inline-flex items-center gap-2">
+                    <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
+                      <span id="reduceKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
+                    </span>
+                    <span class="text-[12px] font-medium">Reduce Only</span>
+                  </button>
+                    
+                    <!-- TP / SL Toggle -->
+                    <button id="tpSlToggle" class="group inline-flex items-center gap-2">
+                      <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
+                        <span id="tpSlKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
+                      </span>
+                      <span class="text-[12px] font-medium">TP / SL</span>
+                  </button>
+              </div>
+
+                <!-- TP / SL Grid -->
+                <div id="tpSlFields" class="mt-2 space-y-2">
+                  <!-- TP Row -->
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="grid grid-cols-3 gap-2">
+                      <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">TP Price</div>
+                        <input id="tpInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
+                </div>
+                      <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain $</div>
+                        <input id="tpGainUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
+                </div>
+                      <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain %</div>
+                        <input id="tpGainPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- SL Row -->
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="grid grid-cols-3 gap-2">
+                      <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">SL Price</div>
+                        <input id="slInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
+                </div>
+                      <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss $</div>
+                        <input id="slLossUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
+                      </div>
+                      <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss %</div>
+                        <input id="slLossPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
+                      </div>
+                    </div>
+                </div>
+            </div>
 
               <!-- Place Order + Summary -->
               <div class="py-2.5">
