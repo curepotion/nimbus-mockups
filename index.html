@@ -1883,9 +1883,7 @@
 
 
 
-    // Main App Initialization
-    function initializeApp() {
-      // State management
+    // Global State Management
       const appState = {
         tab: 'trade',
         orderType: 'Market',
@@ -1911,6 +1909,9 @@
           reserved: false
         }
       };
+
+    // Main App Initialization
+    function initializeApp() {
 
       // Utility functions
       const $ = (selector) => document.querySelector(selector);
