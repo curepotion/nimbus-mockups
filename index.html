@@ -377,7 +377,7 @@
                       <!-- Slider Track -->
                       <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
                         <!-- Active Progress -->
-                        <div id="sliderProgress" class="h-full bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 rounded-sm transition-all duration-200" style="width: 0%"></div>
+                        <div id="sliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 0%"></div>
                         <!-- Slider Handle -->
                         <div id="sliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
                 </div>
@@ -2192,7 +2192,7 @@
       function updatePercentageButtons(val) {
         // Remove active state from all buttons
         document.querySelectorAll('.percentage-btn').forEach(btn => {
-          btn.classList.remove('text-orange-400', 'font-semibold');
+          btn.classList.remove('text-emerald-400', 'font-semibold');
           btn.classList.add('text-neutral-400');
         });
         
@@ -2200,7 +2200,7 @@
         const activeBtn = document.querySelector(`[data-percent="${val}"]`);
         if (activeBtn) {
           activeBtn.classList.remove('text-neutral-400');
-          activeBtn.classList.add('text-orange-400', 'font-semibold');
+          activeBtn.classList.add('text-emerald-400', 'font-semibold');
         }
       }
       
