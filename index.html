@@ -441,7 +441,7 @@
                     <div class="grid grid-cols-3 gap-2">
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">TP Price</div>
-                        <input id="tpPriceInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
+                        <input id="tpInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-emerald-300 placeholder-neutral-600">
                 </div>
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain $</div>
@@ -459,7 +459,7 @@
                     <div class="grid grid-cols-3 gap-2">
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">SL Price</div>
-                        <input id="slPriceInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
+                        <input id="slInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
                 </div>
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss $</div>
@@ -2122,17 +2122,7 @@
         }
       });
 
-      // TP / SL type toggles
-      const tpTypeBtn = $('#tpTypeBtn');
-      const slTypeBtn = $('#slTypeBtn');
-      
-      tpTypeBtn.addEventListener('click', () => {
-        tpTypeBtn.firstChild.textContent = (tpTypeBtn.firstChild.textContent.trim() === 'Gain %') ? 'Price' : 'Gain %';
-      });
-      
-      slTypeBtn.addEventListener('click', () => {
-        slTypeBtn.firstChild.textContent = (slTypeBtn.firstChild.textContent.trim() === 'Loss %') ? 'Price' : 'Loss %';
-      });
+      // TP / SL inputs are now static grid layout - no toggle functionality needed
 
       // Size controls (% of balance)
       const sizeSlider = $('#sizeSlider');
