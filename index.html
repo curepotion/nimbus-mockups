@@ -433,31 +433,38 @@
               </div>
 
                 <!-- TP / SL Inputs -->
-                <div id="tpSlFields" class="mt-2 grid grid-cols-2 gap-2.5">
+                <div id="tpSlFields" class="mt-2 space-y-2">
+                  <!-- Take Profit Row -->
+                  <div class="grid grid-cols-3 gap-2">
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">TP Price</span>
-                      <button id="tpTypeBtn" class="inline-flex items-center gap-1 text-[11px] text-emerald-300/95">
-                        Gain %
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                      </button>
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">TP Price</div>
+                      <input id="tpPriceInput" type="number" placeholder="4,850" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
                 </div>
-                    <input id="tpInput" type="number" placeholder="e.g. 28750" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain $</div>
+                      <input id="tpGainInput" type="number" placeholder="$8,000,000" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
                 </div>
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">SL Price</span>
-                      <button id="slTypeBtn" class="inline-flex items-center gap-1 text-[11px] text-red-300/95">
-                        Loss %
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                      </button>
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain %</div>
+                      <input id="tpPercentInput" type="number" placeholder="98.1%" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
                 </div>
-                    <input id="slInput" type="number" placeholder="e.g. 25200" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
                 </div>
+                  
+                  <!-- Stop Loss Row -->
+                  <div class="grid grid-cols-3 gap-2">
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">SL Price</div>
+                      <input id="slPriceInput" type="number" placeholder="4,850" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                    </div>
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss $</div>
+                      <input id="slLossInput" type="number" placeholder="$8,000,000" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                    </div>
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss %</div>
+                      <input id="slPercentInput" type="number" placeholder="98.1%" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                    </div>
+                  </div>
             </div>
           </div>
 
