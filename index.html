@@ -434,68 +434,38 @@
                   </button>
               </div>
 
-                <!-- TP / SL Inputs -->
-                <div id="tpSlFields" class="mt-2 grid grid-cols-2 gap-2.5">
-                  <!-- Take Profit -->
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between mb-2">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Take Profit</span>
-                      <button id="tpTypeBtn" class="inline-flex items-center gap-1 text-[11px] text-emerald-300/95">
-                        Price
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                      </button>
+                <!-- TP / SL Grid -->
+                <div id="tpSlFields" class="mt-2 rounded-md ring-1 ring-white/10 bg-white/5 p-3">
+                  <!-- First Row: TP Price, Gain $, Gain % -->
+                  <div class="grid grid-cols-3 gap-3 mb-3">
+                    <div class="text-left">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">TP Price</div>
+                      <input id="tpPriceInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[13px] mono font-semibold text-white placeholder-neutral-600">
                 </div>
-                    
-                    <!-- TP Values Display -->
-                    <div class="space-y-1 mb-2">
-                      <div class="flex justify-between">
-                        <span class="text-[10px] text-neutral-500">TP Price</span>
-                        <span id="tpPriceDisplay" class="text-[11px] mono font-semibold text-white">--</span>
+                    <div class="text-left">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain $</div>
+                      <input id="tpGainUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[13px] mono font-semibold text-emerald-300 placeholder-neutral-600">
                 </div>
-                      <div class="flex justify-between">
-                        <span class="text-[10px] text-neutral-500">Gain $</span>
-                        <span id="tpGainUsdDisplay" class="text-[11px] mono font-semibold text-emerald-300">--</span>
-                      </div>
-                      <div class="flex justify-between">
-                        <span class="text-[10px] text-neutral-500">Gain %</span>
-                        <span id="tpGainPctDisplay" class="text-[11px] mono font-semibold text-emerald-300">--</span>
-                      </div>
-                    </div>
-                    
-                    <input id="tpInput" type="number" placeholder="e.g. 28750" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 border-t border-white/10 pt-2" oninput="updateTPDisplay()">
-                  </div>
+                    <div class="text-left">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Gain %</div>
+                      <input id="tpGainPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[13px] mono font-semibold text-emerald-300 placeholder-neutral-600">
+                </div>
+                </div>
                   
-                  <!-- Stop Loss -->
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between mb-2">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Loss</span>
-                      <button id="slTypeBtn" class="inline-flex items-center gap-1 text-[11px] text-red-300/95">
-                        Price
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                      </button>
-                </div>
-                    
-                    <!-- SL Values Display -->
-                    <div class="space-y-1 mb-2">
-                      <div class="flex justify-between">
-                        <span class="text-[10px] text-neutral-500">SL Price</span>
-                        <span id="slPriceDisplay" class="text-[11px] mono font-semibold text-white">--</span>
-                </div>
-                      <div class="flex justify-between">
-                        <span class="text-[10px] text-neutral-500">Loss $</span>
-                        <span id="slLossUsdDisplay" class="text-[11px] mono font-semibold text-red-300">--</span>
-                      </div>
-                      <div class="flex justify-between">
-                        <span class="text-[10px] text-neutral-500">Loss %</span>
-                        <span id="slLossPctDisplay" class="text-[11px] mono font-semibold text-red-300">--</span>
-                      </div>
+                  <!-- Second Row: SL Price, Loss $, Loss % -->
+                  <div class="grid grid-cols-3 gap-3">
+                    <div class="text-left">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">SL Price</div>
+                      <input id="slPriceInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[13px] mono font-semibold text-white placeholder-neutral-600">
                     </div>
-                    
-                    <input id="slInput" type="number" placeholder="e.g. 25200" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 border-t border-white/10 pt-2" oninput="updateSLDisplay()">
+                    <div class="text-left">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss $</div>
+                      <input id="slLossUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[13px] mono font-semibold text-red-300 placeholder-neutral-600">
+                    </div>
+                    <div class="text-left">
+                      <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss %</div>
+                      <input id="slLossPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[13px] mono font-semibold text-red-300 placeholder-neutral-600">
+                    </div>
                   </div>
             </div>
           </div>
@@ -2187,12 +2157,10 @@
       
       sizeSlider.addEventListener('input', e => syncPercent(e.target.value));
       sizeInput.addEventListener('input', e => syncPercent(e.target.value));
-        amountInput.addEventListener('input', () => {
-          updateAmountDisplay();
-          updateTPDisplay();
-          updateSLDisplay();
-          updateSummary();
-        });
+      amountInput.addEventListener('input', () => {
+        updateAmountDisplay();
+        updateSummary();
+      });
 
       // Amount toggle functionality
       let amountDisplayMode = 'USDT'; // Current input mode: 'USDT' or 'BTC'
@@ -2225,8 +2193,6 @@
         }
         
         updateAmountDisplay();
-        updateTPDisplay();
-        updateSLDisplay();
         updateSummary();
       };
       
@@ -2246,73 +2212,6 @@
           amountDisplayValue.textContent = usdtAmount ? usdtAmount.toFixed(0) : '0';
         }
       }
-
-      // TP/SL Display Functions
-      window.updateTPDisplay = function() {
-        const tpInput = document.getElementById('tpInput');
-        const tpPriceDisplay = document.getElementById('tpPriceDisplay');
-        const tpGainUsdDisplay = document.getElementById('tpGainUsdDisplay');
-        const tpGainPctDisplay = document.getElementById('tpGainPctDisplay');
-        const amountInput = document.getElementById('amountInput');
-        
-        const tpPrice = parseFloat(tpInput.value);
-        const currentPriceValue = currentPrice() || 65000;
-        const amount = parseFloat(amountInput.value) || 0;
-        
-        if (tpPrice && amount > 0) {
-          // Calculate position size based on current input mode
-          let positionSizeUSD;
-          if (amountDisplayMode === 'BTC') {
-            positionSizeUSD = amount * currentPriceValue; // BTC amount * price
-          } else {
-            positionSizeUSD = amount; // Already in USD
-          }
-          
-          const gainUSD = ((tpPrice - currentPriceValue) / currentPriceValue) * positionSizeUSD;
-          const gainPct = ((tpPrice - currentPriceValue) / currentPriceValue) * 100;
-          
-          tpPriceDisplay.textContent = tpPrice.toLocaleString();
-          tpGainUsdDisplay.textContent = `$${Math.abs(gainUSD).toLocaleString()}`;
-          tpGainPctDisplay.textContent = `${gainPct.toFixed(1)}%`;
-        } else {
-          tpPriceDisplay.textContent = '--';
-          tpGainUsdDisplay.textContent = '--';
-          tpGainPctDisplay.textContent = '--';
-        }
-      };
-
-      window.updateSLDisplay = function() {
-        const slInput = document.getElementById('slInput');
-        const slPriceDisplay = document.getElementById('slPriceDisplay');
-        const slLossUsdDisplay = document.getElementById('slLossUsdDisplay');
-        const slLossPctDisplay = document.getElementById('slLossPctDisplay');
-        const amountInput = document.getElementById('amountInput');
-        
-        const slPrice = parseFloat(slInput.value);
-        const currentPriceValue = currentPrice() || 65000;
-        const amount = parseFloat(amountInput.value) || 0;
-        
-        if (slPrice && amount > 0) {
-          // Calculate position size based on current input mode
-          let positionSizeUSD;
-          if (amountDisplayMode === 'BTC') {
-            positionSizeUSD = amount * currentPriceValue; // BTC amount * price
-          } else {
-            positionSizeUSD = amount; // Already in USD
-          }
-          
-          const lossUSD = Math.abs(((slPrice - currentPriceValue) / currentPriceValue) * positionSizeUSD);
-          const lossPct = Math.abs(((slPrice - currentPriceValue) / currentPriceValue) * 100);
-          
-          slPriceDisplay.textContent = slPrice.toLocaleString();
-          slLossUsdDisplay.textContent = `$${lossUSD.toLocaleString()}`;
-          slLossPctDisplay.textContent = `${lossPct.toFixed(1)}%`;
-        } else {
-          slPriceDisplay.textContent = '--';
-          slLossUsdDisplay.textContent = '--';
-          slLossPctDisplay.textContent = '--';
-        }
-      };
 
       // Place order enable/summary
       function currentPrice() {
