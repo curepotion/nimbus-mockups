@@ -375,11 +375,11 @@
                     <!-- Custom Slider Container -->
                     <div class="flex-1 relative">
                       <!-- Slider Track -->
-                      <div class="h-2 bg-gray-600/30 rounded-full relative overflow-hidden">
-                        <!-- Active Progress (Orange/Red Gradient) -->
-                        <div id="sliderProgress" class="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full transition-all duration-200" style="width: 0%"></div>
+                      <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
+                        <!-- Active Progress -->
+                        <div id="sliderProgress" class="h-full bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 rounded-sm transition-all duration-200" style="width: 0%"></div>
                         <!-- Slider Handle -->
-                        <div id="sliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white ring-2 ring-orange-400 rounded-full cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
+                        <div id="sliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
                 </div>
                       <!-- Hidden Range Input -->
                       <input id="sizeSlider" type="range" min="0" max="100" step="1" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
@@ -388,7 +388,7 @@
                     <!-- Percentage Input -->
                     <div class="w-[80px]">
                       <div class="relative rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm px-3 py-2">
-                        <input id="sizeInput" type="number" class="w-full bg-transparent outline-none text-[14px] mono font-semibold text-white text-center" value="50" min="0" max="100" step="1">
+                        <input id="sizeInput" type="number" class="w-full bg-transparent outline-none text-[14px] mono font-semibold text-white text-center" value="0" min="0" max="100" step="1">
                         <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[12px] text-neutral-400 pointer-events-none">%</span>
                   </div>
                 </div>
@@ -398,7 +398,7 @@
                   <div class="flex justify-between items-center px-1">
                     <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="25">25%</button>
                     <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="33">33%</button>
-                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer bg-orange-500 text-white px-2 py-1 rounded-md" data-percent="50">50%</button>
+                    <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="50">50%</button>
                     <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="66">66%</button>
                     <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="75">75%</button>
                     <button class="percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="100">100%</button>
@@ -2192,7 +2192,7 @@
       function updatePercentageButtons(val) {
         // Remove active state from all buttons
         document.querySelectorAll('.percentage-btn').forEach(btn => {
-          btn.classList.remove('bg-orange-500', 'text-white', 'px-2', 'py-1', 'rounded-md');
+          btn.classList.remove('text-orange-400', 'font-semibold');
           btn.classList.add('text-neutral-400');
         });
         
@@ -2200,12 +2200,9 @@
         const activeBtn = document.querySelector(`[data-percent="${val}"]`);
         if (activeBtn) {
           activeBtn.classList.remove('text-neutral-400');
-          activeBtn.classList.add('bg-orange-500', 'text-white', 'px-2', 'py-1', 'rounded-md');
+          activeBtn.classList.add('text-orange-400', 'font-semibold');
         }
       }
-      
-      // Initialize slider at 50%
-      syncPercent(50);
       
       sizeSlider.addEventListener('input', e => syncPercent(e.target.value));
       sizeInput.addEventListener('input', e => syncPercent(e.target.value));
