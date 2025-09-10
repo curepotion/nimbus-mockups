@@ -43,7 +43,7 @@ class NimbusNavbar {
           </div>
 
           <!-- Trading Status -->
-          <div class="flex-1 flex items-center justify-center gap-6">
+          <div class="flex-1 flex items-center justify-end gap-6">
             <!-- Market Info -->
 
               <!-- Trading Metrics -->
