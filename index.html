@@ -951,11 +951,19 @@
               <button data-tab="fundingHistory" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Funding History</button>
               <button data-tab="orderHistory" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Order History</button>
               <button data-tab="activeBots" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Active Bots</button>
+              
+              <!-- Balance Section Toggle -->
+              <button id="balanceToggle" class="ml-auto px-2 h-9 flex items-center justify-center text-neutral-400 hover:text-neutral-200 transition-colors" title="Toggle Balance Section" onclick="toggleBalanceSection()">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 6L6 18"/>
+                  <path d="M6 6l12 12"/>
+                </svg>
+              </button>
       </div>
         </div>
 
                     <!-- Content -->
-          <div class="flex-1 overflow-y-auto p-4">
+          <div id="balanceContent" class="flex-1 overflow-y-auto p-4">
 
             <!-- Balances -->
             <section id="panel-balances">
@@ -2481,6 +2489,36 @@
           toggleBtn.title = "Hide Trading Panel";
         }
       });
+
+      // Toggle Balance Section Content
+      window.toggleBalanceSection = function() {
+        const content = document.getElementById('balanceContent');
+        const toggleBtn = document.getElementById('balanceToggle');
+        
+        if (content && toggleBtn) {
+          const isHidden = content.style.display === 'none';
+          
+          // Toggle the content visibility
+          content.style.display = isHidden ? 'block' : 'none';
+          
+          // Update icon
+          const svg = toggleBtn.querySelector('svg');
+          if (isHidden) {
+            // Show content - use close/collapse icon (X)
+            svg.innerHTML = `
+              <path d="M18 6L6 18"/>
+              <path d="M6 6l12 12"/>
+            `;
+            toggleBtn.title = "Hide Balance Section";
+          } else {
+            // Hide content - use expand icon (chevron down)
+            svg.innerHTML = `
+              <path d="M6 9l6 6 6-6"/>
+            `;
+            toggleBtn.title = "Show Balance Section";
+          }
+        }
+      };
 
       // Toggle Trading Panel (Trade + Token List)
       window.toggleTradingPanel = function() {
