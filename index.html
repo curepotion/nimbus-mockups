@@ -418,9 +418,6 @@
                       </button>
               </div>
                     <input id="amountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    <div class="mt-1 text-right">
-                      <span class="text-[10px] text-neutral-500" id="amountInputUnit">USDT</span>
-                    </div>
             </div>
           </div>
         </div>
@@ -2165,7 +2162,6 @@
         const amountDisplayValue = document.getElementById('amountDisplayValue');
         const amountDisplayUnit = document.getElementById('amountDisplayUnit');
         const amountInput = document.getElementById('amountInput');
-        const amountInputUnit = document.getElementById('amountInputUnit');
         
         const price = currentPrice() || 65000; // Get current price
         const currentInputValue = parseFloat(amountInput.value) || 0;
@@ -2178,7 +2174,6 @@
           const btcAmount = currentInputValue / price;
           amountInput.value = btcAmount ? btcAmount.toFixed(6) : '';
           amountInput.placeholder = '0.25';
-          amountInputUnit.textContent = 'BTC';
           
         } else {
           // Switch to USDT input mode
@@ -2188,7 +2183,6 @@
           const usdtAmount = currentInputValue * price;
           amountInput.value = usdtAmount ? usdtAmount.toFixed(0) : '';
           amountInput.placeholder = '1625';
-          amountInputUnit.textContent = 'USDT';
         }
         
         updateAmountDisplay();
