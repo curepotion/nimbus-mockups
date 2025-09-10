@@ -411,21 +411,14 @@
                     <input id="priceInput" type="number" placeholder="Market" disabled="" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 disabled:placeholder-neutral-500">
                 </div>
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between mb-2">
                       <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Size</span>
-                      <button id="sizeToggleBtn" class="text-[11px] text-neutral-500 hover:text-neutral-300 transition-colors" onclick="toggleSizeDisplay()">
-                        <span id="sizeToggleLabel">BTC</span>
+                      <button id="sizeToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-neutral-300 transition-colors" onclick="toggleSizeDisplay()">
+                        <span id="sizeDisplayValue">1000 BTC</span>
                       </button>
-              </div>
-                    <div class="mt-1 flex items-center">
-                      <input id="sizeInput" type="number" placeholder="0.25" class="flex-1 bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                      <div class="flex items-center gap-1 text-[10px] text-neutral-400 ml-2">
-                        <span id="btcValue">0.25 BTC</span>
-                        <span>/</span>
-                        <span id="usdtValue">16,250 USDT</span>
-                      </div>
                     </div>
-            </div>
+                    <input id="sizeInput" type="number" placeholder="10000 USDT" class="w-full bg-transparent outline-none text-[14px] mono font-semibold placeholder-neutral-600 text-white">
+                  </div>
           </div>
         </div>
 
@@ -2140,8 +2133,7 @@
       // Size controls (% of balance)
       const sizeSlider = $('#sizeSlider');
       const sizeInput = $('#sizeInput');
-      const btcValueLabel = $('#btcValue');
-      const usdtValueLabel = $('#usdtValue');
+      const sizeDisplayValue = $('#sizeDisplayValue');
       
       function syncPercent(val) {
         val = Math.max(0, Math.min(100, Number(val) || 0));
@@ -2154,13 +2146,21 @@
         const qty = px > 0 ? usd / px : 0;
         // Update size input based on current display mode
         if (qty > 0) {
-          if (currentSizeDisplay === 'BTC') {
-            sizeInput.value = qty.toFixed(6);
+          const price = currentPrice() || 65000;
+          if (topDisplayMode === 'BTC') {
+            // Top shows BTC, input shows USDT
+            const usdValue = qty * price;
+            sizeInput.value = usdValue.toFixed(0);
+            btcAmount = qty;
+            usdtAmount = usdValue;
+            sizeDisplayValue.textContent = `${btcAmount.toFixed(0)} BTC`;
           } else {
-            const usdValue = qty * (currentPrice() || 65000);
-            sizeInput.value = usdValue.toFixed(2);
+            // Top shows USDT, input shows BTC
+            sizeInput.value = qty.toFixed(6);
+            btcAmount = qty;
+            usdtAmount = qty * price;
+            sizeDisplayValue.textContent = `${usdtAmount.toFixed(0)} USDT`;
           }
-          updateSizeLabels();
         }
         updateSummary();
       }
@@ -2169,58 +2169,63 @@
       sizeInput.addEventListener('input', e => syncPercent(e.target.value));
       
       // Size toggle and sync functionality
-      let currentSizeDisplay = 'BTC'; // Track current display mode: 'BTC' or 'USDT'
-      let btcAmount = 0;
-      let usdtAmount = 0;
+      let topDisplayMode = 'BTC'; // What's shown in top-right: 'BTC' or 'USDT'
+      let btcAmount = 1000; // Default BTC amount
+      let usdtAmount = 65000; // Default USDT amount (1000 BTC * $65)
       
       window.toggleSizeDisplay = function() {
-        const toggleLabel = document.getElementById('sizeToggleLabel');
-        const inputValue = parseFloat(sizeInput.value) || 0;
-        
-        if (currentSizeDisplay === 'BTC') {
-          // Switch to USDT display
-          currentSizeDisplay = 'USDT';
-          toggleLabel.textContent = 'USDT';
-          
-          // Convert current BTC input to USDT and show in input
-          btcAmount = inputValue;
-          usdtAmount = btcAmount * (currentPrice() || 65000);
-          sizeInput.value = usdtAmount.toFixed(2);
-          sizeInput.placeholder = '16,250';
-          
-        } else {
-          // Switch to BTC display
-          currentSizeDisplay = 'BTC';
-          toggleLabel.textContent = 'BTC';
-          
-          // Convert current USDT input to BTC and show in input
-          usdtAmount = inputValue;
-          btcAmount = usdtAmount / (currentPrice() || 65000);
-          sizeInput.value = btcAmount.toFixed(6);
-          sizeInput.placeholder = '0.25';
-        }
-        
-        updateSizeLabels();
-      };
-      
-      function updateSizeLabels() {
         const price = currentPrice() || 65000;
         
-        if (currentSizeDisplay === 'BTC') {
-          btcAmount = parseFloat(sizeInput.value) || 0;
-          usdtAmount = btcAmount * price;
-        } else {
-          usdtAmount = parseFloat(sizeInput.value) || 0;
+        if (topDisplayMode === 'BTC') {
+          // Switch top display to USDT, input shows BTC
+          topDisplayMode = 'USDT';
+          
+          // Get current input value as USDT and convert to BTC
+          const inputUsdtValue = parseFloat(sizeInput.value) || usdtAmount;
+          usdtAmount = inputUsdtValue;
           btcAmount = usdtAmount / price;
+          
+          // Update display
+          sizeDisplayValue.textContent = `${usdtAmount.toFixed(0)} USDT`;
+          sizeInput.value = btcAmount.toFixed(6);
+          sizeInput.placeholder = '0.25 BTC';
+          
+        } else {
+          // Switch top display to BTC, input shows USDT
+          topDisplayMode = 'BTC';
+          
+          // Get current input value as BTC and convert to USDT
+          const inputBtcValue = parseFloat(sizeInput.value) || btcAmount;
+          btcAmount = inputBtcValue;
+          usdtAmount = btcAmount * price;
+          
+          // Update display
+          sizeDisplayValue.textContent = `${btcAmount.toFixed(0)} BTC`;
+          sizeInput.value = usdtAmount.toFixed(0);
+          sizeInput.placeholder = '10000 USDT';
         }
+      };
+      
+      function updateSizeDisplay() {
+        const price = currentPrice() || 65000;
+        const inputValue = parseFloat(sizeInput.value) || 0;
         
-        btcValueLabel.textContent = `${btcAmount.toFixed(6)} BTC`;
-        usdtValueLabel.textContent = `${usdtAmount.toFixed(2)} USDT`;
+        if (topDisplayMode === 'BTC') {
+          // Top shows BTC, input is USDT
+          usdtAmount = inputValue;
+          btcAmount = usdtAmount / price;
+          sizeDisplayValue.textContent = `${btcAmount.toFixed(0)} BTC`;
+        } else {
+          // Top shows USDT, input is BTC
+          btcAmount = inputValue;
+          usdtAmount = btcAmount * price;
+          sizeDisplayValue.textContent = `${usdtAmount.toFixed(0)} USDT`;
+        }
       }
       
       // Add event listeners
       sizeInput.addEventListener('input', () => {
-        updateSizeLabels();
+        updateSizeDisplay();
         updateSummary();
       });
 
