@@ -407,8 +407,8 @@
               </div>
                 </div>
                 
-                <!-- Scale Trading UI (shown when Scale is selected) -->
-                <div id="scaleUI" class="mt-3 space-y-3 hidden">
+                <!-- Scale Trading UI (replaces regular inputs when Scale is selected) -->
+                <div id="scaleUI" class="mt-2 space-y-3 hidden">
                   <!-- Available to Trade -->
                   <div class="flex justify-between items-center">
                     <span class="text-[11px] text-neutral-400">Available to Trade</span>
@@ -503,8 +503,9 @@
                   </div>
                 </div>
                 
-                <!-- Price and Size inputs -->
-                <div class="mt-2 grid grid-cols-2 gap-2.5">
+                <!-- Regular Trading Inputs (Price and Size inputs) -->
+                <div id="regularInputs" class="mt-2 space-y-3">
+                <div class="grid grid-cols-2 gap-2.5">
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2 transition-opacity opacity-60" id="priceField">
                     <div class="flex items-center justify-between">
                       <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Price</span>
@@ -574,15 +575,17 @@
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss $</div>
                         <input id="slLossUsdInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
-                      </div>
+                </div>
                       <div class="text-left">
                         <div class="text-[11px] uppercase tracking-[0.02em] text-neutral-400 mb-1">Loss %</div>
                         <input id="slLossPctInput" type="number" placeholder="" class="w-full bg-transparent outline-none text-[12px] mono font-semibold text-red-300 placeholder-neutral-600">
-                      </div>
-                    </div>
+            </div>
+          </div>
                 </div>
             </div>
           </div>
+                </div>
+                <!-- End Regular Inputs -->
 
               <!-- Place Order + Summary -->
               <div class="py-2.5">
@@ -2206,7 +2209,8 @@
         $('#orderMarket').classList.remove('text-neutral-400');
         $('#orderLimit').classList.add('text-neutral-400');
         $('#orderPro').classList.add('text-neutral-400');
-        // Hide scale UI
+        // Show regular inputs, hide scale UI
+        $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
         disablePrice(true, 'auto for Market');
         updateSummary();
@@ -2219,7 +2223,8 @@
         $('#orderMarket').classList.add('text-neutral-400');
         $('#orderLimit').classList.remove('text-neutral-400');
         $('#orderPro').classList.add('text-neutral-400');
-        // Hide scale UI
+        // Show regular inputs, hide scale UI
+        $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
         disablePrice(false, 'enter price');
         updateSummary();
@@ -2243,17 +2248,16 @@
         appState.proType = b.dataset.pro;
         $('#orderPro span:first-child').textContent = appState.proType;
         
-        // Show/hide Scale UI
+        // Show/hide Scale UI vs Regular Inputs
         const scaleUI = $('#scaleUI');
         const regularInputs = $('#regularInputs');
         
         if (appState.proType === 'Scale') {
           scaleUI.classList.remove('hidden');
-          // Hide regular price/amount inputs when Scale is active
-          if (regularInputs) regularInputs.classList.add('hidden');
+          regularInputs.classList.add('hidden');
         } else {
           scaleUI.classList.add('hidden');
-          if (regularInputs) regularInputs.classList.remove('hidden');
+          regularInputs.classList.remove('hidden');
         }
         
         // Price enable rules
