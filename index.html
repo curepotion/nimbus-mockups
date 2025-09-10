@@ -435,69 +435,69 @@
               </div>
 
                 <!-- TP / SL Inputs -->
-                <div id="tpSlFields" class="mt-2 space-y-2.5">
-                  <!-- TP Section -->
+                <div id="tpSlFields" class="mt-2 grid grid-cols-2 gap-2.5">
+                  <!-- Take Profit -->
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
                     <div class="flex items-center justify-between mb-2">
                       <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Take Profit</span>
                       <button id="tpTypeBtn" class="inline-flex items-center gap-1 text-[11px] text-emerald-300/95">
+                        Price
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <path d="M6 9l6 6 6-6"/>
                         </svg>
                       </button>
+                </div>
+                    
+                    <!-- TP Values Display -->
+                    <div class="space-y-1 mb-2">
+                      <div class="flex justify-between">
+                        <span class="text-[10px] text-neutral-500">TP Price</span>
+                        <span id="tpPriceDisplay" class="text-[11px] mono font-semibold text-white">--</span>
+                </div>
+                      <div class="flex justify-between">
+                        <span class="text-[10px] text-neutral-500">Gain $</span>
+                        <span id="tpGainUsdDisplay" class="text-[11px] mono font-semibold text-emerald-300">--</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-[10px] text-neutral-500">Gain %</span>
+                        <span id="tpGainPctDisplay" class="text-[11px] mono font-semibold text-emerald-300">--</span>
+                      </div>
                     </div>
                     
-                    <!-- TP Values Grid -->
-                    <div id="tpValuesGrid" class="grid grid-cols-3 gap-2 mb-2">
-                      <div class="text-center">
-                        <div class="text-[10px] text-neutral-500 mb-1">TP Price</div>
-                        <div id="tpPriceDisplay" class="text-[12px] mono font-semibold text-white">--</div>
-                      </div>
-                      <div class="text-center">
-                        <div class="text-[10px] text-neutral-500 mb-1">Gain $</div>
-                        <div id="tpGainUsdDisplay" class="text-[12px] mono font-semibold text-emerald-300">--</div>
-                      </div>
-                      <div class="text-center">
-                        <div class="text-[10px] text-neutral-500 mb-1">Gain %</div>
-                        <div id="tpGainPctDisplay" class="text-[12px] mono font-semibold text-emerald-300">--</div>
-                      </div>
-                    </div>
-                    
-                    <!-- TP Input -->
-                    <input id="tpInput" type="number" placeholder="Enter TP price" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 border-t border-white/10 pt-2" oninput="updateTPDisplay()">
+                    <input id="tpInput" type="number" placeholder="e.g. 28750" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 border-t border-white/10 pt-2" oninput="updateTPDisplay()">
                   </div>
                   
-                  <!-- SL Section -->
+                  <!-- Stop Loss -->
                   <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
                     <div class="flex items-center justify-between mb-2">
                       <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Loss</span>
                       <button id="slTypeBtn" class="inline-flex items-center gap-1 text-[11px] text-red-300/95">
+                        Price
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <path d="M6 9l6 6 6-6"/>
                         </svg>
                       </button>
-                    </div>
-                    
-                    <!-- SL Values Grid -->
-                    <div id="slValuesGrid" class="grid grid-cols-3 gap-2 mb-2">
-                      <div class="text-center">
-                        <div class="text-[10px] text-neutral-500 mb-1">SL Price</div>
-                        <div id="slPriceDisplay" class="text-[12px] mono font-semibold text-white">--</div>
-                      </div>
-                      <div class="text-center">
-                        <div class="text-[10px] text-neutral-500 mb-1">Loss $</div>
-                        <div id="slLossUsdDisplay" class="text-[12px] mono font-semibold text-red-300">--</div>
-                      </div>
-                      <div class="text-center">
-                        <div class="text-[10px] text-neutral-500 mb-1">Loss %</div>
-                        <div id="slLossPctDisplay" class="text-[12px] mono font-semibold text-red-300">--</div>
-                      </div>
-                    </div>
-                    
-                    <!-- SL Input -->
-                    <input id="slInput" type="number" placeholder="Enter SL price" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 border-t border-white/10 pt-2" oninput="updateSLDisplay()">
-                  </div>
                 </div>
+                    
+                    <!-- SL Values Display -->
+                    <div class="space-y-1 mb-2">
+                      <div class="flex justify-between">
+                        <span class="text-[10px] text-neutral-500">SL Price</span>
+                        <span id="slPriceDisplay" class="text-[11px] mono font-semibold text-white">--</span>
+                </div>
+                      <div class="flex justify-between">
+                        <span class="text-[10px] text-neutral-500">Loss $</span>
+                        <span id="slLossUsdDisplay" class="text-[11px] mono font-semibold text-red-300">--</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span class="text-[10px] text-neutral-500">Loss %</span>
+                        <span id="slLossPctDisplay" class="text-[11px] mono font-semibold text-red-300">--</span>
+                      </div>
+                    </div>
+                    
+                    <input id="slInput" type="number" placeholder="e.g. 25200" class="w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600 border-t border-white/10 pt-2" oninput="updateSLDisplay()">
+                  </div>
+            </div>
           </div>
 
               <!-- Place Order + Summary -->
@@ -2187,12 +2187,12 @@
       
       sizeSlider.addEventListener('input', e => syncPercent(e.target.value));
       sizeInput.addEventListener('input', e => syncPercent(e.target.value));
-      amountInput.addEventListener('input', () => {
-        updateAmountDisplay();
-        updateTPDisplay();
-        updateSLDisplay();
-        updateSummary();
-      });
+        amountInput.addEventListener('input', () => {
+          updateAmountDisplay();
+          updateTPDisplay();
+          updateSLDisplay();
+          updateSummary();
+        });
 
       // Amount toggle functionality
       let amountDisplayMode = 'USDT'; // Current input mode: 'USDT' or 'BTC'
