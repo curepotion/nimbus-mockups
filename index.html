@@ -416,9 +416,9 @@
                       <button id="sizeToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-neutral-300 transition-colors" onclick="toggleSizeDisplay()">
                         <span id="sizeDisplayValue">1000 BTC</span>
                       </button>
-                    </div>
+              </div>
                     <input id="sizeInput" type="number" placeholder="10000 USDT" class="w-full bg-transparent outline-none text-[14px] mono font-semibold placeholder-neutral-600 text-white">
-                  </div>
+            </div>
           </div>
         </div>
 
@@ -2135,6 +2135,11 @@
       const sizeInput = $('#sizeInput');
       const sizeDisplayValue = $('#sizeDisplayValue');
       
+      // Size toggle and sync functionality - declare variables first
+      let topDisplayMode = 'BTC'; // What's shown in top-right: 'BTC' or 'USDT'
+      let btcAmount = 1000; // Default BTC amount
+      let usdtAmount = 65000; // Default USDT amount (1000 BTC * $65)
+      
       function syncPercent(val) {
         val = Math.max(0, Math.min(100, Number(val) || 0));
         sizeSlider.value = val; 
@@ -2167,11 +2172,6 @@
       
       sizeSlider.addEventListener('input', e => syncPercent(e.target.value));
       sizeInput.addEventListener('input', e => syncPercent(e.target.value));
-      
-      // Size toggle and sync functionality
-      let topDisplayMode = 'BTC'; // What's shown in top-right: 'BTC' or 'USDT'
-      let btcAmount = 1000; // Default BTC amount
-      let usdtAmount = 65000; // Default USDT amount (1000 BTC * $65)
       
       window.toggleSizeDisplay = function() {
         const price = currentPrice() || 65000;
@@ -2239,7 +2239,17 @@
       }
 
       function updateSummary() {
-        const qty = Number(qtyInput.value) || 0;
+        // Get BTC quantity based on current display mode
+        let qty = 0;
+        if (topDisplayMode === 'BTC') {
+          // Input shows USDT, convert to BTC
+          const usdValue = Number(sizeInput.value) || 0;
+          const price = currentPrice() || 65000;
+          qty = price > 0 ? usdValue / price : 0;
+        } else {
+          // Input shows BTC directly
+          qty = Number(sizeInput.value) || 0;
+        }
         const px = currentPrice();
         const canUsePrice = px > 0;
         const needsPrice = !(appState.orderType === 'Market' || (appState.orderType === 'Pro' && appState.proType !== 'Stop Limit'));
