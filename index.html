@@ -2293,18 +2293,24 @@
         appState.proType = b.dataset.pro;
         $('#orderPro span:first-child').textContent = appState.proType;
         
-        // Show/hide Scale UI vs Regular Inputs
+        // Clear all UIs first to prevent mixing
         const scaleUI = $('#scaleUI');
         const regularInputs = $('#regularInputs');
+        const twapUI = $('#twapUI');
+        const stopPriceSection = $('#stopPriceSection');
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
         const buySellToggle = $('#buySellToggle');
         const placeOrderBtn = $('#placeOrder');
-        const stopPriceSection = $('#stopPriceSection');
         
+        // Hide all UIs first
+        scaleUI.classList.add('hidden');
+        regularInputs.classList.add('hidden');
+        twapUI.classList.add('hidden');
+        stopPriceSection.classList.add('hidden');
+        
+        // Then show the appropriate UI based on order type
         if (appState.proType === 'Scale') {
           scaleUI.classList.remove('hidden');
-          regularInputs.classList.add('hidden');
-          stopPriceSection.classList.add('hidden');
           // TP/SL not available for Scale
           tpSlToggleSection.style.display = 'none';
           // Show Buy/Sell toggle for Scale
@@ -2312,7 +2318,6 @@
           // Restore original button text based on current side
           placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else if (appState.proType === 'Stop Limit') {
-          scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
           stopPriceSection.classList.remove('hidden');
           // TP/SL not available for Stop Limit
@@ -2322,7 +2327,6 @@
           // Restore original button text based on current side
           placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else if (appState.proType === 'Stop Market') {
-          scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
           stopPriceSection.classList.remove('hidden');
           // TP/SL not available for Stop Market
@@ -2332,10 +2336,7 @@
           // Restore original button text based on current side
           placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else if (appState.proType === 'TWAP') {
-          scaleUI.classList.add('hidden');
-          regularInputs.classList.add('hidden');
-          stopPriceSection.classList.add('hidden');
-          $('#twapUI').classList.remove('hidden');
+          twapUI.classList.remove('hidden');
           // TP/SL not available for TWAP
           tpSlToggleSection.style.display = 'none';
           // Show Buy/Sell toggle for TWAP
@@ -2343,11 +2344,8 @@
           // Restore original button text based on current side
           placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else {
-          scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
-          stopPriceSection.classList.add('hidden');
-          $('#twapUI').classList.add('hidden');
-          // TP/SL not available for Pro options
+          // TP/SL not available for other Pro options
           tpSlToggleSection.style.display = 'none';
           // Show Buy/Sell toggle for other Pro options
           buySellToggle.style.display = 'block';
