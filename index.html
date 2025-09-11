@@ -461,22 +461,12 @@
                 
                 <!-- TWAP Trading UI (replaces regular inputs when TWAP is selected) -->
                 <div id="twapUI" class="mt-2 space-y-3 hidden">
-                  <!-- Available to Trade -->
-                  <div class="flex justify-between items-center">
-                    <span class="text-[11px] text-neutral-400">Available to Trade</span>
-                    <span class="text-[12px] mono font-semibold text-white">298.58</span>
-                  </div>
+
                   
-                  <!-- Current Position -->
-                  <div class="flex justify-between items-center">
-                    <span class="text-[11px] text-neutral-400">Current Position</span>
-                    <span class="text-[12px] mono font-semibold text-white">0.00000 BTC</span>
-                  </div>
-                  
-                  <!-- Total Size Input -->
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Total Size</span>
+                    <!-- Amount Input -->
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
                       <button id="twapSizeToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer" onclick="toggleTwapSizeDisplay()">
                         <span id="twapSizeDisplayValue">4777.05</span> <span id="twapSizeDisplayUnit">USD</span>
                       </button>
@@ -484,40 +474,7 @@
                     <input id="twapSizeInput" type="number" placeholder="4777.05" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
                   </div>
                   
-                  <!-- TWAP Percentage Slider -->
-                  <div class="space-y-2">
-                    <div class="flex items-center gap-3">
-                      <!-- Custom Slider Container -->
-                      <div class="flex-1 relative">
-                        <!-- Slider Track -->
-                        <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
-                          <!-- Active Progress -->
-                          <div id="twapSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 80%"></div>
-                          <!-- Slider Handle -->
-                          <div id="twapSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: calc(80% - 10px)"></div>
-                        </div>
-                        <!-- Hidden Range Input -->
-                        <input id="twapSlider" type="range" min="0" max="100" step="1" value="80" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                      </div>
-                      
-                      <!-- Percentage Display -->
-                      <div class="w-[60px]">
-                        <div class="flex items-center justify-center rounded-md ring-1 ring-white/10 bg-white/5 px-2 py-1.5">
-                          <span id="twapPercentage" class="text-[12px] mono font-semibold text-white">80</span>
-                          <span class="text-[11px] text-neutral-400 ml-1">%</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <!-- TWAP Dots -->
-                    <div class="flex justify-between items-center px-1">
-                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-                      <div class="w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-emerald-400/50"></div>
-                    </div>
-                  </div>
+
                   
                   <!-- Running Time -->
                   <div class="space-y-2">
