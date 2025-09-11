@@ -413,21 +413,32 @@
                   
 
 
+                  <!-- Amount Input -->
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
+                      <button id="scaleAmountToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer" onclick="toggleScaleAmountDisplay()">
+                        <span id="scaleAmountDisplayValue">0.25</span> <span id="scaleAmountDisplayUnit">BTC</span>
+                    </button>
+                </div>
+                    <input id="scaleAmountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+              </div>
+
                   <!-- Start and End Price Row -->
                   <div class="grid grid-cols-2 gap-2.5">
                     <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
                       <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Start (USD)</span>
-                      </div>
+                  </div>
                       <input type="number" placeholder="Enter start price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
+                </div>
                     
                     <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
                       <div class="flex items-center justify-between">
                         <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">End (USD)</span>
-                      </div>
+              </div>
                       <input type="number" placeholder="Enter end price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
+            </div>
                   </div>
                   
                   <!-- Bottom Row: Total Orders and Size Skew -->
@@ -2515,6 +2526,40 @@
         updateAmountDisplay();
         updateSummary();
       };
+
+      // Scale Amount toggle functionality
+      let scaleAmountDisplayMode = 'USDT'; // Current input mode: 'USDT' or 'BTC'
+      
+      window.toggleScaleAmountDisplay = function() {
+        const scaleAmountDisplayValue = document.getElementById('scaleAmountDisplayValue');
+        const scaleAmountDisplayUnit = document.getElementById('scaleAmountDisplayUnit');
+        const scaleAmountInput = document.getElementById('scaleAmountInput');
+        
+        const price = currentPrice() || 65000; // Get current price
+        const currentInputValue = parseFloat(scaleAmountInput.value) || 0;
+        
+        if (scaleAmountDisplayMode === 'USDT') {
+          // Switch to BTC input mode
+          scaleAmountDisplayMode = 'BTC';
+          
+          // Convert current USDT input to BTC
+          const btcAmount = currentInputValue / price;
+          scaleAmountInput.value = btcAmount ? btcAmount.toFixed(6) : '';
+          scaleAmountInput.placeholder = '0.25';
+          
+        } else {
+          // Switch to USDT input mode
+          scaleAmountDisplayMode = 'USDT';
+          
+          // Convert current BTC input to USDT
+          const usdtAmount = currentInputValue * price;
+          scaleAmountInput.value = usdtAmount ? usdtAmount.toFixed(0) : '';
+          scaleAmountInput.placeholder = '1625';
+        }
+        
+        updateScaleAmountDisplay();
+        updateSummary();
+      };
       
       function updateAmountDisplay() {
         const amountDisplayValue = document.getElementById('amountDisplayValue');
@@ -2530,6 +2575,23 @@
           // Input is BTC, display shows USDT equivalent
           const usdtAmount = inputValue * price;
           amountDisplayValue.textContent = usdtAmount ? usdtAmount.toFixed(0) : '0';
+        }
+      }
+
+      function updateScaleAmountDisplay() {
+        const scaleAmountDisplayValue = document.getElementById('scaleAmountDisplayValue');
+        const scaleAmountInput = document.getElementById('scaleAmountInput');
+        const price = currentPrice() || 65000;
+        const inputValue = parseFloat(scaleAmountInput.value) || 0;
+        
+        if (scaleAmountDisplayMode === 'USDT') {
+          // Input is USDT, display shows BTC equivalent
+          const btcAmount = inputValue / price;
+          scaleAmountDisplayValue.textContent = btcAmount ? btcAmount.toFixed(4) : '0';
+        } else {
+          // Input is BTC, display shows USDT equivalent
+          const usdtAmount = inputValue * price;
+          scaleAmountDisplayValue.textContent = usdtAmount ? usdtAmount.toFixed(0) : '0';
         }
       }
 
