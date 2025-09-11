@@ -263,6 +263,21 @@
       min-height: 0;
       overflow: hidden;
     }
+
+    /* Chart Layout Styles */
+    .chart-layout-option.active {
+      background: rgba(110, 231, 183, 0.1);
+      color: #6EE7B7;
+    }
+
+    .chart-layout-option.active svg {
+      stroke: #6EE7B7;
+    }
+
+    #chartLayoutMenu {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
   </style>
 </head>
 
@@ -284,8 +299,25 @@
           <!-- Chart header controls -->
 
             <!-- TradingView Chart Container -->
-            <div class="relative flex-1 overflow-hidden">
-              <div id="tradingview_widget" class="w-full h-full"></div>
+            <div id="chartContainer" class="relative flex-1 overflow-hidden">
+              <!-- Single Chart Layout -->
+              <div id="singleChartLayout" class="w-full h-full">
+                <div id="tradingview_widget" class="w-full h-full"></div>
+                </div>
+
+              <!-- Two Charts Layout -->
+              <div id="twoChartsLayout" class="hidden w-full h-full flex gap-1">
+                <div id="tradingview_widget_1" class="flex-1 h-full"></div>
+                <div id="tradingview_widget_2" class="flex-1 h-full"></div>
+                </div>
+
+              <!-- Four Charts Layout -->
+              <div id="fourChartsLayout" class="hidden w-full h-full grid grid-cols-2 grid-rows-2 gap-1">
+                <div id="tradingview_widget_3" class="w-full h-full"></div>
+                <div id="tradingview_widget_4" class="w-full h-full"></div>
+                <div id="tradingview_widget_5" class="w-full h-full"></div>
+                <div id="tradingview_widget_6" class="w-full h-full"></div>
+              </div>
             </div>
             </div>
           </div>
@@ -905,6 +937,43 @@
               <path d="M21 15v4h-4"/>
             </svg>
           </button>
+          
+          <!-- Chart Layout Toggle -->
+          <div class="relative">
+            <button id="chartLayoutToggle" class="h-10 w-full flex items-center justify-center border-b border-white/5 hover:bg-white/5 hover:border-white/10 transition-all group" title="Chart Layout">
+              <svg class="w-5 h-5 text-neutral-400/70 group-hover:text-neutral-200 transition-all drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M12 3v18"/>
+                <path d="M3 12h18"/>
+              </svg>
+            </button>
+            
+            <!-- Chart Layout Dropdown -->
+            <div id="chartLayoutMenu" class="hidden absolute left-full top-0 ml-1 w-32 rounded-md glass-strong p-1 z-50">
+              <button data-layout="1" class="w-full text-left px-2 py-2 rounded-[6px] hover:bg-white/10 text-[12px] flex items-center gap-2 chart-layout-option active">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                </svg>
+                1 Chart
+              </button>
+              <button data-layout="2" class="w-full text-left px-2 py-2 rounded-[6px] hover:bg-white/10 text-[12px] flex items-center gap-2 chart-layout-option">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="8" height="18" rx="2"/>
+                  <rect x="13" y="3" width="8" height="18" rx="2"/>
+                </svg>
+                2 Charts
+              </button>
+              <button data-layout="4" class="w-full text-left px-2 py-2 rounded-[6px] hover:bg-white/10 text-[12px] flex items-center gap-2 chart-layout-option">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="8" height="8" rx="1"/>
+                  <rect x="13" y="3" width="8" height="8" rx="1"/>
+                  <rect x="3" y="13" width="8" height="8" rx="1"/>
+                  <rect x="13" y="13" width="8" height="8" rx="1"/>
+                </svg>
+                4 Charts
+              </button>
+            </div>
+          </div>
           <button id="bookToggle" class="h-10 w-full flex items-center justify-center border-b border-white/5 hover:bg-white/5 hover:border-white/10 transition-all group" title="Order Book" onclick="toggleAux('book')">
             <svg class="w-5 h-5 text-neutral-400/70 group-hover:text-neutral-200 transition-all drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -5333,6 +5402,133 @@
       };
 
       $('#openMobileTrade').addEventListener('click', () => toggleMobileTradeSheet(true));
+
+      // Chart Layout Management
+      let currentChartLayout = 1;
+      let chartWidgets = {};
+
+      // Toggle chart layout dropdown
+      const chartLayoutToggle = $('#chartLayoutToggle');
+      const chartLayoutMenu = $('#chartLayoutMenu');
+      
+      if (chartLayoutToggle && chartLayoutMenu) {
+        chartLayoutToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          chartLayoutMenu.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!chartLayoutToggle.contains(e.target) && !chartLayoutMenu.contains(e.target)) {
+            chartLayoutMenu.classList.add('hidden');
+          }
+        });
+
+        // Handle layout selection
+        chartLayoutMenu.addEventListener('click', (e) => {
+          const layoutOption = e.target.closest('.chart-layout-option');
+          if (layoutOption) {
+            const layout = parseInt(layoutOption.dataset.layout);
+            setChartLayout(layout);
+            chartLayoutMenu.classList.add('hidden');
+          }
+        });
+      }
+
+      // Set chart layout function
+      function setChartLayout(layout) {
+        if (layout === currentChartLayout) return;
+
+        // Update active state in dropdown
+        document.querySelectorAll('.chart-layout-option').forEach(option => {
+          option.classList.remove('active');
+        });
+        document.querySelector(`[data-layout="${layout}"]`).classList.add('active');
+
+        // Hide all layouts
+        $('#singleChartLayout').classList.add('hidden');
+        $('#twoChartsLayout').classList.add('hidden');
+        $('#fourChartsLayout').classList.add('hidden');
+
+        // Destroy existing widgets except the main one
+        Object.keys(chartWidgets).forEach(key => {
+          if (key !== 'main' && chartWidgets[key]) {
+            try {
+              chartWidgets[key].remove();
+              delete chartWidgets[key];
+            } catch (e) {
+              console.log('Error removing widget:', e);
+            }
+          }
+        });
+
+        currentChartLayout = layout;
+
+        // Show appropriate layout and create widgets
+        switch (layout) {
+          case 1:
+            $('#singleChartLayout').classList.remove('hidden');
+            // Main widget should already exist
+            break;
+          
+          case 2:
+            $('#twoChartsLayout').classList.remove('hidden');
+            createChartWidget('tradingview_widget_1', 'BINANCE:BTCUSDT');
+            createChartWidget('tradingview_widget_2', 'BINANCE:ETHUSDT');
+            break;
+          
+          case 4:
+            $('#fourChartsLayout').classList.remove('hidden');
+            createChartWidget('tradingview_widget_3', 'BINANCE:BTCUSDT');
+            createChartWidget('tradingview_widget_4', 'BINANCE:ETHUSDT');
+            createChartWidget('tradingview_widget_5', 'BINANCE:ADAUSDT');
+            createChartWidget('tradingview_widget_6', 'BINANCE:SOLUSDT');
+            break;
+        }
+      }
+
+      // Create individual chart widget
+      function createChartWidget(containerId, symbol) {
+        if (!window.TradingView) {
+          console.log('TradingView not loaded yet');
+          return;
+        }
+
+        try {
+          const widget = new TradingView.widget({
+            autosize: true,
+            symbol: symbol,
+            interval: '1H',
+            theme: 'dark',
+            container_id: containerId,
+            locale: 'en',
+            toolbar_bg: '#0a0a0a',
+            hide_side_toolbar: true,
+            allow_symbol_change: false,
+            hide_top_toolbar: true,
+            hide_legend: true,
+            studies_overrides: {},
+            disabled_features: [
+              'header_saveload', 'header_compare', 'header_screenshot', 
+              'left_toolbar', 'symbol_info', 'symbol_search_hot_key',
+              'header_symbol_search', 'header_resolutions', 'header_chart_type',
+              'header_settings', 'header_indicators', 'header_screenshot',
+              'header_fullscreen_button'
+            ],
+            enabled_features: [],
+            overrides: {
+              "paneProperties.background": "#0a0a0a",
+              "paneProperties.backgroundType": "solid",
+              "scalesProperties.textColor": "#666666",
+              "scalesProperties.backgroundColor": "#0a0a0a"
+            }
+          });
+
+          chartWidgets[containerId] = widget;
+        } catch (error) {
+          console.error('Error creating chart widget:', error);
+        }
+      }
 
       // Panel Resizing
       const tradesPanel = $('#tradesPanel');
