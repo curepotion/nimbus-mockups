@@ -535,6 +535,34 @@
       .mobile-section-header.expanded svg {
         transform: rotate(180deg);
       }
+      
+      /* Mobile menu styles */
+      .mobile-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 16px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #d1d5db;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      
+      .mobile-menu-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: rgba(110, 231, 183, 0.3);
+      }
+      
+      .mobile-menu-item svg {
+        color: currentColor;
+        flex-shrink: 0;
+      }
     }
     
     /* Tablet adjustments */
@@ -1640,6 +1668,243 @@
               <div class="flex items-center justify-between">
                 <div class="text-sm text-white mono">0.1000 BTC</div>
                 <div class="text-sm text-neutral-400 mono">@ $44,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Order Book View -->
+  <div id="mobileOrderBookView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Order Book</h2>
+      <button id="closeMobileOrderBook" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-4">
+      <!-- Mobile Order Book -->
+      <div class="space-y-4">
+        <!-- Spread Info -->
+        <div class="text-center py-2 border-b border-white/10">
+          <div class="text-sm text-neutral-400">Spread</div>
+          <div class="text-lg font-mono text-white">$0.05 (0.002%)</div>
+        </div>
+        
+        <!-- Asks (Sell Orders) -->
+        <div>
+          <div class="text-xs text-red-400 font-medium uppercase mb-2">Asks (Sell)</div>
+          <div class="space-y-1">
+            <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
+              <span class="text-sm font-mono text-white">$2,652.50</span>
+              <span class="text-sm font-mono text-neutral-400">1.2450</span>
+              <span class="text-xs text-neutral-500">$3,302</span>
+            </div>
+            <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
+              <span class="text-sm font-mono text-white">$2,651.75</span>
+              <span class="text-sm font-mono text-neutral-400">2.1500</span>
+              <span class="text-xs text-neutral-500">$5,701</span>
+            </div>
+            <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
+              <span class="text-sm font-mono text-white">$2,651.00</span>
+              <span class="text-sm font-mono text-neutral-400">0.8750</span>
+              <span class="text-xs text-neutral-500">$2,320</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Current Price -->
+        <div class="text-center py-4 border-y border-white/10">
+          <div class="text-2xl font-mono font-bold text-emerald-400">$2,650.45</div>
+          <div class="text-sm text-emerald-400">+1.8% (+$46.82)</div>
+        </div>
+        
+        <!-- Bids (Buy Orders) -->
+        <div>
+          <div class="text-xs text-emerald-400 font-medium uppercase mb-2">Bids (Buy)</div>
+          <div class="space-y-1">
+            <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
+              <span class="text-sm font-mono text-white">$2,650.00</span>
+              <span class="text-sm font-mono text-neutral-400">3.1250</span>
+              <span class="text-xs text-neutral-500">$8,281</span>
+            </div>
+            <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
+              <span class="text-sm font-mono text-white">$2,649.25</span>
+              <span class="text-sm font-mono text-neutral-400">1.5000</span>
+              <span class="text-xs text-neutral-500">$3,974</span>
+            </div>
+            <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
+              <span class="text-sm font-mono text-white">$2,648.50</span>
+              <span class="text-sm font-mono text-neutral-400">2.7500</span>
+              <span class="text-xs text-neutral-500">$7,283</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile News View -->
+  <div id="mobileNewsView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Market News</h2>
+      <button id="closeMobileNews" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-4">
+      <div class="space-y-4">
+        <article class="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div class="flex items-start gap-3">
+            <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium text-white mb-1">Bitcoin ETF Sees Record Inflows</h3>
+              <p class="text-xs text-neutral-400 mb-2">Institutional investors pour $2.1B into Bitcoin ETFs this week, signaling strong institutional adoption...</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-neutral-500">CoinDesk</span>
+                <span class="text-xs text-neutral-500">2h ago</span>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div class="flex items-start gap-3">
+            <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 3v18h18"/>
+                <path d="M7 16l4-4 2 2 6-6"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium text-white mb-1">Ethereum 2.0 Staking Reaches New Milestone</h3>
+              <p class="text-xs text-neutral-400 mb-2">Over 32 million ETH now staked in Ethereum 2.0, representing 26% of total supply...</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-neutral-500">Ethereum Foundation</span>
+                <span class="text-xs text-neutral-500">4h ago</span>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div class="flex items-start gap-3">
+            <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium text-white mb-1">DeFi Protocol Launches Cross-Chain Bridge</h3>
+              <p class="text-xs text-neutral-400 mb-2">New cross-chain infrastructure enables seamless asset transfers between Ethereum and Solana...</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-neutral-500">DeFi Pulse</span>
+                <span class="text-xs text-neutral-500">6h ago</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Analytics View -->
+  <div id="mobileAnalyticsView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Analytics</h2>
+      <button id="closeMobileAnalytics" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-4">
+      <div class="space-y-4">
+        <!-- Market Overview -->
+        <div class="rounded-lg bg-white/5 border border-white/10 p-4">
+          <h3 class="text-sm font-medium text-white mb-3">Market Overview</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <div class="text-xs text-neutral-400 uppercase tracking-wider">24h Volume</div>
+              <div class="text-lg font-mono text-white">$2.1B</div>
+              <div class="text-xs text-emerald-400">+12.5%</div>
+            </div>
+            <div>
+              <div class="text-xs text-neutral-400 uppercase tracking-wider">Market Cap</div>
+              <div class="text-lg font-mono text-white">$1.2T</div>
+              <div class="text-xs text-red-400">-2.1%</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Price Metrics -->
+        <div class="rounded-lg bg-white/5 border border-white/10 p-4">
+          <h3 class="text-sm font-medium text-white mb-3">Price Metrics</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400">24h High</span>
+              <span class="text-sm font-mono text-emerald-400">$2,687.50</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400">24h Low</span>
+              <span class="text-sm font-mono text-red-400">$2,598.20</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400">7d High</span>
+              <span class="text-sm font-mono text-white">$2,745.80</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400">7d Low</span>
+              <span class="text-sm font-mono text-white">$2,420.15</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Technical Indicators -->
+        <div class="rounded-lg bg-white/5 border border-white/10 p-4">
+          <h3 class="text-sm font-medium text-white mb-3">Technical Indicators</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400">RSI (14)</span>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-mono text-white">65.2</span>
+                <span class="text-xs px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400">Neutral</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400">MACD</span>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-mono text-emerald-400">+12.5</span>
+                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400">Bullish</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400">Moving Avg</span>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-mono text-white">$2,634.80</span>
+                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400">Above</span>
               </div>
             </div>
           </div>
@@ -6239,6 +6504,60 @@
       function closeMobileSheets() {
         closeMobileTradeSheet();
         closeMobilePortfolio();
+        closeMobileOrderBook();
+        closeMobileNews();
+        closeMobileAnalytics();
+      }
+
+      // Mobile order book functions
+      function openMobileOrderBook() {
+        const sheet = document.getElementById('mobileOrderBookView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileOrderBook() {
+        const sheet = document.getElementById('mobileOrderBookView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Mobile news functions
+      function openMobileNews() {
+        const sheet = document.getElementById('mobileNewsView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileNews() {
+        const sheet = document.getElementById('mobileNewsView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Mobile analytics functions
+      function openMobileAnalytics() {
+        const sheet = document.getElementById('mobileAnalyticsView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileAnalytics() {
+        const sheet = document.getElementById('mobileAnalyticsView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
       }
 
       // Mobile sheet close buttons
@@ -6250,6 +6569,21 @@
       const closeMobilePortfolioBtn = document.getElementById('closeMobilePortfolio');
       if (closeMobilePortfolioBtn) {
         closeMobilePortfolioBtn.addEventListener('click', closeMobilePortfolio);
+      }
+
+      const closeMobileOrderBookBtn = document.getElementById('closeMobileOrderBook');
+      if (closeMobileOrderBookBtn) {
+        closeMobileOrderBookBtn.addEventListener('click', closeMobileOrderBook);
+      }
+
+      const closeMobileNewsBtn = document.getElementById('closeMobileNews');
+      if (closeMobileNewsBtn) {
+        closeMobileNewsBtn.addEventListener('click', closeMobileNews);
+      }
+
+      const closeMobileAnalyticsBtn = document.getElementById('closeMobileAnalytics');
+      if (closeMobileAnalyticsBtn) {
+        closeMobileAnalyticsBtn.addEventListener('click', closeMobileAnalytics);
       }
 
       // Mobile section toggle function
@@ -6314,10 +6648,178 @@
         }
       }
 
+      // Mobile menu functionality
+      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+      if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', () => {
+          toggleMobileMenu();
+        });
+      }
+
+      function toggleMobileMenu() {
+        // Create mobile menu overlay
+        let overlay = document.getElementById('mobileMenuOverlay');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'mobileMenuOverlay';
+          overlay.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-[3000] opacity-0 invisible transition-all duration-300';
+          
+          const menu = document.createElement('div');
+          menu.className = 'absolute top-0 right-0 w-80 h-full bg-black/95 backdrop-blur-xl border-l border-white/10 p-6 transform translate-x-full transition-transform duration-300';
+          
+          menu.innerHTML = `
+            <div class="flex items-center justify-between mb-8">
+              <h2 class="text-xl font-semibold text-white">Menu</h2>
+              <button id="closeMobileMenu" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M18 6L6 18"/>
+                  <path d="M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            
+            <div class="space-y-4">
+              <button class="mobile-menu-item" onclick="openMobileOrderBook(); closeMobileMenu();">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M3 6h18"/>
+                  <path d="M3 10h12"/>
+                  <path d="M3 14h18"/>
+                  <path d="M3 18h8"/>
+                  <path d="M18 10l3 3-3 3"/>
+                  <path d="M6 18l-3-3 3-3"/>
+                </svg>
+                <span>Order Book</span>
+              </button>
+              
+              <button class="mobile-menu-item" onclick="openMobileNews(); closeMobileMenu();">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+                  <path d="M18 14h-8"/>
+                  <path d="M15 18h-5"/>
+                  <path d="M10 6h8v4h-8V6Z"/>
+                </svg>
+                <span>News</span>
+              </button>
+              
+              <button class="mobile-menu-item" onclick="openMobileAnalytics(); closeMobileMenu();">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M2 20h20"/>
+                  <path d="M7 16v4"/>
+                  <path d="M12 8v12"/>
+                  <path d="M17 4v16"/>
+                  <circle cx="7" cy="16" r="2"/>
+                  <circle cx="12" cy="8" r="2"/>
+                  <circle cx="17" cy="4" r="2"/>
+                </svg>
+                <span>Analytics</span>
+              </button>
+              
+              <div class="border-t border-white/10 pt-4 mt-6">
+                <button class="mobile-menu-item">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <span>Settings</span>
+                </button>
+                
+                <button class="mobile-menu-item">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16,17 21,12 16,7"/>
+                    <line x1="21" x2="9" y1="12" y2="12"/>
+                  </svg>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          `;
+          
+          overlay.appendChild(menu);
+          document.body.appendChild(overlay);
+          
+          // Add close functionality
+          overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeMobileMenu();
+          });
+          
+          document.getElementById('closeMobileMenu').addEventListener('click', closeMobileMenu);
+        }
+        
+        // Toggle menu
+        if (overlay.classList.contains('opacity-0')) {
+          overlay.classList.remove('opacity-0', 'invisible');
+          overlay.querySelector('div').classList.remove('translate-x-full');
+          document.body.style.overflow = 'hidden';
+        } else {
+          closeMobileMenu();
+        }
+      }
+
+      function closeMobileMenu() {
+        const overlay = document.getElementById('mobileMenuOverlay');
+        if (overlay) {
+          overlay.classList.add('opacity-0', 'invisible');
+          overlay.querySelector('div').classList.add('translate-x-full');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Touch gestures for mobile charts
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+
+      const mobileChartContainer = document.getElementById('mobileChartContainer');
+      if (mobileChartContainer) {
+        mobileChartContainer.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        mobileChartContainer.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          touchEndY = e.changedTouches[0].screenY;
+          handleMobileSwipe();
+        }, { passive: true });
+      }
+
+      function handleMobileSwipe() {
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+        const minSwipeDistance = 50;
+
+        // Only handle horizontal swipes
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+          if (deltaX > 0) {
+            // Swipe right - previous chart layout
+            const prevLayout = currentMobileChartLayout === 1 ? 4 : currentMobileChartLayout - 1;
+            setMobileChartLayout(prevLayout);
+          } else {
+            // Swipe left - next chart layout
+            const nextLayout = currentMobileChartLayout === 4 ? 1 : currentMobileChartLayout + 1;
+            setMobileChartLayout(nextLayout);
+          }
+        }
+      }
+
       // Initialize mobile layout
       if (window.innerWidth <= 768) {
         setMobileChartLayout(1);
       }
+
+      // Handle orientation changes
+      window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+          if (window.innerWidth <= 768) {
+            // Recreate mobile chart widgets after orientation change
+            if (currentMobileChartLayout) {
+              setMobileChartLayout(currentMobileChartLayout);
+            }
+          }
+        }, 100);
+      });
 
       // Chart Layout Management
       let currentChartLayout = 1;
