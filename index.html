@@ -3288,12 +3288,16 @@
         
         if (portfolioContent && portfolioToggle) {
           const isCollapsed = portfolioContent.style.display === 'none';
+          const isFullscreen = portfolioSection && portfolioSection.classList.contains('fullscreen');
           
           if (isCollapsed) {
             // Expand portfolio section
             portfolioContent.style.display = 'block';
             if (portfolioSection) {
-              portfolioSection.style.height = 'auto';
+              // Don't override height if in fullscreen mode
+              if (!isFullscreen) {
+                portfolioSection.style.height = '';  // Remove inline style to let CSS take over
+              }
             }
             portfolioToggle.title = 'Collapse Portfolio';
             portfolioToggle.querySelector('svg').innerHTML = `
@@ -3304,6 +3308,25 @@
             // Collapse portfolio section  
             portfolioContent.style.display = 'none';
             if (portfolioSection) {
+              // Exit fullscreen mode first if active
+              if (isFullscreen) {
+                portfolioSection.classList.remove('fullscreen');
+                const chartSection = document.querySelector('.chart-section');
+                if (chartSection) {
+                  chartSection.classList.remove('hidden-by-portfolio');
+                }
+                // Update fullscreen button
+                const portfolioFullscreen = document.getElementById('portfolioFullscreen');
+                if (portfolioFullscreen) {
+                  portfolioFullscreen.title = 'Fullscreen Portfolio';
+                  portfolioFullscreen.querySelector('svg').innerHTML = `
+                    <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                    <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                    <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                    <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                  `;
+                }
+              }
               portfolioSection.style.height = '36px'; // Only show tabs height
             }
             portfolioToggle.title = 'Expand Portfolio';
@@ -3319,14 +3342,19 @@
         const portfolioSection = document.querySelector('.portfolio-section');
         const chartSection = document.querySelector('.chart-section');
         const portfolioFullscreen = document.getElementById('portfolioFullscreen');
+        const portfolioContent = document.getElementById('portfolioContent');
+        const portfolioToggle = document.getElementById('portfolioToggle');
         
         if (portfolioSection && chartSection && portfolioFullscreen) {
           const isFullscreen = portfolioSection.classList.contains('fullscreen');
+          const isCollapsed = portfolioContent && portfolioContent.style.display === 'none';
           
           if (isFullscreen) {
             // Exit fullscreen mode
             portfolioSection.classList.remove('fullscreen');
             chartSection.classList.remove('hidden-by-portfolio');
+            // Remove inline height to let CSS take over
+            portfolioSection.style.height = '';
             portfolioFullscreen.title = 'Fullscreen Portfolio';
             portfolioFullscreen.querySelector('svg').innerHTML = `
               <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
@@ -3336,6 +3364,16 @@
             `;
           } else {
             // Enter fullscreen mode
+            // First, ensure portfolio is expanded if it's collapsed
+            if (isCollapsed && portfolioContent && portfolioToggle) {
+              portfolioContent.style.display = 'block';
+              portfolioToggle.title = 'Collapse Portfolio';
+              portfolioToggle.querySelector('svg').innerHTML = `
+                <path d="M18 6L6 18"/>
+                <path d="M6 6l12 12"/>
+              `;
+            }
+            
             portfolioSection.classList.add('fullscreen');
             chartSection.classList.add('hidden-by-portfolio');
             portfolioFullscreen.title = 'Exit Fullscreen';
