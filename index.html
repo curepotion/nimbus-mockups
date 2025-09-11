@@ -496,22 +496,22 @@
                     </div>
                   </div>
                   
-                  <!-- Options Toggles -->
-                  <div class="space-y-2">
-                    <button id="twapRandomizeToggle" class="group inline-flex items-center gap-2">
-                      <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
-                        <span id="twapRandomizeKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
-                      </span>
-                      <span class="text-[12px] font-medium">Randomize</span>
-                    </button>
-                    
-                    <button id="twapReduceOnlyToggle" class="group inline-flex items-center gap-2">
-                      <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
-                        <span id="twapReduceOnlyKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
-                      </span>
-                      <span class="text-[12px] font-medium">Reduce Only</span>
-                    </button>
-                  </div>
+                    <!-- Options Toggles -->
+                    <div class="space-y-2">
+                      <button id="twapRandomizeToggle" class="group inline-flex items-center gap-2">
+                        <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
+                          <span id="twapRandomizeKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
+                        </span>
+                        <span class="text-[12px] font-medium">Randomize</span>
+                      </button>
+                      
+                      <button id="twapReduceOnlyToggle" class="group inline-flex items-center gap-2">
+                        <span class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10">
+                          <span id="twapReduceOnlyKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
+                        </span>
+                        <span class="text-[12px] font-medium">Reduce Only</span>
+                      </button>
+                    </div>
                 </div>
                 
                 <!-- Regular Trading Inputs (Price and Size inputs) -->
@@ -2467,56 +2467,6 @@
         }
       });
 
-      // TWAP Randomize toggle functionality
-      const twapRandomizeToggle = $('#twapRandomizeToggle');
-      const twapRandomizeKnob = $('#twapRandomizeKnob');
-      
-      if (twapRandomizeToggle) {
-        twapRandomizeToggle.addEventListener('click', () => {
-          appState.twapRandomize = !appState.twapRandomize;
-          if (appState.twapRandomize) {
-            twapRandomizeToggle.classList.add('ring-emerald-400/40');
-            twapRandomizeToggle.querySelector('span.relative').classList.add('bg-emerald-400/20', 'ring-emerald-300/40');
-            twapRandomizeKnob.style.transform = 'translate(12px, -50%)';
-            twapRandomizeKnob.classList.remove('bg-neutral-300');
-            twapRandomizeKnob.classList.add('bg-emerald-300');
-            twapRandomizeToggle.querySelector('span.text-[12px]').classList.add('text-emerald-300');
-          } else {
-            twapRandomizeToggle.classList.remove('ring-emerald-400/40');
-            twapRandomizeToggle.querySelector('span.relative').classList.remove('bg-emerald-400/20', 'ring-emerald-300/40');
-            twapRandomizeKnob.style.transform = 'translate(0, -50%)';
-            twapRandomizeKnob.classList.remove('bg-emerald-300');
-            twapRandomizeKnob.classList.add('bg-neutral-300');
-            twapRandomizeToggle.querySelector('span.text-[12px]').classList.remove('text-emerald-300');
-          }
-        });
-      }
-
-      // TWAP Reduce Only toggle functionality
-      const twapReduceOnlyToggle = $('#twapReduceOnlyToggle');
-      const twapReduceOnlyKnob = $('#twapReduceOnlyKnob');
-      
-      if (twapReduceOnlyToggle) {
-        twapReduceOnlyToggle.addEventListener('click', () => {
-          appState.twapReduceOnly = !appState.twapReduceOnly;
-          if (appState.twapReduceOnly) {
-            twapReduceOnlyToggle.classList.add('ring-emerald-400/40');
-            twapReduceOnlyToggle.querySelector('span.relative').classList.add('bg-emerald-400/20', 'ring-emerald-300/40');
-            twapReduceOnlyKnob.style.transform = 'translate(12px, -50%)';
-            twapReduceOnlyKnob.classList.remove('bg-neutral-300');
-            twapReduceOnlyKnob.classList.add('bg-emerald-300');
-            twapReduceOnlyToggle.querySelector('span.text-[12px]').classList.add('text-emerald-300');
-          } else {
-            twapReduceOnlyToggle.classList.remove('ring-emerald-400/40');
-            twapReduceOnlyToggle.querySelector('span.relative').classList.remove('bg-emerald-400/20', 'ring-emerald-300/40');
-            twapReduceOnlyKnob.style.transform = 'translate(0, -50%)';
-            twapReduceOnlyKnob.classList.remove('bg-emerald-300');
-            twapReduceOnlyKnob.classList.add('bg-neutral-300');
-            twapReduceOnlyToggle.querySelector('span.text-[12px]').classList.remove('text-emerald-300');
-          }
-        });
-      }
-
       // TP / SL toggle functionality
       const tpSlToggle = $('#tpSlToggle');
       const tpSlKnob = $('#tpSlKnob');
@@ -2628,6 +2578,58 @@
             twapSliderProgress.style.width = value + '%';
             twapSliderHandle.style.left = `calc(${value}% - 10px)`;
             twapPercentage.textContent = value;
+          });
+        }
+
+        // TWAP Randomize toggle functionality
+        const twapRandomizeToggle = $('#twapRandomizeToggle');
+        const twapRandomizeKnob = $('#twapRandomizeKnob');
+        
+        if (twapRandomizeToggle) {
+          let twapRandomizeEnabled = false;
+          twapRandomizeToggle.addEventListener('click', () => {
+            twapRandomizeEnabled = !twapRandomizeEnabled;
+            if (twapRandomizeEnabled) {
+              twapRandomizeToggle.classList.add('ring-emerald-400/40');
+              twapRandomizeToggle.querySelector('span.relative').classList.add('bg-emerald-400/20', 'ring-emerald-300/40');
+              twapRandomizeKnob.style.transform = 'translate(12px, -50%)';
+              twapRandomizeKnob.classList.remove('bg-neutral-300');
+              twapRandomizeKnob.classList.add('bg-emerald-300');
+              twapRandomizeToggle.querySelector('span.text-[12px]').classList.add('text-emerald-300');
+            } else {
+              twapRandomizeToggle.classList.remove('ring-emerald-400/40');
+              twapRandomizeToggle.querySelector('span.relative').classList.remove('bg-emerald-400/20', 'ring-emerald-300/40');
+              twapRandomizeKnob.style.transform = 'translate(0, -50%)';
+              twapRandomizeKnob.classList.remove('bg-emerald-300');
+              twapRandomizeKnob.classList.add('bg-neutral-300');
+              twapRandomizeToggle.querySelector('span.text-[12px]').classList.remove('text-emerald-300');
+            }
+          });
+        }
+
+        // TWAP Reduce Only toggle functionality
+        const twapReduceOnlyToggle = $('#twapReduceOnlyToggle');
+        const twapReduceOnlyKnob = $('#twapReduceOnlyKnob');
+        
+        if (twapReduceOnlyToggle) {
+          let twapReduceOnlyEnabled = false;
+          twapReduceOnlyToggle.addEventListener('click', () => {
+            twapReduceOnlyEnabled = !twapReduceOnlyEnabled;
+            if (twapReduceOnlyEnabled) {
+              twapReduceOnlyToggle.classList.add('ring-emerald-400/40');
+              twapReduceOnlyToggle.querySelector('span.relative').classList.add('bg-emerald-400/20', 'ring-emerald-300/40');
+              twapReduceOnlyKnob.style.transform = 'translate(12px, -50%)';
+              twapReduceOnlyKnob.classList.remove('bg-neutral-300');
+              twapReduceOnlyKnob.classList.add('bg-emerald-300');
+              twapReduceOnlyToggle.querySelector('span.text-[12px]').classList.add('text-emerald-300');
+            } else {
+              twapReduceOnlyToggle.classList.remove('ring-emerald-400/40');
+              twapReduceOnlyToggle.querySelector('span.relative').classList.remove('bg-emerald-400/20', 'ring-emerald-300/40');
+              twapReduceOnlyKnob.style.transform = 'translate(0, -50%)';
+              twapReduceOnlyKnob.classList.remove('bg-emerald-300');
+              twapReduceOnlyKnob.classList.add('bg-neutral-300');
+              twapReduceOnlyToggle.querySelector('span.text-[12px]').classList.remove('text-emerald-300');
+            }
           });
         }
 
