@@ -292,7 +292,7 @@
       overflow: hidden;
       background: #000;               /* neutral black surface */
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 2px solid rgba(255,255,255,0.3);
     }
     .llb::before {
       /* subtle top highlight */
@@ -731,10 +731,10 @@
                 <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-3 hover:ring-emerald-300/40 transition min-h-[60px]">
                   <div class="flex items-center gap-3 h-full">
                     <!-- ✅ Looping Line Box — standalone, dependency-free, paste-anywhere (works in plain HTML & React) -->
-                    <div class="llb flex-shrink-0" style="--llb-w:40px; --llb-h:32px">
+                    <div class="llb flex-shrink-0" style="--llb-w:80px; --llb-h:48px">
                       <canvas class="llb-canvas"></canvas>
                       <div class="llb-label" aria-hidden="true"></div>
-                  </div>
+                    </div>
                     <div class="flex flex-col items-start justify-center">
                       <span class="text-[12px] font-medium tracking-tight">Grid</span>
                       <span class="text-[10px] text-neutral-400">Automated Trading</span>
@@ -5644,10 +5644,12 @@
         // Initialize all .llb blocks once (works in plain HTML and React)
         const attrKey = 'data-llb-init';
         const blocks = Array.from(document.querySelectorAll('.llb')).filter(b => !b.hasAttribute(attrKey));
+        console.log('🎯 Found', blocks.length, '.llb animation blocks to initialize');
         if (!blocks.length) return;
         blocks.forEach(init);
 
         function init(root) {
+          console.log('🚀 Initializing animation for element:', root);
           root.setAttribute(attrKey, '1');
 
           const canvas = root.querySelector('.llb-canvas');
