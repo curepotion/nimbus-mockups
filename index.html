@@ -1384,7 +1384,7 @@
       <!-- Mobile Market Info Bar -->
       <div class="bg-black/50 backdrop-blur-sm border-b border-white/10 px-4 py-3">
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
+              <div class="flex items-center gap-3">
             <button id="mobileTokenSelector" class="flex items-center gap-2 hover:bg-white/10 rounded-lg px-2 py-1 transition-colors">
               <div class="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center">
                 <span class="text-xs font-bold text-white">₿</span>
@@ -1544,23 +1544,14 @@
     <div class="flex-1 overflow-y-auto">
       <!-- Charts Content -->
       <div id="mobileTradeChartsContent" class="p-4">
-        <div class="h-80 rounded-lg bg-black/50 border border-white/10 flex items-center justify-center">
-          <div class="text-center">
-            <svg class="w-12 h-12 mx-auto mb-2 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <path d="M3 3v18h18"/>
-              <path d="M7 16l4-4 2 2 6-6"/>
-            </svg>
-            <div class="text-sm text-neutral-400">Chart View</div>
-            <div class="text-xs text-neutral-500 mt-1">Interactive chart will load here</div>
-          </div>
-        </div>
+        <div id="mobileTradeChart" class="h-80 rounded-lg overflow-hidden border border-white/10"></div>
         
         <!-- Chart Controls -->
         <div class="flex justify-center gap-2 mt-4">
-          <button class="px-3 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">1H</button>
-          <button class="px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10">4H</button>
-          <button class="px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10">1D</button>
-          <button class="px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10">1W</button>
+          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" data-timeframe="1H">1H</button>
+          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10" data-timeframe="4H">4H</button>
+          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10" data-timeframe="1D">1D</button>
+          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10" data-timeframe="1W">1W</button>
         </div>
       </div>
       
@@ -1711,7 +1702,7 @@
             <span class="text-xs text-neutral-400">0%</span>
           </div>
           
-          <div class="relative">
+                <div class="relative">
             <div class="h-2 rounded-full ring-1 ring-white/10 bg-white/5 relative overflow-hidden">
               <div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full transition-all duration-200" style="width: 0%"></div>
               <div class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full ring-1 ring-white/20 bg-white/90 transition-all duration-200 shadow-lg" style="left: 0%"></div>
@@ -1752,7 +1743,7 @@
         <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M18 6L6 18"/>
           <path d="M6 6l12 12"/>
-        </svg>
+                    </svg>
       </button>
     </div>
     
@@ -1781,7 +1772,7 @@
         <div class="mobile-section-header" onclick="toggleMobileSection('balances')">
           <span class="text-sm font-medium text-white">Spot Balances</span>
           <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6 9l6 6 6-6"/>
+                      <path d="M6 9l6 6 6-6"/>
           </svg>
         </div>
         <div class="mobile-section-content" id="mobileBalancesContent">
@@ -1833,9 +1824,9 @@
         <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M18 6L6 18"/>
           <path d="M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
+                    </svg>
+                  </button>
+      </div>
     
     <div class="flex-1 overflow-y-auto p-4">
       <div class="space-y-4">
@@ -1897,8 +1888,8 @@
           <path d="M18 6L6 18"/>
           <path d="M6 6l12 12"/>
         </svg>
-      </button>
-    </div>
+                </button>
+      </div>
     
     <div class="flex-1 overflow-y-auto">
       <!-- Portfolio Summary -->
@@ -1917,8 +1908,8 @@
             <div class="text-xs text-neutral-400 uppercase tracking-wider">Available</div>
             <div class="text-lg font-semibold text-white mono">$2,829.23</div>
           </div>
-        </div>
-      </div>
+    </div>
+  </div>
       
       <!-- Mobile Portfolio Sections -->
       <div class="mobile-portfolio-section">
@@ -7058,6 +7049,11 @@
         if (sheet) {
           sheet.classList.add('open');
           document.body.style.overflow = 'hidden';
+          
+          // Ensure charts tab is active and create chart if needed
+          setTimeout(() => {
+            switchMobileTradeTab('charts');
+          }, 100);
         }
       }
 
@@ -7370,6 +7366,10 @@
         switch (tabName) {
           case 'charts':
             document.getElementById('mobileTradeChartsContent').classList.remove('hidden');
+            // Create mobile trade chart if it doesn't exist
+            if (!mobileChartWidgets['mobileTradeChart']) {
+              createMobileTradeChart();
+            }
             break;
           case 'tokens':
             document.getElementById('mobileTradeTokensContent').classList.remove('hidden');
@@ -7380,6 +7380,79 @@
           case 'trading':
             document.getElementById('mobileTradeTradingContent').classList.remove('hidden');
             break;
+        }
+      }
+
+      // Create mobile trade chart
+      function createMobileTradeChart() {
+        if (!window.TradingView) {
+          console.log('TradingView not loaded yet for mobile trade chart');
+          return;
+        }
+
+        try {
+          const widget = new TradingView.widget({
+            autosize: true,
+            symbol: 'BINANCE:BTCUSDT',
+            interval: '1H',
+            theme: 'dark',
+            container_id: 'mobileTradeChart',
+            locale: 'en',
+            toolbar_bg: '#0a0a0a',
+            hide_side_toolbar: false,
+            allow_symbol_change: true,
+            hide_top_toolbar: false,
+            hide_legend: false,
+            studies_overrides: {},
+            disabled_features: [
+              'header_saveload', 'header_compare', 'header_screenshot',
+              'header_fullscreen_button'
+            ],
+            enabled_features: [
+              'header_symbol_search', 'header_resolutions', 'header_chart_type'
+            ],
+            overrides: {
+              "paneProperties.background": "#0a0a0a",
+              "paneProperties.backgroundType": "solid",
+              "scalesProperties.textColor": "#b0b0b0",
+              "scalesProperties.backgroundColor": "#111111",
+              "mainSeriesProperties.candleStyle.upColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.downColor": "#F87171",
+              "mainSeriesProperties.candleStyle.borderUpColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.borderDownColor": "#F87171",
+              "mainSeriesProperties.candleStyle.wickUpColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.wickDownColor": "#F87171"
+            }
+          });
+
+          mobileChartWidgets['mobileTradeChart'] = widget;
+        } catch (error) {
+          console.error('Error creating mobile trade chart:', error);
+        }
+      }
+
+      // Mobile chart timeframe controls
+      document.querySelectorAll('.mobile-chart-timeframe').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const timeframe = btn.dataset.timeframe;
+          changeMobileChartTimeframe(timeframe, btn);
+        });
+      });
+
+      function changeMobileChartTimeframe(timeframe, button) {
+        // Update active timeframe button
+        document.querySelectorAll('.mobile-chart-timeframe').forEach(btn => {
+          btn.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/30');
+          btn.classList.add('bg-white/5', 'text-neutral-400', 'border-white/10');
+        });
+        
+        button.classList.remove('bg-white/5', 'text-neutral-400', 'border-white/10');
+        button.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/30');
+
+        // Update chart timeframe
+        const widget = mobileChartWidgets['mobileTradeChart'];
+        if (widget && widget.chart) {
+          widget.chart().setResolution(timeframe);
         }
       }
 
