@@ -581,50 +581,8 @@
         border-color: rgba(110, 231, 183, 0.5);
         background: rgba(110, 231, 183, 0.1);
       }
-    }
-    
-    /* Grid Bot Animation Styles */
-    .grid-bot-animation {
-      transition: all 0.3s ease;
-    }
-    
-    .botBtn:hover .grid-bot-animation {
-      transform: scale(1.05);
-      box-shadow: 0 0 12px rgba(110, 231, 183, 0.3);
-    }
-    
-    .grid-bot-animation::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(110, 231, 183, 0.2), transparent);
-      animation: gridSweep 3s infinite;
-    }
-    
-    @keyframes gridSweep {
-      0% { left: -100%; }
-      50% { left: 100%; }
-      100% { left: 100%; }
-    }
-    
-    .botBtn:hover .grid-bot-animation #gridPriceLine {
-      stroke: #34D399;
-      filter: drop-shadow(0 0 3px rgba(52, 211, 153, 0.6));
-    }
-    
-    .botBtn:hover .grid-buy-dot {
-      r: 1.2;
-    }
-    
-    .botBtn:hover .grid-sell-dot {
-      r: 1.2;
-    }
       
-    /* Mobile trade sub-tabs */
-    @media (max-width: 768px) {
+      /* Mobile trade sub-tabs */
       .mobile-trade-subtab {
         color: #9ca3af;
         border-bottom: 2px solid transparent;
@@ -634,6 +592,33 @@
       .mobile-trade-subtab.active {
         color: white;
         border-bottom-color: #6EE7B7;
+      }
+      
+      /* Grid Bot Animation Styles */
+      .grid-bot-animation-container {
+        backdrop-filter: blur(2px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+      
+      .grid-bot-animation-container:hover {
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 10px rgba(110, 231, 183, 0.15);
+        transform: scale(1.02);
+        transition: all 0.3s ease;
+      }
+      
+      .grid-buy-signal, .grid-sell-signal {
+        text-shadow: 0 0 2px currentColor;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      
+      .grid-profit-counter {
+        transition: all 0.2s ease;
+        text-shadow: 0 0 3px rgba(250, 204, 21, 0.5);
+      }
+      
+      .profit-value {
+        transition: all 0.2s ease;
       }
     }
     
@@ -1047,60 +1032,76 @@
 
 
                 
-              </div>
+            </div>
 
             <!-- STRATEGIES MODE -->
             <div id="strategiesMode" class="hidden space-y-3">
                   <h3 class="text-[12px] font-medium uppercase tracking-[0.02em] text-neutral-200">Pre-built Bots</h3>
               
-              <div class="space-y-2">
-                <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
+                <div class="space-y-2">
+                  <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
                     <div class="flex items-center gap-3">
-                      <!-- Grid Bot Animation -->
-                      <div class="grid-bot-animation w-8 h-6 relative overflow-hidden bg-black/30 rounded border border-white/10">
-                        <!-- Grid Lines -->
-                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 32 24">
-                          <!-- Horizontal grid lines -->
-                          <line x1="0" y1="4" x2="32" y2="4" stroke="rgba(110, 231, 183, 0.3)" stroke-width="0.5"/>
-                          <line x1="0" y1="8" x2="32" y2="8" stroke="rgba(110, 231, 183, 0.3)" stroke-width="0.5"/>
-                          <line x1="0" y1="12" x2="32" y2="12" stroke="rgba(110, 231, 183, 0.5)" stroke-width="0.8"/>
-                          <line x1="0" y1="16" x2="32" y2="16" stroke="rgba(110, 231, 183, 0.3)" stroke-width="0.5"/>
-                          <line x1="0" y1="20" x2="32" y2="20" stroke="rgba(110, 231, 183, 0.3)" stroke-width="0.5"/>
-                          
-                          <!-- Price line (animated) -->
-                          <path id="gridPriceLine" d="M0,12 Q8,8 16,14 Q24,18 32,10" 
-                                stroke="#6EE7B7" stroke-width="1.2" fill="none" opacity="0.8">
-                            <animateTransform attributeName="transform" type="translate"
-                                            values="0,0; 2,1; 0,-1; -1,2; 1,0; 0,0"
-                                            dur="4s" repeatCount="indefinite"/>
+                      <!-- Grid Bot Animation Container -->
+                      <div class="grid-bot-animation-container relative w-20 h-12 rounded-md bg-black/40 border border-white/10 overflow-hidden">
+                        <!-- Grid Lines (horizontal trading levels) -->
+                        <div class="absolute inset-0 pointer-events-none">
+                          <div class="absolute inset-x-0 top-[20%] h-[1px] bg-emerald-400/20"></div>
+                          <div class="absolute inset-x-0 top-[40%] h-[1px] bg-emerald-400/20"></div>
+                          <div class="absolute inset-x-0 top-[60%] h-[1px] bg-emerald-400/20"></div>
+                          <div class="absolute inset-x-0 top-[80%] h-[1px] bg-emerald-400/20"></div>
+                        </div>
+                        
+                        <!-- SVG Animation -->
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 80 48" preserveAspectRatio="none">
+                          <!-- Animated curved path -->
+                          <path id="gridPath" fill="none" stroke="#6EE7B7" stroke-width="1.8" opacity="0.9"
+                                d="M0,35 Q20,15 40,30 Q60,45 80,25">
+                            <animate attributeName="d" 
+                                     values="M0,35 Q20,15 40,30 Q60,45 80,25;M0,25 Q20,40 40,20 Q60,35 80,15;M0,40 Q20,20 40,35 Q60,15 80,30;M0,35 Q20,15 40,30 Q60,45 80,25" 
+                                     dur="6s" 
+                                     repeatCount="indefinite"/>
                           </path>
                           
-                          <!-- Buy indicators -->
-                          <circle class="grid-buy-dot" cx="8" cy="16" r="1" fill="#10B981" opacity="0">
-                            <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0s" repeatCount="indefinite"/>
-                          </circle>
-                          <circle class="grid-buy-dot" cx="24" cy="20" r="1" fill="#10B981" opacity="0">
-                            <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite"/>
-                          </circle>
-                          
-                          <!-- Sell indicators -->
-                          <circle class="grid-sell-dot" cx="16" cy="8" r="1" fill="#EF4444" opacity="0">
-                            <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
-                          </circle>
-                          <circle class="grid-sell-dot" cx="28" cy="4" r="1" fill="#EF4444" opacity="0">
-                            <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+                          <!-- Moving dot that follows the path -->
+                          <circle r="2.5" fill="#6EE7B7" stroke="#ffffff" stroke-width="0.8" opacity="0.95">
+                            <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+                              <mpath href="#gridPath" />
+                            </animateMotion>
                           </circle>
                         </svg>
                         
-                        <!-- Profit indicator -->
-                        <div class="absolute top-0 right-0 w-2 h-1 bg-emerald-400 rounded-full animate-pulse"></div>
-                      </div>
-                      
-                      <div class="flex flex-col">
-                        <span class="text-[12px] font-medium tracking-tight">Grid Bot</span>
-                        <span class="text-[9px] text-emerald-400 opacity-75">+2.4% APY</span>
-                      </div>
+                        <!-- Buy Signal -->
+                        <div class="grid-buy-signal absolute bottom-1 left-1 text-[8px] text-emerald-400 font-bold opacity-0 transition-opacity duration-300">
+                          BUY ↗
                   </div>
+                        
+                        <!-- Sell Signal -->
+                        <div class="grid-sell-signal absolute top-1 right-1 text-[8px] text-red-400 font-bold opacity-0 transition-opacity duration-300">
+                          SELL ↘
+                        </div>
+                        
+                        <!-- Profit Counter -->
+                        <div class="absolute bottom-1 right-1 text-[8px] text-yellow-400 font-mono font-semibold">
+                          <div class="grid-profit-counter opacity-90">
+                            <span class="profit-value">+$47</span>
+                </div>
+              </div>
+
+                        <!-- Subtle backdrop glow -->
+                        <div class="absolute inset-0 bg-gradient-radial from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div>
+                  </div>
+                      
+                      <!-- Grid Bot Icon and Text -->
+                    <div class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="7" height="7" x="3" y="3" rx="1"/>
+                        <rect width="7" height="7" x="14" y="3" rx="1"/>
+                        <rect width="7" height="7" x="14" y="14" rx="1"/>
+                        <rect width="7" height="7" x="3" y="14" rx="1"/>
+                      </svg>
+                        <span class="text-[12px] font-medium tracking-tight">Grid</span>
+                  </div>
+                </div>
                   </button>
                 
                 <button data-bot="DCA" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
@@ -7757,6 +7758,71 @@
       if (window.innerWidth <= 768) {
         setMobileChartLayout(1);
       }
+
+      // Grid Bot Animation Controller
+      function initGridBotAnimation() {
+        const buySignal = document.querySelector('.grid-buy-signal');
+        const sellSignal = document.querySelector('.grid-sell-signal');
+        const profitCounter = document.querySelector('.profit-value');
+        
+        if (!buySignal || !sellSignal || !profitCounter) return;
+        
+        const animationDuration = 6000; // 6 seconds to match SVG animation
+        const profits = ['+$47', '+$52', '+$38', '+$61', '+$44', '+$56'];
+        let profitIndex = 0;
+        
+        function updateSignals() {
+          // Phase 1: Price moving up (0-1.5s) - Show BUY signal
+          buySignal.style.opacity = '1';
+          sellSignal.style.opacity = '0';
+          
+          setTimeout(() => {
+            // Phase 2: Price at peak (1.5-3s) - Show SELL signal
+            buySignal.style.opacity = '0';
+            sellSignal.style.opacity = '1';
+            
+            // Update profit counter
+            profitCounter.textContent = profits[profitIndex];
+            profitIndex = (profitIndex + 1) % profits.length;
+          }, animationDuration * 0.25);
+          
+          setTimeout(() => {
+            // Phase 3: Price moving down (3-4.5s) - Show BUY signal again
+            buySignal.style.opacity = '1';
+            sellSignal.style.opacity = '0';
+          }, animationDuration * 0.5);
+          
+          setTimeout(() => {
+            // Phase 4: Price at bottom (4.5-6s) - Brief SELL signal
+            buySignal.style.opacity = '0';
+            sellSignal.style.opacity = '1';
+          }, animationDuration * 0.75);
+          
+          setTimeout(() => {
+            // Reset for next cycle
+            buySignal.style.opacity = '0';
+            sellSignal.style.opacity = '0';
+          }, animationDuration * 0.9);
+        }
+        
+        // Start the animation cycle
+        updateSignals();
+        setInterval(updateSignals, animationDuration);
+        
+        // Animate profit counter independently
+        setInterval(() => {
+          profitCounter.style.transform = 'scale(1.1)';
+          profitCounter.style.color = '#FFD700';
+          
+          setTimeout(() => {
+            profitCounter.style.transform = 'scale(1)';
+            profitCounter.style.color = '#FACC15'; // yellow-400
+          }, 200);
+        }, 2000);
+      }
+      
+      // Initialize grid bot animation when page loads
+      setTimeout(initGridBotAnimation, 1000);
 
       // Handle orientation changes
       window.addEventListener('orientationchange', () => {
