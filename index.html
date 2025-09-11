@@ -459,6 +459,100 @@
                   </div>
                 </div>
                 
+                <!-- TWAP Trading UI (replaces regular inputs when TWAP is selected) -->
+                <div id="twapUI" class="mt-2 space-y-3 hidden">
+                  <!-- Available to Trade -->
+                  <div class="flex justify-between items-center">
+                    <span class="text-[11px] text-neutral-400">Available to Trade</span>
+                    <span class="text-[12px] mono font-semibold text-white">298.58</span>
+                  </div>
+                  
+                  <!-- Current Position -->
+                  <div class="flex justify-between items-center">
+                    <span class="text-[11px] text-neutral-400">Current Position</span>
+                    <span class="text-[12px] mono font-semibold text-white">0.00000 BTC</span>
+                  </div>
+                  
+                  <!-- Total Size Input -->
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Total Size</span>
+                      <button id="twapSizeToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer" onclick="toggleTwapSizeDisplay()">
+                        <span id="twapSizeDisplayValue">4777.05</span> <span id="twapSizeDisplayUnit">USD</span>
+                      </button>
+                    </div>
+                    <input id="twapSizeInput" type="number" placeholder="4777.05" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                  </div>
+                  
+                  <!-- TWAP Percentage Slider -->
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                      <!-- Custom Slider Container -->
+                      <div class="flex-1 relative">
+                        <!-- Slider Track -->
+                        <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
+                          <!-- Active Progress -->
+                          <div id="twapSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 80%"></div>
+                          <!-- Slider Handle -->
+                          <div id="twapSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: calc(80% - 10px)"></div>
+                        </div>
+                        <!-- Hidden Range Input -->
+                        <input id="twapSlider" type="range" min="0" max="100" step="1" value="80" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                      </div>
+                      
+                      <!-- Percentage Display -->
+                      <div class="w-[60px]">
+                        <div class="flex items-center justify-center rounded-md ring-1 ring-white/10 bg-white/5 px-2 py-1.5">
+                          <span id="twapPercentage" class="text-[12px] mono font-semibold text-white">80</span>
+                          <span class="text-[11px] text-neutral-400 ml-1">%</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- TWAP Dots -->
+                    <div class="flex justify-between items-center px-1">
+                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                      <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                      <div class="w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-emerald-400/50"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Running Time -->
+                  <div class="space-y-2">
+                    <span class="text-[11px] text-neutral-400">Running Time (5m - 24h)</span>
+                    <div class="grid grid-cols-2 gap-2.5">
+                      <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Hour(s)</span>
+                        </div>
+                        <input id="twapHoursInput" type="number" placeholder="" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                      </div>
+                      
+                      <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Minute(s)</span>
+                        </div>
+                        <input id="twapMinutesInput" type="number" placeholder="30" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Options Checkboxes -->
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <input id="twapRandomize" type="checkbox" class="w-4 h-4 rounded border border-white/20 bg-white/10 text-emerald-400 focus:ring-emerald-400 focus:ring-2">
+                      <label for="twapRandomize" class="text-[12px] font-medium text-white">Randomize</label>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                      <input id="twapReduceOnly" type="checkbox" class="w-4 h-4 rounded border border-white/20 bg-white/10 text-emerald-400 focus:ring-emerald-400 focus:ring-2">
+                      <label for="twapReduceOnly" class="text-[12px] font-medium text-white">Reduce Only</label>
+                    </div>
+                  </div>
+                </div>
+                
                 <!-- Regular Trading Inputs (Price and Size inputs) -->
                 <div id="regularInputs" class="mt-2 space-y-3">
                 <div class="grid grid-cols-2 gap-2.5">
@@ -2184,6 +2278,7 @@
         // Show regular inputs, hide scale UI
         $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
+        $('#twapUI').classList.add('hidden');
         $('#stopPriceSection').classList.add('hidden');
         // Show TP/SL toggles for Market
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
@@ -2206,6 +2301,7 @@
         // Show regular inputs, hide scale UI
         $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
+        $('#twapUI').classList.add('hidden');
         $('#stopPriceSection').classList.add('hidden');
         // Show TP/SL toggles for Limit
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
@@ -2274,11 +2370,23 @@
           buySellToggle.style.display = 'block';
           // Restore original button text based on current side
           placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
+        } else if (appState.proType === 'TWAP') {
+          scaleUI.classList.add('hidden');
+          regularInputs.classList.add('hidden');
+          stopPriceSection.classList.add('hidden');
+          $('#twapUI').classList.remove('hidden');
+          // TP/SL not available for TWAP
+          tpSlToggleSection.style.display = 'none';
+          // Show Buy/Sell toggle for TWAP
+          buySellToggle.style.display = 'block';
+          // Restore original button text based on current side
+          placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else {
           scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
           stopPriceSection.classList.add('hidden');
-          // TP/SL not available for Pro options (TWAP)
+          $('#twapUI').classList.add('hidden');
+          // TP/SL not available for Pro options
           tpSlToggleSection.style.display = 'none';
           // Show Buy/Sell toggle for other Pro options
           buySellToggle.style.display = 'block';
@@ -2497,7 +2605,22 @@
         });
       });
       
-      // Scale UI functionality
+        // TWAP UI functionality
+        const twapSlider = document.getElementById('twapSlider');
+        const twapSliderProgress = document.getElementById('twapSliderProgress');
+        const twapSliderHandle = document.getElementById('twapSliderHandle');
+        const twapPercentage = document.getElementById('twapPercentage');
+        
+        if (twapSlider) {
+          twapSlider.addEventListener('input', function() {
+            const value = this.value;
+            twapSliderProgress.style.width = value + '%';
+            twapSliderHandle.style.left = `calc(${value}% - 10px)`;
+            twapPercentage.textContent = value;
+          });
+        }
+
+        // Scale UI functionality
       const scaleSlider = $('#scaleSlider');
       const scaleSliderProgress = $('#scaleSliderProgress');
       const scaleSliderHandle = $('#scaleSliderHandle');
@@ -2613,6 +2736,40 @@
         updateScaleAmountDisplay();
         updateSummary();
       };
+
+      // TWAP Size toggle functionality
+      let twapSizeDisplayMode = 'USD'; // Current input mode: 'USD' or 'BTC'
+      
+      window.toggleTwapSizeDisplay = function() {
+        const twapSizeDisplayValue = document.getElementById('twapSizeDisplayValue');
+        const twapSizeDisplayUnit = document.getElementById('twapSizeDisplayUnit');
+        const twapSizeInput = document.getElementById('twapSizeInput');
+        
+        const price = currentPrice() || 65000; // Get current price
+        const currentInputValue = parseFloat(twapSizeInput.value) || 0;
+        
+        if (twapSizeDisplayMode === 'USD') {
+          // Switch to BTC input mode
+          twapSizeDisplayMode = 'BTC';
+          
+          // Convert current USD input to BTC
+          const btcAmount = currentInputValue / price;
+          twapSizeInput.value = btcAmount ? btcAmount.toFixed(6) : '';
+          twapSizeInput.placeholder = '0.25';
+          
+        } else {
+          // Switch to USD input mode
+          twapSizeDisplayMode = 'USD';
+          
+          // Convert current BTC input to USD
+          const usdAmount = currentInputValue * price;
+          twapSizeInput.value = usdAmount ? usdAmount.toFixed(2) : '';
+          twapSizeInput.placeholder = '4777.05';
+        }
+        
+        updateTwapSizeDisplay();
+        updateSummary();
+      };
       
       function updateAmountDisplay() {
         const amountDisplayValue = document.getElementById('amountDisplayValue');
@@ -2645,6 +2802,23 @@
           // Input is BTC, display shows USDT equivalent
           const usdtAmount = inputValue * price;
           scaleAmountDisplayValue.textContent = usdtAmount ? usdtAmount.toFixed(0) : '0';
+        }
+      }
+
+      function updateTwapSizeDisplay() {
+        const twapSizeDisplayValue = document.getElementById('twapSizeDisplayValue');
+        const twapSizeInput = document.getElementById('twapSizeInput');
+        const price = currentPrice() || 65000;
+        const inputValue = parseFloat(twapSizeInput.value) || 0;
+        
+        if (twapSizeDisplayMode === 'USD') {
+          // Input is USD, display shows BTC equivalent
+          const btcAmount = inputValue / price;
+          twapSizeDisplayValue.textContent = btcAmount ? btcAmount.toFixed(4) : '0';
+        } else {
+          // Input is BTC, display shows USD equivalent
+          const usdAmount = inputValue * price;
+          twapSizeDisplayValue.textContent = usdAmount ? usdAmount.toFixed(2) : '0';
         }
       }
 
