@@ -290,10 +290,13 @@
       contain: layout paint size style;
       border-radius: 6px;
       overflow: hidden;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.6);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 2px solid rgba(110, 231, 183, 0.4);
+      min-width: var(--llb-w);
+      min-height: var(--llb-h);
     }
+    
     .llb::before {
       /* subtle top highlight */
       content: "";
@@ -307,6 +310,18 @@
       position: absolute; inset: 0;
       background: radial-gradient(120% 100% at 50% 110%, rgba(0,0,0,0.55), rgba(0,0,0,0));
       pointer-events: none;
+    }
+    
+    /* Fallback static content when animation fails */
+    .llb-fallback {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+      z-index: 10;
+      pointer-events: none;
+      color: rgba(110, 231, 183, 0.8);
     }
     .llb-canvas { position: absolute; inset: 0; display: block; }
     .llb-label {
@@ -734,38 +749,39 @@
                     <div class="llb flex-shrink-0" style="--llb-w:40px; --llb-h:32px">
                       <canvas class="llb-canvas"></canvas>
                       <div class="llb-label" aria-hidden="true"></div>
-                    </div>
+                      <div class="llb-fallback">📈</div>
+                  </div>
                     <div class="flex flex-col items-start justify-center">
                       <span class="text-[12px] font-medium tracking-tight">Grid</span>
                       <span class="text-[10px] text-neutral-400">Automated Trading</span>
-                    </div>
                   </div>
-                </button>
+                </div>
+                  </button>
                 
                 <button data-bot="DCA" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-3 hover:ring-emerald-300/40 transition min-h-[60px]">
                   <div class="flex items-center gap-3 h-full">
                     <svg class="w-5 h-5 text-emerald-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M11 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h7m0 14l4-4-4-4m6 4v9"/>
-                    </svg>
+                        <path d="M11 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h7m0 14l4-4-4-4m6 4v9"/>
+                      </svg>
                     <div class="flex flex-col items-start justify-center">
                       <span class="text-[12px] font-medium tracking-tight">DCA</span>
                       <span class="text-[10px] text-neutral-400">Dollar Cost Average</span>
-                    </div>
-                  </div>
-                </button>
+              </div>
+                </div>
+                  </button>
                 
                 <button data-bot="Smart Portfolio" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-3 hover:ring-emerald-300/40 transition min-h-[60px]">
                   <div class="flex items-center gap-3 h-full">
                     <svg class="w-5 h-5 text-emerald-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
-                      <path d="M22 12A10 10 0 0 0 12 2v10z"/>
-                    </svg>
+                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+                        <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+                      </svg>
                     <div class="flex flex-col items-start justify-center">
                       <span class="text-[12px] font-medium tracking-tight">Smart Portfolio</span>
                       <span class="text-[10px] text-neutral-400">AI Rebalancing</span>
                     </div>
-                  </div>
-                </button>
+                </div>
+                  </button>
             </div>
 
 
@@ -2216,6 +2232,13 @@
         tabStrategies.classList.add('text-white');
         tabTrade.classList.remove('text-white');
         tabTrade.classList.add('text-neutral-400');
+        
+        // Reinitialize animations when strategies tab becomes visible
+        setTimeout(() => {
+          const blocks = document.querySelectorAll('.llb:not([data-llb-init])');
+          console.log('Reinitializing', blocks.length, 'animation blocks for strategies tab');
+          blocks.forEach(window.initLLBAnimation);
+        }, 100);
       });
 
       // Asset is fixed to ETH (dropdown removed)
@@ -5639,21 +5662,25 @@
       }, 2000);
 
       // Initialize Looping Line Box Animation
-      setTimeout(() => {
-        (() => {
-          // Initialize all .llb blocks once (works in plain HTML and React)
+      window.initLLBAnimation = function(root) {
           const attrKey = 'data-llb-init';
-          const blocks = Array.from(document.querySelectorAll('.llb')).filter(b => !b.hasAttribute(attrKey));
-          console.log('Found', blocks.length, 'animation blocks to initialize');
-          if (!blocks.length) return;
-          blocks.forEach(init);
-
-        function init(root) {
+          if (root.hasAttribute(attrKey)) return; // Already initialized
           root.setAttribute(attrKey, '1');
 
           const canvas = root.querySelector('.llb-canvas');
+          if (!canvas) {
+            console.error('Canvas not found in animation block');
+            return;
+          }
+          
           const ctx = canvas.getContext('2d', { alpha: true });
           const label = root.querySelector('.llb-label');
+          const fallback = root.querySelector('.llb-fallback');
+          
+          // Hide fallback when animation starts
+          if (fallback) {
+            fallback.style.display = 'none';
+          }
 
           // HiDPI sizing
           function fit() {
@@ -5843,8 +5870,13 @@
 
           // Kick off
           fit(); draw(0); start();
-        }
-        })();
+      };
+
+      // Initialize all animations on page load
+      setTimeout(() => {
+        const blocks = Array.from(document.querySelectorAll('.llb'));
+        console.log('Found', blocks.length, 'animation blocks to initialize on page load');
+        blocks.forEach(window.initLLBAnimation);
       }, 500); // Wait 500ms for DOM to be fully ready
       
       // Fallback TradingView initialization
