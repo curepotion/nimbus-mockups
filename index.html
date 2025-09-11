@@ -367,17 +367,11 @@
                   <!-- Position Size Slider -->
                   <div class="flex items-center gap-3">
                     <!-- Custom Slider Container -->
-                    <div class="flex-1 relative">
-                      <!-- Slider Track -->
-                      <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
-                        <!-- Active Progress -->
-                        <div id="sliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 0%"></div>
-                        <!-- Slider Handle -->
-                        <div id="sliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
-                </div>
-                      <!-- Hidden Range Input -->
-                      <input id="sizeSlider" type="range" min="0" max="100" step="1" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-              </div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-[11px] text-neutral-500">0</span>
+                      <input id="sizeSlider" type="range" min="0" max="100" step="1" value="0" class="flex-1 cursor-pointer">
+                      <span class="text-[11px] text-neutral-500">100%</span>
+                    </div>
                     
                     <!-- Percentage Input -->
                     <div class="w-[80px]">
@@ -1740,17 +1734,10 @@
           <!-- Custom Slider (Trading Panel Style) -->
           <div class="space-y-2">
         <div class="flex items-center gap-2">
-              <!-- Slider Container -->
-              <div class="flex-1 relative">
-                <!-- Slider Track -->
-                <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
-                  <!-- Active Progress -->
-                  <div id="levSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 15%"></div>
-                  <!-- Slider Handle -->
-                  <div id="levSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: calc(15% - 10px)"></div>
-        </div>
-                <!-- Hidden Range Input -->
-                <input id="levRange" type="range" min="1" max="40" value="6" step="1" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+              <div class="flex items-center gap-2 flex-1">
+                <span class="text-[11px] text-neutral-500">1x</span>
+                <input id="levRange" type="range" min="1" max="40" value="6" step="1" class="flex-1 cursor-pointer">
+                <span class="text-[11px] text-neutral-500">40x</span>
         </div>
               
               <!-- Plus/Minus Controls -->
@@ -1776,7 +1763,7 @@
               <button class="lev-quick-btn text-[10px] font-medium text-neutral-400 hover:text-emerald-300 transition-colors cursor-pointer" data-lev="30">30x</button>
               <button class="lev-quick-btn text-[10px] font-medium text-neutral-400 hover:text-emerald-300 transition-colors cursor-pointer" data-lev="40">40x</button>
         </div>
-          </div>
+        </div>
         </div>
         
         <!-- Risk Information with Fake Data -->
@@ -2301,8 +2288,6 @@
       // Size controls (% of balance) - Custom Slider
       const sizeSlider = $('#sizeSlider');
       const sizeInput = $('#sizeInput');
-      const sliderProgress = $('#sliderProgress');
-      const sliderHandle = $('#sliderHandle');
       const amountInput = $('#amountInput');
       
       function syncPercent(val) {
@@ -2333,9 +2318,8 @@
       }
       
       function updateSliderVisuals(val) {
-        const percentage = val + '%';
-        sliderProgress.style.width = percentage;
-        sliderHandle.style.left = `calc(${percentage} - 10px)`; // Offset for handle center
+        // Simple slider - no custom visuals needed, just sync the input value
+        sizeSlider.value = val;
       }
       
       function updatePercentageButtons(val) {
@@ -2732,8 +2716,6 @@
 
       // Leverage Modal functionality
       const levModal = $('#levModal');
-      const levSliderProgress = $('#levSliderProgress');
-      const levSliderHandle = $('#levSliderHandle');
       let levTarget = 'trade'; // 'trade' | 'grid'
       let currentMarginMode = 'Isolated'; // 'Cross' | 'Isolated'
       
@@ -2750,9 +2732,8 @@
       }
       
       function updateLevSliderVisuals(val) {
-        const percentage = ((val - 1) / 39) * 100; // Scale 1-40 to 0-100%
-        levSliderProgress.style.width = percentage + '%';
-        levSliderHandle.style.left = `calc(${percentage}% - 10px)`;
+        // Simple slider - no custom visuals needed, just sync the input value
+        $('#levRange').value = val;
       }
       
       function closeLev() {
