@@ -563,6 +563,24 @@
         color: currentColor;
         flex-shrink: 0;
       }
+      
+      /* Mobile orders tabs */
+      .mobile-orders-tab {
+        color: #9ca3af;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s ease;
+      }
+      
+      .mobile-orders-tab.active {
+        color: white;
+        border-bottom-color: #6EE7B7;
+      }
+      
+      /* Mobile token items */
+      .mobile-token-item.active {
+        border-color: rgba(110, 231, 183, 0.5);
+        background: rgba(110, 231, 183, 0.1);
+      }
     }
     
     /* Tablet adjustments */
@@ -1351,6 +1369,47 @@
 
     <!-- Mobile Content Area -->
     <div class="mobile-content">
+      <!-- Mobile Market Info Bar -->
+      <div class="bg-black/50 backdrop-blur-sm border-b border-white/10 px-4 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <button id="mobileTokenSelector" class="flex items-center gap-2 hover:bg-white/10 rounded-lg px-2 py-1 transition-colors">
+              <div class="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center">
+                <span class="text-xs font-bold text-white">₿</span>
+              </div>
+              <span class="text-sm font-medium text-white">BTC/USDT</span>
+              <svg class="w-4 h-4 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+          </div>
+          <div class="text-right">
+            <div class="text-lg font-mono font-bold text-white">$43,256.78</div>
+            <div class="text-xs text-emerald-400">+2.4% (+$1,012.34)</div>
+          </div>
+        </div>
+        
+        <!-- Mobile Quick Stats -->
+        <div class="grid grid-cols-4 gap-2 mt-3 pt-3 border-t border-white/10">
+          <div class="text-center">
+            <div class="text-xs text-neutral-400">24h High</div>
+            <div class="text-sm font-mono text-white">$44,123</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xs text-neutral-400">24h Low</div>
+            <div class="text-sm font-mono text-white">$42,890</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xs text-neutral-400">Volume</div>
+            <div class="text-sm font-mono text-white">2.1B</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xs text-neutral-400">Market Cap</div>
+            <div class="text-sm font-mono text-white">850B</div>
+          </div>
+        </div>
+      </div>
+
       <!-- Mobile Chart Container -->
       <div id="mobileChartContainer" class="mobile-chart-container">
         <!-- Single Chart View -->
@@ -1366,9 +1425,9 @@
                 <path d="M21 3l-7 7"/>
                 <path d="M3 21l7-7"/>
               </svg>
-                </button>
-      </div>
-    </div>
+            </button>
+          </div>
+        </div>
         
         <!-- Two Charts View -->
         <div id="mobileTwoCharts" class="hidden flex-1 flex flex-col gap-2 p-2">
@@ -1421,9 +1480,9 @@
       
       <button class="mobile-tab" data-mobile-tab="orders">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M3 6h18"/>
-          <path d="M3 12h12"/>
-          <path d="M3 18h18"/>
+          <path d="M9 12l2 2 4-4"/>
+          <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+          <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
         </svg>
         <span>Orders</span>
       </button>
@@ -1909,6 +1968,251 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Orders View -->
+  <div id="mobileOrdersView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Orders & Positions</h2>
+      <button id="closeMobileOrders" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto">
+      <!-- Mobile Orders Tabs -->
+      <div class="flex border-b border-white/10">
+        <button class="mobile-orders-tab active flex-1 py-3 px-4 text-sm font-medium" data-orders-tab="open">
+          Open Orders
+        </button>
+        <button class="mobile-orders-tab flex-1 py-3 px-4 text-sm font-medium" data-orders-tab="positions">
+          Positions
+        </button>
+        <button class="mobile-orders-tab flex-1 py-3 px-4 text-sm font-medium" data-orders-tab="history">
+          History
+        </button>
+      </div>
+      
+      <!-- Open Orders Content -->
+      <div id="mobileOpenOrdersContent" class="p-4">
+        <div class="space-y-3">
+          <!-- Order Item -->
+          <div class="p-4 rounded-lg bg-white/5 border border-white/10 border-l-4 border-l-emerald-500">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium">BUY LIMIT</span>
+                <span class="text-sm font-medium text-white">BTC/USDT</span>
+              </div>
+              <button class="text-xs text-red-400 hover:text-red-300 transition-colors">Cancel</button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <div class="text-xs text-neutral-400">Amount</div>
+                <div class="font-mono text-white">0.2500 BTC</div>
+              </div>
+              <div>
+                <div class="text-xs text-neutral-400">Price</div>
+                <div class="font-mono text-white">$42,500.00</div>
+              </div>
+            </div>
+            <div class="mt-2 text-xs text-neutral-400">
+              Total: <span class="text-white font-mono">$10,625.00</span>
+            </div>
+          </div>
+          
+          <!-- Order Item -->
+          <div class="p-4 rounded-lg bg-white/5 border border-white/10 border-l-4 border-l-red-500">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 font-medium">SELL LIMIT</span>
+                <span class="text-sm font-medium text-white">ETH/USDT</span>
+              </div>
+              <button class="text-xs text-red-400 hover:text-red-300 transition-colors">Cancel</button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <div class="text-xs text-neutral-400">Amount</div>
+                <div class="font-mono text-white">2.5000 ETH</div>
+              </div>
+              <div>
+                <div class="text-xs text-neutral-400">Price</div>
+                <div class="font-mono text-white">$2,700.00</div>
+              </div>
+            </div>
+            <div class="mt-2 text-xs text-neutral-400">
+              Total: <span class="text-white font-mono">$6,750.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Positions Content -->
+      <div id="mobilePositionsContent" class="hidden p-4">
+        <div class="text-center py-12 text-neutral-400">
+          <svg class="w-16 h-16 mx-auto mb-4 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 12h8"/>
+          </svg>
+          <div class="text-lg font-medium mb-2">No Open Positions</div>
+          <div class="text-sm">Your futures positions will appear here</div>
+        </div>
+      </div>
+      
+      <!-- History Content -->
+      <div id="mobileHistoryContent" class="hidden p-4">
+        <div class="space-y-3">
+          <!-- History Item -->
+          <div class="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium">FILLED</span>
+                <span class="text-sm font-medium text-white">BTC/USDT</span>
+              </div>
+              <span class="text-xs text-neutral-400">2h ago</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <div class="text-xs text-neutral-400">Type</div>
+                <div class="text-white">Market Buy</div>
+              </div>
+              <div>
+                <div class="text-xs text-neutral-400">Amount</div>
+                <div class="font-mono text-white">0.1000 BTC</div>
+              </div>
+            </div>
+            <div class="mt-2 text-xs text-neutral-400">
+              Avg Price: <span class="text-white font-mono">$43,150.00</span>
+            </div>
+          </div>
+          
+          <!-- History Item -->
+          <div class="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 font-medium">FILLED</span>
+                <span class="text-sm font-medium text-white">ETH/USDT</span>
+              </div>
+              <span class="text-xs text-neutral-400">5h ago</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <div class="text-xs text-neutral-400">Type</div>
+                <div class="text-white">Limit Sell</div>
+              </div>
+              <div>
+                <div class="text-xs text-neutral-400">Amount</div>
+                <div class="font-mono text-white">1.5000 ETH</div>
+              </div>
+            </div>
+            <div class="mt-2 text-xs text-neutral-400">
+              Avg Price: <span class="text-white font-mono">$2,650.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Token Selector -->
+  <div id="mobileTokenSelectorView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Select Trading Pair</h2>
+      <button id="closeMobileTokenSelector" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-4">
+      <!-- Search Bar -->
+      <div class="mb-4">
+        <input type="text" placeholder="Search pairs..." class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-neutral-400 outline-none focus:border-emerald-500/50 transition-colors">
+      </div>
+      
+      <!-- Token List -->
+      <div class="space-y-2">
+        <button class="mobile-token-item active w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="BTCUSDT">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                <span class="text-xs font-bold text-white">₿</span>
+              </div>
+              <div class="text-left">
+                <div class="text-sm font-medium text-white">BTC/USDT</div>
+                <div class="text-xs text-neutral-400">Bitcoin</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm font-mono text-white">$43,256.78</div>
+              <div class="text-xs text-emerald-400">+2.4%</div>
+            </div>
+          </div>
+        </button>
+        
+        <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="ETHUSDT">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                <span class="text-xs font-bold text-white">Ξ</span>
+              </div>
+              <div class="text-left">
+                <div class="text-sm font-medium text-white">ETH/USDT</div>
+                <div class="text-xs text-neutral-400">Ethereum</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm font-mono text-white">$2,650.45</div>
+              <div class="text-xs text-emerald-400">+1.8%</div>
+            </div>
+          </div>
+        </button>
+        
+        <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="ADAUSDT">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                <span class="text-xs font-bold text-white">₳</span>
+              </div>
+              <div class="text-left">
+                <div class="text-sm font-medium text-white">ADA/USDT</div>
+                <div class="text-xs text-neutral-400">Cardano</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm font-mono text-white">$0.4523</div>
+              <div class="text-xs text-red-400">-0.8%</div>
+            </div>
+          </div>
+        </button>
+        
+        <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="SOLUSDT">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
+                <span class="text-xs font-bold text-white">◎</span>
+              </div>
+              <div class="text-left">
+                <div class="text-sm font-medium text-white">SOL/USDT</div>
+                <div class="text-xs text-neutral-400">Solana</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm font-mono text-white">$98.67</div>
+              <div class="text-xs text-emerald-400">+5.2%</div>
+            </div>
+          </div>
+        </button>
       </div>
     </div>
   </div>
@@ -6341,8 +6645,7 @@
             openMobilePortfolio();
             break;
           case 'orders':
-            // Could open orders sheet
-            closeMobileSheets();
+            openMobileOrders();
             break;
           case 'more':
             // Could open more options
@@ -6507,6 +6810,8 @@
         closeMobileOrderBook();
         closeMobileNews();
         closeMobileAnalytics();
+        closeMobileOrders();
+        closeMobileTokenSelector();
       }
 
       // Mobile order book functions
@@ -6584,6 +6889,132 @@
       const closeMobileAnalyticsBtn = document.getElementById('closeMobileAnalytics');
       if (closeMobileAnalyticsBtn) {
         closeMobileAnalyticsBtn.addEventListener('click', closeMobileAnalytics);
+      }
+
+      // Mobile orders functions
+      function openMobileOrders() {
+        const sheet = document.getElementById('mobileOrdersView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileOrders() {
+        const sheet = document.getElementById('mobileOrdersView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      const closeMobileOrdersBtn = document.getElementById('closeMobileOrders');
+      if (closeMobileOrdersBtn) {
+        closeMobileOrdersBtn.addEventListener('click', closeMobileOrders);
+      }
+
+      // Mobile orders tabs functionality
+      document.querySelectorAll('.mobile-orders-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabName = tab.dataset.ordersTab;
+          switchMobileOrdersTab(tabName);
+        });
+      });
+
+      function switchMobileOrdersTab(tabName) {
+        // Update active tab
+        document.querySelectorAll('.mobile-orders-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        document.querySelector(`[data-orders-tab="${tabName}"]`).classList.add('active');
+
+        // Hide all content
+        document.getElementById('mobileOpenOrdersContent').classList.add('hidden');
+        document.getElementById('mobilePositionsContent').classList.add('hidden');
+        document.getElementById('mobileHistoryContent').classList.add('hidden');
+
+        // Show selected content
+        switch (tabName) {
+          case 'open':
+            document.getElementById('mobileOpenOrdersContent').classList.remove('hidden');
+            break;
+          case 'positions':
+            document.getElementById('mobilePositionsContent').classList.remove('hidden');
+            break;
+          case 'history':
+            document.getElementById('mobileHistoryContent').classList.remove('hidden');
+            break;
+        }
+      }
+
+      // Mobile token selector functions
+      function openMobileTokenSelector() {
+        const sheet = document.getElementById('mobileTokenSelectorView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileTokenSelector() {
+        const sheet = document.getElementById('mobileTokenSelectorView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      const mobileTokenSelector = document.getElementById('mobileTokenSelector');
+      if (mobileTokenSelector) {
+        mobileTokenSelector.addEventListener('click', openMobileTokenSelector);
+      }
+
+      const closeMobileTokenSelectorBtn = document.getElementById('closeMobileTokenSelector');
+      if (closeMobileTokenSelectorBtn) {
+        closeMobileTokenSelectorBtn.addEventListener('click', closeMobileTokenSelector);
+      }
+
+      // Mobile token selection
+      document.querySelectorAll('.mobile-token-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const symbol = item.dataset.symbol;
+          selectMobileToken(symbol, item);
+        });
+      });
+
+      function selectMobileToken(symbol, element) {
+        // Update active state
+        document.querySelectorAll('.mobile-token-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        element.classList.add('active');
+
+        // Update market info bar
+        const tokenData = {
+          'BTCUSDT': { icon: '₿', name: 'BTC/USDT', price: '$43,256.78', change: '+2.4% (+$1,012.34)', color: 'bg-orange-500' },
+          'ETHUSDT': { icon: 'Ξ', name: 'ETH/USDT', price: '$2,650.45', change: '+1.8% (+$46.82)', color: 'bg-blue-500' },
+          'ADAUSDT': { icon: '₳', name: 'ADA/USDT', price: '$0.4523', change: '-0.8% (-$0.004)', color: 'bg-blue-600' },
+          'SOLUSDT': { icon: '◎', name: 'SOL/USDT', price: '$98.67', change: '+5.2% (+$4.89)', color: 'bg-purple-500' }
+        };
+
+        const data = tokenData[symbol];
+        if (data) {
+          // Update token selector button
+          const selectorButton = document.getElementById('mobileTokenSelector');
+          selectorButton.querySelector('.w-6').className = `w-6 h-6 rounded-full ${data.color} flex items-center justify-center`;
+          selectorButton.querySelector('.w-6 span').textContent = data.icon;
+          selectorButton.querySelector('span.text-sm').textContent = data.name;
+
+          // Update price display
+          const marketInfoBar = selectorButton.closest('.bg-black\\/50');
+          const priceDisplay = marketInfoBar.querySelector('.text-right .text-lg');
+          const changeDisplay = marketInfoBar.querySelector('.text-right .text-xs');
+          priceDisplay.textContent = data.price;
+          changeDisplay.textContent = data.change;
+          changeDisplay.className = data.change.startsWith('+') ? 'text-xs text-emerald-400' : 'text-xs text-red-400';
+        }
+
+        closeMobileTokenSelector();
       }
 
       // Mobile section toggle function
