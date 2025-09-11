@@ -581,6 +581,18 @@
         border-color: rgba(110, 231, 183, 0.5);
         background: rgba(110, 231, 183, 0.1);
       }
+      
+      /* Mobile trade sub-tabs */
+      .mobile-trade-subtab {
+        color: #9ca3af;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s ease;
+      }
+      
+      .mobile-trade-subtab.active {
+        color: white;
+        border-bottom-color: #6EE7B7;
+      }
     }
     
     /* Tablet adjustments */
@@ -1454,37 +1466,38 @@
 
     <!-- Mobile Bottom Navigation -->
     <nav class="mobile-bottom-nav">
-      <button class="mobile-tab active" data-mobile-tab="charts">
+      <button class="mobile-tab active" data-mobile-tab="trade">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M3 3v18h18"/>
           <path d="M7 16l4-4 2 2 6-6"/>
         </svg>
-        <span>Charts</span>
-      </button>
-      
-      <button class="mobile-tab" data-mobile-tab="trade">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 6v6l4 2"/>
-        </svg>
         <span>Trade</span>
       </button>
       
-      <button class="mobile-tab" data-mobile-tab="portfolio">
+      <button class="mobile-tab" data-mobile-tab="balance">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="3" y="3" width="18" height="18" rx="2"/>
           <path d="M9 9h6v6H9z"/>
         </svg>
-        <span>Portfolio</span>
+        <span>Balance</span>
       </button>
       
-      <button class="mobile-tab" data-mobile-tab="orders">
+      <button class="mobile-tab" data-mobile-tab="news">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M9 12l2 2 4-4"/>
-          <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
-          <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+          <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+          <path d="M18 14h-8"/>
+          <path d="M15 18h-5"/>
+          <path d="M10 6h8v4h-8V6Z"/>
         </svg>
-        <span>Orders</span>
+        <span>News</span>
+      </button>
+      
+      <button class="mobile-tab" data-mobile-tab="portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        <span>Portfolio</span>
       </button>
       
       <button class="mobile-tab" data-mobile-tab="more">
@@ -1498,13 +1511,13 @@
     </nav>
   </div>
 
-  <!-- Mobile Trading Sheet -->
-  <div id="mobileTradeSheet" class="mobile-trade-sheet">
+  <!-- Mobile Trade View -->
+  <div id="mobileTradeView" class="mobile-trade-sheet">
     <div class="mobile-sheet-handle"></div>
     
     <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Trade ETH/USDT</h2>
-      <button id="closeMobileTradeSheet" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+      <h2 class="text-lg font-semibold text-white">Trade</h2>
+      <button id="closeMobileTradeView" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
         <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M18 6L6 18"/>
           <path d="M6 6l12 12"/>
@@ -1512,12 +1525,139 @@
       </button>
     </div>
     
-    <div class="flex-1 overflow-y-auto p-4 space-y-4">
-      <!-- Mobile Price Display -->
-      <div class="text-center py-4">
-        <div class="text-2xl font-bold text-white mono">$2,650.45</div>
-        <div class="text-emerald-400 text-sm">+1.8% (+$46.82)</div>
+    <!-- Mobile Trade Sub-tabs -->
+    <div class="flex border-b border-white/10">
+      <button class="mobile-trade-subtab active flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="charts">
+        Charts
+      </button>
+      <button class="mobile-trade-subtab flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="tokens">
+        Tokens
+      </button>
+      <button class="mobile-trade-subtab flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="orderbook">
+        Order Book
+      </button>
+      <button class="mobile-trade-subtab flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="trading">
+        Trading Panel
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto">
+      <!-- Charts Content -->
+      <div id="mobileTradeChartsContent" class="p-4">
+        <div class="h-80 rounded-lg bg-black/50 border border-white/10 flex items-center justify-center">
+          <div class="text-center">
+            <svg class="w-12 h-12 mx-auto mb-2 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M3 3v18h18"/>
+              <path d="M7 16l4-4 2 2 6-6"/>
+            </svg>
+            <div class="text-sm text-neutral-400">Chart View</div>
+            <div class="text-xs text-neutral-500 mt-1">Interactive chart will load here</div>
+          </div>
+        </div>
+        
+        <!-- Chart Controls -->
+        <div class="flex justify-center gap-2 mt-4">
+          <button class="px-3 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">1H</button>
+          <button class="px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10">4H</button>
+          <button class="px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10">1D</button>
+          <button class="px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10">1W</button>
+        </div>
       </div>
+      
+      <!-- Tokens Content -->
+      <div id="mobileTradeTokensContent" class="hidden p-4">
+        <div class="space-y-2">
+          <button class="mobile-token-item active w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                  <span class="text-xs font-bold text-white">₿</span>
+                </div>
+                <div class="text-left">
+                  <div class="text-sm font-medium text-white">BTC/USDT</div>
+                  <div class="text-xs text-neutral-400">Bitcoin</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-mono text-white">$43,256.78</div>
+                <div class="text-xs text-emerald-400">+2.4%</div>
+              </div>
+            </div>
+          </button>
+          
+          <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                  <span class="text-xs font-bold text-white">Ξ</span>
+                </div>
+                <div class="text-left">
+                  <div class="text-sm font-medium text-white">ETH/USDT</div>
+                  <div class="text-xs text-neutral-400">Ethereum</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-mono text-white">$2,650.45</div>
+                <div class="text-xs text-emerald-400">+1.8%</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Order Book Content -->
+      <div id="mobileTradeOrderBookContent" class="hidden p-4">
+        <div class="space-y-4">
+          <!-- Spread Info -->
+          <div class="text-center py-2 border-b border-white/10">
+            <div class="text-sm text-neutral-400">Spread</div>
+            <div class="text-lg font-mono text-white">$0.05 (0.002%)</div>
+          </div>
+          
+          <!-- Asks -->
+          <div>
+            <div class="text-xs text-red-400 font-medium uppercase mb-2">Asks (Sell)</div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
+                <span class="text-sm font-mono text-white">$2,652.50</span>
+                <span class="text-sm font-mono text-neutral-400">1.2450</span>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
+                <span class="text-sm font-mono text-white">$2,651.75</span>
+                <span class="text-sm font-mono text-neutral-400">2.1500</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Current Price -->
+          <div class="text-center py-2 border-y border-white/10">
+            <div class="text-xl font-mono font-bold text-emerald-400">$2,650.45</div>
+          </div>
+          
+          <!-- Bids -->
+          <div>
+            <div class="text-xs text-emerald-400 font-medium uppercase mb-2">Bids (Buy)</div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
+                <span class="text-sm font-mono text-white">$2,650.00</span>
+                <span class="text-sm font-mono text-neutral-400">3.1250</span>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
+                <span class="text-sm font-mono text-white">$2,649.25</span>
+                <span class="text-sm font-mono text-neutral-400">1.5000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Trading Panel Content -->
+      <div id="mobileTradeTradingContent" class="hidden p-4 space-y-4">
+        <!-- Mobile Price Display -->
+        <div class="text-center py-4">
+          <div class="text-2xl font-bold text-white mono">$2,650.45</div>
+          <div class="text-emerald-400 text-sm">+1.8% (+$46.82)</div>
+        </div>
       
       <!-- Mobile Order Type Tabs -->
       <div class="relative grid grid-cols-3 rounded-lg ring-1 ring-white/10 bg-white/5 p-1">
@@ -1598,6 +1738,150 @@
         <button class="w-full py-4 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-black font-semibold text-lg transition-all hover:from-emerald-400 hover:to-emerald-500 active:scale-[0.98]">
           Buy ETH
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Balance View -->
+  <div id="mobileBalanceView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Balance</h2>
+      <button id="closeMobileBalance" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto">
+      <!-- Portfolio Summary -->
+      <div class="p-4 border-b border-white/10">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-white mono">$12,458.92</div>
+          <div class="text-emerald-400 text-sm">+2.4% (+$291.45) Today</div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mt-4">
+          <div class="text-center">
+            <div class="text-xs text-neutral-400 uppercase tracking-wider">Total Balance</div>
+            <div class="text-lg font-semibold text-white mono">$12,458.92</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xs text-neutral-400 uppercase tracking-wider">Available</div>
+            <div class="text-lg font-semibold text-white mono">$2,829.23</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Balance Sections -->
+      <div class="mobile-portfolio-section">
+        <div class="mobile-section-header" onclick="toggleMobileSection('balances')">
+          <span class="text-sm font-medium text-white">Spot Balances</span>
+          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </div>
+        <div class="mobile-section-content" id="mobileBalancesContent">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                  <span class="text-xs font-bold text-white">₿</span>
+                </div>
+                <div>
+                  <div class="text-sm font-medium text-white">Bitcoin</div>
+                  <div class="text-xs text-neutral-400">BTC</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium text-white mono">0.2845</div>
+                <div class="text-xs text-neutral-400 mono">$12,458.92</div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                  <span class="text-xs font-bold text-white">Ξ</span>
+                </div>
+                <div>
+                  <div class="text-sm font-medium text-white">Ethereum</div>
+                  <div class="text-xs text-neutral-400">ETH</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium text-white mono">1.0650</div>
+                <div class="text-xs text-neutral-400 mono">$2,829.23</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile More View -->
+  <div id="mobileMoreView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">More</h2>
+      <button id="closeMobileMore" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-4">
+      <div class="space-y-4">
+        <button class="mobile-menu-item" onclick="openMobileRewards();">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <span>Rewards</span>
+        </button>
+        
+        <button class="mobile-menu-item" onclick="openMobileCommunity();">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Community</span>
+        </button>
+        
+        <button class="mobile-menu-item" onclick="openMobileLearn();">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+          <span>Learn</span>
+        </button>
+        
+        <div class="border-t border-white/10 pt-4 mt-6">
+          <button class="mobile-menu-item">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span>Settings</span>
+          </button>
+          
+          <button class="mobile-menu-item">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16,17 21,12 16,7"/>
+              <line x1="21" x2="9" y1="12" y2="12"/>
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -6611,7 +6895,7 @@
       $('#openMobileTrade').addEventListener('click', () => toggleMobileTradeSheet(true));
 
       // Mobile functionality
-      let currentMobileTab = 'charts';
+      let currentMobileTab = 'trade';
       let currentMobileChartLayout = 1;
       let mobileChartWidgets = {};
 
@@ -6634,22 +6918,20 @@
 
         // Handle tab content
         switch (tabName) {
-          case 'charts':
-            // Show charts view (already visible)
-            closeMobileSheets();
-            break;
           case 'trade':
-            openMobileTradeSheet();
+            openMobileTradeView();
+            break;
+          case 'balance':
+            openMobileBalance();
+            break;
+          case 'news':
+            openMobileNews();
             break;
           case 'portfolio':
             openMobilePortfolio();
             break;
-          case 'orders':
-            openMobileOrders();
-            break;
           case 'more':
-            // Could open more options
-            closeMobileSheets();
+            openMobileMore();
             break;
         }
 
@@ -6770,17 +7052,51 @@
         }
       }
 
-      // Mobile trading sheet functions
-      function openMobileTradeSheet() {
-        const sheet = document.getElementById('mobileTradeSheet');
+      // Mobile trade view functions
+      function openMobileTradeView() {
+        const sheet = document.getElementById('mobileTradeView');
         if (sheet) {
           sheet.classList.add('open');
           document.body.style.overflow = 'hidden';
         }
       }
 
-      function closeMobileTradeSheet() {
-        const sheet = document.getElementById('mobileTradeSheet');
+      function closeMobileTradeView() {
+        const sheet = document.getElementById('mobileTradeView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Mobile balance view functions
+      function openMobileBalance() {
+        const sheet = document.getElementById('mobileBalanceView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileBalance() {
+        const sheet = document.getElementById('mobileBalanceView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Mobile more view functions
+      function openMobileMore() {
+        const sheet = document.getElementById('mobileMoreView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileMore() {
+        const sheet = document.getElementById('mobileMoreView');
         if (sheet) {
           sheet.classList.remove('open');
           document.body.style.overflow = '';
@@ -6805,13 +7121,15 @@
       }
 
       function closeMobileSheets() {
-        closeMobileTradeSheet();
+        closeMobileTradeView();
+        closeMobileBalance();
         closeMobilePortfolio();
         closeMobileOrderBook();
         closeMobileNews();
         closeMobileAnalytics();
         closeMobileOrders();
         closeMobileTokenSelector();
+        closeMobileMore();
       }
 
       // Mobile order book functions
@@ -6866,9 +7184,19 @@
       }
 
       // Mobile sheet close buttons
-      const closeMobileTradeSheetBtn = document.getElementById('closeMobileTradeSheet');
-      if (closeMobileTradeSheetBtn) {
-        closeMobileTradeSheetBtn.addEventListener('click', closeMobileTradeSheet);
+      const closeMobileTradeViewBtn = document.getElementById('closeMobileTradeView');
+      if (closeMobileTradeViewBtn) {
+        closeMobileTradeViewBtn.addEventListener('click', closeMobileTradeView);
+      }
+
+      const closeMobileBalanceBtn = document.getElementById('closeMobileBalance');
+      if (closeMobileBalanceBtn) {
+        closeMobileBalanceBtn.addEventListener('click', closeMobileBalance);
+      }
+
+      const closeMobileMoreBtn = document.getElementById('closeMobileMore');
+      if (closeMobileMoreBtn) {
+        closeMobileMoreBtn.addEventListener('click', closeMobileMore);
       }
 
       const closeMobilePortfolioBtn = document.getElementById('closeMobilePortfolio');
@@ -7015,6 +7343,44 @@
         }
 
         closeMobileTokenSelector();
+      }
+
+      // Mobile trade sub-tabs functionality
+      document.querySelectorAll('.mobile-trade-subtab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabName = tab.dataset.tradeTab;
+          switchMobileTradeTab(tabName);
+        });
+      });
+
+      function switchMobileTradeTab(tabName) {
+        // Update active tab
+        document.querySelectorAll('.mobile-trade-subtab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        document.querySelector(`[data-trade-tab="${tabName}"]`).classList.add('active');
+
+        // Hide all content
+        document.getElementById('mobileTradeChartsContent').classList.add('hidden');
+        document.getElementById('mobileTradeTokensContent').classList.add('hidden');
+        document.getElementById('mobileTradeOrderBookContent').classList.add('hidden');
+        document.getElementById('mobileTradeTradingContent').classList.add('hidden');
+
+        // Show selected content
+        switch (tabName) {
+          case 'charts':
+            document.getElementById('mobileTradeChartsContent').classList.remove('hidden');
+            break;
+          case 'tokens':
+            document.getElementById('mobileTradeTokensContent').classList.remove('hidden');
+            break;
+          case 'orderbook':
+            document.getElementById('mobileTradeOrderBookContent').classList.remove('hidden');
+            break;
+          case 'trading':
+            document.getElementById('mobileTradeTradingContent').classList.remove('hidden');
+            break;
+        }
       }
 
       // Mobile section toggle function
