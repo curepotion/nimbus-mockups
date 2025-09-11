@@ -16,6 +16,7 @@
 
   <!-- Global Design System -->
   <link href="assets/css/components.css" rel="stylesheet">
+  <link href="assets/css/grid-animation.css" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -25,6 +26,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="assets/js/components.js"></script>
   <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/grid-animation.js"></script>
 
   <style>
     /* Page-specific overrides for index.html */
@@ -1041,55 +1043,44 @@
                 <div class="space-y-2">
                   <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
                     <div class="flex items-center gap-3">
-                      <!-- Grid Bot Animation Container -->
-                      <div class="grid-bot-animation-container relative w-20 h-12 rounded-md bg-black/40 border border-white/10 overflow-hidden">
-                        <!-- Grid Lines (horizontal trading levels) -->
-                        <div class="absolute inset-0 pointer-events-none">
-                          <div class="absolute inset-x-0 top-[20%] h-[1px] bg-emerald-400/20"></div>
-                          <div class="absolute inset-x-0 top-[40%] h-[1px] bg-emerald-400/20"></div>
-                          <div class="absolute inset-x-0 top-[60%] h-[1px] bg-emerald-400/20"></div>
-                          <div class="absolute inset-x-0 top-[80%] h-[1px] bg-emerald-400/20"></div>
-                        </div>
-                        
-                        <!-- SVG Animation -->
-                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 80 48" preserveAspectRatio="none">
-                          <!-- Animated curved path -->
-                          <path id="gridPath" fill="none" stroke="#6EE7B7" stroke-width="1.8" opacity="0.9"
-                                d="M0,35 Q20,15 40,30 Q60,45 80,25">
-                            <animate attributeName="d" 
-                                     values="M0,35 Q20,15 40,30 Q60,45 80,25;M0,25 Q20,40 40,20 Q60,35 80,15;M0,40 Q20,20 40,35 Q60,15 80,30;M0,35 Q20,15 40,30 Q60,45 80,25" 
-                                     dur="6s" 
-                                     repeatCount="indefinite"/>
-                          </path>
-                          
-                          <!-- Moving dot that follows the path -->
-                          <circle r="2.5" fill="#6EE7B7" stroke="#ffffff" stroke-width="0.8" opacity="0.95">
-                            <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
-                              <mpath href="#gridPath" />
-                            </animateMotion>
-                          </circle>
-                        </svg>
-                        
-                        <!-- Buy Signal -->
-                        <div class="grid-buy-signal absolute bottom-1 left-1 text-[8px] text-emerald-400 font-bold opacity-0 transition-opacity duration-300">
-                          BUY ↗
-                  </div>
-                        
-                        <!-- Sell Signal -->
-                        <div class="grid-sell-signal absolute top-1 right-1 text-[8px] text-red-400 font-bold opacity-0 transition-opacity duration-300">
-                          SELL ↘
-                        </div>
-                        
-                        <!-- Profit Counter -->
-                        <div class="absolute bottom-1 right-1 text-[8px] text-yellow-400 font-mono font-semibold">
-                          <div class="grid-profit-counter opacity-90">
-                            <span class="profit-value">+$47</span>
-                </div>
-              </div>
+                      <!-- Grid Bot Animation - Using Chart.js -->
+                      <div class="grid-bot-animation-card animate-in">
+                        <!-- Subtle top highlight -->
+                        <div class="grid-animation-highlight"></div>
 
-                        <!-- Subtle backdrop glow -->
-                        <div class="absolute inset-0 bg-gradient-radial from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div>
-                  </div>
+                        <!-- Overlay label for events -->
+                        <div id="eventLabel">
+                          <!-- dynamic -->
+                        </div>
+
+                        <!-- Horizontal dashed guides -->
+                        <div class="grid-animation-guides">
+                          <div class="grid-guide-line"></div>
+                          <div class="grid-guide-line"></div>
+                          <div class="grid-guide-line"></div>
+                          <div class="grid-guide-line"></div>
+                        </div>
+
+                        <!-- Chart container -->
+                        <div class="grid-chart-container">
+                          <div class="grid-chart-wrapper">
+                            <canvas id="gridBoxChart"></canvas>
+                          </div>
+                        </div>
+
+                        <!-- Leading cursor + scanline -->
+                        <div id="cursorDot"></div>
+                        <div id="scanline"></div>
+
+                        <!-- Cycle fade for start-to-finish feeling -->
+                        <div id="cycleFade"></div>
+
+                        <!-- Profit display -->
+                        <div class="grid-profit-display">+$47</div>
+
+                        <!-- Soft vignette -->
+                        <div class="grid-animation-vignette"></div>
+                      </div>
                       
                       <!-- Grid Bot Icon and Text -->
                     <div class="flex items-center gap-2">
@@ -7759,70 +7750,65 @@
         setMobileChartLayout(1);
       }
 
-      // Grid Bot Animation Controller
+      // Initialize Grid Bot Animation using Chart.js
+      let gridBotAnimation = null;
+      
       function initGridBotAnimation() {
-        const buySignal = document.querySelector('.grid-buy-signal');
-        const sellSignal = document.querySelector('.grid-sell-signal');
-        const profitCounter = document.querySelector('.profit-value');
-        
-        if (!buySignal || !sellSignal || !profitCounter) return;
-        
-        const animationDuration = 6000; // 6 seconds to match SVG animation
-        const profits = ['+$47', '+$52', '+$38', '+$61', '+$44', '+$56'];
-        let profitIndex = 0;
-        
-        function updateSignals() {
-          // Phase 1: Price moving up (0-1.5s) - Show BUY signal
-          buySignal.style.opacity = '1';
-          sellSignal.style.opacity = '0';
-          
-          setTimeout(() => {
-            // Phase 2: Price at peak (1.5-3s) - Show SELL signal
-            buySignal.style.opacity = '0';
-            sellSignal.style.opacity = '1';
-            
-            // Update profit counter
-            profitCounter.textContent = profits[profitIndex];
-            profitIndex = (profitIndex + 1) % profits.length;
-          }, animationDuration * 0.25);
-          
-          setTimeout(() => {
-            // Phase 3: Price moving down (3-4.5s) - Show BUY signal again
-            buySignal.style.opacity = '1';
-            sellSignal.style.opacity = '0';
-          }, animationDuration * 0.5);
-          
-          setTimeout(() => {
-            // Phase 4: Price at bottom (4.5-6s) - Brief SELL signal
-            buySignal.style.opacity = '0';
-            sellSignal.style.opacity = '1';
-          }, animationDuration * 0.75);
-          
-          setTimeout(() => {
-            // Reset for next cycle
-            buySignal.style.opacity = '0';
-            sellSignal.style.opacity = '0';
-          }, animationDuration * 0.9);
+        // Wait for Chart.js to be available
+        if (typeof Chart === 'undefined') {
+          setTimeout(initGridBotAnimation, 100);
+          return;
         }
         
-        // Start the animation cycle
-        updateSignals();
-        setInterval(updateSignals, animationDuration);
-        
-        // Animate profit counter independently
-        setInterval(() => {
-          profitCounter.style.transform = 'scale(1.1)';
-          profitCounter.style.color = '#FFD700';
+        try {
+          // Create the grid bot animation instance
+          gridBotAnimation = new GridBotAnimation('gridBoxChart');
           
+          // Card entrance animation
+          const card = document.querySelector('.grid-bot-animation-card');
+          if (card) {
+            requestAnimationFrame(() => {
+              card.classList.add('visible');
+            });
+          }
+          
+          // Start animation when page loads
           setTimeout(() => {
-            profitCounter.style.transform = 'scale(1)';
-            profitCounter.style.color = '#FACC15'; // yellow-400
-          }, 200);
-        }, 2000);
+            if (gridBotAnimation) {
+              gridBotAnimation.start();
+            }
+          }, 500);
+          
+          // Handle visibility changes for efficiency
+          document.addEventListener('visibilitychange', () => {
+            if (gridBotAnimation) {
+              if (document.hidden) {
+                gridBotAnimation.stop();
+              } else {
+                gridBotAnimation.restart();
+              }
+            }
+          });
+          
+          // Handle resize
+          window.addEventListener('resize', () => {
+            if (gridBotAnimation && gridBotAnimation.chart) {
+              setTimeout(() => {
+                gridBotAnimation.positionCursor(gridBotAnimation.chart.$progress || 0);
+                gridBotAnimation.chart.update('none');
+              }, 50);
+            }
+          });
+          
+        } catch (error) {
+          console.error('Failed to initialize grid bot animation:', error);
+        }
       }
       
-      // Initialize grid bot animation when page loads
-      setTimeout(initGridBotAnimation, 1000);
+      // Initialize when DOM is ready
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initGridBotAnimation, 1000);
+      });
 
       // Handle orientation changes
       window.addEventListener('orientationchange', () => {
