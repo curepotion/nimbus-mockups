@@ -279,7 +279,7 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Looping Line Box Animation Styles */
+    /* ✅ Looping Line Box — standalone, dependency-free, paste-anywhere (works in plain HTML & React) */
     .llb {
       /* Size is fully controlled by these CSS variables (no margins, no padding) */
       --llb-w: 112px;   /* default width (7rem)  */
@@ -288,15 +288,12 @@
       width: var(--llb-w);
       height: var(--llb-h);
       contain: layout paint size style;
-      border-radius: 6px;
+      border-radius: 12px;
       overflow: hidden;
-      background: rgba(0, 0, 0, 0.6);
+      background: #000;               /* neutral black surface */
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-      border: 2px solid rgba(110, 231, 183, 0.4);
-      min-width: var(--llb-w);
-      min-height: var(--llb-h);
+      border: 1px solid rgba(255,255,255,0.10);
     }
-    
     .llb::before {
       /* subtle top highlight */
       content: "";
@@ -310,18 +307,6 @@
       position: absolute; inset: 0;
       background: radial-gradient(120% 100% at 50% 110%, rgba(0,0,0,0.55), rgba(0,0,0,0));
       pointer-events: none;
-    }
-    
-    /* Fallback static content when animation fails */
-    .llb-fallback {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 16px;
-      z-index: 10;
-      pointer-events: none;
-      color: rgba(110, 231, 183, 0.8);
     }
     .llb-canvas { position: absolute; inset: 0; display: block; }
     .llb-label {
@@ -745,11 +730,10 @@
               <div class="space-y-2">
                 <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-3 hover:ring-emerald-300/40 transition min-h-[60px]">
                   <div class="flex items-center gap-3 h-full">
-                    <!-- Animated Grid Chart -->
+                    <!-- ✅ Looping Line Box — standalone, dependency-free, paste-anywhere (works in plain HTML & React) -->
                     <div class="llb flex-shrink-0" style="--llb-w:40px; --llb-h:32px">
                       <canvas class="llb-canvas"></canvas>
                       <div class="llb-label" aria-hidden="true"></div>
-                      <div class="llb-fallback">📈</div>
                   </div>
                     <div class="flex flex-col items-start justify-center">
                       <span class="text-[12px] font-medium tracking-tight">Grid</span>
@@ -2233,12 +2217,6 @@
         tabTrade.classList.remove('text-white');
         tabTrade.classList.add('text-neutral-400');
         
-        // Reinitialize animations when strategies tab becomes visible
-        setTimeout(() => {
-          const blocks = document.querySelectorAll('.llb:not([data-llb-init])');
-          console.log('Reinitializing', blocks.length, 'animation blocks for strategies tab');
-          blocks.forEach(window.initLLBAnimation);
-        }, 100);
       });
 
       // Asset is fixed to ETH (dropdown removed)
@@ -5661,26 +5639,20 @@
         showToast('Welcome to Nimbus Trading Platform with Strategies!');
       }, 2000);
 
-      // Initialize Looping Line Box Animation
-      window.initLLBAnimation = function(root) {
-          const attrKey = 'data-llb-init';
-          if (root.hasAttribute(attrKey)) return; // Already initialized
+      // ✅ Looping Line Box Animation - Exact original implementation
+      (() => {
+        // Initialize all .llb blocks once (works in plain HTML and React)
+        const attrKey = 'data-llb-init';
+        const blocks = Array.from(document.querySelectorAll('.llb')).filter(b => !b.hasAttribute(attrKey));
+        if (!blocks.length) return;
+        blocks.forEach(init);
+
+        function init(root) {
           root.setAttribute(attrKey, '1');
 
           const canvas = root.querySelector('.llb-canvas');
-          if (!canvas) {
-            console.error('Canvas not found in animation block');
-            return;
-          }
-          
           const ctx = canvas.getContext('2d', { alpha: true });
           const label = root.querySelector('.llb-label');
-          const fallback = root.querySelector('.llb-fallback');
-          
-          // Hide fallback when animation starts
-          if (fallback) {
-            fallback.style.display = 'none';
-          }
 
           // HiDPI sizing
           function fit() {
@@ -5734,6 +5706,18 @@
             const W = Wcss, H = Hcss;
             ctx.clearRect(0, 0, W, H);
 
+            // Guides (4 dashed horizontals)
+            if (root.style.getPropertyValue('--llb-guides') !== '0') {
+              ctx.save();
+              ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+              ctx.setLineDash([3, 4]);
+              [0.2, 0.4, 0.6, 0.8].forEach(p => {
+                const y = mapY(100 * (1 - p), H);
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+              });
+              ctx.restore();
+            }
+
             // Build path up to sweepX
             const maxIdx = (N - 1) * progress;
             const iMax = Math.floor(maxIdx);
@@ -5741,12 +5725,12 @@
 
             // Area gradient
             const grad = ctx.createLinearGradient(0, 0, 0, H);
-            grad.addColorStop(0, 'rgba(110,231,183,0.30)');
-            grad.addColorStop(1, 'rgba(110,231,183,0.00)');
+            grad.addColorStop(0, 'rgba(255,255,255,0.20)');
+            grad.addColorStop(1, 'rgba(255,255,255,0.00)');
 
             // Line
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = 'rgba(110,231,183,0.85)';
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(255,255,255,0.85)';
             ctx.beginPath();
             for (let i = 0; i <= iMax; i++) {
               const x = mapX(i, W);
@@ -5763,7 +5747,7 @@
 
             // Area fill under curve
             ctx.save();
-            ctx.fillStyle = grad;
+            ctx.fillStyle = 'rgba(255,255,255,0.05)';
             ctx.beginPath();
             ctx.moveTo(0, H);
             for (let i = 0; i <= iMax; i++) {
@@ -5784,14 +5768,14 @@
             const { x: cx, y: cy } = posAtProgress(progress);
             ctx.save();
             // scanline
-            ctx.strokeStyle = 'rgba(110,231,183,0.30)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.30)';
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke();
             // cursor dot with ring
-            ctx.fillStyle = 'rgba(110,231,183,0.90)';
-            ctx.beginPath(); ctx.arc(cx, cy, 1.5, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'rgba(110,231,183,0.25)'; ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.stroke();
+            ctx.fillStyle = 'rgba(255,255,255,0.90)';
+            ctx.beginPath(); ctx.arc(cx, cy, 2.5, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(cx, cy, 4.5, 0, Math.PI * 2); ctx.stroke();
             ctx.restore();
           }
 
@@ -5833,6 +5817,18 @@
             label.style.opacity = '0';
           }
 
+          // Cycle fade (simple flash)
+          let flashAlpha = 0;
+          function flash(dt) { flashAlpha = Math.min(1, flashAlpha + dt * 5); }
+          function drawFlash() {
+            if (flashAlpha <= 0) return;
+            ctx.save();
+            ctx.fillStyle = `rgba(0,0,0,${0.4 * flashAlpha})`;
+            ctx.fillRect(0, 0, root.clientWidth, root.clientHeight);
+            ctx.restore();
+            flashAlpha = Math.max(0, flashAlpha - 0.08);
+          }
+
           // Animation loop
           function tick(t) {
             if (!startTime) startTime = t;
@@ -5842,11 +5838,13 @@
             draw(p);
             maybeShowEvent(evBUY, p);
             maybeShowEvent(evPROFIT, p);
+            drawFlash();
 
             if (p < 1) {
               rafId = requestAnimationFrame(tick);
             } else {
-              // restart after short delay
+              // flash & restart after short delay
+              flash(0.2);
               setTimeout(restart, 220);
             }
           }
@@ -5870,14 +5868,8 @@
 
           // Kick off
           fit(); draw(0); start();
-      };
-
-      // Initialize all animations on page load
-      setTimeout(() => {
-        const blocks = Array.from(document.querySelectorAll('.llb'));
-        console.log('Found', blocks.length, 'animation blocks to initialize on page load');
-        blocks.forEach(window.initLLBAnimation);
-      }, 500); // Wait 500ms for DOM to be fully ready
+        }
+      })();
       
       // Fallback TradingView initialization
       setTimeout(() => {
