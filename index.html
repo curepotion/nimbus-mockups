@@ -733,28 +733,60 @@
                   <input id="profitPerGrid" type="number" placeholder="0.5" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600" value="0.5" step="0.1" min="0.1" max="10">
             </div>
 
-                <!-- Investment amount -->
-                <div class="space-y-2">
+                <!-- Available Balance Display -->
+                <div class="flex items-center justify-between">
+                  <div class="text-[11px] text-neutral-400">
+                    Avail: <span id="gridAvailBalance" class="text-emerald-200 mono font-semibold">2829.23</span>
+                  </div>
+                  <div class="text-[11px] text-neutral-400">
+                    Pos: <span class="text-neutral-100 mono font-semibold">0.0000 ETH</span>
+                  </div>
+                </div>
+
+                <!-- Investment Amount Input -->
+                <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
                   <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Investment amount</span>
-                    <div class="flex items-center gap-1">
-                      <span class="text-[11px] text-neutral-500 mono font-semibold" id="investmentDisplay">250</span>
-                      <button id="investmentToggle" class="text-[11px] text-neutral-500 hover:text-white transition-colors">USDT</button>
-            </div>
-          </div>
-                  <div class="flex items-center gap-2">
-                    <span class="text-[11px] text-neutral-500">0</span>
-                    <!-- Custom Slider Container -->
-                    <div class="custom-slider">
-                      <div class="custom-slider-track">
-                        <div id="investmentProgress" class="custom-slider-progress" style="width: 8.8%"></div>
-                        <div id="investmentHandle" class="custom-slider-handle" style="left: calc(8.8% - 10px)"></div>
-              </div>
-                      <input id="marginSlider" type="range" min="0" max="2829" value="250" step="10" class="custom-slider-input">
-            </div>
-                    <span class="text-[11px] text-neutral-500">100%</span>
-              </div>
-              </div>
+                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
+                    <button id="gridAmountToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer">
+                      <span id="gridAmountDisplayValue">0.25</span> <span id="gridAmountDisplayUnit">BTC</span>
+                    </button>
+                  </div>
+                  <input id="gridAmountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
+                </div>
+
+                <!-- Position Size Slider -->
+                <div class="flex items-center gap-3">
+                  <!-- Custom Slider Container -->
+                  <div class="flex-1 relative">
+                    <!-- Slider Track -->
+                    <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
+                      <!-- Active Progress -->
+                      <div id="gridSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 0%"></div>
+                      <!-- Slider Handle -->
+                      <div id="gridSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
+                    </div>
+                    <!-- Hidden Range Input -->
+                    <input id="gridSizeSlider" type="range" min="0" max="100" step="1" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                  </div>
+                  
+                  <!-- Percentage Input -->
+                  <div class="w-[80px]">
+                    <div class="relative rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm px-3 py-2">
+                      <input id="gridSizeInput" type="number" class="w-full bg-transparent outline-none text-[14px] mono font-semibold text-white text-center" value="0" min="0" max="100" step="1">
+                      <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[12px] text-neutral-400 pointer-events-none">%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Percentage Buttons -->
+                <div class="flex justify-between items-center px-1">
+                  <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="25">25%</button>
+                  <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="33">33%</button>
+                  <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="50">50%</button>
+                  <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="66">66%</button>
+                  <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="75">75%</button>
+                  <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="100">100%</button>
+                </div>
 
                 <!-- Start Bot Button -->
                       <button id="startGrid" class="w-full group relative inline-flex items-center justify-center overflow-hidden rounded-lg px-3 py-2.5 text-[13px] font-semibold tracking-tight text-black ring-1 ring-white/10 transition-all hover:opacity-95 active:opacity-90 btn-primary">
@@ -2919,11 +2951,14 @@
       const gridQtyDisplay = $('#gridQtyDisplay');
       const gridQtyProgress = $('#gridQtyProgress');
       const gridQtyHandle = $('#gridQtyHandle');
-      
-      const marginSlider = $('#marginSlider');
-      const investmentDisplay = $('#investmentDisplay');
-      const investmentProgress = $('#investmentProgress');
-      const investmentHandle = $('#investmentHandle');
+
+      // Grid amount controls (copied from limit UI)
+      const gridSizeSlider = $('#gridSizeSlider');
+      const gridSizeInput = $('#gridSizeInput');
+      const gridSliderProgress = $('#gridSliderProgress');
+      const gridSliderHandle = $('#gridSliderHandle');
+      const gridAmountInput = $('#gridAmountInput');
+      let gridAmountDisplayMode = 'BTC'; // Default to BTC
 
       // Update grid quantity slider visuals
       function updateGridQtyVisuals(value) {
@@ -2934,12 +2969,68 @@
         }
       }
 
-      // Update investment amount slider visuals
-      function updateInvestmentVisuals(value) {
-        const percentage = (value / 2829) * 100; // 0-2829 range
-        if (investmentProgress && investmentHandle) {
-          investmentProgress.style.width = percentage + '%';
-          investmentHandle.style.left = `calc(${percentage}% - 10px)`;
+      // Grid size controls (% of balance) - copied from limit UI
+      function syncGridPercent(val) {
+        val = Math.max(0, Math.min(100, Number(val) || 0));
+        if (gridSizeSlider) gridSizeSlider.value = val; 
+        if (gridSizeInput) gridSizeInput.value = val;
+        
+        // Update custom slider visuals
+        updateGridSliderVisuals(val);
+        
+        // Update percentage button states
+        updateGridPercentageButtons(val);
+        
+        // Map % of availBalance to amount assuming current input mode
+        const avail = parseFloat($('#gridAvailBalance').textContent) || 0;
+        const px = currentPrice();
+        const usd = avail * val / 100;
+        
+        // Update amount input based on current display mode
+        if (gridAmountInput) {
+          if (gridAmountDisplayMode === 'USDT') {
+            gridAmountInput.value = usd ? usd.toFixed(2) : '';
+          } else {
+            const qty = px > 0 ? usd / px : 0;
+            gridAmountInput.value = qty ? qty.toFixed(4) : '';
+          }
+        }
+        updateGridAmountDisplay();
+      }
+      
+      function updateGridSliderVisuals(val) {
+        const percentage = val + '%';
+        if (gridSliderProgress) gridSliderProgress.style.width = percentage;
+        if (gridSliderHandle) gridSliderHandle.style.left = `calc(${percentage} - 10px)`; // Offset for handle center
+      }
+      
+      function updateGridPercentageButtons(val) {
+        // Remove active state from all buttons
+        document.querySelectorAll('.grid-percentage-btn').forEach(btn => {
+          btn.classList.remove('text-emerald-400', 'font-semibold');
+          btn.classList.add('text-neutral-400');
+        });
+        
+        // Add active state to current percentage button (if exact match)
+        const activeBtn = document.querySelector(`.grid-percentage-btn[data-percent="${val}"]`);
+        if (activeBtn) {
+          activeBtn.classList.remove('text-neutral-400');
+          activeBtn.classList.add('text-emerald-400', 'font-semibold');
+        }
+      }
+
+      function updateGridAmountDisplay() {
+        const displayValue = $('#gridAmountDisplayValue');
+        const displayUnit = $('#gridAmountDisplayUnit');
+        if (displayValue && displayUnit && gridAmountInput) {
+          const val = parseFloat(gridAmountInput.value) || 0;
+          if (gridAmountDisplayMode === 'BTC') {
+            displayValue.textContent = val.toFixed(4);
+            displayUnit.textContent = 'BTC';
+          } else {
+            displayValue.textContent = val.toFixed(2);
+            displayUnit.textContent = 'USDT';
+          }
         }
       }
 
@@ -2964,16 +3055,29 @@
         updateGridQtyVisuals(gridQtySlider.value);
       }
 
-      // Sync investment amount slider and display
-      if (marginSlider && investmentDisplay) {
-        marginSlider.addEventListener('input', (e) => {
-          const value = e.target.value;
-          investmentDisplay.textContent = value;
-          updateInvestmentVisuals(value);
+      // Grid size slider and input events
+      if (gridSizeSlider) gridSizeSlider.addEventListener('input', e => syncGridPercent(e.target.value));
+      if (gridSizeInput) gridSizeInput.addEventListener('input', e => syncGridPercent(e.target.value));
+
+      // Grid percentage button clicks
+      document.querySelectorAll('.grid-percentage-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const percent = btn.dataset.percent;
+          syncGridPercent(percent);
         });
-        
-        // Initialize visuals
-        updateInvestmentVisuals(marginSlider.value);
+      });
+
+      // Grid amount toggle functionality
+      const gridAmountToggleBtn = $('#gridAmountToggleBtn');
+      if (gridAmountToggleBtn) {
+        gridAmountToggleBtn.addEventListener('click', () => {
+          if (gridAmountDisplayMode === 'BTC') {
+            gridAmountDisplayMode = 'USDT';
+          } else {
+            gridAmountDisplayMode = 'BTC';
+          }
+          updateGridAmountDisplay();
+        });
       }
 
       // Portfolio Tabs (New System)
