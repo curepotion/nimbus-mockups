@@ -350,7 +350,7 @@
           </div>
 
                   <!-- Buy/Sell Toggle -->
-                  <div class="p-1">
+                  <div id="buySellToggle" class="p-1">
                     <div class="grid grid-cols-2 relative">
                       <button id="longBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-emerald-300">Long</button>
                       <button id="shortBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-rose-300 opacity-60">Short</button>
@@ -2177,6 +2177,10 @@
         // Show TP/SL toggles for Market
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
         tpSlToggleSection.style.display = 'flex';
+        // Show Buy/Sell toggle for Market
+        $('#buySellToggle').style.display = 'block';
+        // Restore button text based on current side
+        $('#placeOrder').querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         disablePrice(true, 'auto for Market');
         updateSummary();
       });
@@ -2194,6 +2198,10 @@
         // Show TP/SL toggles for Limit
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
         tpSlToggleSection.style.display = 'flex';
+        // Show Buy/Sell toggle for Limit
+        $('#buySellToggle').style.display = 'block';
+        // Restore button text based on current side
+        $('#placeOrder').querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         disablePrice(false, 'enter price');
         updateSummary();
       });
@@ -2220,17 +2228,27 @@
         const scaleUI = $('#scaleUI');
         const regularInputs = $('#regularInputs');
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
+        const buySellToggle = $('#buySellToggle');
+        const placeOrderBtn = $('#placeOrder');
         
         if (appState.proType === 'Scale') {
           scaleUI.classList.remove('hidden');
           regularInputs.classList.add('hidden');
           // TP/SL not available for Scale
           tpSlToggleSection.style.display = 'none';
+          // Hide Buy/Sell toggle for Scale
+          buySellToggle.style.display = 'none';
+          // Change button text to "Place Order"
+          placeOrderBtn.querySelector('span').textContent = 'Place Order';
         } else {
           scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
           // TP/SL not available for Pro options (Stop Limit, Stop Market, TWAP)
           tpSlToggleSection.style.display = 'none';
+          // Show Buy/Sell toggle for other Pro options
+          buySellToggle.style.display = 'block';
+          // Restore original button text based on current side
+          placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         }
         
         // Price enable rules
