@@ -225,6 +225,13 @@
       flex-direction: column;
       min-height: 0;
       overflow: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+
+    .chart-section.hidden-by-portfolio {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
     
     .portfolio-section {
@@ -232,6 +239,13 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
+      transition: height 0.3s ease-in-out, z-index 0.3s ease-in-out;
+    }
+
+    .portfolio-section.fullscreen {
+      height: 100%;
+      z-index: 10;
+      position: relative;
     }
     
     .trading-panel {
@@ -719,29 +733,29 @@
                         <div id="gridQtyHandle" class="custom-slider-handle" style="left: calc(4.6% - 10px)"></div>
                 </div>
                       <input id="gridQty" type="range" min="2" max="500" value="25" step="1" class="custom-slider-input">
-                    </div>
+                </div>
                     <input id="gridQtyInput" type="number" class="w-[70px] px-2 py-1.5 ring-1 ring-white/10 bg-white/5 rounded-md bg-transparent outline-none text-[12px] mono font-semibold" value="25" min="2" max="500" step="1">
                 </div>
-                </div>
+              </div>
 
                 <!-- Profit per grid -->
                 <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-      <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Profit per grid</span>
                     <span class="text-[11px] text-neutral-500">%</span>
-              </div>
+                  </div>
                   <input id="profitPerGrid" type="number" placeholder="0.5" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600" value="0.5" step="0.1" min="0.1" max="10">
-            </div>
+                </div>
 
                 <!-- Available Balance Display -->
-                <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between">
                   <div class="text-[11px] text-neutral-400">
                     Avail: <span id="gridAvailBalance" class="text-emerald-200 mono font-semibold">2829.23</span>
-                  </div>
+              </div>
                   <div class="text-[11px] text-neutral-400">
                     Pos: <span class="text-neutral-100 mono font-semibold">0.0000 ETH</span>
-                  </div>
-                </div>
+            </div>
+      </div>
 
                 <!-- Investment Amount Input -->
                 <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
@@ -750,9 +764,9 @@
                     <button id="gridAmountToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer">
                       <span id="gridAmountDisplayValue">0.25</span> <span id="gridAmountDisplayUnit">BTC</span>
                     </button>
-                  </div>
+            </div>
                   <input id="gridAmountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                </div>
+          </div>
 
                 <!-- Position Size Slider -->
                 <div class="flex items-center gap-3">
@@ -764,20 +778,20 @@
                       <div id="gridSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 0%"></div>
                       <!-- Slider Handle -->
                       <div id="gridSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
-                    </div>
+              </div>
                     <!-- Hidden Range Input -->
                     <input id="gridSizeSlider" type="range" min="0" max="100" step="1" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                  </div>
-                  
+            </div>
+
                   <!-- Percentage Input -->
                   <div class="w-[80px]">
                     <div class="relative rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm px-3 py-2">
                       <input id="gridSizeInput" type="number" class="w-full bg-transparent outline-none text-[14px] mono font-semibold text-white text-center" value="0" min="0" max="100" step="1">
                       <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[12px] text-neutral-400 pointer-events-none">%</span>
-                    </div>
-                  </div>
                 </div>
-                
+              </div>
+              </div>
+
                 <!-- Percentage Buttons -->
                 <div class="flex justify-between items-center px-1">
                   <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="25">25%</button>
@@ -786,7 +800,7 @@
                   <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="66">66%</button>
                   <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="75">75%</button>
                   <button class="grid-percentage-btn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="100">100%</button>
-                </div>
+              </div>
 
                 <!-- Start Bot Button -->
                       <button id="startGrid" class="w-full group relative inline-flex items-center justify-center overflow-hidden rounded-lg px-3 py-2.5 text-[13px] font-semibold tracking-tight text-black ring-1 ring-white/10 transition-all hover:opacity-95 active:opacity-90 btn-primary">
@@ -946,6 +960,16 @@
               <button data-tab="orderHistory" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Order History</button>
               <button data-tab="activeBots" class="tab-btn relative px-4 h-9 text-[12px] font-medium text-neutral-400 whitespace-nowrap">Active Bots</button>
               </div>
+              <!-- Fullscreen Button -->
+              <button id="portfolioFullscreen" class="ml-2 h-7 w-7 rounded-md hover:bg-white/5 flex items-center justify-center transition-colors" title="Fullscreen Portfolio" onclick="togglePortfolioFullscreen()">
+                <svg class="w-4 h-4 text-neutral-400 hover:text-neutral-200 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                  <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                  <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                  <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                </svg>
+              </button>
+              
               <!-- Toggle Button -->
               <button id="portfolioToggle" class="ml-2 h-7 w-7 rounded-md hover:bg-white/5 flex items-center justify-center transition-colors" title="Collapse Portfolio" onclick="togglePortfolioSection()">
                 <svg class="w-4 h-4 text-neutral-400 hover:text-neutral-200 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3285,6 +3309,41 @@
             portfolioToggle.title = 'Expand Portfolio';
             portfolioToggle.querySelector('svg').innerHTML = `
               <path d="M6 9l6 6 6-6"/>
+            `;
+          }
+        }
+      };
+
+      // Toggle Portfolio Fullscreen
+      window.togglePortfolioFullscreen = function() {
+        const portfolioSection = document.querySelector('.portfolio-section');
+        const chartSection = document.querySelector('.chart-section');
+        const portfolioFullscreen = document.getElementById('portfolioFullscreen');
+        
+        if (portfolioSection && chartSection && portfolioFullscreen) {
+          const isFullscreen = portfolioSection.classList.contains('fullscreen');
+          
+          if (isFullscreen) {
+            // Exit fullscreen mode
+            portfolioSection.classList.remove('fullscreen');
+            chartSection.classList.remove('hidden-by-portfolio');
+            portfolioFullscreen.title = 'Fullscreen Portfolio';
+            portfolioFullscreen.querySelector('svg').innerHTML = `
+              <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+              <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+              <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+              <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+            `;
+          } else {
+            // Enter fullscreen mode
+            portfolioSection.classList.add('fullscreen');
+            chartSection.classList.add('hidden-by-portfolio');
+            portfolioFullscreen.title = 'Exit Fullscreen';
+            portfolioFullscreen.querySelector('svg').innerHTML = `
+              <path d="M8 3v3a2 2 0 0 1-2 2H3"/>
+              <path d="M21 8h-3a2 2 0 0 1-2-2V3"/>
+              <path d="M3 16h3a2 2 0 0 1 2 2v3"/>
+              <path d="M16 21v-3a2 2 0 0 1 2-2h3"/>
             `;
           }
         }
