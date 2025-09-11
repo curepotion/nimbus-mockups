@@ -350,11 +350,14 @@
           </div>
 
                   <!-- Buy/Sell Toggle -->
-                  <div id="buySellToggle" class="w-full relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5">
-                    <button id="longBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-emerald-300">Long</button>
-                    <button id="shortBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-rose-300 opacity-60">Short</button>
-                    <div id="sideSlider" class="absolute top-0 bottom-0 left-0 w-1/2 rounded-md transition-all duration-200 ease-out tab-slider-left side-slider-bg"></div>
-                  </div>
+                  <div id="buySellToggle" class="p-1">
+                    <div class="grid grid-cols-2 relative">
+                      <button id="longBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-emerald-300">Long</button>
+                      <button id="shortBtn" class="relative z-10 py-2.5 text-[13px] font-medium text-rose-300 opacity-60">Short</button>
+                      <div id="sideSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-8px)] rounded-md transition-all duration-200 ease-out tab-slider-left side-slider-bg"></div>
+                </div>
+              </div>
+            </div>
                 </div>
 
               <!-- Position & Size -->
@@ -2247,10 +2250,10 @@
           stopPriceSection.classList.add('hidden');
           // TP/SL not available for Scale
           tpSlToggleSection.style.display = 'none';
-          // Hide Buy/Sell toggle for Scale
-          buySellToggle.style.display = 'none';
-          // Change button text to "Place Order"
-          placeOrderBtn.querySelector('span').textContent = 'Place Order';
+          // Show Buy/Sell toggle for Scale
+          buySellToggle.style.display = 'block';
+          // Restore original button text based on current side
+          placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else if (appState.proType === 'Stop Limit') {
           scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
@@ -2267,10 +2270,10 @@
           stopPriceSection.classList.remove('hidden');
           // TP/SL not available for Stop Market
           tpSlToggleSection.style.display = 'none';
-          // Hide Buy/Sell toggle for Stop Market
-          buySellToggle.style.display = 'none';
-          // Change button text to "Place Order"
-          placeOrderBtn.querySelector('span').textContent = 'Place Order';
+          // Show Buy/Sell toggle for Stop Market
+          buySellToggle.style.display = 'block';
+          // Restore original button text based on current side
+          placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else {
           scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
