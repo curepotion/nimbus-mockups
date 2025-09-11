@@ -23,7 +23,7 @@
   <!-- TradingView Widget -->
   <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
   <!-- Chart.js for portfolio charts -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <script src="assets/js/components.js"></script>
   <script src="assets/js/navbar.js"></script>
   <script src="assets/js/grid-animation.js"></script>
@@ -1043,43 +1043,44 @@
                 <div class="space-y-2">
                   <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
                     <div class="flex items-center gap-3">
-                      <!-- Grid Bot Animation - Using Chart.js -->
-                      <div class="grid-bot-animation-card animate-in">
+                      <!-- Grid Bot Animation - Exact Working Implementation -->
+                      <div id="gridCard" class="relative w-20 h-12 rounded-lg border border-white/10 bg-black overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] opacity-0 translate-y-2 transition duration-700 ease-out">
                         <!-- Subtle top highlight -->
-                        <div class="grid-animation-highlight"></div>
+                        <div class="pointer-events-none absolute inset-x-0 -top-6 h-10 opacity-[0.25]" style="background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.14), rgba(255,255,255,0.0) 70%);"></div>
 
-                        <!-- Overlay label for events -->
-                        <div id="eventLabel">
+                        <!-- Overlay label for events (no slide, only fade) -->
+                        <div id="eventLabel" class="absolute z-30 px-1.5 py-1 rounded text-[8px] font-medium tracking-tight bg-white text-black border border-black/10 shadow-sm opacity-0 transition-opacity duration-300">
                           <!-- dynamic -->
                         </div>
 
+                        <!-- Event dots (shown when BUY/PROFIT appear) -->
+                        <div id="dot-BUY" class="absolute z-30 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.25)] opacity-0 transition-opacity duration-300 pointer-events-none" style="left:-9999px; top:-9999px;"></div>
+                        <div id="dot-PROFIT" class="absolute z-30 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.25)] opacity-0 transition-opacity duration-300 pointer-events-none" style="left:-9999px; top:-9999px;"></div>
+
                         <!-- Horizontal dashed guides -->
-                        <div class="grid-animation-guides">
-                          <div class="grid-guide-line"></div>
-                          <div class="grid-guide-line"></div>
-                          <div class="grid-guide-line"></div>
-                          <div class="grid-guide-line"></div>
+                        <div class="pointer-events-none absolute inset-0 z-[1]">
+                          <div class="absolute inset-x-0 top-[20%] border-t border-dashed border-white/12"></div>
+                          <div class="absolute inset-x-0 top-[40%] border-t border-dashed border-white/12"></div>
+                          <div class="absolute inset-x-0 top-[60%] border-t border-dashed border-white/12"></div>
+                          <div class="absolute inset-x-0 top-[80%] border-t border-dashed border-white/12"></div>
                         </div>
 
-                        <!-- Chart container -->
-                        <div class="grid-chart-container">
-                          <div class="grid-chart-wrapper">
-                            <canvas id="gridBoxChart"></canvas>
+                        <!-- Chart container (nest canvas in div to avoid growth bug) -->
+                        <div class="absolute inset-0 z-[2] flex">
+                          <div class="relative w-full h-full">
+                            <canvas id="gridBoxChart" class="w-full h-full"></canvas>
                           </div>
                         </div>
 
                         <!-- Leading cursor + scanline -->
-                        <div id="cursorDot"></div>
-                        <div id="scanline"></div>
+                        <div id="cursorDot" class="absolute z-30 w-1.5 h-1.5 rounded-full bg-white/90 shadow-[0_0_0_1px_rgba(255,255,255,0.25)] opacity-0 transition-opacity duration-300" style="left:-9999px; top:-9999px;"></div>
+                        <div id="scanline" class="absolute z-20 top-0 bottom-0 w-[1px] bg-white/30 opacity-0 transition-opacity duration-300" style="left:-9999px;"></div>
 
                         <!-- Cycle fade for start-to-finish feeling -->
-                        <div id="cycleFade"></div>
-
-                        <!-- Profit display -->
-                        <div class="grid-profit-display">+$47</div>
+                        <div id="cycleFade" class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-500"></div>
 
                         <!-- Soft vignette -->
-                        <div class="grid-animation-vignette"></div>
+                        <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(120% 100% at 50% 110%, rgba(0,0,0,0.55), rgba(0,0,0,0));"></div>
                       </div>
                       
                       <!-- Grid Bot Icon and Text -->
@@ -7750,59 +7751,383 @@
         setMobileChartLayout(1);
       }
 
-      // Initialize Grid Bot Animation using Chart.js
-      let gridBotAnimation = null;
-      
+      // Grid Bot Animation - Exact Working Implementation
       function initGridBotAnimation() {
         // Wait for Chart.js to be available
         if (typeof Chart === 'undefined') {
           setTimeout(initGridBotAnimation, 100);
           return;
         }
-        
-        try {
-          // Create the grid bot animation instance
-          gridBotAnimation = new GridBotAnimation('gridBoxChart');
-          
-          // Card entrance animation
-          const card = document.querySelector('.grid-bot-animation-card');
-          if (card) {
-            requestAnimationFrame(() => {
-              card.classList.add('visible');
-            });
+
+        // Card entrance animation
+        const gridCard = document.getElementById('gridCard');
+        if (gridCard) {
+          requestAnimationFrame(() => {
+            gridCard.style.opacity = '1';
+            gridCard.style.transform = 'translateY(0)';
+          });
+        }
+
+        // Elements
+        const cycleFade = document.getElementById('cycleFade');
+        const cursorDot = document.getElementById('cursorDot');
+        const scanline = document.getElementById('scanline');
+        const eventLabel = document.getElementById('eventLabel');
+        const dotBuy = document.getElementById('dot-BUY');
+        const dotProfit = document.getElementById('dot-PROFIT');
+
+        if (!cursorDot || !scanline || !eventLabel || !dotBuy || !dotProfit) {
+          setTimeout(initGridBotAnimation, 100);
+          return;
+        }
+
+        // Deterministic data: dip below 40 (BUY), then rise above 80 (PROFIT)
+        function generateSmoothData(n = 200) {
+          const out = [];
+          const clamp01 = (v) => Math.max(0, Math.min(1, v));
+          const ease = (t) => t * t * (3 - 2 * t); // smoothstep
+
+          const n0 = Math.max(2, Math.floor(n * 0.25)); // down segment end
+          const n1 = Math.max(n0 + 2, Math.floor(n * 0.68)); // up segment end
+
+          // Segment A: 60 -> 32 (down)
+          for (let i = 0; i < n0; i++) {
+            const t = i / Math.max(1, (n0 - 1));
+            out.push(60 + (32 - 60) * t);
           }
-          
-          // Start animation when page loads
-          setTimeout(() => {
-            if (gridBotAnimation) {
-              gridBotAnimation.start();
+          // Segment B: 32 -> 92 (up, crosses 40 then 80)
+          for (let i = n0; i < n1; i++) {
+            const t = (i - n0) / Math.max(1, (n1 - n0 - 1));
+            out.push(32 + (92 - 32) * ease(clamp01(t)));
+          }
+          // Segment C: 92 -> 78 (soft settle)
+          for (let i = n1; i < n; i++) {
+            const t = (i - n1) / Math.max(1, (n - n1 - 1));
+            out.push(92 + (78 - 92) * clamp01(t));
+          }
+
+          // Clamp to 0..100 to match chart scale
+          for (let i = 0; i < out.length; i++) {
+            out[i] = Math.max(0, Math.min(100, out[i]));
+          }
+          return out;
+        }
+
+        const dataY = generateSmoothData(200);
+        const labels = dataY.map((_, i) => i); // index labels
+
+        // Helper interpolation
+        const lerp = (a, b, t) => a + (b - a) * t;
+
+        // Find first crossing for level and direction ("up" | "down") starting from startIndex
+        function findCrossing(data, level, direction = 'up', startIndex = 0) {
+          for (let i = startIndex; i < data.length - 1; i++) {
+            const y0 = data[i];
+            const y1 = data[i + 1];
+            if (direction === 'up' && y0 < level && y1 >= level) {
+              const t = (level - y0) / (y1 - y0);
+              return { i0: i, i1: i + 1, t, level, direction, idxf: i + t };
             }
-          }, 500);
-          
-          // Handle visibility changes for efficiency
-          document.addEventListener('visibilitychange', () => {
-            if (gridBotAnimation) {
-              if (document.hidden) {
-                gridBotAnimation.stop();
-              } else {
-                gridBotAnimation.restart();
+            if (direction === 'down' && y0 > level && y1 <= level) {
+              const t = (level - y0) / (y1 - y0);
+              return { i0: i, i1: i + 1, t, level, direction, idxf: i + t };
+            }
+          }
+          return null;
+        }
+
+        // Prepare BUY/PROFIT events based on crossings
+        const eventsPlan = [
+          { name: 'BUY', level: 40, direction: 'up', shown: false },
+          { name: 'PROFIT', level: 80, direction: 'up', shown: false }
+        ];
+        let startIdx = 0;
+        for (const ev of eventsPlan) {
+          const cross = findCrossing(dataY, ev.level, ev.direction, startIdx);
+          if (cross) {
+            ev.cross = cross;
+            ev.progress = cross.idxf / (dataY.length - 1);
+            startIdx = Math.ceil(cross.idxf) + 1;
+          } else {
+            ev.cross = null;
+            ev.progress = Infinity;
+          }
+        }
+
+        // Sweep clipping plugin
+        const sweepClip = {
+          id: 'sweepClip',
+          beforeDatasetsDraw(chart) {
+            const { ctx, chartArea } = chart;
+            if (!chartArea) return;
+            const p = chart.$progress ?? 0;
+            chart.$didClip = true;
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(
+              chartArea.left,
+              chartArea.top,
+              Math.max(0.0001, chartArea.width * p),
+              chartArea.height
+            );
+            ctx.clip();
+          },
+          afterDatasetsDraw(chart) {
+            if (chart.$didClip) {
+              chart.ctx.restore();
+              chart.$didClip = false;
+            }
+          }
+        };
+
+        // Canvas gradient refresh on resize
+        const gradientFill = {
+          id: 'gradientFill',
+          resize(chart) {
+            const { ctx, chartArea } = chart;
+            if (!chartArea) return;
+            const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            g.addColorStop(0, 'rgba(110,231,183,0.20)');
+            g.addColorStop(1, 'rgba(110,231,183,0.00)');
+            const ds = chart.data.datasets[0];
+            ds.backgroundColor = g;
+          }
+        };
+
+        const canvas = document.getElementById('gridBoxChart');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+
+        const chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [
+              {
+                data: dataY,
+                borderColor: 'rgba(110,231,183,0.85)',
+                borderWidth: 1.5,
+                pointRadius: 0,
+                tension: 0.42,
+                cubicInterpolationMode: 'monotone',
+                fill: {
+                  target: 'origin',
+                  above: 'rgba(110,231,183,0.05)'
+                }
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: false }
+            },
+            scales: {
+              x: {
+                display: false,
+                min: 0,
+                max: labels.length - 1
+              },
+              y: {
+                display: false,
+                min: 0,
+                max: 100
+              }
+            },
+            layout: { padding: 0 },
+            elements: {
+              line: {
+                capBezierPoints: true
               }
             }
-          });
-          
-          // Handle resize
-          window.addEventListener('resize', () => {
-            if (gridBotAnimation && gridBotAnimation.chart) {
-              setTimeout(() => {
-                gridBotAnimation.positionCursor(gridBotAnimation.chart.$progress || 0);
-                gridBotAnimation.chart.update('none');
-              }, 50);
-            }
-          });
-          
-        } catch (error) {
-          console.error('Failed to initialize grid bot animation:', error);
+          },
+          plugins: [sweepClip, gradientFill]
+        });
+
+        // Animation loop state
+        const DURATION = 5000;
+        let rafId = null;
+        let startTime = null;
+        let running = false;
+
+        // Utility to position cursor and scanline
+        function positionCursor(progress) {
+          const xScale = chart.scales.x;
+          const yScale = chart.scales.y;
+          const maxIndex = dataY.length - 1;
+          const idxf = Math.min(maxIndex, Math.max(0, progress * maxIndex));
+          const i0 = Math.floor(idxf);
+          const t = idxf - i0;
+          const i1 = Math.min(maxIndex, i0 + 1);
+          const y = lerp(dataY[i0], dataY[i1], t);
+          const x0 = xScale.getPixelForValue(i0);
+          const x1 = xScale.getPixelForValue(i1);
+          const xp = lerp(x0, x1, t);
+          const yp = yScale.getPixelForValue(y);
+
+          cursorDot.style.left = `${xp - 3}px`;
+          cursorDot.style.top = `${yp - 3}px`;
+          scanline.style.left = `${xp}px`;
         }
+
+        // Event label handling (fade only) + dots
+        let labelTimeout = null;
+        function showEventLabel(name, xp, yp, placement = 'above') {
+          eventLabel.textContent = name;
+          const cardRect = gridCard.getBoundingClientRect();
+          const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+          const left = clamp(xp, 5, cardRect.width - 5);
+          let top = yp;
+          if (placement === 'above') top -= 8;
+          if (placement === 'below') top += 8;
+
+          eventLabel.style.left = `${left}px`;
+          eventLabel.style.top = `${top}px`;
+
+          eventLabel.classList.remove('opacity-0');
+          eventLabel.classList.add('opacity-100');
+
+          // Show the corresponding dot at the exact crossing point
+          const dotEl = name === 'BUY' ? dotBuy : name === 'PROFIT' ? dotProfit : null;
+          if (dotEl) {
+            dotEl.style.left = `${xp - 3}px`;
+            dotEl.style.top = `${yp - 3}px`;
+            dotEl.classList.remove('opacity-0');
+            dotEl.classList.add('opacity-100');
+          }
+
+          clearTimeout(labelTimeout);
+          labelTimeout = setTimeout(() => {
+            eventLabel.classList.add('opacity-0');
+            eventLabel.classList.remove('opacity-100');
+
+            if (dotEl) {
+              dotEl.classList.add('opacity-0');
+              dotEl.classList.remove('opacity-100');
+            }
+          }, 1100);
+        }
+
+        // Compute pixel for event crossing and schedule display
+        function checkEventTriggers(progress) {
+          const xScale = chart.scales.x;
+          const yScale = chart.scales.y;
+
+          for (const ev of eventsPlan) {
+            if (ev.shown || !ev.cross) continue;
+            if (progress >= ev.progress) {
+              const { i0, i1, t, level } = ev.cross;
+              const x0 = xScale.getPixelForValue(i0);
+              const x1 = xScale.getPixelForValue(i1);
+              const xp = lerp(x0, x1, t);
+              const yp = yScale.getPixelForValue(level);
+              const placement = ev.name === 'BUY' ? 'above' : 'below';
+              showEventLabel(ev.name, xp, yp, placement);
+              ev.shown = true;
+            }
+          }
+        }
+
+        // Reset events
+        function resetEvents() {
+          eventsPlan.forEach(e => (e.shown = false));
+          eventLabel.classList.add('opacity-0');
+          eventLabel.classList.remove('opacity-100');
+
+          // Hide dots and move them offscreen
+          [dotBuy, dotProfit].forEach(dot => {
+            dot.classList.add('opacity-0');
+            dot.classList.remove('opacity-100');
+            dot.style.left = `-9999px`;
+            dot.style.top = `-9999px`;
+          });
+        }
+
+        // Fade overlay helpers
+        function fadeCycleOverlay(show) {
+          if (cycleFade) {
+            if (show) {
+              cycleFade.classList.add('opacity-100');
+            } else {
+              cycleFade.classList.remove('opacity-100');
+            }
+          }
+        }
+
+        // Animation loop
+        function tick(now) {
+          if (!startTime) startTime = now;
+          const elapsed = now - startTime;
+          const p = Math.min(1, elapsed / DURATION);
+
+          chart.$progress = p;
+          chart.update('none');
+
+          positionCursor(p);
+          checkEventTriggers(p);
+
+          if (p < 1) {
+            rafId = requestAnimationFrame(tick);
+          } else {
+            fadeCycleOverlay(true);
+            setTimeout(() => {
+              fadeCycleOverlay(false);
+              restart();
+            }, 220);
+          }
+        }
+
+        function start() {
+          if (running) return;
+          running = true;
+          cursorDot.classList.remove('opacity-0');
+          scanline.classList.remove('opacity-0');
+          startTime = null;
+          rafId = requestAnimationFrame(tick);
+        }
+
+        function stop() {
+          running = false;
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        }
+
+        function restart() {
+          stop();
+          chart.$progress = 0;
+          chart.update('none');
+          resetEvents();
+          start();
+        }
+
+        // Start animation
+        setTimeout(() => {
+          start();
+        }, 1000);
+
+        // Pause/resume on visibility change for efficiency
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            stop();
+          } else {
+            restart();
+          }
+        });
+
+        // Responsive: re-place cursor and refresh gradient after resize
+        window.addEventListener('resize', () => {
+          setTimeout(() => {
+            positionCursor(chart.$progress || 0);
+            chart.update('none');
+          }, 50);
+        });
       }
       
       // Initialize when DOM is ready
