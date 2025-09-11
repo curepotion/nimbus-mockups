@@ -278,50 +278,6 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    /* ✅ Looping Line Box — standalone, dependency-free, paste-anywhere (works in plain HTML & React) */
-    .llb {
-      /* Size is fully controlled by these CSS variables (no margins, no padding) */
-      --llb-w: 112px;   /* default width (7rem)  */
-      --llb-h: 64px;    /* default height (4rem) */
-      position: relative;
-      width: var(--llb-w);
-      height: var(--llb-h);
-      contain: layout paint size style;
-      border-radius: 12px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.05); /* lighter background for visibility */
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-      border: 2px solid rgba(255,255,255,0.3);
-    }
-    .llb::before {
-      /* subtle top highlight */
-      content: "";
-      position: absolute; inset: -40% 0 auto 0; height: 180%;
-      background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.14), rgba(255,255,255,0) 70%);
-      opacity: .25; pointer-events: none;
-    }
-    .llb::after {
-      /* soft vignette */
-      content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(120% 100% at 50% 110%, rgba(0,0,0,0.55), rgba(0,0,0,0));
-      pointer-events: none;
-    }
-    .llb-canvas { position: absolute; inset: 0; display: block; }
-    .llb-label {
-      position: absolute;
-      min-width: 28px;
-      transform: translate(-50%, -50%);
-      padding: 4px 6px; font: 500 11px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-      letter-spacing: .1px; border-radius: 6px;
-      color: #000; background: #fff; border: 1px solid rgba(0,0,0,0.10);
-      box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-      opacity: 0; pointer-events: none; transition: opacity .25s ease;
-      white-space: nowrap;
-    }
-    /* dashed guides (drawn on canvas, but you can hide via this switch) */
-    .llb[data-guides="off"] { --llb-guides: 0; }
   </style>
 </head>
 
@@ -728,42 +684,34 @@
                   <h3 class="text-[12px] font-medium uppercase tracking-[0.02em] text-neutral-200">Pre-built Bots</h3>
               
               <div class="space-y-2">
-                <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-3 hover:ring-emerald-300/40 transition min-h-[60px]">
-                  <div class="flex items-center gap-3 h-full">
-                    <!-- ✅ Looping Line Box — standalone, dependency-free, paste-anywhere (works in plain HTML & React) -->
-                    <div class="llb flex-shrink-0" style="--llb-w:80px; --llb-h:48px">
-                      <canvas class="llb-canvas"></canvas>
-                      <div class="llb-label" aria-hidden="true"></div>
+                <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
+                    <div class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="7" height="7" x="3" y="3" rx="1"/>
+                        <rect width="7" height="7" x="14" y="3" rx="1"/>
+                        <rect width="7" height="7" x="14" y="14" rx="1"/>
+                        <rect width="7" height="7" x="3" y="14" rx="1"/>
+                      </svg>
+                    <span class="text-[12px] font-medium tracking-tight">Grid</span>
                   </div>
-                    <div class="flex flex-col items-start justify-center">
-                      <span class="text-[12px] font-medium tracking-tight">Grid</span>
-                      <span class="text-[10px] text-neutral-400">Automated Trading</span>
-                  </div>
-                </div>
                   </button>
                 
-                <button data-bot="DCA" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-3 hover:ring-emerald-300/40 transition min-h-[60px]">
-                  <div class="flex items-center gap-3 h-full">
-                    <svg class="w-5 h-5 text-emerald-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button data-bot="DCA" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
+                    <div class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M11 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h7m0 14l4-4-4-4m6 4v9"/>
                       </svg>
-                    <div class="flex flex-col items-start justify-center">
-                      <span class="text-[12px] font-medium tracking-tight">DCA</span>
-                      <span class="text-[10px] text-neutral-400">Dollar Cost Average</span>
+                    <span class="text-[12px] font-medium tracking-tight">DCA</span>
               </div>
-                </div>
                   </button>
                 
-                <button data-bot="Smart Portfolio" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-3 hover:ring-emerald-300/40 transition min-h-[60px]">
-                  <div class="flex items-center gap-3 h-full">
-                    <svg class="w-5 h-5 text-emerald-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button data-bot="Smart Portfolio" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
+              <div class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
                         <path d="M22 12A10 10 0 0 0 12 2v10z"/>
                       </svg>
-                    <div class="flex flex-col items-start justify-center">
                       <span class="text-[12px] font-medium tracking-tight">Smart Portfolio</span>
-                      <span class="text-[10px] text-neutral-400">AI Rebalancing</span>
-                    </div>
                 </div>
                   </button>
             </div>
@@ -838,19 +786,19 @@
               </div>
                   <div class="text-[11px] text-neutral-400">
                     Pos: <span class="text-neutral-100 mono font-semibold">0.0000 ETH</span>
-            </div>
-      </div>
+                </div>
+                </div>
 
                 <!-- Investment Amount Input -->
                 <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                  <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
                     <button id="gridAmountToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer">
                       <span id="gridAmountDisplayValue">0.25</span> <span id="gridAmountDisplayUnit">BTC</span>
                     </button>
-            </div>
+              </div>
                   <input id="gridAmountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-          </div>
+            </div>
 
                 <!-- Position Size Slider -->
                 <div class="flex items-center gap-3">
@@ -862,7 +810,7 @@
                       <div id="gridSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 0%"></div>
                       <!-- Slider Handle -->
                       <div id="gridSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: 0%"></div>
-              </div>
+      </div>
                     <!-- Hidden Range Input -->
                     <input id="gridSizeSlider" type="range" min="0" max="100" step="1" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
             </div>
@@ -894,6 +842,152 @@
             </div>
 
           </div> <!-- /content -->
+          </aside>
+
+          <!-- Bot Configuration Panel -->
+          <aside id="botConfigPanel" class="hidden border-l glass-strong flex flex-col border-subtle" style="width: 420px; min-width: 380px; max-width: 460px;">
+            <!-- Header -->
+            <div class="shrink-0 px-3 py-3 border-b border-subtle">
+                  <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <button id="closeBotConfig" class="inline-flex h-7 w-7 items-center justify-center rounded-md hover:bg-white/10 ring-1 ring-white/10 transition">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M19 12H5"/>
+                      <path d="M12 19l-7-7 7-7"/>
+                      </svg>
+                    </button>
+                  <div>
+                    <h3 id="botConfigTitle" class="text-[14px] font-semibold tracking-tight text-neutral-100">Grid Bot Configuration</h3>
+                    <p id="botConfigSubtitle" class="text-[11px] text-neutral-400">BTC/USDT - Running</p>
+            </div>
+          </div>
+                <div class="flex items-center gap-1">
+                  <button class="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition text-[11px]">
+                    <div id="botStatusIndicator" class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                    <span id="botStatusText">Running</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bot Stats Summary -->
+            <div class="shrink-0 p-3 border-b border-subtle">
+              <div class="grid grid-cols-2 gap-3 text-[12px]">
+                <div>
+                  <div class="text-neutral-400">Total PnL</div>
+                  <div id="botTotalPnL" class="text-emerald-400 font-semibold mono">+$22.17 (+3.7%)</div>
+              </div>
+                <div>
+                  <div class="text-neutral-400">Uptime</div>
+                  <div id="botUptime" class="font-semibold mono">3d 2h</div>
+                  </div>
+                <div>
+                  <div class="text-neutral-400">Grids Filled</div>
+                  <div id="botGridsFilled" class="font-semibold mono">41 / 60</div>
+          </div>
+                <div>
+                  <div class="text-neutral-400">Allocated</div>
+                  <div id="botAllocated" class="font-semibold mono">$600</div>
+            </div>
+                </div>
+            </div>
+
+            <!-- Profit Chart -->
+            <div class="shrink-0 p-3 border-b border-subtle">
+              <div class="text-[12px] font-medium mb-2">Profit Chart</div>
+              <div class="h-32 rounded-md bg-white/5 ring-1 ring-white/10 relative overflow-hidden">
+                <canvas id="botProfitChart" class="w-full h-full"></canvas>
+              </div>
+              </div>
+
+            <!-- Bot Configuration Tabs -->
+            <div class="shrink-0 border-b border-subtle">
+              <div class="flex">
+                <button class="bot-config-tab active px-3 py-2 text-[12px] font-medium border-b-2 border-emerald-400 text-emerald-400" data-tab="settings">Settings</button>
+                <button class="bot-config-tab px-3 py-2 text-[12px] font-medium text-neutral-400 hover:text-white transition-colors" data-tab="history">History</button>
+                <button class="bot-config-tab px-3 py-2 text-[12px] font-medium text-neutral-400 hover:text-white transition-colors" data-tab="logs">Logs</button>
+              </div>
+                  </div>
+
+            <!-- Tab Content -->
+            <div class="flex-1 overflow-y-auto">
+              <!-- Settings Tab -->
+              <div id="bot-settings" class="p-3 space-y-3">
+                <div class="text-[12px] font-medium">Grid Configuration</div>
+                
+                <!-- Price Range -->
+                <div class="space-y-2">
+                  <div class="text-[11px] text-neutral-400">Price Range</div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="text-[10px] text-neutral-400 mb-1">Lower</div>
+                      <input id="botLowerPrice" type="number" value="148.00" class="w-full bg-transparent outline-none text-[11px] mono font-semibold">
+                </div>
+                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                      <div class="text-[10px] text-neutral-400 mb-1">Upper</div>
+                      <input id="botUpperPrice" type="number" value="162.00" class="w-full bg-transparent outline-none text-[11px] mono font-semibold">
+          </div>
+                  </div>
+                </div>
+
+                <!-- Grid Count -->
+                <div class="space-y-2">
+                  <div class="text-[11px] text-neutral-400">Grid Count</div>
+                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                    <input id="botGridCount" type="number" value="60" class="w-full bg-transparent outline-none text-[11px] mono font-semibold">
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="pt-2 space-y-2">
+                  <button class="w-full rounded-md bg-emerald-600 hover:bg-emerald-700 px-3 py-2 text-[12px] font-medium text-white transition">
+                    Update Settings
+                      </button>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button id="pauseBotBtn" class="rounded-md ring-1 ring-yellow-500/50 bg-yellow-500/10 hover:bg-yellow-500/20 px-3 py-2 text-[12px] font-medium text-yellow-400 transition">
+                      Pause Bot
+                    </button>
+                    <button id="stopBotBtn" class="rounded-md ring-1 ring-red-500/50 bg-red-500/10 hover:bg-red-500/20 px-3 py-2 text-[12px] font-medium text-red-400 transition">
+                      Stop Bot
+                    </button>
+            </div>
+          </div>
+          </div>
+
+              <!-- History Tab -->
+              <div id="bot-history" class="hidden p-3">
+                <div class="text-[12px] font-medium mb-3">Recent Trades</div>
+                <div id="botTradeHistory" class="space-y-2">
+                  <div class="flex items-center justify-between text-[11px] py-1">
+                    <span class="mono text-neutral-400">10:04:58</span>
+                    <span>Buy 0.0020 @ $62,310</span>
+                    <span class="text-emerald-400">+$1.20</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[11px] py-1">
+                    <span class="mono text-neutral-400">09:57:41</span>
+                    <span>Sell 0.0020 @ $62,680</span>
+                    <span class="text-emerald-400">+$0.74</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[11px] py-1">
+                    <span class="mono text-neutral-400">09:31:02</span>
+                    <span>Buy 0.0018 @ $62,150</span>
+                    <span class="text-emerald-400">+$0.95</span>
+                  </div>
+              </div>
+            </div>
+
+              <!-- Logs Tab -->
+              <div id="bot-logs" class="hidden p-3">
+                <div class="text-[12px] font-medium mb-3">Bot Logs</div>
+                <div id="botLogEntries" class="text-[10px] mono space-y-1 text-neutral-300">
+                  <div>10:04:58 Placed buy 0.0020 @ 62,310 (grid #22)</div>
+                  <div>09:57:41 Filled sell 0.0020 @ 62,680 (TP +0.6%)</div>
+                  <div>09:31:02 Adjusted upper to 66,000 (volatility +)</div>
+                  <div>09:10:15 Funding paid -$0.12 (1h)</div>
+                  <div>08:55:09 Health check: margin ratio 22.1%</div>
+                </div>
+              </div>
+            </div>
           </aside>
 
           <!-- Token List Panel -->
@@ -2216,7 +2310,6 @@
         tabStrategies.classList.add('text-white');
         tabTrade.classList.remove('text-white');
         tabTrade.classList.add('text-neutral-400');
-        
       });
 
       // Asset is fixed to ETH (dropdown removed)
@@ -5582,6 +5675,213 @@
         }
       }
 
+      // Bot Configuration Panel Management
+      function showBotConfig(botData) {
+        // Hide trading panel and token list
+        const tradingPanel = $('#tradesPanel');
+        const tokenList = document.querySelector('.token-list');
+        const botConfigPanel = $('#botConfigPanel');
+
+        if (tradingPanel) tradingPanel.classList.add('hidden');
+        if (tokenList) tokenList.classList.add('hidden');
+        if (botConfigPanel) botConfigPanel.classList.remove('hidden');
+
+        // Update bot config content
+        if (botData) {
+          const title = $('#botConfigTitle');
+          const subtitle = $('#botConfigSubtitle');
+          const statusIndicator = $('#botStatusIndicator');
+          const statusText = $('#botStatusText');
+          
+          if (title) title.textContent = `${botData.type} Configuration`;
+          if (subtitle) subtitle.textContent = `${botData.market} - ${botData.status}`;
+          
+          // Update status indicator
+          if (statusIndicator && statusText) {
+            statusText.textContent = botData.status;
+            statusIndicator.className = `w-2 h-2 rounded-full ${getStatusColor(botData.status)}`;
+          }
+
+          // Update stats
+          updateBotStats(botData);
+        }
+
+        // Initialize profit chart
+        setTimeout(initBotProfitChart, 100);
+      }
+
+      function hideBotConfig() {
+        // Show trading panel and token list
+        const tradingPanel = $('#tradesPanel');
+        const tokenList = document.querySelector('.token-list');
+        const botConfigPanel = $('#botConfigPanel');
+
+        if (tradingPanel) tradingPanel.classList.remove('hidden');
+        if (tokenList) tokenList.classList.remove('hidden');
+        if (botConfigPanel) botConfigPanel.classList.add('hidden');
+      }
+
+      function getStatusColor(status) {
+        switch (status.toLowerCase()) {
+          case 'running': return 'bg-emerald-400';
+          case 'paused': return 'bg-yellow-400';
+          case 'stopped': return 'bg-red-400';
+          default: return 'bg-neutral-400';
+        }
+      }
+
+      function updateBotStats(botData) {
+        // Update stats with bot data
+        const elements = {
+          botTotalPnL: $('#botTotalPnL'),
+          botUptime: $('#botUptime'),
+          botGridsFilled: $('#botGridsFilled'),
+          botAllocated: $('#botAllocated')
+        };
+
+        if (elements.botTotalPnL) elements.botTotalPnL.textContent = botData.pnl || '+$22.17 (+3.7%)';
+        if (elements.botUptime) elements.botUptime.textContent = botData.uptime || '3d 2h';
+        if (elements.botGridsFilled) elements.botGridsFilled.textContent = botData.grids || '41 / 60';
+        if (elements.botAllocated) elements.botAllocated.textContent = botData.allocated || '$600';
+      }
+
+      // Bot Configuration Tabs
+      function initBotConfigTabs() {
+        const tabs = document.querySelectorAll('.bot-config-tab');
+        const contents = {
+          'settings': $('#bot-settings'),
+          'history': $('#bot-history'),
+          'logs': $('#bot-logs')
+        };
+
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            const targetTab = tab.dataset.tab;
+            
+            // Update tab states
+            tabs.forEach(t => {
+              t.classList.remove('active', 'border-emerald-400', 'text-emerald-400');
+              t.classList.add('text-neutral-400');
+            });
+            tab.classList.add('active', 'border-emerald-400', 'text-emerald-400');
+            tab.classList.remove('text-neutral-400');
+
+            // Show/hide content
+            Object.keys(contents).forEach(key => {
+              if (contents[key]) {
+                if (key === targetTab) {
+                  contents[key].classList.remove('hidden');
+                } else {
+                  contents[key].classList.add('hidden');
+                }
+              }
+            });
+          });
+        });
+      }
+
+      // Initialize profit chart
+      function initBotProfitChart() {
+        const canvas = $('#botProfitChart');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        const rect = canvas.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        
+        // Set canvas size
+        canvas.width = width * window.devicePixelRatio;
+        canvas.height = height * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+        // Generate sample profit data
+        const dataPoints = 50;
+        const profitData = [];
+        let currentProfit = 0;
+        
+        for (let i = 0; i < dataPoints; i++) {
+          currentProfit += (Math.random() - 0.4) * 2;
+          profitData.push(Math.max(-10, Math.min(25, currentProfit)));
+        }
+
+        // Draw chart
+        ctx.clearRect(0, 0, width, height);
+        
+        // Grid lines
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        for (let i = 1; i < 4; i++) {
+          const y = (height / 4) * i;
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+          ctx.stroke();
+        }
+
+        // Profit line
+        ctx.strokeStyle = '#6EE7B7';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        
+        profitData.forEach((profit, i) => {
+          const x = (i / (dataPoints - 1)) * width;
+          const y = height - ((profit + 10) / 35) * height;
+          
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.stroke();
+
+        // Fill area under curve
+        const gradient = ctx.createLinearGradient(0, 0, 0, height);
+        gradient.addColorStop(0, 'rgba(110, 231, 183, 0.2)');
+        gradient.addColorStop(1, 'rgba(110, 231, 183, 0.0)');
+        
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.moveTo(0, height);
+        profitData.forEach((profit, i) => {
+          const x = (i / (dataPoints - 1)) * width;
+          const y = height - ((profit + 10) / 35) * height;
+          ctx.lineTo(x, y);
+        });
+        ctx.lineTo(width, height);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Bot row click handlers
+      document.addEventListener('click', (e) => {
+        const botRow = e.target.closest('.bot-row');
+        if (botRow && !e.target.closest('button')) {
+          const botId = botRow.dataset.bot;
+          const botType = botRow.querySelector('.font-medium').textContent;
+          const market = botRow.children[1].textContent;
+          const statusElement = botRow.querySelector('.w-2').nextElementSibling;
+          const status = statusElement ? statusElement.textContent : 'Running';
+          
+          showBotConfig({
+            id: botId,
+            type: botType,
+            market: market,
+            status: status
+          });
+        }
+      });
+
+      // Close bot config handler
+      const closeBotConfig = $('#closeBotConfig');
+      if (closeBotConfig) {
+        closeBotConfig.addEventListener('click', hideBotConfig);
+      }
+
+      // Initialize bot config tabs
+      initBotConfigTabs();
+
       // Panel Resizing
       const tradesPanel = $('#tradesPanel');
       const tpResizer = $('#tpResizer');
@@ -5638,240 +5938,6 @@
       setTimeout(() => {
         showToast('Welcome to Nimbus Trading Platform with Strategies!');
       }, 2000);
-
-      // ✅ Looping Line Box Animation - Exact original implementation
-      (() => {
-        // Initialize all .llb blocks once (works in plain HTML and React)
-        const attrKey = 'data-llb-init';
-        const blocks = Array.from(document.querySelectorAll('.llb')).filter(b => !b.hasAttribute(attrKey));
-        console.log('🎯 Found', blocks.length, '.llb animation blocks to initialize');
-        if (!blocks.length) return;
-        blocks.forEach(init);
-
-        function init(root) {
-          console.log('🚀 Initializing animation for element:', root);
-          root.setAttribute(attrKey, '1');
-
-          const canvas = root.querySelector('.llb-canvas');
-          const ctx = canvas.getContext('2d', { alpha: true });
-          const label = root.querySelector('.llb-label');
-
-          // HiDPI sizing
-          function fit() {
-            const r = window.devicePixelRatio || 1;
-            const { width: cssW, height: cssH } = root.getBoundingClientRect();
-            canvas.width = Math.max(1, Math.floor(cssW * r));
-            canvas.height = Math.max(1, Math.floor(cssH * r));
-            canvas.style.width = cssW + 'px';
-            canvas.style.height = cssH + 'px';
-            ctx.setTransform(r, 0, 0, r, 0, 0); // use CSS pixels for drawing
-          }
-
-          // Data generation (smooth dip then rise; crosses 40 and 80 on the way up)
-          function generate(n = 200) {
-            const out = [];
-            const clamp01 = v => Math.max(0, Math.min(1, v));
-            const smooth = t => t * t * (3 - 2 * t); // smoothstep
-            const n0 = Math.max(2, Math.floor(n * 0.25));
-            const n1 = Math.max(n0 + 2, Math.floor(n * 0.68));
-
-            for (let i=0;i<n0;i++){ const t=i/Math.max(1,n0-1); out.push(60 + (32-60)*t); }
-            for (let i=n0;i<n1;i++){ const t=(i-n0)/Math.max(1,n1-n0-1); out.push(32 + (92-32)*smooth(clamp01(t))); }
-            for (let i=n1;i<n;i++){ const t=(i-n1)/Math.max(1,n-n1-1); out.push(92 + (78-92)*clamp01(t)); }
-            return out.map(v => Math.max(0, Math.min(100, v)));
-          }
-
-          const dataY = generate(200);
-          const N = dataY.length;
-          const DURATION = 5000; // ms
-          let startTime = 0, rafId = 0;
-          let running = false;
-
-          // Find upward crossing of a level (first occurrence after start index)
-          function findCross(level, startIdx=0) {
-            for (let i = startIdx; i < N-1; i++) {
-              const a = dataY[i], b = dataY[i+1];
-              if (a < level && b >= level) {
-                const t = (level - a) / (b - a);
-                return { i0:i, i1:i+1, t, idxf: i + t };
-              }
-            }
-            return null;
-          }
-
-          const evBUY    = { name:'BUY',    level:40, cross: findCross(40, 0),  shown:false };
-          const evPROFIT = { name:'PROFIT', level:80, cross: findCross(80, (evBUY?.cross ? Math.ceil(evBUY.cross.idxf)+1 : 0)), shown:false };
-
-          // Render
-          function draw(progress) {
-            const { width: Wcss, height: Hcss } = root.getBoundingClientRect();
-            const W = Wcss, H = Hcss;
-            ctx.clearRect(0, 0, W, H);
-
-            // Guides (4 dashed horizontals)
-            if (root.style.getPropertyValue('--llb-guides') !== '0') {
-              ctx.save();
-              ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-              ctx.setLineDash([3, 4]);
-              [0.2, 0.4, 0.6, 0.8].forEach(p => {
-                const y = mapY(100 * (1 - p), H);
-                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-              });
-              ctx.restore();
-            }
-
-            // Build path up to sweepX
-            const maxIdx = (N - 1) * progress;
-            const iMax = Math.floor(maxIdx);
-            const tRem = maxIdx - iMax;
-
-            // Area gradient
-            const grad = ctx.createLinearGradient(0, 0, 0, H);
-            grad.addColorStop(0, 'rgba(110,231,183,0.30)');
-            grad.addColorStop(1, 'rgba(110,231,183,0.00)');
-
-            // Line
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'rgba(110,231,183,1)'; /* bright emerald line */
-            ctx.beginPath();
-            for (let i = 0; i <= iMax; i++) {
-              const x = mapX(i, W);
-              const y = mapY(dataY[i], H);
-              if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-            }
-            // partial segment
-            if (iMax < N - 1) {
-              const x0 = mapX(iMax, W), y0 = mapY(dataY[iMax], H);
-              const x1 = mapX(iMax + 1, W), y1 = mapY(dataY[iMax + 1], H);
-              ctx.lineTo(lerp(x0, x1, tRem), lerp(y0, y1, tRem));
-            }
-            ctx.stroke();
-
-            // Area fill under curve
-            ctx.save();
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.moveTo(0, H);
-            for (let i = 0; i <= iMax; i++) {
-              const x = mapX(i, W);
-              const y = mapY(dataY[i], H);
-              ctx.lineTo(x, y);
-            }
-            if (iMax < N - 1) {
-              const x0 = mapX(iMax, W), y0 = mapY(dataY[iMax], H);
-              const x1 = mapX(iMax + 1, W), y1 = mapY(dataY[iMax + 1], H);
-              ctx.lineTo(lerp(x0, x1, tRem), lerp(y0, y1, tRem));
-            }
-            ctx.lineTo(W * progress, H);
-            ctx.closePath();
-            ctx.fill();
-
-            // Cursor dot + scanline
-            const { x: cx, y: cy } = posAtProgress(progress);
-            ctx.save();
-            // scanline
-            ctx.strokeStyle = 'rgba(110,231,183,0.40)';
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke();
-            // cursor dot with ring
-            ctx.fillStyle = 'rgba(110,231,183,1)';
-            ctx.beginPath(); ctx.arc(cx, cy, 2.5, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'rgba(110,231,183,0.30)'; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.arc(cx, cy, 4.5, 0, Math.PI * 2); ctx.stroke();
-            ctx.restore();
-          }
-
-          function mapX(i, W) { return (i / (N - 1)) * W; }
-          function mapY(val, H) { return H - (val / 100) * H; }
-          function lerp(a, b, t) { return a + (b - a) * t; }
-          function posAtProgress(p) {
-            const idxf = (N - 1) * p;
-            const i0 = Math.floor(idxf), i1 = Math.min(N - 1, i0 + 1), t = idxf - i0;
-            const y = lerp(dataY[i0], dataY[i1], t);
-            return { x: mapX(lerp(i0, i1, t), root.clientWidth), y: mapY(y, root.clientHeight) };
-          }
-
-          // Event labels (BUY at 40, PROFIT at 80)
-          function maybeShowEvent(ev, p) {
-            if (!ev || !ev.cross || ev.shown) return;
-            const trigger = ev.cross.idxf / (N - 1);
-            if (p + 1e-6 >= trigger) {
-              const x0 = mapX(ev.cross.i0, root.clientWidth);
-              const x1 = mapX(ev.cross.i1, root.clientWidth);
-              const yL = mapY(ev.level, root.clientHeight);
-              const xp = lerp(x0, x1, ev.cross.t);
-              showLabel(ev.name, xp, yL, ev.name === 'BUY' ? -12 : 12);
-              ev.shown = true;
-            }
-          }
-          let hideTimer = 0;
-          function showLabel(text, x, y, offsetY) {
-            clearTimeout(hideTimer);
-            label.textContent = text;
-            label.style.left = x + 'px';
-            label.style.top  = (y + offsetY) + 'px';
-            label.style.opacity = '1';
-            hideTimer = setTimeout(() => { label.style.opacity = '0'; }, 1100);
-          }
-          function resetEvents() {
-            evBUY && (evBUY.shown = false);
-            evPROFIT && (evPROFIT.shown = false);
-            label.style.opacity = '0';
-          }
-
-          // Cycle fade (simple flash)
-          let flashAlpha = 0;
-          function flash(dt) { flashAlpha = Math.min(1, flashAlpha + dt * 5); }
-          function drawFlash() {
-            if (flashAlpha <= 0) return;
-            ctx.save();
-            ctx.fillStyle = `rgba(0,0,0,${0.4 * flashAlpha})`;
-            ctx.fillRect(0, 0, root.clientWidth, root.clientHeight);
-            ctx.restore();
-            flashAlpha = Math.max(0, flashAlpha - 0.08);
-          }
-
-          // Animation loop
-          function tick(t) {
-            if (!startTime) startTime = t;
-            const elapsed = t - startTime;
-            const p = Math.min(1, elapsed / DURATION);
-
-            draw(p);
-            maybeShowEvent(evBUY, p);
-            maybeShowEvent(evPROFIT, p);
-            drawFlash();
-
-            if (p < 1) {
-              rafId = requestAnimationFrame(tick);
-            } else {
-              // flash & restart after short delay
-              flash(0.2);
-              setTimeout(restart, 220);
-            }
-          }
-
-          function start() {
-            if (running) return;
-            running = true;
-            startTime = 0;
-            rafId = requestAnimationFrame(tick);
-          }
-          function stop() { running = false; cancelAnimationFrame(rafId); }
-          function restart() { stop(); resetEvents(); start(); }
-
-          // Observe size & visibility
-          const ro = new ResizeObserver(() => { fit(); draw(0); });
-          ro.observe(root);
-
-          document.addEventListener('visibilitychange', () => {
-            if (document.hidden) stop(); else restart();
-          });
-
-          // Kick off
-          fit(); draw(0); start();
-        }
-      })();
       
       // Fallback TradingView initialization
       setTimeout(() => {
