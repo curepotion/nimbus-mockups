@@ -5489,24 +5489,30 @@
             container_id: containerId,
             locale: 'en',
             toolbar_bg: '#0a0a0a',
-            hide_side_toolbar: true,
-            allow_symbol_change: false,
-            hide_top_toolbar: true,
-            hide_legend: true,
+            hide_side_toolbar: false,
+            allow_symbol_change: true,
+            hide_top_toolbar: false,
+            hide_legend: false,
             studies_overrides: {},
             disabled_features: [
-              'header_saveload', 'header_compare', 'header_screenshot', 
-              'left_toolbar', 'symbol_info', 'symbol_search_hot_key',
-              'header_symbol_search', 'header_resolutions', 'header_chart_type',
-              'header_settings', 'header_indicators', 'header_screenshot',
+              'header_saveload', 'header_compare', 'header_screenshot',
               'header_fullscreen_button'
             ],
-            enabled_features: [],
+            enabled_features: [
+              'header_symbol_search', 'header_resolutions', 'header_chart_type',
+              'header_settings', 'header_indicators'
+            ],
             overrides: {
               "paneProperties.background": "#0a0a0a",
               "paneProperties.backgroundType": "solid",
-              "scalesProperties.textColor": "#666666",
-              "scalesProperties.backgroundColor": "#0a0a0a"
+              "scalesProperties.textColor": "#b0b0b0",
+              "scalesProperties.backgroundColor": "#111111",
+              "mainSeriesProperties.candleStyle.upColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.downColor": "#F87171",
+              "mainSeriesProperties.candleStyle.borderUpColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.borderDownColor": "#F87171",
+              "mainSeriesProperties.candleStyle.wickUpColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.wickDownColor": "#F87171"
             }
           });
 
