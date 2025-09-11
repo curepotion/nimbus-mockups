@@ -16,17 +16,15 @@
 
   <!-- Global Design System -->
   <link href="assets/css/components.css" rel="stylesheet">
-  <link href="assets/css/grid-animation.css" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- TradingView Widget -->
   <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
   <!-- Chart.js for portfolio charts -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="assets/js/components.js"></script>
   <script src="assets/js/navbar.js"></script>
-  <script src="assets/js/grid-animation.js"></script>
 
   <style>
     /* Page-specific overrides for index.html */
@@ -265,7 +263,7 @@
       min-height: 0;
       overflow: hidden;
     }
-    
+
     /* Chart Layout Styles */
     .chart-layout-option.active {
       background: rgba(110, 231, 183, 0.1);
@@ -281,360 +279,49 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* ========================================
-       MOBILE RESPONSIVE DESIGN
-       ======================================== */
-    
-    /* Mobile Breakpoints */
-    @media (max-width: 768px) {
-      /* Hide desktop elements */
-      .desktop-only {
-        display: none !important;
-      }
-      
-      /* Mobile layout structure */
-      .mobile-layout {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        overflow: hidden;
-      }
-      
-      /* Mobile navigation */
-      .mobile-nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 60px;
-        background: rgba(10, 10, 10, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 16px;
-      }
-      
-      /* Mobile content area */
-      .mobile-content {
-        flex: 1;
-        padding-top: 60px;
-        padding-bottom: 80px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      /* Mobile bottom navigation */
-      .mobile-bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 80px;
-        background: rgba(10, 10, 10, 0.95);
-        backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        padding: 0 8px;
-      }
-      
-      /* Mobile tab buttons */
-      .mobile-tab {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-        padding: 8px 4px;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
-      
-      .mobile-tab.active {
-        background: rgba(110, 231, 183, 0.1);
-        color: #6EE7B7;
-      }
-      
-      .mobile-tab svg {
-        width: 20px;
-        height: 20px;
-        margin-bottom: 4px;
-        stroke: currentColor;
-      }
-      
-      .mobile-tab span {
-        font-size: 10px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.02em;
-      }
-      
-      /* Mobile chart container */
-      .mobile-chart-container {
-        flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      }
-      
-      /* Mobile trading sheet */
-      .mobile-trade-sheet {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(10, 10, 10, 0.98);
-        backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px 20px 0 0;
-        z-index: 2000;
-        transform: translateY(100%);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        max-height: 90vh;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      .mobile-trade-sheet.open {
-        transform: translateY(0);
-      }
-      
-      /* Mobile sheet header */
-      .mobile-sheet-header {
-        padding: 16px 20px 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      
-      .mobile-sheet-handle {
-        position: absolute;
-        top: 8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 40px;
-        height: 4px;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 2px;
-      }
-      
-      /* Mobile portfolio sections */
-      .mobile-portfolio-section {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        margin: 8px 16px;
-        overflow: hidden;
-      }
-      
-      .mobile-section-header {
-        padding: 12px 16px;
-        background: rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-      }
-      
-      .mobile-section-content {
-        padding: 16px;
-        max-height: 300px;
-        overflow-y: auto;
-      }
-      
-      /* Mobile swipe indicator */
-      .mobile-swipe-indicator {
-        position: absolute;
-        bottom: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 8px;
-        z-index: 100;
-      }
-      
-      .mobile-swipe-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transition: all 0.2s ease;
-      }
-      
-      .mobile-swipe-dot.active {
-        background: #6EE7B7;
-        transform: scale(1.2);
-      }
-      
-      /* Hide desktop layout on mobile */
-      .main-layout {
-        display: none;
-      }
-      
-      /* Mobile order tabs */
-      .mobile-order-tab {
-        position: relative;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
-      
-      .mobile-order-tab.active {
-        color: white;
-      }
-      
-      .mobile-order-slider {
-        background: rgba(110, 231, 183, 0.2);
-        border: 1px solid rgba(110, 231, 183, 0.3);
-      }
-      
-      /* Mobile side tabs */
-      .mobile-side-tab {
-        position: relative;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
-      
-      .mobile-side-tab.active {
-        color: white;
-      }
-      
-      .mobile-side-slider {
-        background: rgba(110, 231, 183, 0.2);
-        border: 1px solid rgba(110, 231, 183, 0.3);
-      }
-      
-      /* Mobile section animations */
-      .mobile-section-content.hidden {
-        display: none;
-      }
-      
-      .mobile-section-header svg {
-        transition: transform 0.2s ease;
-      }
-      
-      .mobile-section-header.expanded svg {
-        transform: rotate(180deg);
-      }
-      
-      /* Mobile menu styles */
-      .mobile-menu-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        padding: 16px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #d1d5db;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
-      
-      .mobile-menu-item:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        border-color: rgba(110, 231, 183, 0.3);
-      }
-      
-      .mobile-menu-item svg {
-        color: currentColor;
-        flex-shrink: 0;
-      }
-      
-      /* Mobile orders tabs */
-      .mobile-orders-tab {
-        color: #9ca3af;
-        border-bottom: 2px solid transparent;
-        transition: all 0.2s ease;
-      }
-      
-      .mobile-orders-tab.active {
-        color: white;
-        border-bottom-color: #6EE7B7;
-      }
-      
-      /* Mobile token items */
-      .mobile-token-item.active {
-        border-color: rgba(110, 231, 183, 0.5);
-        background: rgba(110, 231, 183, 0.1);
-      }
-      
-      /* Mobile trade sub-tabs */
-      .mobile-trade-subtab {
-        color: #9ca3af;
-        border-bottom: 2px solid transparent;
-        transition: all 0.2s ease;
-      }
-      
-      .mobile-trade-subtab.active {
-        color: white;
-        border-bottom-color: #6EE7B7;
-      }
-      
-      /* Grid Bot Animation Styles */
-      .grid-bot-animation-container {
-        backdrop-filter: blur(2px);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-      
-      .grid-bot-animation-container:hover {
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 10px rgba(110, 231, 183, 0.15);
-        transform: scale(1.02);
-        transition: all 0.3s ease;
-      }
-      
-      .grid-buy-signal, .grid-sell-signal {
-        text-shadow: 0 0 2px currentColor;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-      }
-      
-      .grid-profit-counter {
-        transition: all 0.2s ease;
-        text-shadow: 0 0 3px rgba(250, 204, 21, 0.5);
-      }
-      
-      .profit-value {
-        transition: all 0.2s ease;
-      }
+    /* Looping Line Box Animation Styles */
+    .llb {
+      /* Size is fully controlled by these CSS variables (no margins, no padding) */
+      --llb-w: 112px;   /* default width (7rem)  */
+      --llb-h: 64px;    /* default height (4rem) */
+      position: relative;
+      width: var(--llb-w);
+      height: var(--llb-h);
+      contain: layout paint size style;
+      border-radius: 6px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
     }
-    
-    /* Tablet adjustments */
-    @media (max-width: 1024px) and (min-width: 769px) {
-      .right-column {
-        width: 360px;
-        min-width: 320px;
-      }
-      
-      .token-list {
-        display: none;
-      }
+    .llb::before {
+      /* subtle top highlight */
+      content: "";
+      position: absolute; inset: -40% 0 auto 0; height: 180%;
+      background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.14), rgba(255,255,255,0) 70%);
+      opacity: .25; pointer-events: none;
     }
+    .llb::after {
+      /* soft vignette */
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(120% 100% at 50% 110%, rgba(0,0,0,0.55), rgba(0,0,0,0));
+      pointer-events: none;
+    }
+    .llb-canvas { position: absolute; inset: 0; display: block; }
+    .llb-label {
+      position: absolute;
+      min-width: 28px;
+      transform: translate(-50%, -50%);
+      padding: 4px 6px; font: 500 11px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      letter-spacing: .1px; border-radius: 6px;
+      color: #000; background: #fff; border: 1px solid rgba(0,0,0,0.10);
+      box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+      opacity: 0; pointer-events: none; transition: opacity .25s ease;
+      white-space: nowrap;
+    }
+    /* dashed guides (drawn on canvas, but you can hide via this switch) */
+    .llb[data-guides="off"] { --llb-guides: 0; }
   </style>
 </head>
 
@@ -1034,67 +721,23 @@
 
 
                 
-            </div>
+              </div>
 
             <!-- STRATEGIES MODE -->
             <div id="strategiesMode" class="hidden space-y-3">
                   <h3 class="text-[12px] font-medium uppercase tracking-[0.02em] text-neutral-200">Pre-built Bots</h3>
               
-                <div class="space-y-2">
-                  <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
-                    <div class="flex items-center gap-3">
-                      <!-- Grid Bot Animation - Exact Working Implementation -->
-                      <div id="gridCard" class="relative w-20 h-12 rounded-lg border border-white/10 bg-black overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] opacity-0 translate-y-2 transition duration-700 ease-out">
-                        <!-- Subtle top highlight -->
-                        <div class="pointer-events-none absolute inset-x-0 -top-6 h-10 opacity-[0.25]" style="background: radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.14), rgba(255,255,255,0.0) 70%);"></div>
-
-                        <!-- Overlay label for events (no slide, only fade) -->
-                        <div id="eventLabel" class="absolute z-30 px-1.5 py-1 rounded text-[8px] font-medium tracking-tight bg-white text-black border border-black/10 shadow-sm opacity-0 transition-opacity duration-300">
-                          <!-- dynamic -->
-                        </div>
-
-                        <!-- Event dots (shown when BUY/PROFIT appear) -->
-                        <div id="dot-BUY" class="absolute z-30 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.25)] opacity-0 transition-opacity duration-300 pointer-events-none" style="left:-9999px; top:-9999px;"></div>
-                        <div id="dot-PROFIT" class="absolute z-30 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.25)] opacity-0 transition-opacity duration-300 pointer-events-none" style="left:-9999px; top:-9999px;"></div>
-
-                        <!-- Horizontal dashed guides -->
-                        <div class="pointer-events-none absolute inset-0 z-[1]">
-                          <div class="absolute inset-x-0 top-[20%] border-t border-dashed border-white/12"></div>
-                          <div class="absolute inset-x-0 top-[40%] border-t border-dashed border-white/12"></div>
-                          <div class="absolute inset-x-0 top-[60%] border-t border-dashed border-white/12"></div>
-                          <div class="absolute inset-x-0 top-[80%] border-t border-dashed border-white/12"></div>
-                        </div>
-
-                        <!-- Chart container (nest canvas in div to avoid growth bug) -->
-                        <div class="absolute inset-0 z-[2] flex">
-                          <div class="relative w-full h-full">
-                            <canvas id="gridBoxChart" class="w-full h-full"></canvas>
-                          </div>
-                        </div>
-
-                        <!-- Leading cursor + scanline -->
-                        <div id="cursorDot" class="absolute z-30 w-1.5 h-1.5 rounded-full bg-white/90 shadow-[0_0_0_1px_rgba(255,255,255,0.25)] opacity-0 transition-opacity duration-300" style="left:-9999px; top:-9999px;"></div>
-                        <div id="scanline" class="absolute z-20 top-0 bottom-0 w-[1px] bg-white/30 opacity-0 transition-opacity duration-300" style="left:-9999px;"></div>
-
-                        <!-- Cycle fade for start-to-finish feeling -->
-                        <div id="cycleFade" class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-500"></div>
-
-                        <!-- Soft vignette -->
-                        <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(120% 100% at 50% 110%, rgba(0,0,0,0.55), rgba(0,0,0,0));"></div>
-                      </div>
-                      
-                      <!-- Grid Bot Icon and Text -->
-                    <div class="flex items-center gap-2">
-                      <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect width="7" height="7" x="3" y="3" rx="1"/>
-                        <rect width="7" height="7" x="14" y="3" rx="1"/>
-                        <rect width="7" height="7" x="14" y="14" rx="1"/>
-                        <rect width="7" height="7" x="3" y="14" rx="1"/>
-                      </svg>
-                        <span class="text-[12px] font-medium tracking-tight">Grid</span>
+              <div class="space-y-2">
+                <button data-bot="Grid" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
+                  <div class="flex items-center gap-3">
+                    <!-- Animated Grid Chart -->
+                    <div class="llb" style="--llb-w:28px; --llb-h:16px">
+                      <canvas class="llb-canvas"></canvas>
+                      <div class="llb-label" aria-hidden="true"></div>
+                    </div>
+                    <span class="text-[12px] font-medium tracking-tight">Grid</span>
                   </div>
-                </div>
-                  </button>
+                </button>
                 
                 <button data-bot="DCA" class="botBtn group w-full rounded-md bg-white/5 ring-1 ring-white/10 p-2 hover:ring-emerald-300/40 transition">
                     <div class="flex items-center gap-2">
@@ -1415,1153 +1058,6 @@
         </div>
       </div>
     </main>
-  </div>
-
-  <!-- MOBILE LAYOUT (Visible only on mobile devices) -->
-  <div class="mobile-layout md:hidden">
-    <!-- Mobile Top Navigation -->
-    <nav class="mobile-nav">
-              <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-          <span class="text-black font-bold text-sm">N</span>
-        </div>
-        <div>
-          <h1 class="text-white font-semibold text-lg">Nimbus</h1>
-        </div>
-      </div>
-      
-      <div class="flex items-center gap-2">
-        <!-- Mobile chart layout toggle -->
-        <button id="mobileChartToggle" class="w-10 h-10 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-          <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <path d="M12 3v18"/>
-            <path d="M3 12h18"/>
-                    </svg>
-        </button>
-        
-        <!-- Mobile menu -->
-        <button id="mobileMenuToggle" class="w-10 h-10 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-          <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M3 12h18"/>
-            <path d="M3 6h18"/>
-            <path d="M3 18h18"/>
-                    </svg>
-                  </button>
-      </div>
-    </nav>
-
-    <!-- Mobile Content Area -->
-    <div class="mobile-content">
-      <!-- Mobile Market Info Bar -->
-      <div class="bg-black/50 backdrop-blur-sm border-b border-white/10 px-4 py-3">
-        <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-            <button id="mobileTokenSelector" class="flex items-center gap-2 hover:bg-white/10 rounded-lg px-2 py-1 transition-colors">
-              <div class="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center">
-                <span class="text-xs font-bold text-white">₿</span>
-              </div>
-              <span class="text-sm font-medium text-white">BTC/USDT</span>
-              <svg class="w-4 h-4 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </button>
-          </div>
-          <div class="text-right">
-            <div class="text-lg font-mono font-bold text-white">$43,256.78</div>
-            <div class="text-xs text-emerald-400">+2.4% (+$1,012.34)</div>
-          </div>
-        </div>
-        
-        <!-- Mobile Quick Stats -->
-        <div class="grid grid-cols-4 gap-2 mt-3 pt-3 border-t border-white/10">
-          <div class="text-center">
-            <div class="text-xs text-neutral-400">24h High</div>
-            <div class="text-sm font-mono text-white">$44,123</div>
-          </div>
-          <div class="text-center">
-            <div class="text-xs text-neutral-400">24h Low</div>
-            <div class="text-sm font-mono text-white">$42,890</div>
-          </div>
-          <div class="text-center">
-            <div class="text-xs text-neutral-400">Volume</div>
-            <div class="text-sm font-mono text-white">2.1B</div>
-          </div>
-          <div class="text-center">
-            <div class="text-xs text-neutral-400">Market Cap</div>
-            <div class="text-sm font-mono text-white">850B</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mobile Chart Container -->
-      <div id="mobileChartContainer" class="mobile-chart-container">
-        <!-- Single Chart View -->
-        <div id="mobileSingleChart" class="flex-1 relative">
-          <div id="mobile_tradingview_widget" class="w-full h-full"></div>
-          
-          <!-- Mobile Chart Controls -->
-          <div class="absolute top-4 right-4 flex gap-2 z-10">
-            <button class="w-8 h-8 rounded-lg bg-black/50 backdrop-blur-sm flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M15 3h6v6"/>
-                <path d="M9 21H3v-6"/>
-                <path d="M21 3l-7 7"/>
-                <path d="M3 21l7-7"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Two Charts View -->
-        <div id="mobileTwoCharts" class="hidden flex-1 flex flex-col gap-2 p-2">
-          <div id="mobile_chart_1" class="flex-1 rounded-lg overflow-hidden"></div>
-          <div id="mobile_chart_2" class="flex-1 rounded-lg overflow-hidden"></div>
-  </div>
-        
-        <!-- Four Charts View -->
-        <div id="mobileFourCharts" class="hidden flex-1 grid grid-cols-2 grid-rows-2 gap-2 p-2">
-          <div id="mobile_chart_3" class="rounded-lg overflow-hidden"></div>
-          <div id="mobile_chart_4" class="rounded-lg overflow-hidden"></div>
-          <div id="mobile_chart_5" class="rounded-lg overflow-hidden"></div>
-          <div id="mobile_chart_6" class="rounded-lg overflow-hidden"></div>
-        </div>
-      </div>
-
-      <!-- Mobile Swipe Indicators -->
-      <div class="mobile-swipe-indicator">
-        <div class="mobile-swipe-dot active"></div>
-        <div class="mobile-swipe-dot"></div>
-        <div class="mobile-swipe-dot"></div>
-      </div>
-    </div>
-
-    <!-- Mobile Bottom Navigation -->
-    <nav class="mobile-bottom-nav">
-      <button class="mobile-tab active" data-mobile-tab="trade">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M3 3v18h18"/>
-          <path d="M7 16l4-4 2 2 6-6"/>
-        </svg>
-        <span>Trade</span>
-      </button>
-      
-      <button class="mobile-tab" data-mobile-tab="balance">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <path d="M9 9h6v6H9z"/>
-        </svg>
-        <span>Balance</span>
-      </button>
-      
-      <button class="mobile-tab" data-mobile-tab="news">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-          <path d="M18 14h-8"/>
-          <path d="M15 18h-5"/>
-          <path d="M10 6h8v4h-8V6Z"/>
-        </svg>
-        <span>News</span>
-      </button>
-      
-      <button class="mobile-tab" data-mobile-tab="portfolio">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 6v6l4 2"/>
-        </svg>
-        <span>Portfolio</span>
-      </button>
-      
-      <button class="mobile-tab" data-mobile-tab="more">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="1"/>
-          <circle cx="19" cy="12" r="1"/>
-          <circle cx="5" cy="12" r="1"/>
-        </svg>
-        <span>More</span>
-      </button>
-    </nav>
-  </div>
-
-  <!-- Mobile Trade View -->
-  <div id="mobileTradeView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Trade</h2>
-      <button id="closeMobileTradeView" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    
-    <!-- Mobile Trade Sub-tabs -->
-    <div class="flex border-b border-white/10">
-      <button class="mobile-trade-subtab active flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="charts">
-        Charts
-      </button>
-      <button class="mobile-trade-subtab flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="tokens">
-        Tokens
-      </button>
-      <button class="mobile-trade-subtab flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="orderbook">
-        Order Book
-      </button>
-      <button class="mobile-trade-subtab flex-1 py-3 px-2 text-xs font-medium" data-trade-tab="trading">
-        Trading Panel
-      </button>
-    </div>
-    
-    <div class="flex-1 overflow-y-auto">
-      <!-- Charts Content -->
-      <div id="mobileTradeChartsContent" class="p-4">
-        <div id="mobileTradeChart" class="h-80 rounded-lg overflow-hidden border border-white/10"></div>
-        
-        <!-- Chart Controls -->
-        <div class="flex justify-center gap-2 mt-4">
-          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" data-timeframe="1H">1H</button>
-          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10" data-timeframe="4H">4H</button>
-          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10" data-timeframe="1D">1D</button>
-          <button class="mobile-chart-timeframe px-3 py-1 text-xs rounded-full bg-white/5 text-neutral-400 border border-white/10" data-timeframe="1W">1W</button>
-        </div>
-      </div>
-      
-      <!-- Tokens Content -->
-      <div id="mobileTradeTokensContent" class="hidden p-4">
-        <div class="space-y-2">
-          <button class="mobile-token-item active w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-                  <span class="text-xs font-bold text-white">₿</span>
-                </div>
-                <div class="text-left">
-                  <div class="text-sm font-medium text-white">BTC/USDT</div>
-                  <div class="text-xs text-neutral-400">Bitcoin</div>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="text-sm font-mono text-white">$43,256.78</div>
-                <div class="text-xs text-emerald-400">+2.4%</div>
-              </div>
-            </div>
-          </button>
-          
-          <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                  <span class="text-xs font-bold text-white">Ξ</span>
-                </div>
-                <div class="text-left">
-                  <div class="text-sm font-medium text-white">ETH/USDT</div>
-                  <div class="text-xs text-neutral-400">Ethereum</div>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="text-sm font-mono text-white">$2,650.45</div>
-                <div class="text-xs text-emerald-400">+1.8%</div>
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Order Book Content -->
-      <div id="mobileTradeOrderBookContent" class="hidden p-4">
-        <div class="space-y-4">
-          <!-- Spread Info -->
-          <div class="text-center py-2 border-b border-white/10">
-            <div class="text-sm text-neutral-400">Spread</div>
-            <div class="text-lg font-mono text-white">$0.05 (0.002%)</div>
-          </div>
-          
-          <!-- Asks -->
-          <div>
-            <div class="text-xs text-red-400 font-medium uppercase mb-2">Asks (Sell)</div>
-            <div class="space-y-1">
-              <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
-                <span class="text-sm font-mono text-white">$2,652.50</span>
-                <span class="text-sm font-mono text-neutral-400">1.2450</span>
-              </div>
-              <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
-                <span class="text-sm font-mono text-white">$2,651.75</span>
-                <span class="text-sm font-mono text-neutral-400">2.1500</span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Current Price -->
-          <div class="text-center py-2 border-y border-white/10">
-            <div class="text-xl font-mono font-bold text-emerald-400">$2,650.45</div>
-          </div>
-          
-          <!-- Bids -->
-          <div>
-            <div class="text-xs text-emerald-400 font-medium uppercase mb-2">Bids (Buy)</div>
-            <div class="space-y-1">
-              <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
-                <span class="text-sm font-mono text-white">$2,650.00</span>
-                <span class="text-sm font-mono text-neutral-400">3.1250</span>
-              </div>
-              <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
-                <span class="text-sm font-mono text-white">$2,649.25</span>
-                <span class="text-sm font-mono text-neutral-400">1.5000</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Trading Panel Content -->
-      <div id="mobileTradeTradingContent" class="hidden p-4 space-y-4">
-        <!-- Mobile Price Display -->
-        <div class="text-center py-4">
-          <div class="text-2xl font-bold text-white mono">$2,650.45</div>
-          <div class="text-emerald-400 text-sm">+1.8% (+$46.82)</div>
-        </div>
-      
-      <!-- Mobile Order Type Tabs -->
-      <div class="relative grid grid-cols-3 rounded-lg ring-1 ring-white/10 bg-white/5 p-1">
-        <button class="mobile-order-tab active" data-order="market">
-          <span class="text-xs font-medium">Market</span>
-        </button>
-        <button class="mobile-order-tab" data-order="limit">
-          <span class="text-xs font-medium">Limit</span>
-        </button>
-        <button class="mobile-order-tab" data-order="pro">
-          <span class="text-xs font-medium">Pro</span>
-        </button>
-        <div class="mobile-order-slider absolute top-1 bottom-1 left-1 w-[calc(33.333%-4px)] rounded-md bg-white/10 transition-all duration-200"></div>
-      </div>
-      
-      <!-- Mobile Buy/Sell Toggle -->
-      <div class="relative grid grid-cols-2 rounded-lg ring-1 ring-white/10 bg-white/5 p-1">
-        <button class="mobile-side-tab active" data-side="buy">
-          <span class="text-xs font-medium text-emerald-400">Buy</span>
-        </button>
-        <button class="mobile-side-tab" data-side="sell">
-          <span class="text-xs font-medium text-neutral-400">Sell</span>
-        </button>
-        <div class="mobile-side-slider absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-emerald-500/20 transition-all duration-200"></div>
-      </div>
-      
-      <!-- Mobile Trading Inputs -->
-      <div class="space-y-3">
-        <!-- Amount Input -->
-        <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs uppercase tracking-wider text-neutral-400">Amount</span>
-            <button class="text-xs text-emerald-400 font-mono">0.25 ETH</button>
-          </div>
-          <input type="number" placeholder="0.0" class="w-full bg-transparent outline-none text-lg font-mono text-white placeholder-neutral-500">
-        </div>
-        
-        <!-- Price Input (for limit orders) -->
-        <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3 opacity-50">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs uppercase tracking-wider text-neutral-400">Price</span>
-            <span class="text-xs text-neutral-500">Market</span>
-          </div>
-          <input type="number" placeholder="Market" disabled class="w-full bg-transparent outline-none text-lg font-mono text-white placeholder-neutral-500">
-        </div>
-        
-        <!-- Mobile Percentage Slider -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-xs uppercase tracking-wider text-neutral-400">Position Size</span>
-            <span class="text-xs text-neutral-400">0%</span>
-          </div>
-          
-                <div class="relative">
-            <div class="h-2 rounded-full ring-1 ring-white/10 bg-white/5 relative overflow-hidden">
-              <div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full transition-all duration-200" style="width: 0%"></div>
-              <div class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full ring-1 ring-white/20 bg-white/90 transition-all duration-200 shadow-lg" style="left: 0%"></div>
-            </div>
-            <input type="range" min="0" max="100" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-          </div>
-          
-          <!-- Quick percentage buttons -->
-          <div class="flex justify-between gap-2 mt-3">
-            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">25%</button>
-            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">50%</button>
-            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">75%</button>
-            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">Max</button>
-          </div>
-        </div>
-        
-        <!-- Available Balance -->
-        <div class="flex justify-between text-xs">
-          <span class="text-neutral-400">Available:</span>
-          <span class="text-emerald-200 font-mono">2,829.23 USDT</span>
-        </div>
-        
-        <!-- Mobile Trade Button -->
-        <button class="w-full py-4 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-black font-semibold text-lg transition-all hover:from-emerald-400 hover:to-emerald-500 active:scale-[0.98]">
-          Buy ETH
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Balance View -->
-  <div id="mobileBalanceView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Balance</h2>
-      <button id="closeMobileBalance" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-                    </svg>
-      </button>
-    </div>
-    
-    <div class="flex-1 overflow-y-auto">
-      <!-- Portfolio Summary -->
-      <div class="p-4 border-b border-white/10">
-        <div class="text-center">
-          <div class="text-2xl font-bold text-white mono">$12,458.92</div>
-          <div class="text-emerald-400 text-sm">+2.4% (+$291.45) Today</div>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-4 mt-4">
-          <div class="text-center">
-            <div class="text-xs text-neutral-400 uppercase tracking-wider">Total Balance</div>
-            <div class="text-lg font-semibold text-white mono">$12,458.92</div>
-          </div>
-          <div class="text-center">
-            <div class="text-xs text-neutral-400 uppercase tracking-wider">Available</div>
-            <div class="text-lg font-semibold text-white mono">$2,829.23</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Balance Sections -->
-      <div class="mobile-portfolio-section">
-        <div class="mobile-section-header" onclick="toggleMobileSection('balances')">
-          <span class="text-sm font-medium text-white">Spot Balances</span>
-          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                      <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </div>
-        <div class="mobile-section-content" id="mobileBalancesContent">
-          <div class="space-y-3">
-            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-                  <span class="text-xs font-bold text-white">₿</span>
-                </div>
-                <div>
-                  <div class="text-sm font-medium text-white">Bitcoin</div>
-                  <div class="text-xs text-neutral-400">BTC</div>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="text-sm font-medium text-white mono">0.2845</div>
-                <div class="text-xs text-neutral-400 mono">$12,458.92</div>
-              </div>
-            </div>
-            
-            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                  <span class="text-xs font-bold text-white">Ξ</span>
-                </div>
-                <div>
-                  <div class="text-sm font-medium text-white">Ethereum</div>
-                  <div class="text-xs text-neutral-400">ETH</div>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="text-sm font-medium text-white mono">1.0650</div>
-                <div class="text-xs text-neutral-400 mono">$2,829.23</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile More View -->
-  <div id="mobileMoreView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">More</h2>
-      <button id="closeMobileMore" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-                    </svg>
-                  </button>
-      </div>
-    
-    <div class="flex-1 overflow-y-auto p-4">
-      <div class="space-y-4">
-        <button class="mobile-menu-item" onclick="openMobileRewards();">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
-          <span>Rewards</span>
-        </button>
-        
-        <button class="mobile-menu-item" onclick="openMobileCommunity();">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-          <span>Community</span>
-        </button>
-        
-        <button class="mobile-menu-item" onclick="openMobileLearn();">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-          </svg>
-          <span>Learn</span>
-        </button>
-        
-        <div class="border-t border-white/10 pt-4 mt-6">
-          <button class="mobile-menu-item">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-            <span>Settings</span>
-          </button>
-          
-          <button class="mobile-menu-item">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16,17 21,12 16,7"/>
-              <line x1="21" x2="9" y1="12" y2="12"/>
-            </svg>
-            <span>Logout</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Portfolio View -->
-  <div id="mobilePortfolioView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Portfolio</h2>
-      <button id="closeMobilePortfolio" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-        </svg>
-                </button>
-      </div>
-    
-    <div class="flex-1 overflow-y-auto">
-      <!-- Portfolio Summary -->
-      <div class="p-4 border-b border-white/10">
-        <div class="text-center">
-          <div class="text-2xl font-bold text-white mono">$12,458.92</div>
-          <div class="text-emerald-400 text-sm">+2.4% (+$291.45) Today</div>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-4 mt-4">
-          <div class="text-center">
-            <div class="text-xs text-neutral-400 uppercase tracking-wider">Total Balance</div>
-            <div class="text-lg font-semibold text-white mono">$12,458.92</div>
-          </div>
-          <div class="text-center">
-            <div class="text-xs text-neutral-400 uppercase tracking-wider">Available</div>
-            <div class="text-lg font-semibold text-white mono">$2,829.23</div>
-          </div>
-    </div>
-  </div>
-      
-      <!-- Mobile Portfolio Sections -->
-      <div class="mobile-portfolio-section">
-        <div class="mobile-section-header" onclick="toggleMobileSection('balances')">
-          <span class="text-sm font-medium text-white">Balances</span>
-          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </div>
-        <div class="mobile-section-content" id="mobileBalancesContent">
-          <div class="space-y-3">
-            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-                  <span class="text-xs font-bold text-white">₿</span>
-                </div>
-                <div>
-                  <div class="text-sm font-medium text-white">Bitcoin</div>
-                  <div class="text-xs text-neutral-400">BTC</div>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="text-sm font-medium text-white mono">0.2845</div>
-                <div class="text-xs text-neutral-400 mono">$12,458.92</div>
-              </div>
-            </div>
-            
-            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                  <span class="text-xs font-bold text-white">Ξ</span>
-                </div>
-                <div>
-                  <div class="text-sm font-medium text-white">Ethereum</div>
-                  <div class="text-xs text-neutral-400">ETH</div>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="text-sm font-medium text-white mono">1.0650</div>
-                <div class="text-xs text-neutral-400 mono">$2,829.23</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mobile-portfolio-section">
-        <div class="mobile-section-header" onclick="toggleMobileSection('positions')">
-          <span class="text-sm font-medium text-white">Open Positions</span>
-          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </div>
-        <div class="mobile-section-content hidden" id="mobilePositionsContent">
-          <div class="text-center py-8 text-neutral-400">
-            <svg class="w-12 h-12 mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M8 12h8"/>
-            </svg>
-            <div class="text-sm">No open positions</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mobile-portfolio-section">
-        <div class="mobile-section-header" onclick="toggleMobileSection('orders')">
-          <span class="text-sm font-medium text-white">Open Orders</span>
-          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </div>
-        <div class="mobile-section-content hidden" id="mobileOrdersContent">
-          <div class="space-y-3">
-            <div class="p-3 rounded-lg bg-white/5 border-l-2 border-emerald-500">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs text-emerald-400 font-medium uppercase">Buy Limit</span>
-                <span class="text-xs text-neutral-400">ETH/USDT</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="text-sm text-white mono">0.5000 ETH</div>
-                <div class="text-sm text-neutral-400 mono">@ $2,600</div>
-              </div>
-            </div>
-            
-            <div class="p-3 rounded-lg bg-white/5 border-l-2 border-red-500">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs text-red-400 font-medium uppercase">Sell Limit</span>
-                <span class="text-xs text-neutral-400">BTC/USDT</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="text-sm text-white mono">0.1000 BTC</div>
-                <div class="text-sm text-neutral-400 mono">@ $44,000</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Order Book View -->
-  <div id="mobileOrderBookView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Order Book</h2>
-      <button id="closeMobileOrderBook" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="flex-1 overflow-y-auto p-4">
-      <!-- Mobile Order Book -->
-      <div class="space-y-4">
-        <!-- Spread Info -->
-        <div class="text-center py-2 border-b border-white/10">
-          <div class="text-sm text-neutral-400">Spread</div>
-          <div class="text-lg font-mono text-white">$0.05 (0.002%)</div>
-        </div>
-        
-        <!-- Asks (Sell Orders) -->
-        <div>
-          <div class="text-xs text-red-400 font-medium uppercase mb-2">Asks (Sell)</div>
-          <div class="space-y-1">
-            <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
-              <span class="text-sm font-mono text-white">$2,652.50</span>
-              <span class="text-sm font-mono text-neutral-400">1.2450</span>
-              <span class="text-xs text-neutral-500">$3,302</span>
-            </div>
-            <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
-              <span class="text-sm font-mono text-white">$2,651.75</span>
-              <span class="text-sm font-mono text-neutral-400">2.1500</span>
-              <span class="text-xs text-neutral-500">$5,701</span>
-            </div>
-            <div class="flex items-center justify-between p-2 bg-red-500/5 rounded">
-              <span class="text-sm font-mono text-white">$2,651.00</span>
-              <span class="text-sm font-mono text-neutral-400">0.8750</span>
-              <span class="text-xs text-neutral-500">$2,320</span>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Current Price -->
-        <div class="text-center py-4 border-y border-white/10">
-          <div class="text-2xl font-mono font-bold text-emerald-400">$2,650.45</div>
-          <div class="text-sm text-emerald-400">+1.8% (+$46.82)</div>
-        </div>
-        
-        <!-- Bids (Buy Orders) -->
-        <div>
-          <div class="text-xs text-emerald-400 font-medium uppercase mb-2">Bids (Buy)</div>
-          <div class="space-y-1">
-            <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
-              <span class="text-sm font-mono text-white">$2,650.00</span>
-              <span class="text-sm font-mono text-neutral-400">3.1250</span>
-              <span class="text-xs text-neutral-500">$8,281</span>
-            </div>
-            <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
-              <span class="text-sm font-mono text-white">$2,649.25</span>
-              <span class="text-sm font-mono text-neutral-400">1.5000</span>
-              <span class="text-xs text-neutral-500">$3,974</span>
-            </div>
-            <div class="flex items-center justify-between p-2 bg-emerald-500/5 rounded">
-              <span class="text-sm font-mono text-white">$2,648.50</span>
-              <span class="text-sm font-mono text-neutral-400">2.7500</span>
-              <span class="text-xs text-neutral-500">$7,283</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile News View -->
-  <div id="mobileNewsView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Market News</h2>
-      <button id="closeMobileNews" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="flex-1 overflow-y-auto p-4">
-      <div class="space-y-4">
-        <article class="p-4 rounded-lg bg-white/5 border border-white/10">
-          <div class="flex items-start gap-3">
-            <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-              <svg class="w-6 h-6 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-medium text-white mb-1">Bitcoin ETF Sees Record Inflows</h3>
-              <p class="text-xs text-neutral-400 mb-2">Institutional investors pour $2.1B into Bitcoin ETFs this week, signaling strong institutional adoption...</p>
-              <div class="flex items-center justify-between">
-                <span class="text-xs text-neutral-500">CoinDesk</span>
-                <span class="text-xs text-neutral-500">2h ago</span>
-              </div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="p-4 rounded-lg bg-white/5 border border-white/10">
-          <div class="flex items-start gap-3">
-            <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-              <svg class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 3v18h18"/>
-                <path d="M7 16l4-4 2 2 6-6"/>
-              </svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-medium text-white mb-1">Ethereum 2.0 Staking Reaches New Milestone</h3>
-              <p class="text-xs text-neutral-400 mb-2">Over 32 million ETH now staked in Ethereum 2.0, representing 26% of total supply...</p>
-              <div class="flex items-center justify-between">
-                <span class="text-xs text-neutral-500">Ethereum Foundation</span>
-                <span class="text-xs text-neutral-500">4h ago</span>
-              </div>
-            </div>
-          </div>
-        </article>
-        
-        <article class="p-4 rounded-lg bg-white/5 border border-white/10">
-          <div class="flex items-start gap-3">
-            <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-              <svg class="w-6 h-6 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-medium text-white mb-1">DeFi Protocol Launches Cross-Chain Bridge</h3>
-              <p class="text-xs text-neutral-400 mb-2">New cross-chain infrastructure enables seamless asset transfers between Ethereum and Solana...</p>
-              <div class="flex items-center justify-between">
-                <span class="text-xs text-neutral-500">DeFi Pulse</span>
-                <span class="text-xs text-neutral-500">6h ago</span>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Analytics View -->
-  <div id="mobileAnalyticsView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Analytics</h2>
-      <button id="closeMobileAnalytics" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="flex-1 overflow-y-auto p-4">
-      <div class="space-y-4">
-        <!-- Market Overview -->
-        <div class="rounded-lg bg-white/5 border border-white/10 p-4">
-          <h3 class="text-sm font-medium text-white mb-3">Market Overview</h3>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <div class="text-xs text-neutral-400 uppercase tracking-wider">24h Volume</div>
-              <div class="text-lg font-mono text-white">$2.1B</div>
-              <div class="text-xs text-emerald-400">+12.5%</div>
-            </div>
-            <div>
-              <div class="text-xs text-neutral-400 uppercase tracking-wider">Market Cap</div>
-              <div class="text-lg font-mono text-white">$1.2T</div>
-              <div class="text-xs text-red-400">-2.1%</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Price Metrics -->
-        <div class="rounded-lg bg-white/5 border border-white/10 p-4">
-          <h3 class="text-sm font-medium text-white mb-3">Price Metrics</h3>
-          <div class="space-y-3">
-            <div class="flex justify-between items-center">
-              <span class="text-xs text-neutral-400">24h High</span>
-              <span class="text-sm font-mono text-emerald-400">$2,687.50</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xs text-neutral-400">24h Low</span>
-              <span class="text-sm font-mono text-red-400">$2,598.20</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xs text-neutral-400">7d High</span>
-              <span class="text-sm font-mono text-white">$2,745.80</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xs text-neutral-400">7d Low</span>
-              <span class="text-sm font-mono text-white">$2,420.15</span>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Technical Indicators -->
-        <div class="rounded-lg bg-white/5 border border-white/10 p-4">
-          <h3 class="text-sm font-medium text-white mb-3">Technical Indicators</h3>
-          <div class="space-y-3">
-            <div class="flex justify-between items-center">
-              <span class="text-xs text-neutral-400">RSI (14)</span>
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-mono text-white">65.2</span>
-                <span class="text-xs px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400">Neutral</span>
-              </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xs text-neutral-400">MACD</span>
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-mono text-emerald-400">+12.5</span>
-                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400">Bullish</span>
-              </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xs text-neutral-400">Moving Avg</span>
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-mono text-white">$2,634.80</span>
-                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400">Above</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Orders View -->
-  <div id="mobileOrdersView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Orders & Positions</h2>
-      <button id="closeMobileOrders" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="flex-1 overflow-y-auto">
-      <!-- Mobile Orders Tabs -->
-      <div class="flex border-b border-white/10">
-        <button class="mobile-orders-tab active flex-1 py-3 px-4 text-sm font-medium" data-orders-tab="open">
-          Open Orders
-        </button>
-        <button class="mobile-orders-tab flex-1 py-3 px-4 text-sm font-medium" data-orders-tab="positions">
-          Positions
-        </button>
-        <button class="mobile-orders-tab flex-1 py-3 px-4 text-sm font-medium" data-orders-tab="history">
-          History
-        </button>
-      </div>
-      
-      <!-- Open Orders Content -->
-      <div id="mobileOpenOrdersContent" class="p-4">
-        <div class="space-y-3">
-          <!-- Order Item -->
-          <div class="p-4 rounded-lg bg-white/5 border border-white/10 border-l-4 border-l-emerald-500">
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center gap-2">
-                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium">BUY LIMIT</span>
-                <span class="text-sm font-medium text-white">BTC/USDT</span>
-              </div>
-              <button class="text-xs text-red-400 hover:text-red-300 transition-colors">Cancel</button>
-            </div>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <div class="text-xs text-neutral-400">Amount</div>
-                <div class="font-mono text-white">0.2500 BTC</div>
-              </div>
-              <div>
-                <div class="text-xs text-neutral-400">Price</div>
-                <div class="font-mono text-white">$42,500.00</div>
-              </div>
-            </div>
-            <div class="mt-2 text-xs text-neutral-400">
-              Total: <span class="text-white font-mono">$10,625.00</span>
-            </div>
-          </div>
-          
-          <!-- Order Item -->
-          <div class="p-4 rounded-lg bg-white/5 border border-white/10 border-l-4 border-l-red-500">
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center gap-2">
-                <span class="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 font-medium">SELL LIMIT</span>
-                <span class="text-sm font-medium text-white">ETH/USDT</span>
-              </div>
-              <button class="text-xs text-red-400 hover:text-red-300 transition-colors">Cancel</button>
-            </div>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <div class="text-xs text-neutral-400">Amount</div>
-                <div class="font-mono text-white">2.5000 ETH</div>
-              </div>
-              <div>
-                <div class="text-xs text-neutral-400">Price</div>
-                <div class="font-mono text-white">$2,700.00</div>
-              </div>
-            </div>
-            <div class="mt-2 text-xs text-neutral-400">
-              Total: <span class="text-white font-mono">$6,750.00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Positions Content -->
-      <div id="mobilePositionsContent" class="hidden p-4">
-        <div class="text-center py-12 text-neutral-400">
-          <svg class="w-16 h-16 mx-auto mb-4 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M8 12h8"/>
-          </svg>
-          <div class="text-lg font-medium mb-2">No Open Positions</div>
-          <div class="text-sm">Your futures positions will appear here</div>
-        </div>
-      </div>
-      
-      <!-- History Content -->
-      <div id="mobileHistoryContent" class="hidden p-4">
-        <div class="space-y-3">
-          <!-- History Item -->
-          <div class="p-4 rounded-lg bg-white/5 border border-white/10">
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center gap-2">
-                <span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium">FILLED</span>
-                <span class="text-sm font-medium text-white">BTC/USDT</span>
-              </div>
-              <span class="text-xs text-neutral-400">2h ago</span>
-            </div>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <div class="text-xs text-neutral-400">Type</div>
-                <div class="text-white">Market Buy</div>
-              </div>
-              <div>
-                <div class="text-xs text-neutral-400">Amount</div>
-                <div class="font-mono text-white">0.1000 BTC</div>
-              </div>
-            </div>
-            <div class="mt-2 text-xs text-neutral-400">
-              Avg Price: <span class="text-white font-mono">$43,150.00</span>
-            </div>
-          </div>
-          
-          <!-- History Item -->
-          <div class="p-4 rounded-lg bg-white/5 border border-white/10">
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center gap-2">
-                <span class="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 font-medium">FILLED</span>
-                <span class="text-sm font-medium text-white">ETH/USDT</span>
-              </div>
-              <span class="text-xs text-neutral-400">5h ago</span>
-            </div>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <div class="text-xs text-neutral-400">Type</div>
-                <div class="text-white">Limit Sell</div>
-              </div>
-              <div>
-                <div class="text-xs text-neutral-400">Amount</div>
-                <div class="font-mono text-white">1.5000 ETH</div>
-              </div>
-            </div>
-            <div class="mt-2 text-xs text-neutral-400">
-              Avg Price: <span class="text-white font-mono">$2,650.00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Token Selector -->
-  <div id="mobileTokenSelectorView" class="mobile-trade-sheet">
-    <div class="mobile-sheet-handle"></div>
-    
-    <div class="mobile-sheet-header">
-      <h2 class="text-lg font-semibold text-white">Select Trading Pair</h2>
-      <button id="closeMobileTokenSelector" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M18 6L6 18"/>
-          <path d="M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    
-    <div class="flex-1 overflow-y-auto p-4">
-      <!-- Search Bar -->
-      <div class="mb-4">
-        <input type="text" placeholder="Search pairs..." class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-neutral-400 outline-none focus:border-emerald-500/50 transition-colors">
-      </div>
-      
-      <!-- Token List -->
-      <div class="space-y-2">
-        <button class="mobile-token-item active w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="BTCUSDT">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-                <span class="text-xs font-bold text-white">₿</span>
-              </div>
-              <div class="text-left">
-                <div class="text-sm font-medium text-white">BTC/USDT</div>
-                <div class="text-xs text-neutral-400">Bitcoin</div>
-              </div>
-            </div>
-            <div class="text-right">
-              <div class="text-sm font-mono text-white">$43,256.78</div>
-              <div class="text-xs text-emerald-400">+2.4%</div>
-            </div>
-          </div>
-        </button>
-        
-        <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="ETHUSDT">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                <span class="text-xs font-bold text-white">Ξ</span>
-              </div>
-              <div class="text-left">
-                <div class="text-sm font-medium text-white">ETH/USDT</div>
-                <div class="text-xs text-neutral-400">Ethereum</div>
-              </div>
-            </div>
-            <div class="text-right">
-              <div class="text-sm font-mono text-white">$2,650.45</div>
-              <div class="text-xs text-emerald-400">+1.8%</div>
-            </div>
-          </div>
-        </button>
-        
-        <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="ADAUSDT">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
-                <span class="text-xs font-bold text-white">₳</span>
-              </div>
-              <div class="text-left">
-                <div class="text-sm font-medium text-white">ADA/USDT</div>
-                <div class="text-xs text-neutral-400">Cardano</div>
-              </div>
-            </div>
-            <div class="text-right">
-              <div class="text-sm font-mono text-white">$0.4523</div>
-              <div class="text-xs text-red-400">-0.8%</div>
-            </div>
-          </div>
-        </button>
-        
-        <button class="mobile-token-item w-full p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" data-symbol="SOLUSDT">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
-                <span class="text-xs font-bold text-white">◎</span>
-              </div>
-              <div class="text-left">
-                <div class="text-sm font-medium text-white">SOL/USDT</div>
-                <div class="text-xs text-neutral-400">Solana</div>
-              </div>
-            </div>
-            <div class="text-right">
-              <div class="text-sm font-mono text-white">$98.67</div>
-              <div class="text-xs text-emerald-400">+5.2%</div>
-            </div>
-          </div>
-        </button>
-      </div>
-    </div>
   </div>
 
     <!-- Portfolio Section Template (to be moved via JavaScript) -->
@@ -6957,1196 +5453,6 @@
 
       $('#openMobileTrade').addEventListener('click', () => toggleMobileTradeSheet(true));
 
-      // Mobile functionality
-      let currentMobileTab = 'trade';
-      let currentMobileChartLayout = 1;
-      let mobileChartWidgets = {};
-
-      // Mobile bottom navigation
-      document.querySelectorAll('.mobile-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          const tabName = tab.dataset.mobileTab;
-          switchMobileTab(tabName);
-        });
-      });
-
-      function switchMobileTab(tabName) {
-        if (tabName === currentMobileTab) return;
-
-        // Update active tab
-        document.querySelectorAll('.mobile-tab').forEach(tab => {
-          tab.classList.remove('active');
-        });
-        document.querySelector(`[data-mobile-tab="${tabName}"]`).classList.add('active');
-
-        // Handle tab content
-        switch (tabName) {
-          case 'trade':
-            openMobileTradeView();
-            break;
-          case 'balance':
-            openMobileBalance();
-            break;
-          case 'news':
-            openMobileNews();
-            break;
-          case 'portfolio':
-            openMobilePortfolio();
-            break;
-          case 'more':
-            openMobileMore();
-            break;
-        }
-
-        currentMobileTab = tabName;
-      }
-
-      // Mobile chart layout toggle
-      const mobileChartToggle = document.getElementById('mobileChartToggle');
-      if (mobileChartToggle) {
-        mobileChartToggle.addEventListener('click', () => {
-          cycleMobileChartLayout();
-        });
-      }
-
-      function cycleMobileChartLayout() {
-        const nextLayout = currentMobileChartLayout === 4 ? 1 : currentMobileChartLayout + 1;
-        setMobileChartLayout(nextLayout);
-      }
-
-      function setMobileChartLayout(layout) {
-        if (layout === currentMobileChartLayout) return;
-
-        // Hide all layouts
-        document.getElementById('mobileSingleChart').classList.add('hidden');
-        document.getElementById('mobileTwoCharts').classList.add('hidden');
-        document.getElementById('mobileFourCharts').classList.add('hidden');
-
-        // Update swipe indicators
-        document.querySelectorAll('.mobile-swipe-dot').forEach((dot, index) => {
-          dot.classList.remove('active');
-          if (index === layout - 1) {
-            dot.classList.add('active');
-          }
-        });
-
-        // Destroy existing mobile widgets
-        Object.keys(mobileChartWidgets).forEach(key => {
-          if (mobileChartWidgets[key]) {
-            try {
-              mobileChartWidgets[key].remove();
-              delete mobileChartWidgets[key];
-            } catch (e) {
-              console.log('Error removing mobile widget:', e);
-            }
-          }
-        });
-
-        currentMobileChartLayout = layout;
-
-        // Show appropriate layout and create widgets
-        switch (layout) {
-          case 1:
-            document.getElementById('mobileSingleChart').classList.remove('hidden');
-            createMobileChartWidget('mobile_tradingview_widget', 'BINANCE:BTCUSDT');
-            break;
-          
-          case 2:
-            document.getElementById('mobileTwoCharts').classList.remove('hidden');
-            createMobileChartWidget('mobile_chart_1', 'BINANCE:BTCUSDT');
-            createMobileChartWidget('mobile_chart_2', 'BINANCE:ETHUSDT');
-            break;
-          
-          case 4:
-            document.getElementById('mobileFourCharts').classList.remove('hidden');
-            createMobileChartWidget('mobile_chart_3', 'BINANCE:BTCUSDT');
-            createMobileChartWidget('mobile_chart_4', 'BINANCE:ETHUSDT');
-            createMobileChartWidget('mobile_chart_5', 'BINANCE:ADAUSDT');
-            createMobileChartWidget('mobile_chart_6', 'BINANCE:SOLUSDT');
-            break;
-        }
-      }
-
-      // Create mobile chart widget
-      function createMobileChartWidget(containerId, symbol) {
-        if (!window.TradingView) {
-          console.log('TradingView not loaded yet for mobile');
-          return;
-        }
-
-        try {
-          const widget = new TradingView.widget({
-            autosize: true,
-            symbol: symbol,
-            interval: '1H',
-            theme: 'dark',
-            container_id: containerId,
-            locale: 'en',
-            toolbar_bg: '#0a0a0a',
-            hide_side_toolbar: false,
-            allow_symbol_change: true,
-            hide_top_toolbar: false,
-            hide_legend: false,
-            studies_overrides: {},
-            disabled_features: [
-              'header_saveload', 'header_compare', 'header_screenshot',
-              'header_fullscreen_button'
-            ],
-            enabled_features: [
-              'header_symbol_search', 'header_resolutions', 'header_chart_type'
-            ],
-            overrides: {
-              "paneProperties.background": "#0a0a0a",
-              "paneProperties.backgroundType": "solid",
-              "scalesProperties.textColor": "#b0b0b0",
-              "scalesProperties.backgroundColor": "#111111",
-              "mainSeriesProperties.candleStyle.upColor": "#6EE7B7",
-              "mainSeriesProperties.candleStyle.downColor": "#F87171",
-              "mainSeriesProperties.candleStyle.borderUpColor": "#6EE7B7",
-              "mainSeriesProperties.candleStyle.borderDownColor": "#F87171",
-              "mainSeriesProperties.candleStyle.wickUpColor": "#6EE7B7",
-              "mainSeriesProperties.candleStyle.wickDownColor": "#F87171"
-            }
-          });
-
-          mobileChartWidgets[containerId] = widget;
-        } catch (error) {
-          console.error('Error creating mobile chart widget:', error);
-        }
-      }
-
-      // Mobile trade view functions
-      function openMobileTradeView() {
-        const sheet = document.getElementById('mobileTradeView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-          
-          // Ensure charts tab is active and create chart if needed
-          setTimeout(() => {
-            switchMobileTradeTab('charts');
-          }, 100);
-        }
-      }
-
-      function closeMobileTradeView() {
-        const sheet = document.getElementById('mobileTradeView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      // Mobile balance view functions
-      function openMobileBalance() {
-        const sheet = document.getElementById('mobileBalanceView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobileBalance() {
-        const sheet = document.getElementById('mobileBalanceView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      // Mobile more view functions
-      function openMobileMore() {
-        const sheet = document.getElementById('mobileMoreView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobileMore() {
-        const sheet = document.getElementById('mobileMoreView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      // Mobile portfolio functions
-      function openMobilePortfolio() {
-        const sheet = document.getElementById('mobilePortfolioView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobilePortfolio() {
-        const sheet = document.getElementById('mobilePortfolioView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      function closeMobileSheets() {
-        closeMobileTradeView();
-        closeMobileBalance();
-        closeMobilePortfolio();
-        closeMobileOrderBook();
-        closeMobileNews();
-        closeMobileAnalytics();
-        closeMobileOrders();
-        closeMobileTokenSelector();
-        closeMobileMore();
-      }
-
-      // Mobile order book functions
-      function openMobileOrderBook() {
-        const sheet = document.getElementById('mobileOrderBookView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobileOrderBook() {
-        const sheet = document.getElementById('mobileOrderBookView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      // Mobile news functions
-      function openMobileNews() {
-        const sheet = document.getElementById('mobileNewsView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobileNews() {
-        const sheet = document.getElementById('mobileNewsView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      // Mobile analytics functions
-      function openMobileAnalytics() {
-        const sheet = document.getElementById('mobileAnalyticsView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobileAnalytics() {
-        const sheet = document.getElementById('mobileAnalyticsView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      // Mobile sheet close buttons
-      const closeMobileTradeViewBtn = document.getElementById('closeMobileTradeView');
-      if (closeMobileTradeViewBtn) {
-        closeMobileTradeViewBtn.addEventListener('click', closeMobileTradeView);
-      }
-
-      const closeMobileBalanceBtn = document.getElementById('closeMobileBalance');
-      if (closeMobileBalanceBtn) {
-        closeMobileBalanceBtn.addEventListener('click', closeMobileBalance);
-      }
-
-      const closeMobileMoreBtn = document.getElementById('closeMobileMore');
-      if (closeMobileMoreBtn) {
-        closeMobileMoreBtn.addEventListener('click', closeMobileMore);
-      }
-
-      const closeMobilePortfolioBtn = document.getElementById('closeMobilePortfolio');
-      if (closeMobilePortfolioBtn) {
-        closeMobilePortfolioBtn.addEventListener('click', closeMobilePortfolio);
-      }
-
-      const closeMobileOrderBookBtn = document.getElementById('closeMobileOrderBook');
-      if (closeMobileOrderBookBtn) {
-        closeMobileOrderBookBtn.addEventListener('click', closeMobileOrderBook);
-      }
-
-      const closeMobileNewsBtn = document.getElementById('closeMobileNews');
-      if (closeMobileNewsBtn) {
-        closeMobileNewsBtn.addEventListener('click', closeMobileNews);
-      }
-
-      const closeMobileAnalyticsBtn = document.getElementById('closeMobileAnalytics');
-      if (closeMobileAnalyticsBtn) {
-        closeMobileAnalyticsBtn.addEventListener('click', closeMobileAnalytics);
-      }
-
-      // Mobile orders functions
-      function openMobileOrders() {
-        const sheet = document.getElementById('mobileOrdersView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobileOrders() {
-        const sheet = document.getElementById('mobileOrdersView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      const closeMobileOrdersBtn = document.getElementById('closeMobileOrders');
-      if (closeMobileOrdersBtn) {
-        closeMobileOrdersBtn.addEventListener('click', closeMobileOrders);
-      }
-
-      // Mobile orders tabs functionality
-      document.querySelectorAll('.mobile-orders-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          const tabName = tab.dataset.ordersTab;
-          switchMobileOrdersTab(tabName);
-        });
-      });
-
-      function switchMobileOrdersTab(tabName) {
-        // Update active tab
-        document.querySelectorAll('.mobile-orders-tab').forEach(tab => {
-          tab.classList.remove('active');
-        });
-        document.querySelector(`[data-orders-tab="${tabName}"]`).classList.add('active');
-
-        // Hide all content
-        document.getElementById('mobileOpenOrdersContent').classList.add('hidden');
-        document.getElementById('mobilePositionsContent').classList.add('hidden');
-        document.getElementById('mobileHistoryContent').classList.add('hidden');
-
-        // Show selected content
-        switch (tabName) {
-          case 'open':
-            document.getElementById('mobileOpenOrdersContent').classList.remove('hidden');
-            break;
-          case 'positions':
-            document.getElementById('mobilePositionsContent').classList.remove('hidden');
-            break;
-          case 'history':
-            document.getElementById('mobileHistoryContent').classList.remove('hidden');
-            break;
-        }
-      }
-
-      // Mobile token selector functions
-      function openMobileTokenSelector() {
-        const sheet = document.getElementById('mobileTokenSelectorView');
-        if (sheet) {
-          sheet.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        }
-      }
-
-      function closeMobileTokenSelector() {
-        const sheet = document.getElementById('mobileTokenSelectorView');
-        if (sheet) {
-          sheet.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
-
-      const mobileTokenSelector = document.getElementById('mobileTokenSelector');
-      if (mobileTokenSelector) {
-        mobileTokenSelector.addEventListener('click', openMobileTokenSelector);
-      }
-
-      const closeMobileTokenSelectorBtn = document.getElementById('closeMobileTokenSelector');
-      if (closeMobileTokenSelectorBtn) {
-        closeMobileTokenSelectorBtn.addEventListener('click', closeMobileTokenSelector);
-      }
-
-      // Mobile token selection
-      document.querySelectorAll('.mobile-token-item').forEach(item => {
-        item.addEventListener('click', () => {
-          const symbol = item.dataset.symbol;
-          selectMobileToken(symbol, item);
-        });
-      });
-
-      function selectMobileToken(symbol, element) {
-        // Update active state
-        document.querySelectorAll('.mobile-token-item').forEach(item => {
-          item.classList.remove('active');
-        });
-        element.classList.add('active');
-
-        // Update market info bar
-        const tokenData = {
-          'BTCUSDT': { icon: '₿', name: 'BTC/USDT', price: '$43,256.78', change: '+2.4% (+$1,012.34)', color: 'bg-orange-500' },
-          'ETHUSDT': { icon: 'Ξ', name: 'ETH/USDT', price: '$2,650.45', change: '+1.8% (+$46.82)', color: 'bg-blue-500' },
-          'ADAUSDT': { icon: '₳', name: 'ADA/USDT', price: '$0.4523', change: '-0.8% (-$0.004)', color: 'bg-blue-600' },
-          'SOLUSDT': { icon: '◎', name: 'SOL/USDT', price: '$98.67', change: '+5.2% (+$4.89)', color: 'bg-purple-500' }
-        };
-
-        const data = tokenData[symbol];
-        if (data) {
-          // Update token selector button
-          const selectorButton = document.getElementById('mobileTokenSelector');
-          selectorButton.querySelector('.w-6').className = `w-6 h-6 rounded-full ${data.color} flex items-center justify-center`;
-          selectorButton.querySelector('.w-6 span').textContent = data.icon;
-          selectorButton.querySelector('span.text-sm').textContent = data.name;
-
-          // Update price display
-          const marketInfoBar = selectorButton.closest('.bg-black\\/50');
-          const priceDisplay = marketInfoBar.querySelector('.text-right .text-lg');
-          const changeDisplay = marketInfoBar.querySelector('.text-right .text-xs');
-          priceDisplay.textContent = data.price;
-          changeDisplay.textContent = data.change;
-          changeDisplay.className = data.change.startsWith('+') ? 'text-xs text-emerald-400' : 'text-xs text-red-400';
-        }
-
-        closeMobileTokenSelector();
-      }
-
-      // Mobile trade sub-tabs functionality
-      document.querySelectorAll('.mobile-trade-subtab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          const tabName = tab.dataset.tradeTab;
-          switchMobileTradeTab(tabName);
-        });
-      });
-
-      function switchMobileTradeTab(tabName) {
-        // Update active tab
-        document.querySelectorAll('.mobile-trade-subtab').forEach(tab => {
-          tab.classList.remove('active');
-        });
-        document.querySelector(`[data-trade-tab="${tabName}"]`).classList.add('active');
-
-        // Hide all content
-        document.getElementById('mobileTradeChartsContent').classList.add('hidden');
-        document.getElementById('mobileTradeTokensContent').classList.add('hidden');
-        document.getElementById('mobileTradeOrderBookContent').classList.add('hidden');
-        document.getElementById('mobileTradeTradingContent').classList.add('hidden');
-
-        // Show selected content
-        switch (tabName) {
-          case 'charts':
-            document.getElementById('mobileTradeChartsContent').classList.remove('hidden');
-            // Create mobile trade chart if it doesn't exist
-            if (!mobileChartWidgets['mobileTradeChart']) {
-              createMobileTradeChart();
-            }
-            break;
-          case 'tokens':
-            document.getElementById('mobileTradeTokensContent').classList.remove('hidden');
-            break;
-          case 'orderbook':
-            document.getElementById('mobileTradeOrderBookContent').classList.remove('hidden');
-            break;
-          case 'trading':
-            document.getElementById('mobileTradeTradingContent').classList.remove('hidden');
-            break;
-        }
-      }
-
-      // Create mobile trade chart
-      function createMobileTradeChart() {
-        if (!window.TradingView) {
-          console.log('TradingView not loaded yet for mobile trade chart');
-          return;
-        }
-
-        try {
-          const widget = new TradingView.widget({
-            autosize: true,
-            symbol: 'BINANCE:BTCUSDT',
-            interval: '1H',
-            theme: 'dark',
-            container_id: 'mobileTradeChart',
-            locale: 'en',
-            toolbar_bg: '#0a0a0a',
-            hide_side_toolbar: false,
-            allow_symbol_change: true,
-            hide_top_toolbar: false,
-            hide_legend: false,
-            studies_overrides: {},
-            disabled_features: [
-              'header_saveload', 'header_compare', 'header_screenshot',
-              'header_fullscreen_button'
-            ],
-            enabled_features: [
-              'header_symbol_search', 'header_resolutions', 'header_chart_type'
-            ],
-            overrides: {
-              "paneProperties.background": "#0a0a0a",
-              "paneProperties.backgroundType": "solid",
-              "scalesProperties.textColor": "#b0b0b0",
-              "scalesProperties.backgroundColor": "#111111",
-              "mainSeriesProperties.candleStyle.upColor": "#6EE7B7",
-              "mainSeriesProperties.candleStyle.downColor": "#F87171",
-              "mainSeriesProperties.candleStyle.borderUpColor": "#6EE7B7",
-              "mainSeriesProperties.candleStyle.borderDownColor": "#F87171",
-              "mainSeriesProperties.candleStyle.wickUpColor": "#6EE7B7",
-              "mainSeriesProperties.candleStyle.wickDownColor": "#F87171"
-            }
-          });
-
-          mobileChartWidgets['mobileTradeChart'] = widget;
-        } catch (error) {
-          console.error('Error creating mobile trade chart:', error);
-        }
-      }
-
-      // Mobile chart timeframe controls
-      document.querySelectorAll('.mobile-chart-timeframe').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const timeframe = btn.dataset.timeframe;
-          changeMobileChartTimeframe(timeframe, btn);
-        });
-      });
-
-      function changeMobileChartTimeframe(timeframe, button) {
-        // Update active timeframe button
-        document.querySelectorAll('.mobile-chart-timeframe').forEach(btn => {
-          btn.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/30');
-          btn.classList.add('bg-white/5', 'text-neutral-400', 'border-white/10');
-        });
-        
-        button.classList.remove('bg-white/5', 'text-neutral-400', 'border-white/10');
-        button.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/30');
-
-        // Update chart timeframe
-        const widget = mobileChartWidgets['mobileTradeChart'];
-        if (widget && widget.chart) {
-          widget.chart().setResolution(timeframe);
-        }
-      }
-
-      // Mobile section toggle function
-      window.toggleMobileSection = function(sectionName) {
-        const content = document.getElementById(`mobile${sectionName.charAt(0).toUpperCase() + sectionName.slice(1)}Content`);
-        const header = content.parentElement.querySelector('.mobile-section-header');
-        
-        if (content.classList.contains('hidden')) {
-          content.classList.remove('hidden');
-          header.classList.add('expanded');
-        } else {
-          content.classList.add('hidden');
-          header.classList.remove('expanded');
-        }
-      };
-
-      // Mobile trading controls
-      document.querySelectorAll('.mobile-order-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          const orderType = tab.dataset.order;
-          switchMobileOrderType(orderType);
-        });
-      });
-
-      document.querySelectorAll('.mobile-side-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          const side = tab.dataset.side;
-          switchMobileSide(side);
-        });
-      });
-
-      function switchMobileOrderType(orderType) {
-        // Update active tab
-        document.querySelectorAll('.mobile-order-tab').forEach(tab => {
-          tab.classList.remove('active');
-        });
-        document.querySelector(`[data-order="${orderType}"]`).classList.add('active');
-
-        // Move slider
-        const slider = document.querySelector('.mobile-order-slider');
-        const index = orderType === 'market' ? 0 : orderType === 'limit' ? 1 : 2;
-        slider.style.left = `calc(${index * 33.333}% + 4px)`;
-      }
-
-      function switchMobileSide(side) {
-        // Update active tab
-        document.querySelectorAll('.mobile-side-tab').forEach(tab => {
-          tab.classList.remove('active');
-        });
-        document.querySelector(`[data-side="${side}"]`).classList.add('active');
-
-        // Move slider and update colors
-        const slider = document.querySelector('.mobile-side-slider');
-        if (side === 'buy') {
-          slider.style.left = 'calc(0% + 4px)';
-          slider.style.background = 'rgba(110, 231, 183, 0.2)';
-          slider.style.borderColor = 'rgba(110, 231, 183, 0.3)';
-        } else {
-          slider.style.left = 'calc(50% + 4px)';
-          slider.style.background = 'rgba(248, 113, 113, 0.2)';
-          slider.style.borderColor = 'rgba(248, 113, 113, 0.3)';
-        }
-      }
-
-      // Mobile menu functionality
-      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-      if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', () => {
-          toggleMobileMenu();
-        });
-      }
-
-      function toggleMobileMenu() {
-        // Create mobile menu overlay
-        let overlay = document.getElementById('mobileMenuOverlay');
-        if (!overlay) {
-          overlay = document.createElement('div');
-          overlay.id = 'mobileMenuOverlay';
-          overlay.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-[3000] opacity-0 invisible transition-all duration-300';
-          
-          const menu = document.createElement('div');
-          menu.className = 'absolute top-0 right-0 w-80 h-full bg-black/95 backdrop-blur-xl border-l border-white/10 p-6 transform translate-x-full transition-transform duration-300';
-          
-          menu.innerHTML = `
-            <div class="flex items-center justify-between mb-8">
-              <h2 class="text-xl font-semibold text-white">Menu</h2>
-              <button id="closeMobileMenu" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
-                <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M18 6L6 18"/>
-                  <path d="M6 6l12 12"/>
-                </svg>
-              </button>
-            </div>
-            
-            <div class="space-y-4">
-              <button class="mobile-menu-item" onclick="openMobileOrderBook(); closeMobileMenu();">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M3 6h18"/>
-                  <path d="M3 10h12"/>
-                  <path d="M3 14h18"/>
-                  <path d="M3 18h8"/>
-                  <path d="M18 10l3 3-3 3"/>
-                  <path d="M6 18l-3-3 3-3"/>
-                </svg>
-                <span>Order Book</span>
-              </button>
-              
-              <button class="mobile-menu-item" onclick="openMobileNews(); closeMobileMenu();">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-                  <path d="M18 14h-8"/>
-                  <path d="M15 18h-5"/>
-                  <path d="M10 6h8v4h-8V6Z"/>
-                </svg>
-                <span>News</span>
-              </button>
-              
-              <button class="mobile-menu-item" onclick="openMobileAnalytics(); closeMobileMenu();">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M2 20h20"/>
-                  <path d="M7 16v4"/>
-                  <path d="M12 8v12"/>
-                  <path d="M17 4v16"/>
-                  <circle cx="7" cy="16" r="2"/>
-                  <circle cx="12" cy="8" r="2"/>
-                  <circle cx="17" cy="4" r="2"/>
-                </svg>
-                <span>Analytics</span>
-              </button>
-              
-              <div class="border-t border-white/10 pt-4 mt-6">
-                <button class="mobile-menu-item">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                  <span>Settings</span>
-                </button>
-                
-                <button class="mobile-menu-item">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                    <polyline points="16,17 21,12 16,7"/>
-                    <line x1="21" x2="9" y1="12" y2="12"/>
-                  </svg>
-                  <span>Logout</span>
-                </button>
-              </div>
-            </div>
-          `;
-          
-          overlay.appendChild(menu);
-          document.body.appendChild(overlay);
-          
-          // Add close functionality
-          overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) closeMobileMenu();
-          });
-          
-          document.getElementById('closeMobileMenu').addEventListener('click', closeMobileMenu);
-        }
-        
-        // Toggle menu
-        if (overlay.classList.contains('opacity-0')) {
-          overlay.classList.remove('opacity-0', 'invisible');
-          overlay.querySelector('div').classList.remove('translate-x-full');
-          document.body.style.overflow = 'hidden';
-        } else {
-          closeMobileMenu();
-        }
-      }
-
-      function closeMobileMenu() {
-        const overlay = document.getElementById('mobileMenuOverlay');
-        if (overlay) {
-          overlay.classList.add('opacity-0', 'invisible');
-          overlay.querySelector('div').classList.add('translate-x-full');
-          document.body.style.overflow = '';
-        }
-      }
-
-      // Touch gestures for mobile charts
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let touchEndX = 0;
-      let touchEndY = 0;
-
-      const mobileChartContainer = document.getElementById('mobileChartContainer');
-      if (mobileChartContainer) {
-        mobileChartContainer.addEventListener('touchstart', (e) => {
-          touchStartX = e.changedTouches[0].screenX;
-          touchStartY = e.changedTouches[0].screenY;
-        }, { passive: true });
-
-        mobileChartContainer.addEventListener('touchend', (e) => {
-          touchEndX = e.changedTouches[0].screenX;
-          touchEndY = e.changedTouches[0].screenY;
-          handleMobileSwipe();
-        }, { passive: true });
-      }
-
-      function handleMobileSwipe() {
-        const deltaX = touchEndX - touchStartX;
-        const deltaY = touchEndY - touchStartY;
-        const minSwipeDistance = 50;
-
-        // Only handle horizontal swipes
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-          if (deltaX > 0) {
-            // Swipe right - previous chart layout
-            const prevLayout = currentMobileChartLayout === 1 ? 4 : currentMobileChartLayout - 1;
-            setMobileChartLayout(prevLayout);
-          } else {
-            // Swipe left - next chart layout
-            const nextLayout = currentMobileChartLayout === 4 ? 1 : currentMobileChartLayout + 1;
-            setMobileChartLayout(nextLayout);
-          }
-        }
-      }
-
-      // Initialize mobile layout
-      if (window.innerWidth <= 768) {
-        setMobileChartLayout(1);
-      }
-
-      // Grid Bot Animation - Exact Working Implementation
-      function initGridBotAnimation() {
-        // Wait for Chart.js to be available
-        if (typeof Chart === 'undefined') {
-          setTimeout(initGridBotAnimation, 100);
-          return;
-        }
-
-        // Card entrance animation
-        const gridCard = document.getElementById('gridCard');
-        if (gridCard) {
-          requestAnimationFrame(() => {
-            gridCard.style.opacity = '1';
-            gridCard.style.transform = 'translateY(0)';
-          });
-        }
-
-        // Elements
-        const cycleFade = document.getElementById('cycleFade');
-        const cursorDot = document.getElementById('cursorDot');
-        const scanline = document.getElementById('scanline');
-        const eventLabel = document.getElementById('eventLabel');
-        const dotBuy = document.getElementById('dot-BUY');
-        const dotProfit = document.getElementById('dot-PROFIT');
-
-        if (!cursorDot || !scanline || !eventLabel || !dotBuy || !dotProfit) {
-          setTimeout(initGridBotAnimation, 100);
-          return;
-        }
-
-        // Deterministic data: dip below 40 (BUY), then rise above 80 (PROFIT)
-        function generateSmoothData(n = 200) {
-          const out = [];
-          const clamp01 = (v) => Math.max(0, Math.min(1, v));
-          const ease = (t) => t * t * (3 - 2 * t); // smoothstep
-
-          const n0 = Math.max(2, Math.floor(n * 0.25)); // down segment end
-          const n1 = Math.max(n0 + 2, Math.floor(n * 0.68)); // up segment end
-
-          // Segment A: 60 -> 32 (down)
-          for (let i = 0; i < n0; i++) {
-            const t = i / Math.max(1, (n0 - 1));
-            out.push(60 + (32 - 60) * t);
-          }
-          // Segment B: 32 -> 92 (up, crosses 40 then 80)
-          for (let i = n0; i < n1; i++) {
-            const t = (i - n0) / Math.max(1, (n1 - n0 - 1));
-            out.push(32 + (92 - 32) * ease(clamp01(t)));
-          }
-          // Segment C: 92 -> 78 (soft settle)
-          for (let i = n1; i < n; i++) {
-            const t = (i - n1) / Math.max(1, (n - n1 - 1));
-            out.push(92 + (78 - 92) * clamp01(t));
-          }
-
-          // Clamp to 0..100 to match chart scale
-          for (let i = 0; i < out.length; i++) {
-            out[i] = Math.max(0, Math.min(100, out[i]));
-          }
-          return out;
-        }
-
-        const dataY = generateSmoothData(200);
-        const labels = dataY.map((_, i) => i); // index labels
-
-        // Helper interpolation
-        const lerp = (a, b, t) => a + (b - a) * t;
-
-        // Find first crossing for level and direction ("up" | "down") starting from startIndex
-        function findCrossing(data, level, direction = 'up', startIndex = 0) {
-          for (let i = startIndex; i < data.length - 1; i++) {
-            const y0 = data[i];
-            const y1 = data[i + 1];
-            if (direction === 'up' && y0 < level && y1 >= level) {
-              const t = (level - y0) / (y1 - y0);
-              return { i0: i, i1: i + 1, t, level, direction, idxf: i + t };
-            }
-            if (direction === 'down' && y0 > level && y1 <= level) {
-              const t = (level - y0) / (y1 - y0);
-              return { i0: i, i1: i + 1, t, level, direction, idxf: i + t };
-            }
-          }
-          return null;
-        }
-
-        // Prepare BUY/PROFIT events based on crossings
-        const eventsPlan = [
-          { name: 'BUY', level: 40, direction: 'up', shown: false },
-          { name: 'PROFIT', level: 80, direction: 'up', shown: false }
-        ];
-        let startIdx = 0;
-        for (const ev of eventsPlan) {
-          const cross = findCrossing(dataY, ev.level, ev.direction, startIdx);
-          if (cross) {
-            ev.cross = cross;
-            ev.progress = cross.idxf / (dataY.length - 1);
-            startIdx = Math.ceil(cross.idxf) + 1;
-          } else {
-            ev.cross = null;
-            ev.progress = Infinity;
-          }
-        }
-
-        // Sweep clipping plugin
-        const sweepClip = {
-          id: 'sweepClip',
-          beforeDatasetsDraw(chart) {
-            const { ctx, chartArea } = chart;
-            if (!chartArea) return;
-            const p = chart.$progress ?? 0;
-            chart.$didClip = true;
-            ctx.save();
-            ctx.beginPath();
-            ctx.rect(
-              chartArea.left,
-              chartArea.top,
-              Math.max(0.0001, chartArea.width * p),
-              chartArea.height
-            );
-            ctx.clip();
-          },
-          afterDatasetsDraw(chart) {
-            if (chart.$didClip) {
-              chart.ctx.restore();
-              chart.$didClip = false;
-            }
-          }
-        };
-
-        // Canvas gradient refresh on resize
-        const gradientFill = {
-          id: 'gradientFill',
-          resize(chart) {
-            const { ctx, chartArea } = chart;
-            if (!chartArea) return;
-            const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-            g.addColorStop(0, 'rgba(110,231,183,0.20)');
-            g.addColorStop(1, 'rgba(110,231,183,0.00)');
-            const ds = chart.data.datasets[0];
-            ds.backgroundColor = g;
-          }
-        };
-
-        const canvas = document.getElementById('gridBoxChart');
-        if (!canvas) return;
-        
-        const ctx = canvas.getContext('2d');
-
-        const chart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels,
-            datasets: [
-              {
-                data: dataY,
-                borderColor: 'rgba(110,231,183,0.85)',
-                borderWidth: 1.5,
-                pointRadius: 0,
-                tension: 0.42,
-                cubicInterpolationMode: 'monotone',
-                fill: {
-                  target: 'origin',
-                  above: 'rgba(110,231,183,0.05)'
-                }
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: false,
-            interaction: { mode: 'index', intersect: false },
-            plugins: {
-              legend: { display: false },
-              tooltip: { enabled: false }
-            },
-            scales: {
-              x: {
-                display: false,
-                min: 0,
-                max: labels.length - 1
-              },
-              y: {
-                display: false,
-                min: 0,
-                max: 100
-              }
-            },
-            layout: { padding: 0 },
-            elements: {
-              line: {
-                capBezierPoints: true
-              }
-            }
-          },
-          plugins: [sweepClip, gradientFill]
-        });
-
-        // Animation loop state
-        const DURATION = 5000;
-        let rafId = null;
-        let startTime = null;
-        let running = false;
-
-        // Utility to position cursor and scanline
-        function positionCursor(progress) {
-          const xScale = chart.scales.x;
-          const yScale = chart.scales.y;
-          const maxIndex = dataY.length - 1;
-          const idxf = Math.min(maxIndex, Math.max(0, progress * maxIndex));
-          const i0 = Math.floor(idxf);
-          const t = idxf - i0;
-          const i1 = Math.min(maxIndex, i0 + 1);
-          const y = lerp(dataY[i0], dataY[i1], t);
-          const x0 = xScale.getPixelForValue(i0);
-          const x1 = xScale.getPixelForValue(i1);
-          const xp = lerp(x0, x1, t);
-          const yp = yScale.getPixelForValue(y);
-
-          cursorDot.style.left = `${xp - 3}px`;
-          cursorDot.style.top = `${yp - 3}px`;
-          scanline.style.left = `${xp}px`;
-        }
-
-        // Event label handling (fade only) + dots
-        let labelTimeout = null;
-        function showEventLabel(name, xp, yp, placement = 'above') {
-          eventLabel.textContent = name;
-          const cardRect = gridCard.getBoundingClientRect();
-          const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-          const left = clamp(xp, 5, cardRect.width - 5);
-          let top = yp;
-          if (placement === 'above') top -= 8;
-          if (placement === 'below') top += 8;
-
-          eventLabel.style.left = `${left}px`;
-          eventLabel.style.top = `${top}px`;
-
-          eventLabel.classList.remove('opacity-0');
-          eventLabel.classList.add('opacity-100');
-
-          // Show the corresponding dot at the exact crossing point
-          const dotEl = name === 'BUY' ? dotBuy : name === 'PROFIT' ? dotProfit : null;
-          if (dotEl) {
-            dotEl.style.left = `${xp - 3}px`;
-            dotEl.style.top = `${yp - 3}px`;
-            dotEl.classList.remove('opacity-0');
-            dotEl.classList.add('opacity-100');
-          }
-
-          clearTimeout(labelTimeout);
-          labelTimeout = setTimeout(() => {
-            eventLabel.classList.add('opacity-0');
-            eventLabel.classList.remove('opacity-100');
-
-            if (dotEl) {
-              dotEl.classList.add('opacity-0');
-              dotEl.classList.remove('opacity-100');
-            }
-          }, 1100);
-        }
-
-        // Compute pixel for event crossing and schedule display
-        function checkEventTriggers(progress) {
-          const xScale = chart.scales.x;
-          const yScale = chart.scales.y;
-
-          for (const ev of eventsPlan) {
-            if (ev.shown || !ev.cross) continue;
-            if (progress >= ev.progress) {
-              const { i0, i1, t, level } = ev.cross;
-              const x0 = xScale.getPixelForValue(i0);
-              const x1 = xScale.getPixelForValue(i1);
-              const xp = lerp(x0, x1, t);
-              const yp = yScale.getPixelForValue(level);
-              const placement = ev.name === 'BUY' ? 'above' : 'below';
-              showEventLabel(ev.name, xp, yp, placement);
-              ev.shown = true;
-            }
-          }
-        }
-
-        // Reset events
-        function resetEvents() {
-          eventsPlan.forEach(e => (e.shown = false));
-          eventLabel.classList.add('opacity-0');
-          eventLabel.classList.remove('opacity-100');
-
-          // Hide dots and move them offscreen
-          [dotBuy, dotProfit].forEach(dot => {
-            dot.classList.add('opacity-0');
-            dot.classList.remove('opacity-100');
-            dot.style.left = `-9999px`;
-            dot.style.top = `-9999px`;
-          });
-        }
-
-        // Fade overlay helpers
-        function fadeCycleOverlay(show) {
-          if (cycleFade) {
-            if (show) {
-              cycleFade.classList.add('opacity-100');
-            } else {
-              cycleFade.classList.remove('opacity-100');
-            }
-          }
-        }
-
-        // Animation loop
-        function tick(now) {
-          if (!startTime) startTime = now;
-          const elapsed = now - startTime;
-          const p = Math.min(1, elapsed / DURATION);
-
-          chart.$progress = p;
-          chart.update('none');
-
-          positionCursor(p);
-          checkEventTriggers(p);
-
-          if (p < 1) {
-            rafId = requestAnimationFrame(tick);
-          } else {
-            fadeCycleOverlay(true);
-            setTimeout(() => {
-              fadeCycleOverlay(false);
-              restart();
-            }, 220);
-          }
-        }
-
-        function start() {
-          if (running) return;
-          running = true;
-          cursorDot.classList.remove('opacity-0');
-          scanline.classList.remove('opacity-0');
-          startTime = null;
-          rafId = requestAnimationFrame(tick);
-        }
-
-        function stop() {
-          running = false;
-          if (rafId) {
-            cancelAnimationFrame(rafId);
-            rafId = null;
-          }
-        }
-
-        function restart() {
-          stop();
-          chart.$progress = 0;
-          chart.update('none');
-          resetEvents();
-          start();
-        }
-
-        // Start animation
-        setTimeout(() => {
-          start();
-        }, 1000);
-
-        // Pause/resume on visibility change for efficiency
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            stop();
-          } else {
-            restart();
-          }
-        });
-
-        // Responsive: re-place cursor and refresh gradient after resize
-        window.addEventListener('resize', () => {
-          setTimeout(() => {
-            positionCursor(chart.$progress || 0);
-            chart.update('none');
-          }, 50);
-        });
-      }
-      
-      // Initialize when DOM is ready
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(initGridBotAnimation, 1000);
-      });
-
-      // Handle orientation changes
-      window.addEventListener('orientationchange', () => {
-        setTimeout(() => {
-          if (window.innerWidth <= 768) {
-            // Recreate mobile chart widgets after orientation change
-            if (currentMobileChartLayout) {
-              setMobileChartLayout(currentMobileChartLayout);
-            }
-          }
-        }, 100);
-      });
-
       // Chart Layout Management
       let currentChartLayout = 1;
       let chartWidgets = {};
@@ -8322,6 +5628,212 @@
       setTimeout(() => {
         showToast('Welcome to Nimbus Trading Platform with Strategies!');
       }, 2000);
+
+      // Initialize Looping Line Box Animation
+      (() => {
+        // Initialize all .llb blocks once (works in plain HTML and React)
+        const attrKey = 'data-llb-init';
+        const blocks = Array.from(document.querySelectorAll('.llb')).filter(b => !b.hasAttribute(attrKey));
+        if (!blocks.length) return;
+        blocks.forEach(init);
+
+        function init(root) {
+          root.setAttribute(attrKey, '1');
+
+          const canvas = root.querySelector('.llb-canvas');
+          const ctx = canvas.getContext('2d', { alpha: true });
+          const label = root.querySelector('.llb-label');
+
+          // HiDPI sizing
+          function fit() {
+            const r = window.devicePixelRatio || 1;
+            const { width: cssW, height: cssH } = root.getBoundingClientRect();
+            canvas.width = Math.max(1, Math.floor(cssW * r));
+            canvas.height = Math.max(1, Math.floor(cssH * r));
+            canvas.style.width = cssW + 'px';
+            canvas.style.height = cssH + 'px';
+            ctx.setTransform(r, 0, 0, r, 0, 0); // use CSS pixels for drawing
+          }
+
+          // Data generation (smooth dip then rise; crosses 40 and 80 on the way up)
+          function generate(n = 200) {
+            const out = [];
+            const clamp01 = v => Math.max(0, Math.min(1, v));
+            const smooth = t => t * t * (3 - 2 * t); // smoothstep
+            const n0 = Math.max(2, Math.floor(n * 0.25));
+            const n1 = Math.max(n0 + 2, Math.floor(n * 0.68));
+
+            for (let i=0;i<n0;i++){ const t=i/Math.max(1,n0-1); out.push(60 + (32-60)*t); }
+            for (let i=n0;i<n1;i++){ const t=(i-n0)/Math.max(1,n1-n0-1); out.push(32 + (92-32)*smooth(clamp01(t))); }
+            for (let i=n1;i<n;i++){ const t=(i-n1)/Math.max(1,n-n1-1); out.push(92 + (78-92)*clamp01(t)); }
+            return out.map(v => Math.max(0, Math.min(100, v)));
+          }
+
+          const dataY = generate(200);
+          const N = dataY.length;
+          const DURATION = 5000; // ms
+          let startTime = 0, rafId = 0;
+          let running = false;
+
+          // Find upward crossing of a level (first occurrence after start index)
+          function findCross(level, startIdx=0) {
+            for (let i = startIdx; i < N-1; i++) {
+              const a = dataY[i], b = dataY[i+1];
+              if (a < level && b >= level) {
+                const t = (level - a) / (b - a);
+                return { i0:i, i1:i+1, t, idxf: i + t };
+              }
+            }
+            return null;
+          }
+
+          const evBUY    = { name:'BUY',    level:40, cross: findCross(40, 0),  shown:false };
+          const evPROFIT = { name:'PROFIT', level:80, cross: findCross(80, (evBUY?.cross ? Math.ceil(evBUY.cross.idxf)+1 : 0)), shown:false };
+
+          // Render
+          function draw(progress) {
+            const { width: Wcss, height: Hcss } = root.getBoundingClientRect();
+            const W = Wcss, H = Hcss;
+            ctx.clearRect(0, 0, W, H);
+
+            // Build path up to sweepX
+            const maxIdx = (N - 1) * progress;
+            const iMax = Math.floor(maxIdx);
+            const tRem = maxIdx - iMax;
+
+            // Area gradient
+            const grad = ctx.createLinearGradient(0, 0, 0, H);
+            grad.addColorStop(0, 'rgba(110,231,183,0.30)');
+            grad.addColorStop(1, 'rgba(110,231,183,0.00)');
+
+            // Line
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(110,231,183,0.85)';
+            ctx.beginPath();
+            for (let i = 0; i <= iMax; i++) {
+              const x = mapX(i, W);
+              const y = mapY(dataY[i], H);
+              if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            }
+            // partial segment
+            if (iMax < N - 1) {
+              const x0 = mapX(iMax, W), y0 = mapY(dataY[iMax], H);
+              const x1 = mapX(iMax + 1, W), y1 = mapY(dataY[iMax + 1], W);
+              ctx.lineTo(lerp(x0, x1, tRem), lerp(y0, y1, tRem));
+            }
+            ctx.stroke();
+
+            // Area fill under curve
+            ctx.save();
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.moveTo(0, H);
+            for (let i = 0; i <= iMax; i++) {
+              const x = mapX(i, W);
+              const y = mapY(dataY[i], H);
+              ctx.lineTo(x, y);
+            }
+            if (iMax < N - 1) {
+              const x0 = mapX(iMax, W), y0 = mapY(dataY[iMax], H);
+              const x1 = mapX(iMax + 1, W), y1 = mapY(dataY[iMax + 1], H);
+              ctx.lineTo(lerp(x0, x1, tRem), lerp(y0, y1, tRem));
+            }
+            ctx.lineTo(W * progress, H);
+            ctx.closePath();
+            ctx.fill();
+
+            // Cursor dot + scanline
+            const { x: cx, y: cy } = posAtProgress(progress);
+            ctx.save();
+            // scanline
+            ctx.strokeStyle = 'rgba(110,231,183,0.30)';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke();
+            // cursor dot with ring
+            ctx.fillStyle = 'rgba(110,231,183,0.90)';
+            ctx.beginPath(); ctx.arc(cx, cy, 1.5, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = 'rgba(110,231,183,0.25)'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.stroke();
+            ctx.restore();
+          }
+
+          function mapX(i, W) { return (i / (N - 1)) * W; }
+          function mapY(val, H) { return H - (val / 100) * H; }
+          function lerp(a, b, t) { return a + (b - a) * t; }
+          function posAtProgress(p) {
+            const idxf = (N - 1) * p;
+            const i0 = Math.floor(idxf), i1 = Math.min(N - 1, i0 + 1), t = idxf - i0;
+            const y = lerp(dataY[i0], dataY[i1], t);
+            return { x: mapX(lerp(i0, i1, t), root.clientWidth), y: mapY(y, root.clientHeight) };
+          }
+
+          // Event labels (BUY at 40, PROFIT at 80)
+          function maybeShowEvent(ev, p) {
+            if (!ev || !ev.cross || ev.shown) return;
+            const trigger = ev.cross.idxf / (N - 1);
+            if (p + 1e-6 >= trigger) {
+              const x0 = mapX(ev.cross.i0, root.clientWidth);
+              const x1 = mapX(ev.cross.i1, root.clientWidth);
+              const yL = mapY(ev.level, root.clientHeight);
+              const xp = lerp(x0, x1, ev.cross.t);
+              showLabel(ev.name, xp, yL, ev.name === 'BUY' ? -12 : 12);
+              ev.shown = true;
+            }
+          }
+          let hideTimer = 0;
+          function showLabel(text, x, y, offsetY) {
+            clearTimeout(hideTimer);
+            label.textContent = text;
+            label.style.left = x + 'px';
+            label.style.top  = (y + offsetY) + 'px';
+            label.style.opacity = '1';
+            hideTimer = setTimeout(() => { label.style.opacity = '0'; }, 1100);
+          }
+          function resetEvents() {
+            evBUY && (evBUY.shown = false);
+            evPROFIT && (evPROFIT.shown = false);
+            label.style.opacity = '0';
+          }
+
+          // Animation loop
+          function tick(t) {
+            if (!startTime) startTime = t;
+            const elapsed = t - startTime;
+            const p = Math.min(1, elapsed / DURATION);
+
+            draw(p);
+            maybeShowEvent(evBUY, p);
+            maybeShowEvent(evPROFIT, p);
+
+            if (p < 1) {
+              rafId = requestAnimationFrame(tick);
+            } else {
+              // restart after short delay
+              setTimeout(restart, 220);
+            }
+          }
+
+          function start() {
+            if (running) return;
+            running = true;
+            startTime = 0;
+            rafId = requestAnimationFrame(tick);
+          }
+          function stop() { running = false; cancelAnimationFrame(rafId); }
+          function restart() { stop(); resetEvents(); start(); }
+
+          // Observe size & visibility
+          const ro = new ResizeObserver(() => { fit(); draw(0); });
+          ro.observe(root);
+
+          document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stop(); else restart();
+          });
+
+          // Kick off
+          fit(); draw(0); start();
+        }
+      })();
       
       // Fallback TradingView initialization
       setTimeout(() => {
