@@ -459,51 +459,6 @@
                   </div>
                 </div>
                 
-                <!-- Stop Limit Trading UI (shown when Stop Limit is selected) -->
-                <div id="stopLimitUI" class="mt-2 space-y-3 hidden">
-                  <!-- Price and Stop Price Row -->
-                  <div class="grid grid-cols-2 gap-2.5">
-                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Price</span>
-                      </div>
-                      <input id="stopLimitPriceInput" type="number" placeholder="Enter price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
-                    
-                    <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Price</span>
-                      </div>
-                      <input id="stopPriceInput" type="number" placeholder="Enter stop price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                    </div>
-                  </div>
-
-                  <!-- Amount Input -->
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Amount</span>
-                      <button id="stopLimitAmountToggleBtn" class="text-[12px] mono font-semibold text-white hover:text-emerald-300 transition-colors cursor-pointer" onclick="toggleStopLimitAmountDisplay()">
-                        <span id="stopLimitAmountDisplayValue">0.25</span> <span id="stopLimitAmountDisplayUnit">BTC</span>
-                      </button>
-                    </div>
-                    <input id="stopLimitAmountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
-                  </div>
-
-                  <!-- Amount Percentage Buttons -->
-                  <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
-                    <div class="flex items-center justify-between mb-2">
-                      <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Quick Amount</span>
-                    </div>
-                    <div class="flex justify-between gap-1">
-                      <button class="stopLimitPercentageBtn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="25">25%</button>
-                      <button class="stopLimitPercentageBtn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="50">50%</button>
-                      <button class="stopLimitPercentageBtn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="66">66%</button>
-                      <button class="stopLimitPercentageBtn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="75">75%</button>
-                      <button class="stopLimitPercentageBtn text-[11px] font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer" data-percent="100">100%</button>
-                    </div>
-                  </div>
-                </div>
-                
                 <!-- Regular Trading Inputs (Price and Size inputs) -->
                 <div id="regularInputs" class="mt-2 space-y-3">
                 <div class="grid grid-cols-2 gap-2.5">
@@ -523,6 +478,16 @@
               </div>
                     <input id="amountInput" type="number" placeholder="1625" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
             </div>
+          </div>
+        </div>
+
+              <!-- Stop Price Input (shown only for Stop Limit orders) -->
+              <div id="stopPriceSection" class="hidden">
+                <div class="rounded-md ring-1 ring-white/10 bg-white/5 p-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] uppercase tracking-[0.02em] text-neutral-400">Stop Price</span>
+                  </div>
+                  <input id="stopPriceInput" type="number" placeholder="Enter stop price" class="mt-1 w-full bg-transparent outline-none text-[12px] mono font-semibold placeholder-neutral-600">
           </div>
         </div>
 
@@ -2219,6 +2184,7 @@
         // Show regular inputs, hide scale UI
         $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
+        $('#stopPriceSection').classList.add('hidden');
         // Show TP/SL toggles for Market
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
         tpSlToggleSection.style.display = 'flex';
@@ -2240,6 +2206,7 @@
         // Show regular inputs, hide scale UI
         $('#regularInputs').classList.remove('hidden');
         $('#scaleUI').classList.add('hidden');
+        $('#stopPriceSection').classList.add('hidden');
         // Show TP/SL toggles for Limit
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
         tpSlToggleSection.style.display = 'flex';
@@ -2269,21 +2236,18 @@
         appState.proType = b.dataset.pro;
         $('#orderPro span:first-child').textContent = appState.proType;
         
-        // Show/hide appropriate UI based on Pro type
+        // Show/hide Scale UI vs Regular Inputs
         const scaleUI = $('#scaleUI');
-        const stopLimitUI = $('#stopLimitUI');
         const regularInputs = $('#regularInputs');
         const tpSlToggleSection = $('#tpSlToggle').parentElement;
         const buySellToggle = $('#buySellToggle');
         const placeOrderBtn = $('#placeOrder');
-        
-        // Hide all UIs first
-        scaleUI.classList.add('hidden');
-        stopLimitUI.classList.add('hidden');
-        regularInputs.classList.add('hidden');
+        const stopPriceSection = $('#stopPriceSection');
         
         if (appState.proType === 'Scale') {
           scaleUI.classList.remove('hidden');
+          regularInputs.classList.add('hidden');
+          stopPriceSection.classList.add('hidden');
           // TP/SL not available for Scale
           tpSlToggleSection.style.display = 'none';
           // Hide Buy/Sell toggle for Scale
@@ -2291,7 +2255,9 @@
           // Change button text to "Place Order"
           placeOrderBtn.querySelector('span').textContent = 'Place Order';
         } else if (appState.proType === 'Stop Limit') {
-          stopLimitUI.classList.remove('hidden');
+          scaleUI.classList.add('hidden');
+          regularInputs.classList.remove('hidden');
+          stopPriceSection.classList.remove('hidden');
           // TP/SL not available for Stop Limit
           tpSlToggleSection.style.display = 'none';
           // Show Buy/Sell toggle for Stop Limit
@@ -2299,7 +2265,9 @@
           // Restore original button text based on current side
           placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
         } else {
+          scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
+          stopPriceSection.classList.add('hidden');
           // TP/SL not available for Pro options (Stop Market, TWAP)
           tpSlToggleSection.style.display = 'none';
           // Show Buy/Sell toggle for other Pro options
@@ -2518,34 +2486,6 @@
           syncPercent(percent);
         });
       });
-
-      // Stop Limit Percentage button clicks
-      document.querySelectorAll('.stopLimitPercentageBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const percent = parseInt(btn.dataset.percent);
-          const stopLimitAmountInput = document.getElementById('stopLimitAmountInput');
-          
-          // Calculate amount based on percentage of available balance
-          // For now, using a simple calculation - can be enhanced with actual balance
-          const maxAmount = stopLimitAmountDisplayMode === 'USDT' ? 10000 : 1; // Example max amounts
-          const calculatedAmount = (maxAmount * percent) / 100;
-          
-          stopLimitAmountInput.value = stopLimitAmountDisplayMode === 'USDT' 
-            ? calculatedAmount.toFixed(0) 
-            : calculatedAmount.toFixed(6);
-          
-          updateStopLimitAmountDisplay();
-          updateSummary();
-          
-          // Update button styles
-          document.querySelectorAll('.stopLimitPercentageBtn').forEach(b => {
-            b.classList.remove('text-emerald-400', 'font-semibold');
-            b.classList.add('text-neutral-400');
-          });
-          btn.classList.remove('text-neutral-400');
-          btn.classList.add('text-emerald-400', 'font-semibold');
-        });
-      });
       
       // Scale UI functionality
       const scaleSlider = $('#scaleSlider');
@@ -2663,40 +2603,6 @@
         updateScaleAmountDisplay();
         updateSummary();
       };
-
-      // Stop Limit Amount toggle functionality
-      let stopLimitAmountDisplayMode = 'USDT'; // Current input mode: 'USDT' or 'BTC'
-      
-      window.toggleStopLimitAmountDisplay = function() {
-        const stopLimitAmountDisplayValue = document.getElementById('stopLimitAmountDisplayValue');
-        const stopLimitAmountDisplayUnit = document.getElementById('stopLimitAmountDisplayUnit');
-        const stopLimitAmountInput = document.getElementById('stopLimitAmountInput');
-        
-        const price = currentPrice() || 65000; // Get current price
-        const currentInputValue = parseFloat(stopLimitAmountInput.value) || 0;
-        
-        if (stopLimitAmountDisplayMode === 'USDT') {
-          // Switch to BTC input mode
-          stopLimitAmountDisplayMode = 'BTC';
-          
-          // Convert current USDT input to BTC
-          const btcAmount = currentInputValue / price;
-          stopLimitAmountInput.value = btcAmount ? btcAmount.toFixed(6) : '';
-          stopLimitAmountInput.placeholder = '0.25';
-          
-        } else {
-          // Switch to USDT input mode
-          stopLimitAmountDisplayMode = 'USDT';
-          
-          // Convert current BTC input to USDT
-          const usdtAmount = currentInputValue * price;
-          stopLimitAmountInput.value = usdtAmount ? usdtAmount.toFixed(0) : '';
-          stopLimitAmountInput.placeholder = '1625';
-        }
-        
-        updateStopLimitAmountDisplay();
-        updateSummary();
-      };
       
       function updateAmountDisplay() {
         const amountDisplayValue = document.getElementById('amountDisplayValue');
@@ -2729,23 +2635,6 @@
           // Input is BTC, display shows USDT equivalent
           const usdtAmount = inputValue * price;
           scaleAmountDisplayValue.textContent = usdtAmount ? usdtAmount.toFixed(0) : '0';
-        }
-      }
-
-      function updateStopLimitAmountDisplay() {
-        const stopLimitAmountDisplayValue = document.getElementById('stopLimitAmountDisplayValue');
-        const stopLimitAmountInput = document.getElementById('stopLimitAmountInput');
-        const price = currentPrice() || 65000;
-        const inputValue = parseFloat(stopLimitAmountInput.value) || 0;
-        
-        if (stopLimitAmountDisplayMode === 'USDT') {
-          // Input is USDT, display shows BTC equivalent
-          const btcAmount = inputValue / price;
-          stopLimitAmountDisplayValue.textContent = btcAmount ? btcAmount.toFixed(4) : '0';
-        } else {
-          // Input is BTC, display shows USDT equivalent
-          const usdtAmount = inputValue * price;
-          stopLimitAmountDisplayValue.textContent = usdtAmount ? usdtAmount.toFixed(0) : '0';
         }
       }
 
