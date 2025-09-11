@@ -294,8 +294,8 @@
             <div class="flex items-center gap-3">
               <!-- Mode Switch -->
                <div class="flex w-full">
-                 <button id="tabTrade" class="flex-1 text-center py-1.5 text-[12px] font-medium tracking-tight text-white border-b-2 border-white transition-all duration-200">Trade</button>
-                 <button id="tabStrategies" class="flex-1 text-center py-1.5 text-[12px] font-medium tracking-tight text-neutral-400 border-b-2 border-transparent hover:text-neutral-300 transition-all duration-200">Strategies</button>
+                 <button id="tabTrade" class="flex-1 text-center py-1.5 text-[12px] font-medium tracking-tight text-white transition-all duration-200">Trade</button>
+                 <button id="tabStrategies" class="flex-1 text-center py-1.5 text-[12px] font-medium tracking-tight text-neutral-400 hover:text-neutral-300 transition-all duration-200">Strategies</button>
               </div>
               
               <!-- Spacer to push elements to the right -->
@@ -2147,10 +2147,10 @@
         strategiesMode.classList.add('hidden');
         gridSetup.classList.add('hidden');
         // Update tab styling
-        tabTrade.classList.remove('text-neutral-400', 'border-transparent');
-        tabTrade.classList.add('text-white', 'border-white');
-        tabStrategies.classList.remove('text-white', 'border-white');
-        tabStrategies.classList.add('text-neutral-400', 'border-transparent');
+        tabTrade.classList.remove('text-neutral-400');
+        tabTrade.classList.add('text-white');
+        tabStrategies.classList.remove('text-white');
+        tabStrategies.classList.add('text-neutral-400');
       });
       
       $('#tabStrategies').addEventListener('click', () => {
@@ -2159,10 +2159,10 @@
         tradeMode.classList.add('hidden');
         gridSetup.classList.add('hidden');
         // Update tab styling
-        tabStrategies.classList.remove('text-neutral-400', 'border-transparent');
-        tabStrategies.classList.add('text-white', 'border-white');
-        tabTrade.classList.remove('text-white', 'border-white');
-        tabTrade.classList.add('text-neutral-400', 'border-transparent');
+        tabStrategies.classList.remove('text-neutral-400');
+        tabStrategies.classList.add('text-white');
+        tabTrade.classList.remove('text-white');
+        tabTrade.classList.add('text-neutral-400');
       });
 
       // Asset is fixed to ETH (dropdown removed)
