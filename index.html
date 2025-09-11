@@ -2264,11 +2264,21 @@
           buySellToggle.style.display = 'block';
           // Restore original button text based on current side
           placeOrderBtn.querySelector('span').textContent = appState.side === 'long' ? 'Place Long' : 'Place Short';
+        } else if (appState.proType === 'Stop Market') {
+          scaleUI.classList.add('hidden');
+          regularInputs.classList.remove('hidden');
+          stopPriceSection.classList.remove('hidden');
+          // TP/SL not available for Stop Market
+          tpSlToggleSection.style.display = 'none';
+          // Hide Buy/Sell toggle for Stop Market
+          buySellToggle.style.display = 'none';
+          // Change button text to "Place Order"
+          placeOrderBtn.querySelector('span').textContent = 'Place Order';
         } else {
           scaleUI.classList.add('hidden');
           regularInputs.classList.remove('hidden');
           stopPriceSection.classList.add('hidden');
-          // TP/SL not available for Pro options (Stop Market, TWAP)
+          // TP/SL not available for Pro options (TWAP)
           tpSlToggleSection.style.display = 'none';
           // Show Buy/Sell toggle for other Pro options
           buySellToggle.style.display = 'block';
