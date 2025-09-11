@@ -939,8 +939,8 @@
           </button>
           
           <!-- Chart Layout Toggle -->
-          <div class="relative">
-            <button id="chartLayoutToggle" class="h-10 w-full flex items-center justify-center border-b border-white/5 hover:bg-white/5 hover:border-white/10 transition-all group" title="Chart Layout">
+          <div class="relative group">
+            <button id="chartLayoutToggle" class="h-10 w-full flex items-center justify-center border-b border-white/5 hover:bg-white/5 hover:border-white/10 transition-all" title="Chart Layout">
               <svg class="w-5 h-5 text-neutral-400/70 group-hover:text-neutral-200 transition-all drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <rect x="3" y="3" width="18" height="18" rx="2"/>
                 <path d="M12 3v18"/>
@@ -949,7 +949,7 @@
             </button>
             
             <!-- Chart Layout Dropdown -->
-            <div id="chartLayoutMenu" class="hidden absolute left-full top-0 ml-1 w-32 rounded-md glass-strong p-1 z-50">
+            <div id="chartLayoutMenu" class="opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute right-full top-0 mr-1 w-32 rounded-md glass-strong p-1 z-50 transition-all duration-200">
               <button data-layout="1" class="w-full text-left px-2 py-2 rounded-[6px] hover:bg-white/10 text-[12px] flex items-center gap-2 chart-layout-option active">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -5407,30 +5407,16 @@
       let currentChartLayout = 1;
       let chartWidgets = {};
 
-      // Toggle chart layout dropdown
-      const chartLayoutToggle = $('#chartLayoutToggle');
+      // Chart layout dropdown (now hover-based)
       const chartLayoutMenu = $('#chartLayoutMenu');
       
-      if (chartLayoutToggle && chartLayoutMenu) {
-        chartLayoutToggle.addEventListener('click', (e) => {
-          e.stopPropagation();
-          chartLayoutMenu.classList.toggle('hidden');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-          if (!chartLayoutToggle.contains(e.target) && !chartLayoutMenu.contains(e.target)) {
-            chartLayoutMenu.classList.add('hidden');
-          }
-        });
-
+      if (chartLayoutMenu) {
         // Handle layout selection
         chartLayoutMenu.addEventListener('click', (e) => {
           const layoutOption = e.target.closest('.chart-layout-option');
           if (layoutOption) {
             const layout = parseInt(layoutOption.dataset.layout);
             setChartLayout(layout);
-            chartLayoutMenu.classList.add('hidden');
           }
         });
       }
