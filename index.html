@@ -263,7 +263,7 @@
       min-height: 0;
       overflow: hidden;
     }
-
+    
     /* Chart Layout Styles */
     .chart-layout-option.active {
       background: rgba(110, 231, 183, 0.1);
@@ -277,6 +277,276 @@
     #chartLayoutMenu {
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ========================================
+       MOBILE RESPONSIVE DESIGN
+       ======================================== */
+    
+    /* Mobile Breakpoints */
+    @media (max-width: 768px) {
+      /* Hide desktop elements */
+      .desktop-only {
+        display: none !important;
+      }
+      
+      /* Mobile layout structure */
+      .mobile-layout {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+      
+      /* Mobile navigation */
+      .mobile-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+      }
+      
+      /* Mobile content area */
+      .mobile-content {
+        flex: 1;
+        padding-top: 60px;
+        padding-bottom: 80px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* Mobile bottom navigation */
+      .mobile-bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 8px;
+      }
+      
+      /* Mobile tab buttons */
+      .mobile-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        padding: 8px 4px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      
+      .mobile-tab.active {
+        background: rgba(110, 231, 183, 0.1);
+        color: #6EE7B7;
+      }
+      
+      .mobile-tab svg {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 4px;
+        stroke: currentColor;
+      }
+      
+      .mobile-tab span {
+        font-size: 10px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+      
+      /* Mobile chart container */
+      .mobile-chart-container {
+        flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      }
+      
+      /* Mobile trading sheet */
+      .mobile-trade-sheet {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px 20px 0 0;
+        z-index: 2000;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 90vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .mobile-trade-sheet.open {
+        transform: translateY(0);
+      }
+      
+      /* Mobile sheet header */
+      .mobile-sheet-header {
+        padding: 16px 20px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .mobile-sheet-handle {
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+      }
+      
+      /* Mobile portfolio sections */
+      .mobile-portfolio-section {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        margin: 8px 16px;
+        overflow: hidden;
+      }
+      
+      .mobile-section-header {
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+      }
+      
+      .mobile-section-content {
+        padding: 16px;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      
+      /* Mobile swipe indicator */
+      .mobile-swipe-indicator {
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 100;
+      }
+      
+      .mobile-swipe-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transition: all 0.2s ease;
+      }
+      
+      .mobile-swipe-dot.active {
+        background: #6EE7B7;
+        transform: scale(1.2);
+      }
+      
+      /* Hide desktop layout on mobile */
+      .main-layout {
+        display: none;
+      }
+      
+      /* Mobile order tabs */
+      .mobile-order-tab {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      
+      .mobile-order-tab.active {
+        color: white;
+      }
+      
+      .mobile-order-slider {
+        background: rgba(110, 231, 183, 0.2);
+        border: 1px solid rgba(110, 231, 183, 0.3);
+      }
+      
+      /* Mobile side tabs */
+      .mobile-side-tab {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      
+      .mobile-side-tab.active {
+        color: white;
+      }
+      
+      .mobile-side-slider {
+        background: rgba(110, 231, 183, 0.2);
+        border: 1px solid rgba(110, 231, 183, 0.3);
+      }
+      
+      /* Mobile section animations */
+      .mobile-section-content.hidden {
+        display: none;
+      }
+      
+      .mobile-section-header svg {
+        transition: transform 0.2s ease;
+      }
+      
+      .mobile-section-header.expanded svg {
+        transform: rotate(180deg);
+      }
+    }
+    
+    /* Tablet adjustments */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .right-column {
+        width: 360px;
+        min-width: 320px;
+      }
+      
+      .token-list {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -1015,6 +1285,367 @@
         </div>
       </div>
     </main>
+  </div>
+
+  <!-- MOBILE LAYOUT (Visible only on mobile devices) -->
+  <div class="mobile-layout md:hidden">
+    <!-- Mobile Top Navigation -->
+    <nav class="mobile-nav">
+              <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
+          <span class="text-black font-bold text-sm">N</span>
+        </div>
+        <div>
+          <h1 class="text-white font-semibold text-lg">Nimbus</h1>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <!-- Mobile chart layout toggle -->
+        <button id="mobileChartToggle" class="w-10 h-10 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+          <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M12 3v18"/>
+            <path d="M3 12h18"/>
+                    </svg>
+        </button>
+        
+        <!-- Mobile menu -->
+        <button id="mobileMenuToggle" class="w-10 h-10 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+          <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 12h18"/>
+            <path d="M3 6h18"/>
+            <path d="M3 18h18"/>
+                    </svg>
+                  </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Content Area -->
+    <div class="mobile-content">
+      <!-- Mobile Chart Container -->
+      <div id="mobileChartContainer" class="mobile-chart-container">
+        <!-- Single Chart View -->
+        <div id="mobileSingleChart" class="flex-1 relative">
+          <div id="mobile_tradingview_widget" class="w-full h-full"></div>
+          
+          <!-- Mobile Chart Controls -->
+          <div class="absolute top-4 right-4 flex gap-2 z-10">
+            <button class="w-8 h-8 rounded-lg bg-black/50 backdrop-blur-sm flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M15 3h6v6"/>
+                <path d="M9 21H3v-6"/>
+                <path d="M21 3l-7 7"/>
+                <path d="M3 21l7-7"/>
+              </svg>
+                </button>
+      </div>
+    </div>
+        
+        <!-- Two Charts View -->
+        <div id="mobileTwoCharts" class="hidden flex-1 flex flex-col gap-2 p-2">
+          <div id="mobile_chart_1" class="flex-1 rounded-lg overflow-hidden"></div>
+          <div id="mobile_chart_2" class="flex-1 rounded-lg overflow-hidden"></div>
+  </div>
+        
+        <!-- Four Charts View -->
+        <div id="mobileFourCharts" class="hidden flex-1 grid grid-cols-2 grid-rows-2 gap-2 p-2">
+          <div id="mobile_chart_3" class="rounded-lg overflow-hidden"></div>
+          <div id="mobile_chart_4" class="rounded-lg overflow-hidden"></div>
+          <div id="mobile_chart_5" class="rounded-lg overflow-hidden"></div>
+          <div id="mobile_chart_6" class="rounded-lg overflow-hidden"></div>
+        </div>
+      </div>
+
+      <!-- Mobile Swipe Indicators -->
+      <div class="mobile-swipe-indicator">
+        <div class="mobile-swipe-dot active"></div>
+        <div class="mobile-swipe-dot"></div>
+        <div class="mobile-swipe-dot"></div>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+      <button class="mobile-tab active" data-mobile-tab="charts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 3v18h18"/>
+          <path d="M7 16l4-4 2 2 6-6"/>
+        </svg>
+        <span>Charts</span>
+      </button>
+      
+      <button class="mobile-tab" data-mobile-tab="trade">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        <span>Trade</span>
+      </button>
+      
+      <button class="mobile-tab" data-mobile-tab="portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M9 9h6v6H9z"/>
+        </svg>
+        <span>Portfolio</span>
+      </button>
+      
+      <button class="mobile-tab" data-mobile-tab="orders">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 6h18"/>
+          <path d="M3 12h12"/>
+          <path d="M3 18h18"/>
+        </svg>
+        <span>Orders</span>
+      </button>
+      
+      <button class="mobile-tab" data-mobile-tab="more">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="1"/>
+          <circle cx="19" cy="12" r="1"/>
+          <circle cx="5" cy="12" r="1"/>
+        </svg>
+        <span>More</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile Trading Sheet -->
+  <div id="mobileTradeSheet" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Trade ETH/USDT</h2>
+      <button id="closeMobileTradeSheet" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+      <!-- Mobile Price Display -->
+      <div class="text-center py-4">
+        <div class="text-2xl font-bold text-white mono">$2,650.45</div>
+        <div class="text-emerald-400 text-sm">+1.8% (+$46.82)</div>
+      </div>
+      
+      <!-- Mobile Order Type Tabs -->
+      <div class="relative grid grid-cols-3 rounded-lg ring-1 ring-white/10 bg-white/5 p-1">
+        <button class="mobile-order-tab active" data-order="market">
+          <span class="text-xs font-medium">Market</span>
+        </button>
+        <button class="mobile-order-tab" data-order="limit">
+          <span class="text-xs font-medium">Limit</span>
+        </button>
+        <button class="mobile-order-tab" data-order="pro">
+          <span class="text-xs font-medium">Pro</span>
+        </button>
+        <div class="mobile-order-slider absolute top-1 bottom-1 left-1 w-[calc(33.333%-4px)] rounded-md bg-white/10 transition-all duration-200"></div>
+      </div>
+      
+      <!-- Mobile Buy/Sell Toggle -->
+      <div class="relative grid grid-cols-2 rounded-lg ring-1 ring-white/10 bg-white/5 p-1">
+        <button class="mobile-side-tab active" data-side="buy">
+          <span class="text-xs font-medium text-emerald-400">Buy</span>
+        </button>
+        <button class="mobile-side-tab" data-side="sell">
+          <span class="text-xs font-medium text-neutral-400">Sell</span>
+        </button>
+        <div class="mobile-side-slider absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-emerald-500/20 transition-all duration-200"></div>
+      </div>
+      
+      <!-- Mobile Trading Inputs -->
+      <div class="space-y-3">
+        <!-- Amount Input -->
+        <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs uppercase tracking-wider text-neutral-400">Amount</span>
+            <button class="text-xs text-emerald-400 font-mono">0.25 ETH</button>
+          </div>
+          <input type="number" placeholder="0.0" class="w-full bg-transparent outline-none text-lg font-mono text-white placeholder-neutral-500">
+        </div>
+        
+        <!-- Price Input (for limit orders) -->
+        <div class="rounded-lg ring-1 ring-white/10 bg-white/5 p-3 opacity-50">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs uppercase tracking-wider text-neutral-400">Price</span>
+            <span class="text-xs text-neutral-500">Market</span>
+          </div>
+          <input type="number" placeholder="Market" disabled class="w-full bg-transparent outline-none text-lg font-mono text-white placeholder-neutral-500">
+        </div>
+        
+        <!-- Mobile Percentage Slider -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs uppercase tracking-wider text-neutral-400">Position Size</span>
+            <span class="text-xs text-neutral-400">0%</span>
+          </div>
+          
+          <div class="relative">
+            <div class="h-2 rounded-full ring-1 ring-white/10 bg-white/5 relative overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full transition-all duration-200" style="width: 0%"></div>
+              <div class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full ring-1 ring-white/20 bg-white/90 transition-all duration-200 shadow-lg" style="left: 0%"></div>
+            </div>
+            <input type="range" min="0" max="100" value="0" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+          </div>
+          
+          <!-- Quick percentage buttons -->
+          <div class="flex justify-between gap-2 mt-3">
+            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">25%</button>
+            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">50%</button>
+            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">75%</button>
+            <button class="flex-1 py-2 px-3 rounded-lg ring-1 ring-white/10 bg-white/5 text-xs font-medium text-neutral-400 hover:text-white transition-colors">Max</button>
+          </div>
+        </div>
+        
+        <!-- Available Balance -->
+        <div class="flex justify-between text-xs">
+          <span class="text-neutral-400">Available:</span>
+          <span class="text-emerald-200 font-mono">2,829.23 USDT</span>
+        </div>
+        
+        <!-- Mobile Trade Button -->
+        <button class="w-full py-4 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-black font-semibold text-lg transition-all hover:from-emerald-400 hover:to-emerald-500 active:scale-[0.98]">
+          Buy ETH
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Portfolio View -->
+  <div id="mobilePortfolioView" class="mobile-trade-sheet">
+    <div class="mobile-sheet-handle"></div>
+    
+    <div class="mobile-sheet-header">
+      <h2 class="text-lg font-semibold text-white">Portfolio</h2>
+      <button id="closeMobilePortfolio" class="w-8 h-8 rounded-lg hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-5 h-5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto">
+      <!-- Portfolio Summary -->
+      <div class="p-4 border-b border-white/10">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-white mono">$12,458.92</div>
+          <div class="text-emerald-400 text-sm">+2.4% (+$291.45) Today</div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mt-4">
+          <div class="text-center">
+            <div class="text-xs text-neutral-400 uppercase tracking-wider">Total Balance</div>
+            <div class="text-lg font-semibold text-white mono">$12,458.92</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xs text-neutral-400 uppercase tracking-wider">Available</div>
+            <div class="text-lg font-semibold text-white mono">$2,829.23</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile Portfolio Sections -->
+      <div class="mobile-portfolio-section">
+        <div class="mobile-section-header" onclick="toggleMobileSection('balances')">
+          <span class="text-sm font-medium text-white">Balances</span>
+          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </div>
+        <div class="mobile-section-content" id="mobileBalancesContent">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                  <span class="text-xs font-bold text-white">₿</span>
+                </div>
+                <div>
+                  <div class="text-sm font-medium text-white">Bitcoin</div>
+                  <div class="text-xs text-neutral-400">BTC</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium text-white mono">0.2845</div>
+                <div class="text-xs text-neutral-400 mono">$12,458.92</div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between p-3 rounded-lg bg-white/5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                  <span class="text-xs font-bold text-white">Ξ</span>
+                </div>
+                <div>
+                  <div class="text-sm font-medium text-white">Ethereum</div>
+                  <div class="text-xs text-neutral-400">ETH</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium text-white mono">1.0650</div>
+                <div class="text-xs text-neutral-400 mono">$2,829.23</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mobile-portfolio-section">
+        <div class="mobile-section-header" onclick="toggleMobileSection('positions')">
+          <span class="text-sm font-medium text-white">Open Positions</span>
+          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </div>
+        <div class="mobile-section-content hidden" id="mobilePositionsContent">
+          <div class="text-center py-8 text-neutral-400">
+            <svg class="w-12 h-12 mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 12h8"/>
+            </svg>
+            <div class="text-sm">No open positions</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mobile-portfolio-section">
+        <div class="mobile-section-header" onclick="toggleMobileSection('orders')">
+          <span class="text-sm font-medium text-white">Open Orders</span>
+          <svg class="w-4 h-4 text-neutral-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </div>
+        <div class="mobile-section-content hidden" id="mobileOrdersContent">
+          <div class="space-y-3">
+            <div class="p-3 rounded-lg bg-white/5 border-l-2 border-emerald-500">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-emerald-400 font-medium uppercase">Buy Limit</span>
+                <span class="text-xs text-neutral-400">ETH/USDT</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="text-sm text-white mono">0.5000 ETH</div>
+                <div class="text-sm text-neutral-400 mono">@ $2,600</div>
+              </div>
+            </div>
+            
+            <div class="p-3 rounded-lg bg-white/5 border-l-2 border-red-500">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-red-400 font-medium uppercase">Sell Limit</span>
+                <span class="text-xs text-neutral-400">BTC/USDT</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="text-sm text-white mono">0.1000 BTC</div>
+                <div class="text-sm text-neutral-400 mono">@ $44,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
     <!-- Portfolio Section Template (to be moved via JavaScript) -->
@@ -5409,6 +6040,284 @@
       };
 
       $('#openMobileTrade').addEventListener('click', () => toggleMobileTradeSheet(true));
+
+      // Mobile functionality
+      let currentMobileTab = 'charts';
+      let currentMobileChartLayout = 1;
+      let mobileChartWidgets = {};
+
+      // Mobile bottom navigation
+      document.querySelectorAll('.mobile-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabName = tab.dataset.mobileTab;
+          switchMobileTab(tabName);
+        });
+      });
+
+      function switchMobileTab(tabName) {
+        if (tabName === currentMobileTab) return;
+
+        // Update active tab
+        document.querySelectorAll('.mobile-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        document.querySelector(`[data-mobile-tab="${tabName}"]`).classList.add('active');
+
+        // Handle tab content
+        switch (tabName) {
+          case 'charts':
+            // Show charts view (already visible)
+            closeMobileSheets();
+            break;
+          case 'trade':
+            openMobileTradeSheet();
+            break;
+          case 'portfolio':
+            openMobilePortfolio();
+            break;
+          case 'orders':
+            // Could open orders sheet
+            closeMobileSheets();
+            break;
+          case 'more':
+            // Could open more options
+            closeMobileSheets();
+            break;
+        }
+
+        currentMobileTab = tabName;
+      }
+
+      // Mobile chart layout toggle
+      const mobileChartToggle = document.getElementById('mobileChartToggle');
+      if (mobileChartToggle) {
+        mobileChartToggle.addEventListener('click', () => {
+          cycleMobileChartLayout();
+        });
+      }
+
+      function cycleMobileChartLayout() {
+        const nextLayout = currentMobileChartLayout === 4 ? 1 : currentMobileChartLayout + 1;
+        setMobileChartLayout(nextLayout);
+      }
+
+      function setMobileChartLayout(layout) {
+        if (layout === currentMobileChartLayout) return;
+
+        // Hide all layouts
+        document.getElementById('mobileSingleChart').classList.add('hidden');
+        document.getElementById('mobileTwoCharts').classList.add('hidden');
+        document.getElementById('mobileFourCharts').classList.add('hidden');
+
+        // Update swipe indicators
+        document.querySelectorAll('.mobile-swipe-dot').forEach((dot, index) => {
+          dot.classList.remove('active');
+          if (index === layout - 1) {
+            dot.classList.add('active');
+          }
+        });
+
+        // Destroy existing mobile widgets
+        Object.keys(mobileChartWidgets).forEach(key => {
+          if (mobileChartWidgets[key]) {
+            try {
+              mobileChartWidgets[key].remove();
+              delete mobileChartWidgets[key];
+            } catch (e) {
+              console.log('Error removing mobile widget:', e);
+            }
+          }
+        });
+
+        currentMobileChartLayout = layout;
+
+        // Show appropriate layout and create widgets
+        switch (layout) {
+          case 1:
+            document.getElementById('mobileSingleChart').classList.remove('hidden');
+            createMobileChartWidget('mobile_tradingview_widget', 'BINANCE:BTCUSDT');
+            break;
+          
+          case 2:
+            document.getElementById('mobileTwoCharts').classList.remove('hidden');
+            createMobileChartWidget('mobile_chart_1', 'BINANCE:BTCUSDT');
+            createMobileChartWidget('mobile_chart_2', 'BINANCE:ETHUSDT');
+            break;
+          
+          case 4:
+            document.getElementById('mobileFourCharts').classList.remove('hidden');
+            createMobileChartWidget('mobile_chart_3', 'BINANCE:BTCUSDT');
+            createMobileChartWidget('mobile_chart_4', 'BINANCE:ETHUSDT');
+            createMobileChartWidget('mobile_chart_5', 'BINANCE:ADAUSDT');
+            createMobileChartWidget('mobile_chart_6', 'BINANCE:SOLUSDT');
+            break;
+        }
+      }
+
+      // Create mobile chart widget
+      function createMobileChartWidget(containerId, symbol) {
+        if (!window.TradingView) {
+          console.log('TradingView not loaded yet for mobile');
+          return;
+        }
+
+        try {
+          const widget = new TradingView.widget({
+            autosize: true,
+            symbol: symbol,
+            interval: '1H',
+            theme: 'dark',
+            container_id: containerId,
+            locale: 'en',
+            toolbar_bg: '#0a0a0a',
+            hide_side_toolbar: false,
+            allow_symbol_change: true,
+            hide_top_toolbar: false,
+            hide_legend: false,
+            studies_overrides: {},
+            disabled_features: [
+              'header_saveload', 'header_compare', 'header_screenshot',
+              'header_fullscreen_button'
+            ],
+            enabled_features: [
+              'header_symbol_search', 'header_resolutions', 'header_chart_type'
+            ],
+            overrides: {
+              "paneProperties.background": "#0a0a0a",
+              "paneProperties.backgroundType": "solid",
+              "scalesProperties.textColor": "#b0b0b0",
+              "scalesProperties.backgroundColor": "#111111",
+              "mainSeriesProperties.candleStyle.upColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.downColor": "#F87171",
+              "mainSeriesProperties.candleStyle.borderUpColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.borderDownColor": "#F87171",
+              "mainSeriesProperties.candleStyle.wickUpColor": "#6EE7B7",
+              "mainSeriesProperties.candleStyle.wickDownColor": "#F87171"
+            }
+          });
+
+          mobileChartWidgets[containerId] = widget;
+        } catch (error) {
+          console.error('Error creating mobile chart widget:', error);
+        }
+      }
+
+      // Mobile trading sheet functions
+      function openMobileTradeSheet() {
+        const sheet = document.getElementById('mobileTradeSheet');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobileTradeSheet() {
+        const sheet = document.getElementById('mobileTradeSheet');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Mobile portfolio functions
+      function openMobilePortfolio() {
+        const sheet = document.getElementById('mobilePortfolioView');
+        if (sheet) {
+          sheet.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeMobilePortfolio() {
+        const sheet = document.getElementById('mobilePortfolioView');
+        if (sheet) {
+          sheet.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      function closeMobileSheets() {
+        closeMobileTradeSheet();
+        closeMobilePortfolio();
+      }
+
+      // Mobile sheet close buttons
+      const closeMobileTradeSheetBtn = document.getElementById('closeMobileTradeSheet');
+      if (closeMobileTradeSheetBtn) {
+        closeMobileTradeSheetBtn.addEventListener('click', closeMobileTradeSheet);
+      }
+
+      const closeMobilePortfolioBtn = document.getElementById('closeMobilePortfolio');
+      if (closeMobilePortfolioBtn) {
+        closeMobilePortfolioBtn.addEventListener('click', closeMobilePortfolio);
+      }
+
+      // Mobile section toggle function
+      window.toggleMobileSection = function(sectionName) {
+        const content = document.getElementById(`mobile${sectionName.charAt(0).toUpperCase() + sectionName.slice(1)}Content`);
+        const header = content.parentElement.querySelector('.mobile-section-header');
+        
+        if (content.classList.contains('hidden')) {
+          content.classList.remove('hidden');
+          header.classList.add('expanded');
+        } else {
+          content.classList.add('hidden');
+          header.classList.remove('expanded');
+        }
+      };
+
+      // Mobile trading controls
+      document.querySelectorAll('.mobile-order-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const orderType = tab.dataset.order;
+          switchMobileOrderType(orderType);
+        });
+      });
+
+      document.querySelectorAll('.mobile-side-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const side = tab.dataset.side;
+          switchMobileSide(side);
+        });
+      });
+
+      function switchMobileOrderType(orderType) {
+        // Update active tab
+        document.querySelectorAll('.mobile-order-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        document.querySelector(`[data-order="${orderType}"]`).classList.add('active');
+
+        // Move slider
+        const slider = document.querySelector('.mobile-order-slider');
+        const index = orderType === 'market' ? 0 : orderType === 'limit' ? 1 : 2;
+        slider.style.left = `calc(${index * 33.333}% + 4px)`;
+      }
+
+      function switchMobileSide(side) {
+        // Update active tab
+        document.querySelectorAll('.mobile-side-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        document.querySelector(`[data-side="${side}"]`).classList.add('active');
+
+        // Move slider and update colors
+        const slider = document.querySelector('.mobile-side-slider');
+        if (side === 'buy') {
+          slider.style.left = 'calc(0% + 4px)';
+          slider.style.background = 'rgba(110, 231, 183, 0.2)';
+          slider.style.borderColor = 'rgba(110, 231, 183, 0.3)';
+        } else {
+          slider.style.left = 'calc(50% + 4px)';
+          slider.style.background = 'rgba(248, 113, 113, 0.2)';
+          slider.style.borderColor = 'rgba(248, 113, 113, 0.3)';
+        }
+      }
+
+      // Initialize mobile layout
+      if (window.innerWidth <= 768) {
+        setMobileChartLayout(1);
+      }
 
       // Chart Layout Management
       let currentChartLayout = 1;
