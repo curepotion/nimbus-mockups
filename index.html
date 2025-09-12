@@ -603,6 +603,15 @@
                       </span>
                       <span class="text-[12px] font-medium">TP / SL</span>
                   </button>
+                    
+                    <!-- TP / SL Settings Button -->
+                    <button id="tpSlSettingsBtn" onclick="openTpSlModal()" class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md ring-1 ring-white/10 bg-white/5 hover:bg-white/10 transition-colors text-[11px] text-neutral-300 hover:text-white">
+                      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                      </svg>
+                      <span>Settings</span>
+                    </button>
               </div>
 
                 <!-- TP / SL Grid -->
@@ -2187,6 +2196,178 @@
       </div>
   </div>
 
+  <!-- TP/SL Modal (Matching Leverage Modal Style) -->
+  <div id="tpSlModal" class="hidden fixed inset-0 z-[80] items-center justify-center">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-[3px]" data-close="tpsl"></div>
+    <div class="relative w-full max-w-sm mx-4 rounded-xl glass-strong shadow-elevated overflow-hidden">
+      
+      <!-- Header -->
+      <div class="flex items-center justify-between px-4 py-3 border-b border-white/10">
+        <div>
+          <div class="text-[14px] font-semibold text-white">Take Profit / Stop Loss</div>
+          <div id="tpSlContext" class="text-[11px] text-neutral-400">Set TP/SL for BTC positions</div>
+        </div>
+        <button class="h-7 w-7 inline-flex items-center justify-center rounded-md hover:bg-white/10 ring-1 ring-white/10 transition-colors" data-close="tpsl">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Content -->
+      <div class="px-4 py-4 space-y-4">
+        
+        <!-- Take Profit Section -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="text-[13px] font-semibold text-white">Take Profit</div>
+            <div class="flex items-center gap-2">
+              <button id="tpToggle" class="relative inline-flex h-4 w-7 items-center rounded-full bg-emerald-500 ring-1 ring-emerald-400/30 transition-colors">
+                <span id="tpKnob" class="absolute right-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-white transition-transform"></span>
+              </button>
+              <span class="text-[11px] text-emerald-300 font-medium">Enabled</span>
+            </div>
+          </div>
+          
+          <div id="tpFields" class="space-y-3">
+            <!-- TP Price Input -->
+            <div class="space-y-2">
+              <div class="text-[12px] font-medium text-neutral-300">TP Price</div>
+              <div class="relative">
+                <input id="tpPriceInput" type="number" placeholder="0.00" class="w-full px-3 py-2 rounded-md ring-1 ring-white/10 bg-white/5 text-[14px] mono font-semibold text-emerald-300 placeholder-neutral-600 focus:ring-emerald-400/50 focus:bg-white/10 transition-all outline-none">
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-neutral-400">USDT</div>
+              </div>
+            </div>
+            
+            <!-- TP Percentage -->
+            <div class="space-y-2">
+              <div class="text-[12px] font-medium text-neutral-300">TP Percentage</div>
+              <div class="flex items-center gap-2">
+                <div class="flex-1 relative">
+                  <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
+                    <div id="tpSliderProgress" class="h-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 rounded-sm transition-all duration-200" style="width: 20%"></div>
+                    <div id="tpSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: calc(20% - 10px)"></div>
+                  </div>
+                  <input id="tpRange" type="range" min="1" max="50" value="10" step="1" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                </div>
+                <div class="px-3 py-1.5 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm">
+                  <span id="tpPercentageLabel" class="text-[16px] font-bold mono text-emerald-300">10%</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- TP Quick Buttons -->
+            <div class="flex justify-between items-center px-1">
+              <button class="tp-quick-btn text-[10px] font-medium text-neutral-400 hover:text-emerald-300 transition-colors cursor-pointer" data-tp="5">5%</button>
+              <button class="tp-quick-btn text-[10px] font-medium text-neutral-400 hover:text-emerald-300 transition-colors cursor-pointer" data-tp="10">10%</button>
+              <button class="tp-quick-btn text-[10px] font-medium text-neutral-400 hover:text-emerald-300 transition-colors cursor-pointer" data-tp="20">20%</button>
+              <button class="tp-quick-btn text-[10px] font-medium text-neutral-400 hover:text-emerald-300 transition-colors cursor-pointer" data-tp="30">30%</button>
+              <button class="tp-quick-btn text-[10px] font-medium text-neutral-400 hover:text-emerald-300 transition-colors cursor-pointer" data-tp="50">50%</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Stop Loss Section -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="text-[13px] font-semibold text-white">Stop Loss</div>
+            <div class="flex items-center gap-2">
+              <button id="slToggle" class="relative inline-flex h-4 w-7 items-center rounded-full bg-white/10 ring-1 ring-white/10 transition-colors">
+                <span id="slKnob" class="absolute left-0.5 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-neutral-300 transition-transform"></span>
+              </button>
+              <span class="text-[11px] text-neutral-400 font-medium">Disabled</span>
+            </div>
+          </div>
+          
+          <div id="slFields" class="space-y-3 opacity-50 pointer-events-none">
+            <!-- SL Price Input -->
+            <div class="space-y-2">
+              <div class="text-[12px] font-medium text-neutral-300">SL Price</div>
+              <div class="relative">
+                <input id="slPriceInput" type="number" placeholder="0.00" class="w-full px-3 py-2 rounded-md ring-1 ring-white/10 bg-white/5 text-[14px] mono font-semibold text-red-300 placeholder-neutral-600 focus:ring-red-400/50 focus:bg-white/10 transition-all outline-none">
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-neutral-400">USDT</div>
+              </div>
+            </div>
+            
+            <!-- SL Percentage -->
+            <div class="space-y-2">
+              <div class="text-[12px] font-medium text-neutral-300">SL Percentage</div>
+              <div class="flex items-center gap-2">
+                <div class="flex-1 relative">
+                  <div class="h-2 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm relative overflow-hidden">
+                    <div id="slSliderProgress" class="h-full bg-gradient-to-r from-red-400 via-red-500 to-red-600 rounded-sm transition-all duration-200" style="width: 10%"></div>
+                    <div id="slSliderHandle" class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-md ring-1 ring-white/20 bg-white/90 backdrop-blur-sm cursor-pointer transition-all duration-200 shadow-lg" style="left: calc(10% - 10px)"></div>
+                  </div>
+                  <input id="slRange" type="range" min="1" max="20" value="5" step="1" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                </div>
+                <div class="px-3 py-1.5 rounded-md ring-1 ring-white/10 bg-white/5 backdrop-blur-sm">
+                  <span id="slPercentageLabel" class="text-[16px] font-bold mono text-red-300">5%</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- SL Quick Buttons -->
+            <div class="flex justify-between items-center px-1">
+              <button class="sl-quick-btn text-[10px] font-medium text-neutral-400 hover:text-red-300 transition-colors cursor-pointer" data-sl="2">2%</button>
+              <button class="sl-quick-btn text-[10px] font-medium text-neutral-400 hover:text-red-300 transition-colors cursor-pointer" data-sl="5">5%</button>
+              <button class="sl-quick-btn text-[10px] font-medium text-neutral-400 hover:text-red-300 transition-colors cursor-pointer" data-sl="10">10%</button>
+              <button class="sl-quick-btn text-[10px] font-medium text-neutral-400 hover:text-red-300 transition-colors cursor-pointer" data-sl="15">15%</button>
+              <button class="sl-quick-btn text-[10px] font-medium text-neutral-400 hover:text-red-300 transition-colors cursor-pointer" data-sl="20">20%</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Risk Information -->
+        <div class="space-y-2 rounded-md ring-1 ring-white/5 bg-white/5 p-3">
+          <div class="flex justify-between text-[11px]">
+            <span class="text-neutral-400">Current Price</span>
+            <span class="text-white mono" id="currentPriceValue">$65,432.10</span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-neutral-400">TP Price</span>
+            <span class="text-emerald-300 mono" id="tpPriceValue">$71,975.31</span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-neutral-400">SL Price</span>
+            <span class="text-red-300 mono" id="slPriceValue">$62,160.50</span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-neutral-400">Potential Profit</span>
+            <span class="text-emerald-300 mono" id="profitValue">+$6,543.21</span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-neutral-400">Potential Loss</span>
+            <span class="text-red-300 mono" id="lossValue">-$3,271.61</span>
+          </div>
+        </div>
+        
+        <!-- Warning -->
+        <div class="rounded-md ring-1 ring-orange-400/20 bg-orange-400/10 p-2">
+          <div class="flex gap-2 items-start">
+            <svg class="w-3.5 h-3.5 text-orange-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+            </svg>
+            <div>
+              <div class="text-[11px] font-medium text-orange-300">TP/SL Risk</div>
+              <div class="text-[10px] text-orange-200 mt-0.5 leading-relaxed">
+                TP/SL orders will be executed automatically when price targets are reached.
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Footer -->
+      <div class="px-4 py-3 border-t border-white/10">
+        <button id="tpSlApply" class="w-full py-2.5 rounded-md font-semibold text-[13px] text-emerald-900 transition-all duration-200" style="background: linear-gradient(135deg, #10B981, #34D399); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);">
+          Apply TP/SL Settings
+        </button>
+      </div>
+      
+      </div>
+  </div>
+
   <!-- Toast Container -->
   <div id="toastContainer" class="fixed inset-x-0 bottom-6 flex flex-col items-center gap-2 z-[90] pointer-events-none"></div>
 
@@ -3233,6 +3414,191 @@
         closeLev();
         showToast('Leverage set to ' + v + 'x');
         updateSummary();
+      });
+
+      // TP/SL Modal functionality
+      const tpSlModal = $('#tpSlModal');
+      const tpSliderProgress = $('#tpSliderProgress');
+      const tpSliderHandle = $('#tpSliderHandle');
+      const slSliderProgress = $('#slSliderProgress');
+      const slSliderHandle = $('#slSliderHandle');
+      
+      let tpEnabled = true;
+      let slEnabled = false;
+      let currentPrice = 65432.10; // Current BTC price
+      
+      // Open TP/SL modal function
+      window.openTpSlModal = function() {
+        tpSlModal.classList.remove('hidden');
+        tpSlModal.classList.add('flex');
+        updateTpSlCalculations();
+      };
+      
+      function closeTpSl() {
+        tpSlModal.classList.add('hidden');
+        tpSlModal.classList.remove('flex');
+      }
+      
+      $$('[data-close="tpsl"]').forEach(b => b.addEventListener('click', closeTpSl));
+      
+      // TP Toggle
+      $('#tpToggle').addEventListener('click', () => {
+        tpEnabled = !tpEnabled;
+        if (tpEnabled) {
+          $('#tpToggle').classList.add('bg-emerald-500', 'ring-emerald-400/30');
+          $('#tpToggle').classList.remove('bg-white/10', 'ring-white/10');
+          $('#tpKnob').classList.add('right-0.5');
+          $('#tpKnob').classList.remove('left-0.5');
+          $('#tpToggle').nextElementSibling.textContent = 'Enabled';
+          $('#tpToggle').nextElementSibling.classList.add('text-emerald-300');
+          $('#tpToggle').nextElementSibling.classList.remove('text-neutral-400');
+          $('#tpFields').classList.remove('opacity-50', 'pointer-events-none');
+        } else {
+          $('#tpToggle').classList.remove('bg-emerald-500', 'ring-emerald-400/30');
+          $('#tpToggle').classList.add('bg-white/10', 'ring-white/10');
+          $('#tpKnob').classList.remove('right-0.5');
+          $('#tpKnob').classList.add('left-0.5');
+          $('#tpToggle').nextElementSibling.textContent = 'Disabled';
+          $('#tpToggle').nextElementSibling.classList.remove('text-emerald-300');
+          $('#tpToggle').nextElementSibling.classList.add('text-neutral-400');
+          $('#tpFields').classList.add('opacity-50', 'pointer-events-none');
+        }
+        updateTpSlCalculations();
+      });
+      
+      // SL Toggle
+      $('#slToggle').addEventListener('click', () => {
+        slEnabled = !slEnabled;
+        if (slEnabled) {
+          $('#slToggle').classList.add('bg-emerald-500', 'ring-emerald-400/30');
+          $('#slToggle').classList.remove('bg-white/10', 'ring-white/10');
+          $('#slKnob').classList.add('right-0.5');
+          $('#slKnob').classList.remove('left-0.5');
+          $('#slToggle').nextElementSibling.textContent = 'Enabled';
+          $('#slToggle').nextElementSibling.classList.add('text-emerald-300');
+          $('#slToggle').nextElementSibling.classList.remove('text-neutral-400');
+          $('#slFields').classList.remove('opacity-50', 'pointer-events-none');
+        } else {
+          $('#slToggle').classList.remove('bg-emerald-500', 'ring-emerald-400/30');
+          $('#slToggle').classList.add('bg-white/10', 'ring-white/10');
+          $('#slKnob').classList.remove('right-0.5');
+          $('#slKnob').classList.add('left-0.5');
+          $('#slToggle').nextElementSibling.textContent = 'Disabled';
+          $('#slToggle').nextElementSibling.classList.remove('text-emerald-300');
+          $('#slToggle').nextElementSibling.classList.add('text-neutral-400');
+          $('#slFields').classList.add('opacity-50', 'pointer-events-none');
+        }
+        updateTpSlCalculations();
+      });
+      
+      // TP Slider
+      function updateTpSliderVisuals(val) {
+        const percentage = ((val - 1) / 49) * 100; // Scale 1-50 to 0-100%
+        tpSliderProgress.style.width = percentage + '%';
+        tpSliderHandle.style.left = `calc(${percentage}% - 10px)`;
+      }
+      
+      $('#tpRange').addEventListener('input', (e) => {
+        const v = e.target.value;
+        $('#tpPercentageLabel').textContent = v + '%';
+        updateTpSliderVisuals(v);
+        updateTpSlCalculations();
+      });
+      
+      // SL Slider
+      function updateSlSliderVisuals(val) {
+        const percentage = ((val - 1) / 19) * 100; // Scale 1-20 to 0-100%
+        slSliderProgress.style.width = percentage + '%';
+        slSliderHandle.style.left = `calc(${percentage}% - 10px)`;
+      }
+      
+      $('#slRange').addEventListener('input', (e) => {
+        const v = e.target.value;
+        $('#slPercentageLabel').textContent = v + '%';
+        updateSlSliderVisuals(v);
+        updateTpSlCalculations();
+      });
+      
+      // TP Quick buttons
+      document.querySelectorAll('.tp-quick-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tp = parseInt(btn.dataset.tp);
+          $('#tpRange').value = tp;
+          $('#tpPercentageLabel').textContent = tp + '%';
+          updateTpSliderVisuals(tp);
+          updateTpSlCalculations();
+          
+          // Update button states
+          document.querySelectorAll('.tp-quick-btn').forEach(b => {
+            b.classList.remove('text-emerald-300');
+            b.classList.add('text-neutral-400');
+          });
+          btn.classList.remove('text-neutral-400');
+          btn.classList.add('text-emerald-300');
+        });
+      });
+      
+      // SL Quick buttons
+      document.querySelectorAll('.sl-quick-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sl = parseInt(btn.dataset.sl);
+          $('#slRange').value = sl;
+          $('#slPercentageLabel').textContent = sl + '%';
+          updateSlSliderVisuals(sl);
+          updateTpSlCalculations();
+          
+          // Update button states
+          document.querySelectorAll('.sl-quick-btn').forEach(b => {
+            b.classList.remove('text-red-300');
+            b.classList.add('text-neutral-400');
+          });
+          btn.classList.remove('text-neutral-400');
+          btn.classList.add('text-red-300');
+        });
+      });
+      
+      // Update calculations
+      function updateTpSlCalculations() {
+        const tpPercentage = parseInt($('#tpRange').value);
+        const slPercentage = parseInt($('#slRange').value);
+        
+        const tpPrice = currentPrice * (1 + tpPercentage / 100);
+        const slPrice = currentPrice * (1 - slPercentage / 100);
+        
+        const profit = tpPrice - currentPrice;
+        const loss = currentPrice - slPrice;
+        
+        $('#currentPriceValue').textContent = `$${currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        $('#tpPriceValue').textContent = tpEnabled ? `$${tpPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}` : '--';
+        $('#slPriceValue').textContent = slEnabled ? `$${slPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}` : '--';
+        $('#profitValue').textContent = tpEnabled ? `+$${profit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}` : '--';
+        $('#lossValue').textContent = slEnabled ? `-$${loss.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}` : '--';
+        
+        // Update price inputs
+        $('#tpPriceInput').value = tpEnabled ? tpPrice.toFixed(2) : '';
+        $('#slPriceInput').value = slEnabled ? slPrice.toFixed(2) : '';
+      }
+      
+      // Apply TP/SL settings
+      $('#tpSlApply').addEventListener('click', () => {
+        const tpPrice = parseFloat($('#tpPriceInput').value) || 0;
+        const slPrice = parseFloat($('#slPriceInput').value) || 0;
+        const tpPercentage = parseInt($('#tpRange').value);
+        const slPercentage = parseInt($('#slRange').value);
+        
+        // Update the main TP/SL inputs in the trading panel
+        if (tpEnabled && tpPrice > 0) {
+          $('#tpInput').value = tpPrice.toFixed(2);
+          $('#tpGainUsdInput').value = (tpPrice - currentPrice).toFixed(2);
+        }
+        
+        if (slEnabled && slPrice > 0) {
+          $('#slInput').value = slPrice.toFixed(2);
+          $('#slLossUsdInput').value = (currentPrice - slPrice).toFixed(2);
+        }
+        
+        closeTpSl();
+        showToast(`TP/SL settings applied: TP ${tpEnabled ? tpPercentage + '%' : 'off'}, SL ${slEnabled ? slPercentage + '%' : 'off'}`);
       });
 
       // Strategies: open Grid setup
@@ -7036,16 +7402,16 @@
     }
 
     // Start - Initialize TradingView but keep token list empty
-    setTimeout(() => {
-      console.log('TradingView available:', !!window.TradingView);
-      console.log('Current tvWidget:', state.tvWidget);
-      if (window.TradingView && !state.tvWidget) {
-        console.log('Initializing TradingView...');
-        initTV('BINANCE:BTCUSDT');
-      } else {
-        console.log('TradingView not available or widget already exists');
-      }
-    }, 2000);
+      setTimeout(() => {
+        console.log('TradingView available:', !!window.TradingView);
+        console.log('Current tvWidget:', state.tvWidget);
+        if (window.TradingView && !state.tvWidget) {
+          console.log('Initializing TradingView...');
+          initTV('BINANCE:BTCUSDT');
+        } else {
+          console.log('TradingView not available or widget already exists');
+        }
+      }, 2000);
 
     
 
