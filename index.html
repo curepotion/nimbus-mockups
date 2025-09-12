@@ -7015,21 +7015,21 @@
       }
     }
 
-    // Start
-    bootstrap().then(()=> {
-      switchWS();
-      // Initialize TradingView chart after data is loaded
-      setTimeout(() => {
-        console.log('TradingView available:', !!window.TradingView);
-        console.log('Current tvWidget:', state.tvWidget);
-        if (window.TradingView && !state.tvWidget) {
-          console.log('Initializing TradingView...');
-          initTV('BINANCE:BTCUSDT');
-        } else {
-          console.log('TradingView not available or widget already exists');
-        }
-      }, 2000);
-    });
+    // Start - DISABLED to keep token list empty initially
+    // bootstrap().then(()=> {
+    //   switchWS();
+    //   // Initialize TradingView chart after data is loaded
+    //   setTimeout(() => {
+    //     console.log('TradingView available:', !!window.TradingView);
+    //     console.log('Current tvWidget:', state.tvWidget);
+    //     if (window.TradingView && !state.tvWidget) {
+    //       console.log('Initializing TradingView...');
+    //       initTV('BINANCE:BTCUSDT');
+    //     } else {
+    //       console.log('TradingView not available or widget already exists');
+    //     }
+    //   }, 2000);
+    // });
 
     
 
