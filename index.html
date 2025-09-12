@@ -6533,6 +6533,9 @@
 
     // Clear any existing tokens from state to start fresh
     state.allTokens = [];
+    
+    // Clear any old token data from localStorage to ensure clean start
+    localStorage.removeItem('nimbus-favorite-tokens');
 
     // Token Search Modal Functions
     window.openTokenSearchModal = function() {
