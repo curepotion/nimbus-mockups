@@ -6421,8 +6421,8 @@
       els.tokenList.innerHTML = '';
       state.rowMap.clear();
 
-      // Always show empty state when no tokens (favorites) exist
-      if (!arr.length || modalState.favorites.length === 0) {
+      // Show empty state when no tokens in the list
+      if (!arr.length) {
         els.emptyState.classList.remove('hidden');
         return;
       } else {
@@ -6531,11 +6531,21 @@
       selectedCategory: 'all'
     };
 
+    // Clear any existing tokens from state to start fresh
+    state.allTokens = [];
+
     // Token Search Modal Functions
     window.openTokenSearchModal = function() {
       document.getElementById('tokenSearchModal').classList.remove('hidden');
       document.getElementById('modalSearchInput').focus();
       showSearchState('empty');
+      
+      // Update search results to reflect current favorites state
+      modalState.searchResults = modalState.searchResults.map(t => ({
+        ...t,
+        isFavorite: state.allTokens.some(fav => fav.symbol === t.symbol)
+      }));
+      renderSearchResults();
     };
 
     window.closeTokenSearchModal = function() {
@@ -6606,7 +6616,7 @@
             exchange: symbol.exchange,
             tradingViewSymbol: symbol.symbol,
             category: category,
-            isFavorite: modalState.favorites.some(fav => fav.symbol === baseSymbol)
+            isFavorite: state.allTokens.some(fav => fav.symbol === baseSymbol)
           };
         });
 
@@ -6705,21 +6715,27 @@
     }
 
     window.addToFavorites = function(symbol, name, price, change) {
+      // Check if already added
+      if (state.allTokens.some(t => t.symbol === symbol)) {
+        return;
+      }
+
       const token = {
         symbol,
         name,
         price: price !== 'null' ? price : null,
         change: change !== 'null' ? change : null,
         image: `https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=80&q=60&auto=format&fit=crop`,
-        pair: `${symbol}USDT`
+        pair: `${symbol}USDT`,
+        rank: null // Add rank for consistency
       };
 
-      // Add to favorites
+      // Add to both favorites and main token list
       modalState.favorites.push(token);
-      localStorage.setItem('nimbus-favorite-tokens', JSON.stringify(modalState.favorites));
-      
-      // Update token list state
       state.allTokens.push(token);
+      
+      // Save to localStorage
+      localStorage.setItem('nimbus-favorite-tokens', JSON.stringify(modalState.favorites));
       
       // Update search results to show as added
       modalState.searchResults = modalState.searchResults.map(t => 
@@ -6732,11 +6748,19 @@
     };
 
     window.removeFavorite = function(symbol) {
+      // Remove from both favorites and main token list
       modalState.favorites = modalState.favorites.filter(fav => fav.symbol !== symbol);
+      state.allTokens = state.allTokens.filter(token => token.symbol !== symbol);
+      
+      // Save to localStorage
       localStorage.setItem('nimbus-favorite-tokens', JSON.stringify(modalState.favorites));
       
-      // Update main token list
-      state.allTokens = state.allTokens.filter(token => token.symbol !== symbol);
+      // Update search results to show as not added (if modal is open)
+      modalState.searchResults = modalState.searchResults.map(t => 
+        t.symbol === symbol ? { ...t, isFavorite: false } : t
+      );
+      
+      // Re-render main token list
       renderList(true);
     };
 
@@ -6779,15 +6803,12 @@
       const saved = localStorage.getItem('nimbus-favorite-tokens');
       if (saved) {
         modalState.favorites = JSON.parse(saved);
-        // Add favorites to main token list
-        modalState.favorites.forEach(token => {
-          if (!state.allTokens.some(t => t.symbol === token.symbol)) {
-            state.allTokens.push(token);
-          }
-        });
-        
-        renderList(true);
+        // Add favorites to main token list (they are the same thing)
+        state.allTokens = [...modalState.favorites];
       }
+      
+      // Always render the list (will show empty state if no tokens)
+      renderList(true);
     }
 
     // Initialize favorites on load
