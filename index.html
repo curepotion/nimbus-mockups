@@ -6564,67 +6564,55 @@
       showSearchState('searchLoading');
       
       try {
-        // Popular cryptocurrency symbols to display by default
-        const popularTokens = [
-          { symbol: 'BTC', name: 'Bitcoin', category: 'layer1' },
-          { symbol: 'ETH', name: 'Ethereum', category: 'layer1' },
-          { symbol: 'SOL', name: 'Solana', category: 'layer1' },
-          { symbol: 'BNB', name: 'BNB', category: 'layer1' },
-          { symbol: 'XRP', name: 'XRP', category: 'layer1' },
-          { symbol: 'ADA', name: 'Cardano', category: 'layer1' },
-          { symbol: 'DOGE', name: 'Dogecoin', category: 'meme' },
-          { symbol: 'AVAX', name: 'Avalanche', category: 'layer1' },
-          { symbol: 'SHIB', name: 'Shiba Inu', category: 'meme' },
-          { symbol: 'DOT', name: 'Polkadot', category: 'layer1' },
-          { symbol: 'LINK', name: 'Chainlink', category: 'defi' },
-          { symbol: 'MATIC', name: 'Polygon', category: 'layer1' },
-          { symbol: 'UNI', name: 'Uniswap', category: 'defi' },
-          { symbol: 'LTC', name: 'Litecoin', category: 'layer1' },
-          { symbol: 'ATOM', name: 'Cosmos', category: 'layer1' },
-          { symbol: 'NEAR', name: 'NEAR Protocol', category: 'layer1' },
-          { symbol: 'AAVE', name: 'Aave', category: 'defi' },
-          { symbol: 'FTM', name: 'Fantom', category: 'layer1' },
-          { symbol: 'ALGO', name: 'Algorand', category: 'layer1' },
-          { symbol: 'VET', name: 'VeChain', category: 'layer1' }
-        ];
+        // Fetch real cryptocurrency data from CoinGecko API
+        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch token data');
+        }
+        
+        const data = await response.json();
+        
+        // Process the real data and categorize tokens
+        const processedTokens = data.map(coin => {
+          // Extract symbol and categorize
+          const symbol = coin.symbol.toUpperCase();
+          let category = 'layer1';
+          
+          // Categorize based on coin data
+          const defiTokens = ['UNI', 'AAVE', 'COMP', 'MKR', 'CRV', 'SUSHI', 'LINK', 'SNX', 'YFI', '1INCH', 'BAL', 'RUNE'];
+          const memeTokens = ['DOGE', 'SHIB', 'PEPE', 'FLOKI', 'BONK', 'WIF', 'POPCAT', 'MEME', 'BABYDOGE'];
+          const layer1Tokens = ['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'AVAX', 'MATIC', 'ATOM', 'NEAR', 'FTM', 'ALGO', 'VET', 'XRP', 'LTC', 'BCH', 'TRX', 'XLM', 'HBAR', 'ICP', 'FIL'];
+          
+          if (defiTokens.includes(symbol)) category = 'defi';
+          else if (memeTokens.includes(symbol)) category = 'meme';
+          else if (layer1Tokens.includes(symbol)) category = 'layer1';
+          
+          return {
+            symbol: symbol,
+            name: coin.name,
+            price: coin.current_price,
+            change: coin.price_change_percentage_24h,
+            marketCap: coin.market_cap,
+            rank: coin.market_cap_rank,
+            image: coin.image,
+            category: category,
+            isFavorite: state.allTokens.some(fav => fav.symbol === symbol)
+          };
+        });
 
         // Filter by category if selected
-        let filteredTokens = popularTokens;
+        let filteredTokens = processedTokens;
         if (modalState.selectedCategory !== 'all') {
-          filteredTokens = popularTokens.filter(token => token.category === modalState.selectedCategory);
+          filteredTokens = processedTokens.filter(token => token.category === modalState.selectedCategory);
         }
 
-        // Add price data from Binance API
-        const resultsWithPrices = await Promise.all(
-          filteredTokens.map(async (token) => {
-            try {
-              const response = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${token.symbol}USDT`);
-              if (response.ok) {
-                const data = await response.json();
-                return {
-                  ...token,
-                  price: parseFloat(data.lastPrice),
-                  change: parseFloat(data.priceChangePercent),
-                  isFavorite: state.allTokens.some(fav => fav.symbol === token.symbol)
-                };
-              }
-            } catch (error) {
-              console.log(`Price not available for ${token.symbol}`);
-            }
-            return {
-              ...token,
-              price: null,
-              change: null,
-              isFavorite: state.allTokens.some(fav => fav.symbol === token.symbol)
-            };
-          })
-        );
-
-        modalState.searchResults = resultsWithPrices;
+        // Limit to top 50 for performance
+        modalState.searchResults = filteredTokens.slice(0, 50);
         renderSearchResults();
         showSearchState('results');
       } catch (error) {
-        console.error('Error loading popular tokens:', error);
+        console.error('Error loading token data:', error);
         showSearchState('searchNoResults');
       } finally {
         modalState.isLoading = false;
@@ -6642,47 +6630,58 @@
       showSearchState('searchLoading');
       
       try {
-        // Use TradingView Symbol Search API
-        const response = await fetch(`https://symbol-search.tradingview.com/symbol_search/?text=${encodeURIComponent(query)}&hl=1&exchange=&lang=en&search_type=&domain=production`);
+        // Use CoinGecko Search API for real token data
+        const searchResponse = await fetch(`https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(query)}`);
         
-        if (!response.ok) {
-          throw new Error('TradingView API request failed');
+        if (!searchResponse.ok) {
+          throw new Error('CoinGecko search API request failed');
         }
         
-        const data = await response.json();
+        const searchData = await searchResponse.json();
         
-        // Filter for crypto symbols and add category classification
-        let cryptoTokens = data.symbols.filter(symbol => {
-          const isCrypto = symbol.exchange && (
-            symbol.exchange.includes('BINANCE') || 
-            symbol.exchange.includes('COINBASE') ||
-            symbol.exchange.includes('CRYPTO') ||
-            symbol.symbol.includes('USDT') ||
-            symbol.symbol.includes('USD') ||
-            symbol.symbol.includes('BTC')
-          );
-          return isCrypto;
-        }).map(symbol => {
-          // Extract base symbol (remove USDT, USD suffixes)
-          const baseSymbol = symbol.symbol.replace(/(USDT|USD|BTC)$/, '');
-          
-          // Classify tokens by category
+        // Get coin IDs from search results
+        const coinIds = searchData.coins.slice(0, 20).map(coin => coin.id);
+        
+        if (coinIds.length === 0) {
+          modalState.searchResults = [];
+          renderSearchResults();
+          showSearchState('searchNoResults');
+          return;
+        }
+        
+        // Fetch detailed market data for found coins
+        const marketResponse = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(',')}&order=market_cap_desc&sparkline=false`);
+        
+        if (!marketResponse.ok) {
+          throw new Error('CoinGecko market API request failed');
+        }
+        
+        const marketData = await marketResponse.json();
+        
+        // Process the real data and categorize tokens
+        let cryptoTokens = marketData.map(coin => {
+          const symbol = coin.symbol.toUpperCase();
           let category = 'layer1';
-          const defiTokens = ['UNI', 'AAVE', 'COMP', 'MKR', 'CRV', 'SUSHI', 'LINK', 'SNX', 'YFI', 'BAL'];
-          const memeTokens = ['DOGE', 'SHIB', 'PEPE', 'FLOKI', 'BONK', 'WIF', 'POPCAT'];
-          const layer1Tokens = ['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'AVAX', 'MATIC', 'ATOM', 'NEAR', 'FTM'];
           
-          if (defiTokens.includes(baseSymbol)) category = 'defi';
-          else if (memeTokens.includes(baseSymbol)) category = 'meme';
-          else if (layer1Tokens.includes(baseSymbol)) category = 'layer1';
+          // Categorize based on coin data
+          const defiTokens = ['UNI', 'AAVE', 'COMP', 'MKR', 'CRV', 'SUSHI', 'LINK', 'SNX', 'YFI', '1INCH', 'BAL', 'RUNE'];
+          const memeTokens = ['DOGE', 'SHIB', 'PEPE', 'FLOKI', 'BONK', 'WIF', 'POPCAT', 'MEME', 'BABYDOGE'];
+          const layer1Tokens = ['BTC', 'ETH', 'SOL', 'ADA', 'DOT', 'AVAX', 'MATIC', 'ATOM', 'NEAR', 'FTM', 'ALGO', 'VET', 'XRP', 'LTC', 'BCH', 'TRX', 'XLM', 'HBAR', 'ICP', 'FIL'];
+          
+          if (defiTokens.includes(symbol)) category = 'defi';
+          else if (memeTokens.includes(symbol)) category = 'meme';
+          else if (layer1Tokens.includes(symbol)) category = 'layer1';
           
           return {
-            symbol: baseSymbol,
-            name: symbol.description || symbol.symbol,
-            exchange: symbol.exchange,
-            tradingViewSymbol: symbol.symbol,
+            symbol: symbol,
+            name: coin.name,
+            price: coin.current_price,
+            change: coin.price_change_percentage_24h,
+            marketCap: coin.market_cap,
+            rank: coin.market_cap_rank,
+            image: coin.image,
             category: category,
-            isFavorite: state.allTokens.some(fav => fav.symbol === baseSymbol)
+            isFavorite: state.allTokens.some(fav => fav.symbol === symbol)
           };
         });
 
@@ -6691,42 +6690,10 @@
           cryptoTokens = cryptoTokens.filter(token => token.category === modalState.selectedCategory);
         }
 
-        // Remove duplicates and limit results
-        const uniqueTokens = cryptoTokens.reduce((acc, token) => {
-          if (!acc.find(t => t.symbol === token.symbol)) {
-            acc.push(token);
-          }
-          return acc;
-        }, []).slice(0, 20);
-
-        // Add price data from Binance API
-        const resultsWithPrices = await Promise.all(
-          uniqueTokens.map(async (token) => {
-            try {
-              const response = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${token.symbol}USDT`);
-              if (response.ok) {
-                const data = await response.json();
-                return {
-                  ...token,
-                  price: parseFloat(data.lastPrice),
-                  change: parseFloat(data.priceChangePercent)
-                };
-              }
-            } catch (error) {
-              console.log(`Price not available for ${token.symbol}`);
-            }
-            return {
-              ...token,
-              price: null,
-              change: null
-            };
-          })
-        );
-
-        modalState.searchResults = resultsWithPrices;
+        modalState.searchResults = cryptoTokens;
         renderSearchResults();
         
-        if (resultsWithPrices.length === 0) {
+        if (cryptoTokens.length === 0) {
           showSearchState('searchNoResults');
         } else {
           showSearchState('results');
@@ -6749,25 +6716,39 @@
         
         div.innerHTML = `
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-[12px] font-bold text-white">
-              ${token.symbol.charAt(0)}
+            <div class="w-8 h-8 rounded-full overflow-hidden bg-white/10 flex items-center justify-center">
+              ${token.image ? `
+                <img src="${token.image}" alt="${token.symbol}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="hidden w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 items-center justify-center text-[12px] font-bold text-white">
+                  ${token.symbol.charAt(0)}
+                </div>
+              ` : `
+                <div class="w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-[12px] font-bold text-white">
+                  ${token.symbol.charAt(0)}
+                </div>
+              `}
             </div>
-            <div>
-              <div class="text-[14px] font-medium text-white">${token.symbol}</div>
-              <div class="text-[12px] text-neutral-400">${token.name}</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <div class="text-[14px] font-medium text-white">${token.symbol}</div>
+                ${token.rank ? `<div class="text-[10px] text-neutral-500 bg-neutral-800 px-1.5 py-0.5 rounded">#${token.rank}</div>` : ''}
+              </div>
+              <div class="text-[12px] text-neutral-400 truncate">${token.name}</div>
             </div>
           </div>
           <div class="flex items-center gap-3">
-            ${token.price ? `
+            ${token.price !== null && token.price !== undefined ? `
               <div class="text-right">
-                <div class="text-[12px] font-semibold mono text-neutral-200">$${token.price.toFixed(token.price > 1 ? 2 : 6)}</div>
-                <div class="text-[11px] font-semibold mono ${token.change >= 0 ? 'text-emerald-400' : 'text-red-400'}">
-                  ${token.change >= 0 ? '+' : ''}${token.change.toFixed(2)}%
-                </div>
+                <div class="text-[12px] font-semibold mono text-neutral-200">$${token.price >= 1 ? token.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : token.price.toFixed(6)}</div>
+                ${token.change !== null && token.change !== undefined ? `
+                  <div class="text-[11px] font-semibold mono ${token.change >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                    ${token.change >= 0 ? '+' : ''}${token.change.toFixed(2)}%
+                  </div>
+                ` : ''}
               </div>
             ` : ''}
             <button 
-              onclick="addToFavorites('${token.symbol}', '${token.name}', ${token.price || 'null'}, ${token.change || 'null'})"
+              onclick="addToFavorites('${token.symbol}', '${token.name.replace(/'/g, "\\'")}', ${token.price || 'null'}, ${token.change || 'null'})"
               ${token.isFavorite ? 'disabled' : ''}
               class="${token.isFavorite ? 'bg-neutral-600 text-neutral-400 cursor-not-allowed' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} px-3 py-1 text-[12px] font-medium rounded-md transition-colors"
             >
@@ -6786,14 +6767,18 @@
         return;
       }
 
+      // Find the token in search results to get complete data
+      const fullToken = modalState.searchResults.find(t => t.symbol === symbol);
+      
       const token = {
         symbol,
         name,
         price: price !== 'null' ? price : null,
         change: change !== 'null' ? change : null,
-        image: `https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=80&q=60&auto=format&fit=crop`,
+        image: fullToken ? fullToken.image : `https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=80&q=60&auto=format&fit=crop`,
         pair: `${symbol}USDT`,
-        rank: null // Add rank for consistency
+        rank: fullToken ? fullToken.rank : null,
+        marketCap: fullToken ? fullToken.marketCap : null
       };
 
       // Add to both favorites and main token list
