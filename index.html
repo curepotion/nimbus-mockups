@@ -6478,8 +6478,15 @@
       state.active = token;
       savePersist();
       renderList(false);
-      const tvSymbol = state.marketType === 'perp' ? token.tvPerp : token.tvSpot;
+      
+      // Create TradingView symbol format (BINANCE:SYMBOLUSDT)
+      const tvSymbol = `BINANCE:${token.symbol}USDT`;
       setChartSymbol(tvSymbol);
+      
+      // Update the active badge
+      if (els.activeBadge) {
+        els.activeBadge.textContent = `${token.symbol}USDT`;
+      }
     }
 
     // Tabs
@@ -6781,7 +6788,10 @@
         image: fullToken ? fullToken.image : `https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=80&q=60&auto=format&fit=crop`,
         pair: `${symbol}USDT`,
         rank: fullToken ? fullToken.rank : null,
-        marketCap: fullToken ? fullToken.marketCap : null
+        marketCap: fullToken ? fullToken.marketCap : null,
+        // Add TradingView symbols for chart integration
+        tvSpot: `BINANCE:${symbol}USDT`,
+        tvPerp: `BINANCE:${symbol}USDT` // Using same for both spot and perp for simplicity
       };
 
       // Add to both favorites and main token list
@@ -6799,6 +6809,16 @@
       
       // Re-render main token list
       renderList(true);
+      
+      // If this is the first token added, make it active and update the chart
+      if (state.allTokens.length === 1) {
+        state.active = token;
+        const tvSymbol = `BINANCE:${symbol}USDT`;
+        setChartSymbol(tvSymbol);
+        if (els.activeBadge) {
+          els.activeBadge.textContent = `${symbol}USDT`;
+        }
+      }
     };
 
     window.removeFavorite = function(symbol) {
@@ -7015,21 +7035,17 @@
       }
     }
 
-    // Start - DISABLED to keep token list empty initially
-    // bootstrap().then(()=> {
-    //   switchWS();
-    //   // Initialize TradingView chart after data is loaded
-    //   setTimeout(() => {
-    //     console.log('TradingView available:', !!window.TradingView);
-    //     console.log('Current tvWidget:', state.tvWidget);
-    //     if (window.TradingView && !state.tvWidget) {
-    //       console.log('Initializing TradingView...');
-    //       initTV('BINANCE:BTCUSDT');
-    //     } else {
-    //       console.log('TradingView not available or widget already exists');
-    //     }
-    //   }, 2000);
-    // });
+    // Start - Initialize TradingView but keep token list empty
+    setTimeout(() => {
+      console.log('TradingView available:', !!window.TradingView);
+      console.log('Current tvWidget:', state.tvWidget);
+      if (window.TradingView && !state.tvWidget) {
+        console.log('Initializing TradingView...');
+        initTV('BINANCE:BTCUSDT');
+      } else {
+        console.log('TradingView not available or widget already exists');
+      }
+    }, 2000);
 
     
 
