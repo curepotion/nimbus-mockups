@@ -167,6 +167,9 @@ class NimbusNavbar {
             <button class="btn-primary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
               Deposit
             </button>
+            <button class="btn-secondary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
+              Withdraw
+            </button>
             <div class="hidden md:flex items-center gap-2 h-9 px-2 rounded-md glass">
               <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=48&auto=format&fit=crop" class="w-5 h-5 rounded-full" alt="Avatar">
               <span class="mono text-[12px]">0x0b5C...59C8</span>
