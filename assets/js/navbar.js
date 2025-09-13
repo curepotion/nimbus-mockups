@@ -167,7 +167,7 @@ class NimbusNavbar {
             <button class="btn-primary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
               Deposit
             </button>
-            <button class="btn-secondary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
+            <button class="btn-primary h-9 px-3 rounded-md text-[13px] font-medium flex items-center justify-center">
               Withdraw
             </button>
             <div class="hidden md:flex items-center gap-2 h-9 px-2 rounded-md glass">
