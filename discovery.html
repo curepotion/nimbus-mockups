@@ -1254,24 +1254,39 @@
     // Update chart URLs
     function updateChartUrls() {
       const chartElements = document.querySelectorAll('[data-bind-src]');
+      console.log('Found chart elements:', chartElements.length);
+      
       chartElements.forEach(el => {
         const dataType = el.dataset.bindSrc;
+        console.log('Processing chart:', dataType);
+        
         if (dataType === 'fgi.series') {
+          console.log('FGI data:', discoveryData.fgi.series);
           el.src = generateQuickChartUrl(discoveryData.fgi.series);
         } else if (dataType === 'btcDom.series') {
+          console.log('BTC Dom data:', discoveryData.btcDom.series);
           el.src = generateQuickChartUrl(discoveryData.btcDom.series);
         } else if (dataType === 'altseason.series') {
+          console.log('Altseason data:', discoveryData.altseason.series);
           el.src = generateQuickChartUrl(discoveryData.altseason.series);
         } else if (dataType.includes('hl.candles')) {
           const candles = discoveryData.hl.candles['vntls:vSTRIPE'] || [];
           const closes = candles.map(c => c.c);
+          console.log('HL candles data:', closes);
           el.src = generateQuickChartUrl(closes);
         }
+        
+        console.log('Chart URL generated:', el.src);
       });
     }
 
     // Generate QuickChart URL
     function generateQuickChartUrl(data) {
+      // Ensure we have valid data
+      if (!data || data.length === 0) {
+        return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEyIiB2aWV3Qm94PSIwIDAgMjAwIDEyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+';
+      }
+      
       const config = {
         type: 'sparkline',
         data: {
@@ -1302,7 +1317,7 @@
         }
       };
       
-      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}&height=12&width=200`;
+      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}`;
     }
 
     // Story overlay functions
