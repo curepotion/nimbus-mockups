@@ -197,6 +197,11 @@
       box-shadow: 0 2px 8px rgba(110, 231, 183, 0.3);
     }
 
+    .tile img {
+      max-height: 12px !important;
+      object-fit: contain;
+    }
+
     .tabs {
       display: flex;
       gap: 0.25rem;
@@ -1274,11 +1279,13 @@
             data: data,
             borderColor: '#6EE7B7',
             backgroundColor: 'rgba(110, 231, 183, 0.1)',
-            borderWidth: 2,
+            borderWidth: 1,
             fill: true
           }]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
           scales: {
             x: { display: false },
             y: { display: false }
@@ -1288,11 +1295,14 @@
           },
           plugins: {
             legend: { display: false }
+          },
+          layout: {
+            padding: 0
           }
         }
       };
       
-      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}`;
+      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}&height=12&width=200`;
     }
 
     // Story overlay functions
