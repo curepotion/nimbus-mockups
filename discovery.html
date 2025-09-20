@@ -78,6 +78,13 @@
       display: flex;
       gap: 0.25rem;
       flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .chips:not(:last-child)::after {
+      content: '|';
+      color: rgba(156, 163, 175, 0.3);
+      margin: 0 0.5rem;
     }
 
     .chips button {
@@ -552,21 +559,33 @@
             <img alt="" src="https://api.iconify.design/mdi/magnify.svg" width="16" height="16" />
             <input aria-label="Search tokens, HIP-3, news" placeholder="Search tokens, HIP-3, news…" />
           </div>
-          <!-- Compact filter chips: replace all side filters -->
-          <nav aria-label="Quick filters" class="chips">
+          <!-- Content type filters -->
+          <nav aria-label="Content filters" class="chips">
             <button data-chip="all" aria-pressed="true">All</button>
             <button data-chip="hip3">HIP-3</button>
             <button data-chip="perps">Perps</button>
             <button data-chip="spot">Spot</button>
             <button data-chip="news">News</button>
-            <!-- Secondary chips: timeframe & sort -->
-            <button data-chip="tf" data-value="24h">24h</button>
-            <button data-chip="tf" data-value="7d">7d</button>
-            <button data-chip="sort" data-value="trending">Trending</button>
-            <button data-chip="sort" data-value="volume">Volume</button>
           </nav>
+          <!-- Timeframe filters -->
+          <nav aria-label="Timeframe filters" class="chips">
+            <button data-chip="tf" data-value="1h">1h</button>
+            <button data-chip="tf" data-value="24h" aria-pressed="true">24h</button>
+            <button data-chip="tf" data-value="7d">7d</button>
+            <button data-chip="tf" data-value="30d">30d</button>
+          </nav>
+          <!-- Sort options -->
+          <nav aria-label="Sort options" class="chips">
+            <button data-chip="sort" data-value="trending" aria-pressed="true">Trending</button>
+            <button data-chip="sort" data-value="volume">Volume</button>
+            <button data-chip="sort" data-value="price">Price</button>
+            <button data-chip="sort" data-value="change">Change</button>
+          </nav>
+          <!-- Utility functions -->
           <div class="utils">
-            <button>Watchlist</button><button>Alerts</button><button>RSS</button>
+            <button title="My Watchlist">📋</button>
+            <button title="Price Alerts">🔔</button>
+            <button title="RSS Feed">📡</button>
           </div>
         </div>
       </header>
@@ -789,7 +808,11 @@
   <script>
     // Discovery Page JavaScript
     let currentTab = 'trending';
-    let currentFilters = { all: true };
+    let currentFilters = { 
+      contentType: 'all',
+      timeframe: '24h',
+      sortBy: 'trending'
+    };
     let discoveryData = {
       fgi: { value: '--', delta24h: '--%', series: [] },
       btcDom: { value: '--%', delta24h: '--%', series: [] },
@@ -848,34 +871,47 @@
 
     // Filter functionality
     function initFilters() {
-      const chips = document.querySelectorAll('.chips button');
-      
-      chips.forEach(chip => {
+      // Content type filters
+      const contentChips = document.querySelectorAll('[aria-label="Content filters"] button');
+      contentChips.forEach(chip => {
         chip.addEventListener('click', () => {
           const chipType = chip.dataset.chip;
-          const chipValue = chip.dataset.value;
           
-          if (chipType === 'all') {
-            // Reset all filters
-            chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
-            chip.setAttribute('aria-pressed', 'true');
-            currentFilters = { all: true };
-          } else {
-            // Toggle specific filter
-            const isPressed = chip.getAttribute('aria-pressed') === 'true';
-            chip.setAttribute('aria-pressed', !isPressed);
-            
-            if (!isPressed) {
-              currentFilters[chipType] = chipValue || true;
-            } else {
-              delete currentFilters[chipType];
-            }
-            
-            // Update all chip
-            const allChip = document.querySelector('[data-chip="all"]');
-            allChip.setAttribute('aria-pressed', 'false');
-          }
+          // Reset all content filters
+          contentChips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+          chip.setAttribute('aria-pressed', 'true');
           
+          currentFilters.contentType = chipType;
+          applyFilters();
+        });
+      });
+
+      // Timeframe filters
+      const timeChips = document.querySelectorAll('[aria-label="Timeframe filters"] button');
+      timeChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const timeValue = chip.dataset.value;
+          
+          // Reset all timeframe filters
+          timeChips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+          chip.setAttribute('aria-pressed', 'true');
+          
+          currentFilters.timeframe = timeValue;
+          applyFilters();
+        });
+      });
+
+      // Sort options
+      const sortChips = document.querySelectorAll('[aria-label="Sort options"] button');
+      sortChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const sortValue = chip.dataset.value;
+          
+          // Reset all sort options
+          sortChips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+          chip.setAttribute('aria-pressed', 'true');
+          
+          currentFilters.sortBy = sortValue;
           applyFilters();
         });
       });
