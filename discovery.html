@@ -142,6 +142,7 @@
       flex-direction: column;
       gap: 0.5rem;
       position: relative;
+      min-height: 120px;
     }
 
     .tile .trade-btn {
@@ -168,26 +169,29 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     .tile .lead img {
-      width: 1rem;
-      height: 1rem;
+      width: 0.875rem;
+      height: 0.875rem;
     }
 
     .tile .lead h2 {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
+      color: rgba(156, 163, 175, 0.9);
     }
 
     .tile .kpi {
       display: flex;
       align-items: baseline;
-      gap: 0.25rem;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
     }
 
     .tile .kpi output {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: white;
     }
@@ -195,6 +199,19 @@
     .tile .kpi small {
       color: rgba(156, 163, 175, 0.8);
       font-size: 0.75rem;
+    }
+
+    .tile .chart-container {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 2px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .tile .chart-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .tabs {
@@ -623,7 +640,9 @@
             <output data-bind="fgi.value">--</output>
             <small data-bind="fgi.delta24h">--%</small>
           </div>
-          <img alt="FGI spark" data-bind-src="fgi.series" width="100%" height="20" />
+          <div class="chart-container">
+            <img alt="FGI spark" data-bind-src="fgi.series" />
+          </div>
         </article>
         <article class="tile">
           <button class="trade-btn" onclick="openTrade('btc')">Trade</button>
@@ -635,7 +654,9 @@
             <output data-bind="btcDom.value">--%</output>
             <small data-bind="btcDom.delta24h">--%</small>
           </div>
-          <img alt="BTC.D spark" data-bind-src="btcDom.series" width="100%" height="20" />
+          <div class="chart-container">
+            <img alt="BTC.D spark" data-bind-src="btcDom.series" />
+          </div>
         </article>
         <article class="tile">
           <button class="trade-btn" onclick="openTrade('alt')">Trade</button>
@@ -647,7 +668,9 @@
             <output data-bind="altseason.value">--</output>
             <small data-bind="altseason.label">--</small>
           </div>
-          <img alt="Altseason spark" data-bind-src="altseason.series" width="100%" height="20" />
+          <div class="chart-container">
+            <img alt="Altseason spark" data-bind-src="altseason.series" />
+          </div>
         </article>
       </section>
 
@@ -1273,26 +1296,33 @@
           datasets: [{
             data: data,
             borderColor: '#6EE7B7',
-            backgroundColor: 'rgba(110, 231, 183, 0.1)',
-            borderWidth: 2,
-            fill: true
+            backgroundColor: 'rgba(110, 231, 183, 0.2)',
+            borderWidth: 1,
+            fill: true,
+            tension: 0.4
           }]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
           scales: {
             x: { display: false },
             y: { display: false }
           },
           elements: {
-            point: { radius: 0 }
+            point: { radius: 0 },
+            line: { borderJoinStyle: 'round' }
           },
           plugins: {
             legend: { display: false }
+          },
+          layout: {
+            padding: 0
           }
         }
       };
       
-      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}`;
+      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}&width=200&height=12`;
     }
 
     // Story overlay functions
