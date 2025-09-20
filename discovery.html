@@ -601,7 +601,7 @@
             <output data-bind="fgi.value">--</output>
             <small data-bind="fgi.delta24h">--%</small>
           </div>
-          <img alt="FGI spark" data-bind-src="quickchartUrl(line(fgi.series))" width="100%" height="40" />
+          <img alt="FGI spark" data-bind-src="fgi.series" width="100%" height="40" />
         </article>
         <article class="tile">
           <div class="lead">
@@ -612,7 +612,7 @@
             <output data-bind="btcDom.value">--%</output>
             <small data-bind="btcDom.delta24h">--%</small>
           </div>
-          <img alt="BTC.D spark" data-bind-src="quickchartUrl(line(btcDom.series))" width="100%" height="40" />
+          <img alt="BTC.D spark" data-bind-src="btcDom.series" width="100%" height="40" />
         </article>
         <article class="tile">
           <div class="lead">
@@ -623,7 +623,7 @@
             <output data-bind="altseason.value">--</output>
             <small data-bind="altseason.label">--</small>
           </div>
-          <img alt="Altseason spark" data-bind-src="quickchartUrl(line(altseason.series))" width="100%" height="40" />
+          <img alt="Altseason spark" data-bind-src="altseason.series" width="100%" height="40" />
         </article>
       </section>
 
@@ -971,10 +971,12 @@
           }
         ];
 
-        // Generate altcoin season data
+        // Generate altcoin season data (mock - would come from real API)
         discoveryData.altseason.value = '75';
         discoveryData.altseason.label = 'Alt Season';
         discoveryData.altseason.series = generateMockSeries(30, 75);
+        
+        console.log('Altcoin Season data:', discoveryData.altseason);
 
         updateUI();
       } catch (error) {
@@ -1222,13 +1224,15 @@
 
     // Update chart URLs
     function updateChartUrls() {
-      const chartElements = document.querySelectorAll('[data-bind-src^="quickchartUrl"]');
+      const chartElements = document.querySelectorAll('[data-bind-src]');
       chartElements.forEach(el => {
         const dataType = el.dataset.bindSrc;
-        if (dataType.includes('fgi.series')) {
+        if (dataType === 'fgi.series') {
           el.src = generateQuickChartUrl(discoveryData.fgi.series);
-        } else if (dataType.includes('btcDom.series')) {
+        } else if (dataType === 'btcDom.series') {
           el.src = generateQuickChartUrl(discoveryData.btcDom.series);
+        } else if (dataType === 'altseason.series') {
+          el.src = generateQuickChartUrl(discoveryData.altseason.series);
         } else if (dataType.includes('hl.candles')) {
           const candles = discoveryData.hl.candles['vntls:vSTRIPE'] || [];
           const closes = candles.map(c => c.c);
