@@ -1087,11 +1087,11 @@
       sortBy: 'trending'
     };
     let discoveryData = {
+      fgi: { value: '--', delta24h: '--%', series: [], label: '--', angle: 0 },
+      btcDom: { value: '--%', delta24h: '--%', series: [], percentage: 0 },
+      altseason: { value: '--', label: '--', series: [], percentage: 75 },
       marketCap: { value: '$4.04T', change: '-0.93%', series: [] },
       cmc20: { value: '$256.47', change: '-0.9%', series: [] },
-      fgi: { value: 48, label: 'Neutral', angle: 0, series: [] },
-      btcDom: { value: '--%', delta24h: '--%', percentage: 0, series: [] },
-      altseason: { value: '75/100', percentage: 75, series: [] },
       rsi: { value: 46.83, percentage: 46.83 },
       hl: {
         universe: [],
@@ -1269,8 +1269,6 @@
         
         // Mock Altcoin Season data
         discoveryData.altseason.series = generateMockSeries(30, 75);
-        
-        console.log('Altcoin Season data:', discoveryData.altseason);
 
         updateUI();
       } catch (error) {
@@ -1560,35 +1558,25 @@
     // Update chart URLs
     function updateChartUrls() {
       const chartElements = document.querySelectorAll('[data-bind-src]');
-      console.log('Found chart elements:', chartElements.length);
       
       chartElements.forEach(el => {
         const dataType = el.dataset.bindSrc;
-        console.log('Processing chart:', dataType);
         
         if (dataType === 'marketCap.series') {
-          console.log('Market Cap data:', discoveryData.marketCap.series);
           el.src = generateQuickChartUrl(discoveryData.marketCap.series);
         } else if (dataType === 'cmc20.series') {
-          console.log('CMC20 data:', discoveryData.cmc20.series);
           el.src = generateQuickChartUrl(discoveryData.cmc20.series);
         } else if (dataType === 'fgi.series') {
-          console.log('FGI data:', discoveryData.fgi.series);
           el.src = generateQuickChartUrl(discoveryData.fgi.series);
         } else if (dataType === 'btcDom.series') {
-          console.log('BTC Dom data:', discoveryData.btcDom.series);
           el.src = generateQuickChartUrl(discoveryData.btcDom.series);
         } else if (dataType === 'altseason.series') {
-          console.log('Altseason data:', discoveryData.altseason.series);
           el.src = generateQuickChartUrl(discoveryData.altseason.series);
         } else if (dataType.includes('hl.candles')) {
           const candles = discoveryData.hl.candles['vntls:vSTRIPE'] || [];
           const closes = candles.map(c => c.c);
-          console.log('HL candles data:', closes);
           el.src = generateQuickChartUrl(closes);
         }
-        
-        console.log('Chart URL generated:', el.src);
       });
     }
 
