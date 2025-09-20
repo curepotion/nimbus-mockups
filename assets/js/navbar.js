@@ -5,8 +5,6 @@ class NimbusNavbar {
     this.navItems = [
       { name: 'Charts', href: 'index.html', id: 'charts' },
       { name: 'Community', href: 'community.html', id: 'community' },
-      { name: 'Bots', href: 'bots.html', id: 'bots' },
-      { name: 'Nimbus Chats', href: 'chats.html', id: 'chats' },
       { name: 'Rewards', href: 'rewards.html', id: 'rewards' },
       { name: 'Learn', href: 'learn.html', id: 'learn' },
       { name: 'Leaderboard', href: 'leaderboard.html', id: 'leaderboard' },
