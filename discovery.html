@@ -202,6 +202,181 @@
       object-fit: contain;
     }
 
+    /* Gauge Styles */
+    .gauge-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .gauge {
+      position: relative;
+      width: 80px;
+      height: 40px;
+    }
+
+    .gauge-track {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .gauge-segment {
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+
+    .gauge-segment.fear { left: 0%; width: 20%; background: #ef4444; }
+    .gauge-segment.fear-neutral { left: 20%; width: 20%; background: #f97316; }
+    .gauge-segment.neutral { left: 40%; width: 20%; background: #eab308; }
+    .gauge-segment.neutral-greed { left: 60%; width: 20%; background: #84cc16; }
+    .gauge-segment.greed { left: 80%; width: 20%; background: #22c55e; }
+
+    .gauge-indicator {
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      transform-origin: center;
+      transform: translateX(-50%) rotate(0deg);
+      transition: transform 0.3s ease;
+    }
+
+    .gauge-value {
+      text-align: center;
+    }
+
+    .gauge-value output {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .gauge-value small {
+      font-size: 0.75rem;
+      color: rgba(156, 163, 175, 0.9);
+    }
+
+    /* Progress Bar Styles */
+    .progress-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .progress-item label {
+      font-size: 0.75rem;
+      color: rgba(156, 163, 175, 0.9);
+    }
+
+    .progress-bar {
+      position: relative;
+      height: 6px;
+      background: rgba(55, 65, 81, 0.6);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-fill.btc {
+      background: linear-gradient(90deg, #f97316, #fbbf24, #9ca3af);
+    }
+
+    .progress-fill.alt {
+      background: linear-gradient(90deg, #9ca3af, #3b82f6);
+    }
+
+    .progress-handle {
+      position: absolute;
+      top: -2px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      transition: left 0.3s ease;
+    }
+
+    /* RSI Slider Styles */
+    .rsi-slider {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .rsi-track {
+      position: relative;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .rsi-segment {
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+
+    .rsi-segment.oversold { left: 0%; width: 20%; background: #06b6d4; }
+    .rsi-segment.neutral-low { left: 20%; width: 20%; background: #10b981; }
+    .rsi-segment.neutral { left: 40%; width: 20%; background: #6b7280; }
+    .rsi-segment.neutral-high { left: 60%; width: 20%; background: #9ca3af; }
+    .rsi-segment.overbought { left: 80%; width: 20%; background: #ef4444; }
+
+    .rsi-handle {
+      position: absolute;
+      top: -2px;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      transition: left 0.3s ease;
+    }
+
+    .rsi-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.625rem;
+      color: rgba(156, 163, 175, 0.7);
+    }
+
+    /* Chart Container */
+    .chart-container {
+      height: 20px;
+      overflow: hidden;
+    }
+
+    .chart-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Negative values */
+    .negative {
+      color: #ef4444 !important;
+    }
+
     .tabs {
       display: flex;
       gap: 0.25rem;
@@ -616,43 +791,112 @@
         </div>
       </header>
 
-      <!-- 2) STATS STRIP (full-bleed row with 3 expanding tiles) -->
+      <!-- 2) STATS STRIP (full-bleed row with 5 expanding tiles) -->
       <section aria-label="Market Sentiment" class="row stats">
-        <article class="tile">
+        <article class="tile market-cap">
+          <button class="trade-btn" onclick="openTrade('market')">Trade</button>
+          <div class="lead">
+            <h2>Market Cap</h2>
+            <img alt="" src="https://api.iconify.design/mdi/arrow-right.svg" />
+          </div>
+          <div class="kpi">
+            <output data-bind="marketCap.value">$4.04T</output>
+            <small data-bind="marketCap.change" class="negative">-0.93%</small>
+          </div>
+          <div class="chart-container">
+            <img alt="Market Cap spark" data-bind-src="marketCap.series" />
+          </div>
+        </article>
+        
+        <article class="tile cmc20">
+          <button class="trade-btn" onclick="openTrade('cmc20')">Trade</button>
+          <div class="lead">
+            <h2>CMC20</h2>
+            <img alt="" src="https://api.iconify.design/mdi/arrow-right.svg" />
+          </div>
+          <div class="kpi">
+            <output data-bind="cmc20.value">$256.47</output>
+            <small data-bind="cmc20.change" class="negative">-0.9%</small>
+          </div>
+          <div class="chart-container">
+            <img alt="CMC20 spark" data-bind-src="cmc20.series" />
+          </div>
+        </article>
+        
+        <article class="tile fear-greed">
           <button class="trade-btn" onclick="openTrade('fgi')">Trade</button>
           <div class="lead">
-            <img alt="" src="https://api.iconify.design/mdi/emoticon-excited-outline.svg" />
             <h2>Fear & Greed</h2>
+            <img alt="" src="https://api.iconify.design/mdi/arrow-right.svg" />
           </div>
-          <div class="kpi">
-            <output data-bind="fgi.value">--</output>
-            <small data-bind="fgi.delta24h">--%</small>
+          <div class="gauge-container">
+            <div class="gauge">
+              <div class="gauge-track">
+                <div class="gauge-segment fear"></div>
+                <div class="gauge-segment fear-neutral"></div>
+                <div class="gauge-segment neutral"></div>
+                <div class="gauge-segment neutral-greed"></div>
+                <div class="gauge-segment greed"></div>
+              </div>
+              <div class="gauge-indicator" data-bind-style="transform: rotate(fgi.angle)deg"></div>
+            </div>
+            <div class="gauge-value">
+              <output data-bind="fgi.value">48</output>
+              <small data-bind="fgi.label">Neutral</small>
+            </div>
           </div>
-          <img alt="FGI spark" data-bind-src="fgi.series" width="100%" height="12" />
         </article>
-        <article class="tile">
-          <button class="trade-btn" onclick="openTrade('btc')">Trade</button>
-          <div class="lead">
-            <img alt="" src="https://api.iconify.design/mdi/bitcoin.svg" />
-            <h2>BTC Dominance</h2>
-          </div>
-          <div class="kpi">
-            <output data-bind="btcDom.value">--%</output>
-            <small data-bind="btcDom.delta24h">--%</small>
-          </div>
-          <img alt="BTC.D spark" data-bind-src="btcDom.series" width="100%" height="12" />
-        </article>
-        <article class="tile">
+        
+        <article class="tile altcoin-season">
           <button class="trade-btn" onclick="openTrade('alt')">Trade</button>
           <div class="lead">
-            <img alt="" src="https://api.iconify.design/mdi/alpha-a-circle-outline.svg" />
             <h2>Altcoin Season</h2>
+            <img alt="" src="https://api.iconify.design/mdi/arrow-right.svg" />
           </div>
           <div class="kpi">
-            <output data-bind="altseason.value">--</output>
-            <small data-bind="altseason.label">--</small>
+            <output data-bind="altseason.value">75/100</output>
           </div>
-          <img alt="Altseason spark" data-bind-src="altseason.series" width="100%" height="12" />
+          <div class="progress-bars">
+            <div class="progress-item">
+              <label>Bitcoin</label>
+              <div class="progress-bar">
+                <div class="progress-fill btc" data-bind-style="width: btcDom.percentage%"></div>
+                <div class="progress-handle" data-bind-style="left: btcDom.percentage%"></div>
+              </div>
+            </div>
+            <div class="progress-item">
+              <label>Altcoin</label>
+              <div class="progress-bar">
+                <div class="progress-fill alt" data-bind-style="width: altseason.percentage%"></div>
+                <div class="progress-handle" data-bind-style="left: altseason.percentage%"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="tile crypto-rsi">
+          <button class="trade-btn" onclick="openTrade('rsi')">Trade</button>
+          <div class="lead">
+            <h2>Average Crypto RSI</h2>
+            <img alt="" src="https://api.iconify.design/mdi/arrow-right.svg" />
+          </div>
+          <div class="kpi">
+            <output data-bind="rsi.value">46.83</output>
+          </div>
+          <div class="rsi-slider">
+            <div class="rsi-track">
+              <div class="rsi-segment oversold"></div>
+              <div class="rsi-segment neutral-low"></div>
+              <div class="rsi-segment neutral"></div>
+              <div class="rsi-segment neutral-high"></div>
+              <div class="rsi-segment overbought"></div>
+            </div>
+            <div class="rsi-handle" data-bind-style="left: rsi.percentage%"></div>
+            <div class="rsi-labels">
+              <span>Oversold</span>
+              <span>Overbought</span>
+            </div>
+          </div>
         </article>
       </section>
 
@@ -843,9 +1087,12 @@
       sortBy: 'trending'
     };
     let discoveryData = {
-      fgi: { value: '--', delta24h: '--%', series: [] },
-      btcDom: { value: '--%', delta24h: '--%', series: [] },
-      altseason: { value: '--', label: '--', series: [] },
+      marketCap: { value: '$4.04T', change: '-0.93%', series: [] },
+      cmc20: { value: '$256.47', change: '-0.9%', series: [] },
+      fgi: { value: 48, label: 'Neutral', angle: 0, series: [] },
+      btcDom: { value: '--%', delta24h: '--%', percentage: 0, series: [] },
+      altseason: { value: '75/100', percentage: 75, series: [] },
+      rsi: { value: 46.83, percentage: 46.83 },
       hl: {
         universe: [],
         marketCtxs: [],
@@ -965,15 +1212,28 @@
           discoveryData.fgi.delta24h = previous ? 
             ((parseInt(latest.value) - parseInt(previous.value)).toFixed(1) + '%') : '0%';
           discoveryData.fgi.series = fgiData.data.map(d => parseInt(d.value));
+          
+          // Calculate gauge angle (0-180 degrees for semicircle)
+          const angle = (latest.value / 100) * 180;
+          discoveryData.fgi.angle = angle;
+          
+          // Set label based on value
+          if (latest.value <= 25) discoveryData.fgi.label = 'Extreme Fear';
+          else if (latest.value <= 45) discoveryData.fgi.label = 'Fear';
+          else if (latest.value <= 55) discoveryData.fgi.label = 'Neutral';
+          else if (latest.value <= 75) discoveryData.fgi.label = 'Greed';
+          else discoveryData.fgi.label = 'Extreme Greed';
         }
 
         // Load BTC Dominance from CoinGecko
         const globalResponse = await fetch('https://api.coingecko.com/api/v3/global');
         const globalData = await globalResponse.json();
         if (globalData.data) {
-          discoveryData.btcDom.value = globalData.data.market_cap_percentage.btc.toFixed(1) + '%';
+          const btcDomValue = parseFloat(globalData.data.market_cap_percentage.btc);
+          discoveryData.btcDom.value = btcDomValue.toFixed(1) + '%';
+          discoveryData.btcDom.percentage = btcDomValue; // For progress bar
           // Mock BTC dominance series (CoinGecko doesn't provide historical dominance)
-          discoveryData.btcDom.series = generateMockSeries(30, parseFloat(globalData.data.market_cap_percentage.btc));
+          discoveryData.btcDom.series = generateMockSeries(30, btcDomValue);
           discoveryData.btcDom.delta24h = '0.2%'; // Mock change
         }
 
@@ -1001,8 +1261,13 @@
         ];
 
         // Generate altcoin season data (mock - would come from real API)
-        discoveryData.altseason.value = '75';
-        discoveryData.altseason.label = 'Alt Season';
+        // Mock Market Cap data
+        discoveryData.marketCap.series = generateMockSeries(30, 4.04);
+        
+        // Mock CMC20 data
+        discoveryData.cmc20.series = generateMockSeries(30, 256.47);
+        
+        // Mock Altcoin Season data
         discoveryData.altseason.series = generateMockSeries(30, 75);
         
         console.log('Altcoin Season data:', discoveryData.altseason);
@@ -1123,17 +1388,27 @@
     // Update UI with loaded data
     function updateUI() {
       // Update stats tiles
+      document.querySelector('[data-bind="marketCap.value"]').textContent = discoveryData.marketCap.value;
+      document.querySelector('[data-bind="marketCap.change"]').textContent = discoveryData.marketCap.change;
+      
+      document.querySelector('[data-bind="cmc20.value"]').textContent = discoveryData.cmc20.value;
+      document.querySelector('[data-bind="cmc20.change"]').textContent = discoveryData.cmc20.change;
+      
       document.querySelector('[data-bind="fgi.value"]').textContent = discoveryData.fgi.value;
-      document.querySelector('[data-bind="fgi.delta24h"]').textContent = discoveryData.fgi.delta24h;
+      document.querySelector('[data-bind="fgi.label"]').textContent = discoveryData.fgi.label;
       
       document.querySelector('[data-bind="btcDom.value"]').textContent = discoveryData.btcDom.value;
       document.querySelector('[data-bind="btcDom.delta24h"]').textContent = discoveryData.btcDom.delta24h;
 
       document.querySelector('[data-bind="altseason.value"]').textContent = discoveryData.altseason.value;
-      document.querySelector('[data-bind="altseason.label"]').textContent = discoveryData.altseason.label;
+      
+      document.querySelector('[data-bind="rsi.value"]').textContent = discoveryData.rsi.value;
 
       // Update chart URLs
       updateChartUrls();
+      
+      // Update gauge and progress bar styles
+      updateGaugeStyles();
       
       // Populate trending cards with real data
       populateTrendingCards();
@@ -1251,6 +1526,37 @@
       });
     }
 
+    // Update gauge and progress bar styles
+    function updateGaugeStyles() {
+      // Update Fear & Greed gauge angle
+      const gaugeIndicator = document.querySelector('.gauge-indicator');
+      if (gaugeIndicator) {
+        gaugeIndicator.style.transform = `translateX(-50%) rotate(${discoveryData.fgi.angle}deg)`;
+      }
+      
+      // Update BTC Dominance progress bar
+      const btcProgressFill = document.querySelector('.progress-fill.btc');
+      const btcProgressHandle = document.querySelector('.progress-item:first-child .progress-handle');
+      if (btcProgressFill && btcProgressHandle) {
+        btcProgressFill.style.width = `${discoveryData.btcDom.percentage}%`;
+        btcProgressHandle.style.left = `${discoveryData.btcDom.percentage}%`;
+      }
+      
+      // Update Altcoin Season progress bar
+      const altProgressFill = document.querySelector('.progress-fill.alt');
+      const altProgressHandle = document.querySelector('.progress-item:last-child .progress-handle');
+      if (altProgressFill && altProgressHandle) {
+        altProgressFill.style.width = `${discoveryData.altseason.percentage}%`;
+        altProgressHandle.style.left = `${discoveryData.altseason.percentage}%`;
+      }
+      
+      // Update RSI slider
+      const rsiHandle = document.querySelector('.rsi-handle');
+      if (rsiHandle) {
+        rsiHandle.style.left = `${discoveryData.rsi.percentage}%`;
+      }
+    }
+
     // Update chart URLs
     function updateChartUrls() {
       const chartElements = document.querySelectorAll('[data-bind-src]');
@@ -1260,7 +1566,13 @@
         const dataType = el.dataset.bindSrc;
         console.log('Processing chart:', dataType);
         
-        if (dataType === 'fgi.series') {
+        if (dataType === 'marketCap.series') {
+          console.log('Market Cap data:', discoveryData.marketCap.series);
+          el.src = generateQuickChartUrl(discoveryData.marketCap.series);
+        } else if (dataType === 'cmc20.series') {
+          console.log('CMC20 data:', discoveryData.cmc20.series);
+          el.src = generateQuickChartUrl(discoveryData.cmc20.series);
+        } else if (dataType === 'fgi.series') {
           console.log('FGI data:', discoveryData.fgi.series);
           el.src = generateQuickChartUrl(discoveryData.fgi.series);
         } else if (dataType === 'btcDom.series') {
