@@ -50,30 +50,33 @@
       max-width: none;
     }
 
-    .search {
+
+    .chips {
       display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 0.375rem;
-      background: rgba(11, 15, 20, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 0.375rem;
-      padding: 0.375rem 0.5rem;
-      flex: 1;
-      max-width: 300px;
     }
 
-    .search input {
-      background: transparent;
+    .chips button {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      background: rgba(55, 65, 81, 0.6);
+      color: rgba(156, 163, 175, 0.9);
       border: none;
-      color: white;
-      outline: none;
-      flex: 1;
+      font-size: 0.75rem;
+      transition: all 0.15s ease;
     }
 
-    .search input::placeholder {
-      color: rgba(156, 163, 175, 0.7);
+    .chips button[aria-pressed="true"] {
+      background: rgba(110, 231, 183, 0.2);
+      color: rgba(110, 231, 183, 1);
     }
 
+    .chips button:hover {
+      background: rgba(75, 85, 99, 0.7);
+      color: rgba(229, 231, 235, 1);
+    }
 
     .utils {
       display: flex;
@@ -561,10 +564,12 @@
       <!-- 1) TOP BAR (single line; minimal controls; sticky; full-width) -->
       <header role="banner" class="top-bar">
         <div class="bar">
-          <div role="search" class="search">
-            <img alt="" src="https://api.iconify.design/mdi/magnify.svg" width="16" height="16" />
-            <input aria-label="Search tokens, HIP-3, news" placeholder="Search tokens, HIP-3, news…" />
-          </div>
+          <!-- Filter chips -->
+          <nav aria-label="Content filters" class="chips">
+            <button data-chip="spot" aria-pressed="true">Spot</button>
+            <button data-chip="perps">Perps</button>
+            <button data-chip="hip3">HIP-3</button>
+          </nav>
           <!-- Utility functions -->
           <div class="utils">
             <button title="My Watchlist">📋</button>
@@ -759,6 +764,7 @@
     // Initialize page
     document.addEventListener('DOMContentLoaded', function() {
       initTabs();
+      initFilterChips();
       loadMarketData();
       loadHLData();
     });
@@ -785,6 +791,14 @@
           tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
           tab.setAttribute('aria-selected', 'true');
           
+          // Update filter chips
+          const filterChips = document.querySelectorAll('[aria-label="Content filters"] button');
+          filterChips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+          const targetChip = Array.from(filterChips).find(chip => chip.dataset.chip === tabName);
+          if (targetChip) {
+            targetChip.setAttribute('aria-pressed', 'true');
+          }
+          
           // Show/hide panels
           panels.forEach(panel => {
             panel.hidden = true;
@@ -800,6 +814,43 @@
       });
     }
 
+    // Filter chip functionality
+    function initFilterChips() {
+      const filterChips = document.querySelectorAll('[aria-label="Content filters"] button');
+      
+      filterChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const chipType = chip.dataset.chip;
+          
+          // Reset all filter chips
+          filterChips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+          chip.setAttribute('aria-pressed', 'true');
+          
+          // Switch to corresponding tab
+          const tabs = document.querySelectorAll('[role="tab"]');
+          const targetTab = Array.from(tabs).find(tab => tab.dataset.tab === chipType);
+          
+          if (targetTab) {
+            // Update tab states
+            tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+            targetTab.setAttribute('aria-selected', 'true');
+            
+            // Show/hide panels
+            const panels = document.querySelectorAll('[role="tabpanel"]');
+            panels.forEach(panel => {
+              panel.hidden = true;
+            });
+            
+            const targetPanel = document.getElementById(`${chipType}-panel`);
+            if (targetPanel) {
+              targetPanel.hidden = false;
+            }
+            
+            currentTab = chipType;
+          }
+        });
+      });
+    }
 
     // Load market data from APIs
     async function loadMarketData() {
