@@ -3,6 +3,7 @@ class NimbusNavbar {
   constructor() {
     this.currentPage = this.getCurrentPage();
     this.navItems = [
+      { name: 'Discovery', href: 'discovery.html', id: 'discovery' },
       { name: 'Charts', href: 'index.html', id: 'charts' },
       { name: 'Community', href: 'community.html', id: 'community' },
       { name: 'Rewards', href: 'rewards.html', id: 'rewards' },

@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full" style="background: var(--color-bg-main);">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Discovery - Nimbus Trading Platform</title>
+
+  <!-- Fonts: Geist + Geist Mono -->
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/600.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/700.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/400.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/500.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/600.css" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="assets/css/components.css">
+  <script src="assets/js/navbar.js"></script>
+
+  <style>
+    /* Discovery Page Styles - Full Width Layout */
+    .discovery-container {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+    }
+
+    .full-width {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10, 12, 16, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 2rem;
+      max-width: none;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(11, 15, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .search input {
+      background: transparent;
+      border: none;
+      color: white;
+      outline: none;
+      flex: 1;
+    }
+
+    .search input::placeholder {
+      color: rgba(156, 163, 175, 0.7);
+    }
+
+    .chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chips button {
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      background: rgba(55, 65, 81, 0.6);
+      color: rgba(156, 163, 175, 0.9);
+      border: none;
+      font-size: 0.875rem;
+      transition: all 0.15s ease;
+    }
+
+    .chips button[aria-pressed="true"] {
+      background: rgba(110, 231, 183, 0.2);
+      color: rgba(110, 231, 183, 1);
+    }
+
+    .chips button:hover {
+      background: rgba(75, 85, 99, 0.7);
+      color: rgba(229, 231, 235, 1);
+    }
+
+    .utils {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .utils button {
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      background: rgba(55, 65, 81, 0.6);
+      color: rgba(156, 163, 175, 0.9);
+      border: none;
+      font-size: 0.875rem;
+    }
+
+    .row {
+      width: 100%;
+      padding: 1rem 2rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      background: rgba(11, 15, 20, 0.3);
+    }
+
+    .tile {
+      background: rgba(11, 15, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .tile .lead {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .tile .lead img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .tile .kpi {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .tile .kpi output {
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .tile .kpi small {
+      color: rgba(156, 163, 175, 0.8);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: rgba(11, 15, 20, 0.3);
+    }
+
+    .tabs button {
+      padding: 1rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: rgba(156, 163, 175, 0.9);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .tabs button[aria-selected="true"] {
+      color: rgba(110, 231, 183, 1);
+      border-bottom-color: rgba(110, 231, 183, 1);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: rgba(11, 15, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card .badges {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .card .badges img {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .card .badges span {
+      background: rgba(110, 231, 183, 0.1);
+      color: rgba(110, 231, 183, 0.9);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card h3 img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .card .kpis {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .card .kpis output {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .card .kpis small {
+      color: rgba(156, 163, 175, 0.8);
+    }
+
+    .card .actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .card .actions button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      background: rgba(55, 65, 81, 0.6);
+      color: rgba(156, 163, 175, 0.9);
+      border: none;
+      font-size: 0.875rem;
+      transition: all 0.15s ease;
+    }
+
+    .card .actions button:hover {
+      background: rgba(75, 85, 99, 0.7);
+      color: rgba(229, 231, 235, 1);
+    }
+
+    .table {
+      background: rgba(11, 15, 20, 0.3);
+    }
+
+    .table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .table th {
+      color: rgba(156, 163, 175, 0.9);
+      font-weight: 500;
+    }
+
+    .table td {
+      color: white;
+    }
+
+    .list {
+      background: rgba(11, 15, 20, 0.3);
+    }
+
+    .news {
+      display: flex;
+      gap: 1rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .news .thumb {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 0.5rem;
+      object-fit: cover;
+    }
+
+    .news .body {
+      flex: 1;
+    }
+
+    .news .body h3 {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .news .body p {
+      color: rgba(156, 163, 175, 0.8);
+      font-size: 0.875rem;
+    }
+
+    .news .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .overlay.hidden {
+      display: none;
+    }
+
+    .story .hero {
+      background: rgba(11, 15, 20, 0.95);
+      border-bottom: 1px solid var(--color-border-subtle);
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .story .hero img {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .story .hero h2 {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .story .hero .pills {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+
+    .story .hero .pills span {
+      background: rgba(110, 231, 183, 0.1);
+      color: rgba(110, 231, 183, 0.9);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+    }
+
+    .story .hero button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: rgba(156, 163, 175, 0.9);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .story .content {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .kpi-fullrow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .kpi-fullrow dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem 1rem;
+    }
+
+    .kpi-fullrow dt {
+      color: rgba(156, 163, 175, 0.8);
+    }
+
+    .kpi-fullrow dd {
+      color: white;
+      font-weight: 600;
+    }
+
+    .actions-wide {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .actions-wide button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      background: linear-gradient(135deg, rgba(110, 231, 183, 1) 0%, rgba(52, 211, 153, 1) 100%);
+      color: rgba(0, 0, 0, 0.9);
+      border: none;
+      font-weight: 600;
+    }
+
+    .related-wide ul {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .related-wide button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      background: rgba(55, 65, 81, 0.6);
+      color: rgba(156, 163, 175, 0.9);
+      border: none;
+    }
+
+    .provenance {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .provenance small {
+      color: rgba(156, 163, 175, 0.6);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .bar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .search {
+        max-width: none;
+      }
+
+      .chips {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        overflow-x: auto;
+      }
+
+      .table {
+        overflow-x: auto;
+      }
+
+      .news {
+        flex-direction: column;
+      }
+
+      .kpi-fullrow {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body class="h-full text-gray-200 antialiased bg-gradient-main">
+  <div class="min-h-screen flex flex-col">
+    <!-- Navbar Container -->
+    <div id="navbar-container"></div>
+
+    <!-- Discovery Page -->
+    <main aria-label="Discovery" class="discovery-container">
+      
+      <!-- 1) TOP BAR (single line; minimal controls; sticky; full-width) -->
+      <header role="banner" class="top-bar">
+        <div class="bar">
+          <h1 class="text-xl font-bold">Nimbus • Discovery</h1>
+          <div role="search" class="search">
+            <img alt="" src="https://api.iconify.design/mdi/magnify.svg" width="16" height="16" />
+            <input aria-label="Search tokens, HIP-3, news" placeholder="Search tokens, HIP-3, news…" />
+          </div>
+          <!-- Compact filter chips: replace all side filters -->
+          <nav aria-label="Quick filters" class="chips">
+            <button data-chip="all" aria-pressed="true">All</button>
+            <button data-chip="hip3">HIP-3</button>
+            <button data-chip="perps">Perps</button>
+            <button data-chip="spot">Spot</button>
+            <button data-chip="news">News</button>
+            <!-- Secondary chips: timeframe & sort -->
+            <button data-chip="tf" data-value="24h">24h</button>
+            <button data-chip="tf" data-value="7d">7d</button>
+            <button data-chip="sort" data-value="trending">Trending</button>
+            <button data-chip="sort" data-value="volume">Volume</button>
+          </nav>
+          <div class="utils">
+            <button>Watchlist</button><button>Alerts</button><button>RSS</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- 2) STATS STRIP (full-bleed row with 3 expanding tiles) -->
+      <section aria-label="Market Sentiment" class="row stats">
+        <article class="tile">
+          <div class="lead">
+            <img alt="" src="https://api.iconify.design/mdi/emoticon-excited-outline.svg" />
+            <h2>Fear & Greed</h2>
+          </div>
+          <div class="kpi">
+            <output data-bind="fgi.value">--</output>
+            <small data-bind="fgi.delta24h">--%</small>
+          </div>
+          <img alt="FGI spark" data-bind-src="quickchartUrl(line(fgi.series))" width="100%" height="60" />
+        </article>
+        <article class="tile">
+          <div class="lead">
+            <img alt="" src="https://api.iconify.design/mdi/bitcoin.svg" />
+            <h2>BTC Dominance</h2>
+          </div>
+          <div class="kpi">
+            <output data-bind="btcDom.value">--%</output>
+            <small data-bind="btcDom.delta24h">--%</small>
+          </div>
+          <img alt="BTC.D spark" data-bind-src="quickchartUrl(line(btcDom.series))" width="100%" height="60" />
+        </article>
+        <article class="tile">
+          <div class="lead">
+            <img alt="" src="https://api.iconify.design/mdi/alpha-a-circle-outline.svg" />
+            <h2>Altcoin Season</h2>
+          </div>
+          <div class="kpi">
+            <output data-bind="altseason.value">--</output>
+            <small data-bind="altseason.label">--</small>
+          </div>
+          <img alt="Altseason spark" data-bind-src="quickchartUrl(line(altseason.series))" width="100%" height="60" />
+        </article>
+      </section>
+
+      <!-- 3) TABS (full-width) -->
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button role="tab" aria-selected="true" data-tab="trending">Trending</button>
+        <button role="tab" data-tab="hip3">HIP-3</button>
+        <button role="tab" data-tab="perps">Perps</button>
+        <button role="tab" data-tab="spot">Spot</button>
+        <button role="tab" data-tab="news">News</button>
+      </nav>
+
+      <!-- 4) TRENDING STRIP (full-bleed, responsive grid; cards expand) -->
+      <section role="tabpanel" aria-label="Trending" class="row grid auto-fit" id="trending-panel">
+        <!-- HIP-3 Perp Card (HL) -->
+        <article class="card">
+          <header class="badges">
+            <img alt="" src="https://api.iconify.design/mdi/playlist-star.svg" />
+            <span>HIP-3 Perp</span>
+            <span data-bind="hl.maxLeverage">Max Lev: 10x</span>
+          </header>
+          <h3 data-bind="hl.symbol">vSTRIPE</h3>
+          <p data-bind="hl.instrument">vntls:vSTRIPE</p>
+          <div class="kpis">
+            <output data-bind="hl.markPx">--</output>
+            <small data-bind="pct(prevDayPx, markPx)">--%</small>
+            <small data-bind="hl.openInterest">OI: --</small>
+            <small data-bind="hl.funding">F: --</small>
+          </div>
+          <img alt="series" data-bind-src="quickchartUrl(line(hl.candles.map(c=>c.c)))" width="100%" height="80" />
+          <footer class="actions">
+            <button aria-haspopup="dialog" onclick="openStory('hl')">Story ▸</button>
+            <button>Watch</button>
+            <button>Trade</button>
+          </footer>
+        </article>
+
+        <!-- Perp Card (CoinGecko logo + sparkline) -->
+        <article class="card">
+          <header class="badges">
+            <img alt="" src="https://api.iconify.design/mdi/chart-line-variant.svg" /><span>Perp</span>
+          </header>
+          <h3><img alt="" data-bind-src="row.image" /> ETH-PERP</h3>
+          <div class="kpis"><output data-bind="row.price">--</output><small data-bind="row.change24h">--%</small></div>
+          <img alt="spark" data-bind-src="quickchartUrl(line(row.spark))" width="100%" height="80" />
+          <footer class="actions"><button aria-haspopup="dialog" onclick="openStory('perp')">Story ▸</button><button>Watch</button><button>Trade</button></footer>
+        </article>
+
+        <!-- News Card (thumbnail if present) -->
+        <article class="card">
+          <img class="thumb" alt="" data-bind-src="news.thumb || 'https://api.iconify.design/mdi/newspaper.svg'" width="100%" height="120" style="object-fit: cover;" />
+          <h3 data-bind="news.title">Headline</h3>
+          <p><small data-bind="news.source">Source</small> · <time data-bind="news.published">--</time></p>
+          <footer class="actions"><button aria-haspopup="dialog" onclick="openStory('news')">Open Story ▸</button><a target="_blank" rel="noopener" data-bind-href="news.link">Read</a></footer>
+        </article>
+
+        <!-- Repeat more cards; grid auto-fits to fill each row fully -->
+      </section>
+
+      <!-- 5) HIP-3 GRID (full-width; all universe items; auto-fit, fills rows) -->
+      <section role="tabpanel" hidden aria-label="HIP-3" class="row grid auto-fit" id="hip3-panel">
+        <!-- For each HL universe[i] + marketCtxs[i] -->
+        <article class="card">
+          <header class="badges">
+            <img alt="" src="https://api.iconify.design/mdi/chart-bell-curve.svg" />
+            <span>HIP-3 Perp</span>
+            <span data-bind="u.maxLeverage">Max Lev: --x</span>
+          </header>
+          <h3 data-bind="u.symbol">vCURSOR</h3>
+          <p data-bind="u.name">vntls:vCURSOR</p>
+          <div class="kpis">
+            <output data-bind="m.markPx">--</output>
+            <small data-bind="pct(m.prevDayPx, m.markPx)">--%</small>
+            <small data-bind="m.openInterest">OI: --</small>
+            <small data-bind="m.funding">F: --</small>
+          </div>
+          <img alt="series" data-bind-src="quickchartUrl(line(candles(u.name).map(c=>c.c)))" width="100%" height="80" />
+          <footer class="actions"><button aria-haspopup="dialog" onclick="openStory('hip3')">Story ▸</button><button>Watch</button><button>Trade</button></footer>
+        </article>
+      </section>
+
+      <!-- 6) PERPS TABLE (full-width; fills container) -->
+      <section role="tabpanel" hidden aria-label="Perps" class="row table" id="perps-panel">
+        <table role="table" aria-label="Perp markets">
+          <thead>
+            <tr><th aria-sort="none">Symbol</th><th>Price</th><th>24h %</th><th>OI</th><th>Funding</th><th>Volume</th><th>Spark</th><th>Story</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img alt="" src="https://api.iconify.design/mdi/alpha-h-circle.svg" width="20" height="20" /> <strong data-bind="hl.symbol">vSTRIPE</strong> <small>HL Testnet</small></td>
+              <td data-bind="hl.markPx">--</td>
+              <td data-bind="pct(prevDayPx, markPx)">--%</td>
+              <td data-bind="hl.openInterest">--</td>
+              <td data-bind="hl.funding">--</td>
+              <td data-bind="hl.dayNtlVlm">--</td>
+              <td><img alt="" data-bind-src="quickchartUrl(line(hl.candles.map(c=>c.c)))" width="100" height="40" /></td>
+              <td><button aria-haspopup="dialog" onclick="openStory('hl')">Story ▸</button></td>
+            </tr>
+            <!-- More rows (HL + other perps) -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 7) SPOT TABLE (full-width) -->
+      <section role="tabpanel" hidden aria-label="Spot" class="row table" id="spot-panel">
+        <table role="table" aria-label="Spot markets">
+          <thead><tr><th>Symbol</th><th>Price</th><th>24h %</th><th>Mkt Cap</th><th>Volume</th><th>Spark</th><th>Story</th></tr></thead>
+          <tbody><!-- CoinGecko rows; logo row.image; sparkline_in_7d.price → QuickChart --></tbody>
+        </table>
+      </section>
+
+      <!-- 8) NEWS STREAM (full-width; each item stretches) -->
+      <section role="tabpanel" hidden aria-label="News" class="row list" id="news-panel">
+        <article class="news">
+          <img class="thumb" alt="" data-bind-src="news.thumb || 'https://api.iconify.design/mdi/newspaper.svg'" />
+          <div class="body">
+            <h3 data-bind="news.title">Headline</h3>
+            <p><small data-bind="news.source">Source</small> · <time data-bind="news.published">--</time></p>
+            <div class="tags"><!-- tags --></div>
+          </div>
+          <div class="actions">
+            <button aria-haspopup="dialog" onclick="openStory('news')">Open Story ▸</button>
+            <a target="_blank" rel="noopener" data-bind-href="news.link">Read</a>
+          </div>
+        </article>
+        <!-- Repeat; each article fills row width -->
+      </section>
+
+      <!-- 9) STORY OVERLAY (full-width dialog that covers content) -->
+      <div role="dialog" aria-modal="true" hidden class="overlay story" id="story-overlay">
+        <header class="hero">
+          <img alt="" data-bind-src="selected.icon || selected.logo" />
+          <h2 data-bind="selected.name">Item Name</h2>
+          <div class="pills"><span data-bind="selected.type">HIP-3 Perp</span><span data-bind="selected.tags">Sentiment</span></div>
+          <button aria-label="Close" onclick="closeStory()">✕</button>
+        </header>
+        <section class="content">
+          <article aria-label="Story">
+            <h3>Story</h3>
+            <p data-bind="selected.story.summary">…</p>
+            <p data-bind="selected.story.method">…</p>
+            <p data-bind="selected.story.whyMatters">…</p>
+          </article>
+          <section aria-label="Key Metrics" class="kpi-fullrow">
+            <dl>
+              <dt>Mark</dt><dd data-bind="hl.markPx">--</dd>
+              <dt>Oracle</dt><dd data-bind="hl.oraclePx">--</dd>
+              <dt>Premium</dt><dd data-bind="hl.premium">--</dd>
+              <dt>Funding</dt><dd data-bind="hl.funding">--</dd>
+              <dt>Max Lev</dt><dd data-bind="hl.maxLeverage">--x</dd>
+            </dl>
+            <img alt="OHLC" data-bind-src="quickchartUrl(ohlc(selected.candles))" width="100%" height="200" />
+          </section>
+          <section class="actions-wide">
+            <button hidden data-bind-hidden="!selected.tradable">Open in Trade</button>
+            <button>Add to Watchlist</button>
+          </section>
+          <section aria-label="Related" class="related-wide">
+            <ul><li><button>Related HIP-3</button></li><li><button>Related Token</button></li><li><button>Related News</button></li></ul>
+          </section>
+          <footer class="provenance">
+            <small>Source: HL Testnet (metaAndAssetCtxs: vntls) · Indices from Alternative.me & CoinGecko</small>
+            <small>Last updated: <time data-bind="selected.lastUpdated">--</time></small>
+          </footer>
+        </section>
+      </div>
+
+      <!-- 10) STATES (full-width rows) -->
+      <section aria-label="States" class="row">
+        <div data-state="loading" id="loading-state">Loading…</div>
+        <div data-state="empty" id="empty-state" style="display: none;">No results. Adjust top filters.</div>
+        <div data-state="error" id="error-state" style="display: none;">Couldn't load data. Retry.</div>
+      </section>
+
+      <!-- 11) PAGINATION (full-width) -->
+      <nav aria-label="Pagination" class="row">
+        <button onclick="loadMore()">Load more</button>
+      </nav>
+    </main>
+  </div>
+
+  <script>
+    // Discovery Page JavaScript
+    let currentTab = 'trending';
+    let currentFilters = { all: true };
+    let discoveryData = {
+      fgi: { value: '--', delta24h: '--%', series: [] },
+      btcDom: { value: '--%', delta24h: '--%', series: [] },
+      altseason: { value: '--', label: '--', series: [] },
+      hl: {
+        universe: [],
+        marketCtxs: [],
+        candles: {},
+        maxLeverage: '10x',
+        symbol: 'vSTRIPE',
+        instrument: 'vntls:vSTRIPE',
+        markPx: '--',
+        openInterest: '--',
+        funding: '--',
+        dayNtlVlm: '--'
+      },
+      spot: [],
+      news: []
+    };
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      initTabs();
+      initFilters();
+      loadMarketData();
+      loadHLData();
+    });
+
+    // Tab functionality
+    function initTabs() {
+      const tabs = document.querySelectorAll('[role="tab"]');
+      const panels = document.querySelectorAll('[role="tabpanel"]');
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabName = tab.dataset.tab;
+          
+          // Update tab states
+          tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+          tab.setAttribute('aria-selected', 'true');
+          
+          // Show/hide panels
+          panels.forEach(panel => {
+            panel.hidden = true;
+          });
+          
+          const targetPanel = document.getElementById(`${tabName}-panel`);
+          if (targetPanel) {
+            targetPanel.hidden = false;
+          }
+          
+          currentTab = tabName;
+        });
+      });
+    }
+
+    // Filter functionality
+    function initFilters() {
+      const chips = document.querySelectorAll('.chips button');
+      
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const chipType = chip.dataset.chip;
+          const chipValue = chip.dataset.value;
+          
+          if (chipType === 'all') {
+            // Reset all filters
+            chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+            chip.setAttribute('aria-pressed', 'true');
+            currentFilters = { all: true };
+          } else {
+            // Toggle specific filter
+            const isPressed = chip.getAttribute('aria-pressed') === 'true';
+            chip.setAttribute('aria-pressed', !isPressed);
+            
+            if (!isPressed) {
+              currentFilters[chipType] = chipValue || true;
+            } else {
+              delete currentFilters[chipType];
+            }
+            
+            // Update all chip
+            const allChip = document.querySelector('[data-chip="all"]');
+            allChip.setAttribute('aria-pressed', 'false');
+          }
+          
+          applyFilters();
+        });
+      });
+    }
+
+    // Apply current filters
+    function applyFilters() {
+      console.log('Applying filters:', currentFilters);
+      // Filter logic would go here
+    }
+
+    // Load market data from APIs
+    async function loadMarketData() {
+      try {
+        // Load Fear & Greed Index
+        const fgiResponse = await fetch('https://api.alternative.me/fng/?limit=30');
+        const fgiData = await fgiResponse.json();
+        if (fgiData.data && fgiData.data.length > 0) {
+          const latest = fgiData.data[0];
+          discoveryData.fgi.value = latest.value;
+          discoveryData.fgi.delta24h = '0%'; // Calculate from series
+          discoveryData.fgi.series = fgiData.data.map(d => parseInt(d.value));
+        }
+
+        // Load BTC Dominance from CoinGecko
+        const globalResponse = await fetch('https://api.coingecko.com/api/v3/global');
+        const globalData = await globalResponse.json();
+        if (globalData.data) {
+          discoveryData.btcDom.value = globalData.data.market_cap_percentage.btc.toFixed(1) + '%';
+        }
+
+        // Load spot market data
+        const marketsResponse = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true');
+        const marketsData = await marketsResponse.json();
+        discoveryData.spot = marketsData;
+
+        updateUI();
+      } catch (error) {
+        console.error('Error loading market data:', error);
+        showError();
+      }
+    }
+
+    // Load Hyperliquid Testnet data
+    async function loadHLData() {
+      try {
+        // Mock data for now - would use real API calls
+        discoveryData.hl.universe = [
+          { name: 'vntls:vSTRIPE', symbol: 'vSTRIPE', maxLeverage: 10 },
+          { name: 'vntls:vCURSOR', symbol: 'vCURSOR', maxLeverage: 10 }
+        ];
+        
+        discoveryData.hl.marketCtxs = [
+          { markPx: '0.95', oraclePx: '0.94', prevDayPx: '0.92', openInterest: '1.2M', dayNtlVlm: '500K', funding: '0.01%', premium: '1.06%' },
+          { markPx: '2.45', oraclePx: '2.44', prevDayPx: '2.40', openInterest: '800K', dayNtlVlm: '300K', funding: '0.02%', premium: '1.02%' }
+        ];
+
+        // Mock candle data
+        discoveryData.hl.candles['vntls:vSTRIPE'] = generateMockCandles(100);
+        discoveryData.hl.candles['vntls:vCURSOR'] = generateMockCandles(100);
+
+        updateUI();
+      } catch (error) {
+        console.error('Error loading HL data:', error);
+        showError();
+      }
+    }
+
+    // Generate mock candle data
+    function generateMockCandles(count) {
+      const candles = [];
+      let price = 1.0;
+      const now = Date.now();
+      
+      for (let i = 0; i < count; i++) {
+        const change = (Math.random() - 0.5) * 0.02; // ±1% change
+        price *= (1 + change);
+        
+        candles.push({
+          t: now - (count - i) * 60000, // 1 minute intervals
+          o: price * 0.999,
+          h: price * 1.001,
+          l: price * 0.998,
+          c: price,
+          v: Math.random() * 1000
+        });
+      }
+      
+      return candles;
+    }
+
+    // Update UI with loaded data
+    function updateUI() {
+      // Update stats tiles
+      document.querySelector('[data-bind="fgi.value"]').textContent = discoveryData.fgi.value;
+      document.querySelector('[data-bind="fgi.delta24h"]').textContent = discoveryData.fgi.delta24h;
+      
+      document.querySelector('[data-bind="btcDom.value"]').textContent = discoveryData.btcDom.value;
+      document.querySelector('[data-bind="btcDom.delta24h"]').textContent = discoveryData.btcDom.delta24h;
+
+      // Update chart URLs
+      updateChartUrls();
+      
+      // Hide loading state
+      document.getElementById('loading-state').style.display = 'none';
+    }
+
+    // Update chart URLs
+    function updateChartUrls() {
+      const chartElements = document.querySelectorAll('[data-bind-src^="quickchartUrl"]');
+      chartElements.forEach(el => {
+        const dataType = el.dataset.bindSrc;
+        if (dataType.includes('fgi.series')) {
+          el.src = generateQuickChartUrl(discoveryData.fgi.series);
+        } else if (dataType.includes('btcDom.series')) {
+          el.src = generateQuickChartUrl(discoveryData.btcDom.series);
+        } else if (dataType.includes('hl.candles')) {
+          const candles = discoveryData.hl.candles['vntls:vSTRIPE'] || [];
+          const closes = candles.map(c => c.c);
+          el.src = generateQuickChartUrl(closes);
+        }
+      });
+    }
+
+    // Generate QuickChart URL
+    function generateQuickChartUrl(data) {
+      const config = {
+        type: 'sparkline',
+        data: {
+          datasets: [{
+            data: data,
+            borderColor: '#6EE7B7',
+            backgroundColor: 'rgba(110, 231, 183, 0.1)',
+            borderWidth: 2,
+            fill: true
+          }]
+        },
+        options: {
+          scales: {
+            x: { display: false },
+            y: { display: false }
+          },
+          elements: {
+            point: { radius: 0 }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      };
+      
+      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}`;
+    }
+
+    // Story overlay functions
+    function openStory(type) {
+      const overlay = document.getElementById('story-overlay');
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      
+      // Set story content based on type
+      const selected = {
+        name: type === 'hl' ? 'vSTRIPE' : type === 'perp' ? 'ETH-PERP' : 'News Story',
+        type: type === 'hl' ? 'HIP-3 Perp' : type === 'perp' ? 'Perp' : 'News',
+        icon: type === 'hl' ? 'https://api.iconify.design/mdi/alpha-h-circle.svg' : 
+              type === 'perp' ? 'https://api.iconify.design/mdi/chart-line-variant.svg' :
+              'https://api.iconify.design/mdi/newspaper.svg',
+        story: {
+          summary: 'This is a sample story summary...',
+          method: 'Trading methodology explanation...',
+          whyMatters: 'Why this matters for traders...'
+        },
+        lastUpdated: new Date().toLocaleString()
+      };
+      
+      // Update story content
+      document.querySelector('[data-bind="selected.name"]').textContent = selected.name;
+      document.querySelector('[data-bind="selected.type"]').textContent = selected.type;
+      document.querySelector('[data-bind="selected.icon"]').src = selected.icon;
+      document.querySelector('[data-bind="selected.story.summary"]').textContent = selected.story.summary;
+      document.querySelector('[data-bind="selected.story.method"]').textContent = selected.story.method;
+      document.querySelector('[data-bind="selected.story.whyMatters"]').textContent = selected.story.whyMatters;
+      document.querySelector('[data-bind="selected.lastUpdated"]').textContent = selected.lastUpdated;
+    }
+
+    function closeStory() {
+      const overlay = document.getElementById('story-overlay');
+      overlay.hidden = true;
+      document.body.style.overflow = 'auto';
+    }
+
+    // Load more functionality
+    function loadMore() {
+      console.log('Loading more data...');
+      // Implementation would load additional data
+    }
+
+    // Error handling
+    function showError() {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('error-state').style.display = 'block';
+    }
+
+    // Close story on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeStory();
+      }
+    });
+  </script>
+</body>
+</html>
