@@ -870,8 +870,10 @@
         const fgiData = await fgiResponse.json();
         if (fgiData.data && fgiData.data.length > 0) {
           const latest = fgiData.data[0];
+          const previous = fgiData.data[1];
           discoveryData.fgi.value = latest.value;
-          discoveryData.fgi.delta24h = '0%'; // Calculate from series
+          discoveryData.fgi.delta24h = previous ? 
+            ((parseInt(latest.value) - parseInt(previous.value)).toFixed(1) + '%') : '0%';
           discoveryData.fgi.series = fgiData.data.map(d => parseInt(d.value));
         }
 
@@ -880,12 +882,38 @@
         const globalData = await globalResponse.json();
         if (globalData.data) {
           discoveryData.btcDom.value = globalData.data.market_cap_percentage.btc.toFixed(1) + '%';
+          // Mock BTC dominance series (CoinGecko doesn't provide historical dominance)
+          discoveryData.btcDom.series = generateMockSeries(30, parseFloat(globalData.data.market_cap_percentage.btc));
+          discoveryData.btcDom.delta24h = '0.2%'; // Mock change
         }
 
-        // Load spot market data
+        // Load spot market data with sparklines
         const marketsResponse = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true');
         const marketsData = await marketsResponse.json();
         discoveryData.spot = marketsData;
+
+        // Load news data (mock for now - would need RSS parser)
+        discoveryData.news = [
+          {
+            title: "Bitcoin Reaches New All-Time High",
+            source: "CoinDesk",
+            published: "2 hours ago",
+            link: "https://coindesk.com",
+            thumb: "https://api.iconify.design/mdi/bitcoin.svg"
+          },
+          {
+            title: "Ethereum 2.0 Staking Rewards Increase",
+            source: "The Block",
+            published: "4 hours ago", 
+            link: "https://theblock.co",
+            thumb: "https://api.iconify.design/mdi/ethereum.svg"
+          }
+        ];
+
+        // Generate altcoin season data
+        discoveryData.altseason.value = '75';
+        discoveryData.altseason.label = 'Alt Season';
+        discoveryData.altseason.series = generateMockSeries(30, 75);
 
         updateUI();
       } catch (error) {
@@ -897,20 +925,64 @@
     // Load Hyperliquid Testnet data
     async function loadHLData() {
       try {
-        // Mock data for now - would use real API calls
-        discoveryData.hl.universe = [
-          { name: 'vntls:vSTRIPE', symbol: 'vSTRIPE', maxLeverage: 10 },
-          { name: 'vntls:vCURSOR', symbol: 'vCURSOR', maxLeverage: 10 }
-        ];
+        // Try to fetch real Hyperliquid Testnet data
+        try {
+          const universeResponse = await fetch('https://api.hyperliquid-testnet.xyz/info', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'perpDexs' })
+          });
+          
+          if (universeResponse.ok) {
+            const universeData = await universeResponse.json();
+            console.log('HL Universe data:', universeData);
+            
+            // Try to get market contexts
+            const ctxResponse = await fetch('https://api.hyperliquid-testnet.xyz/info', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ type: 'metaAndAssetCtxs', dex: 'vntls' })
+            });
+            
+            if (ctxResponse.ok) {
+              const ctxData = await ctxResponse.json();
+              console.log('HL Market contexts:', ctxData);
+              
+              // Process real data if available
+              if (universeData && ctxData) {
+                discoveryData.hl.universe = universeData.slice(0, 5); // Limit to first 5
+                discoveryData.hl.marketCtxs = ctxData.slice(0, 5);
+              }
+            }
+          }
+        } catch (apiError) {
+          console.log('HL API not available, using mock data:', apiError);
+        }
         
-        discoveryData.hl.marketCtxs = [
-          { markPx: '0.95', oraclePx: '0.94', prevDayPx: '0.92', openInterest: '1.2M', dayNtlVlm: '500K', funding: '0.01%', premium: '1.06%' },
-          { markPx: '2.45', oraclePx: '2.44', prevDayPx: '2.40', openInterest: '800K', dayNtlVlm: '300K', funding: '0.02%', premium: '1.02%' }
-        ];
+        // Fallback to mock data if API fails
+        if (!discoveryData.hl.universe.length) {
+          discoveryData.hl.universe = [
+            { name: 'vntls:vSTRIPE', symbol: 'vSTRIPE', maxLeverage: 10 },
+            { name: 'vntls:vCURSOR', symbol: 'vCURSOR', maxLeverage: 10 },
+            { name: 'vntls:vGOOGL', symbol: 'vGOOGL', maxLeverage: 10 },
+            { name: 'vntls:vTSLA', symbol: 'vTSLA', maxLeverage: 10 },
+            { name: 'vntls:vNVDA', symbol: 'vNVDA', maxLeverage: 10 }
+          ];
+          
+          discoveryData.hl.marketCtxs = [
+            { markPx: '0.95', oraclePx: '0.94', prevDayPx: '0.92', openInterest: '1.2M', dayNtlVlm: '500K', funding: '0.01%', premium: '1.06%' },
+            { markPx: '2.45', oraclePx: '2.44', prevDayPx: '2.40', openInterest: '800K', dayNtlVlm: '300K', funding: '0.02%', premium: '1.02%' },
+            { markPx: '145.20', oraclePx: '145.15', prevDayPx: '143.80', openInterest: '2.1M', dayNtlVlm: '800K', funding: '0.03%', premium: '1.03%' },
+            { markPx: '245.80', oraclePx: '245.70', prevDayPx: '242.50', openInterest: '1.5M', dayNtlVlm: '600K', funding: '0.04%', premium: '1.04%' },
+            { markPx: '485.20', oraclePx: '485.10', prevDayPx: '480.30', openInterest: '3.2M', dayNtlVlm: '1.2M', funding: '0.02%', premium: '1.02%' }
+          ];
+        }
 
-        // Mock candle data
-        discoveryData.hl.candles['vntls:vSTRIPE'] = generateMockCandles(100);
-        discoveryData.hl.candles['vntls:vCURSOR'] = generateMockCandles(100);
+        // Generate candle data for all instruments
+        discoveryData.hl.universe.forEach((instrument, index) => {
+          const basePrice = parseFloat(discoveryData.hl.marketCtxs[index]?.markPx || '1.0');
+          discoveryData.hl.candles[instrument.name] = generateMockCandles(100, basePrice);
+        });
 
         updateUI();
       } catch (error) {
@@ -920,9 +992,9 @@
     }
 
     // Generate mock candle data
-    function generateMockCandles(count) {
+    function generateMockCandles(count, basePrice = 1.0) {
       const candles = [];
-      let price = 1.0;
+      let price = basePrice;
       const now = Date.now();
       
       for (let i = 0; i < count; i++) {
@@ -942,6 +1014,20 @@
       return candles;
     }
 
+    // Generate mock series data
+    function generateMockSeries(count, baseValue) {
+      const series = [];
+      let value = baseValue;
+      
+      for (let i = 0; i < count; i++) {
+        const change = (Math.random() - 0.5) * 0.1; // ±5% change
+        value *= (1 + change);
+        series.push(Math.max(0, value)); // Ensure non-negative
+      }
+      
+      return series;
+    }
+
     // Update UI with loaded data
     function updateUI() {
       // Update stats tiles
@@ -951,11 +1037,126 @@
       document.querySelector('[data-bind="btcDom.value"]').textContent = discoveryData.btcDom.value;
       document.querySelector('[data-bind="btcDom.delta24h"]').textContent = discoveryData.btcDom.delta24h;
 
+      document.querySelector('[data-bind="altseason.value"]').textContent = discoveryData.altseason.value;
+      document.querySelector('[data-bind="altseason.label"]').textContent = discoveryData.altseason.label;
+
       // Update chart URLs
       updateChartUrls();
       
+      // Populate trending cards with real data
+      populateTrendingCards();
+      
+      // Populate spot table with real data
+      populateSpotTable();
+      
+      // Populate news section
+      populateNewsSection();
+      
       // Hide loading state
       document.getElementById('loading-state').style.display = 'none';
+    }
+
+    // Populate trending cards with real data
+    function populateTrendingCards() {
+      const trendingPanel = document.getElementById('trending-panel');
+      
+      // Clear existing cards except the first HIP-3 card
+      const existingCards = trendingPanel.querySelectorAll('.card');
+      for (let i = 1; i < existingCards.length; i++) {
+        existingCards[i].remove();
+      }
+      
+      // Add top cryptocurrencies as cards
+      discoveryData.spot.slice(0, 5).forEach((coin, index) => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <header class="badges">
+            <img alt="" src="https://api.iconify.design/mdi/chart-line-variant.svg" />
+            <span>Spot</span>
+            <span>#${coin.market_cap_rank || 'N/A'}</span>
+          </header>
+          <h3><img alt="" src="${coin.image}" width="24" height="24" /> ${coin.symbol.toUpperCase()}</h3>
+          <p>${coin.name}</p>
+          <div class="kpis">
+            <output>$${coin.current_price?.toFixed(2) || '--'}</output>
+            <small class="${coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}">${coin.price_change_percentage_24h?.toFixed(2) || '--'}%</small>
+            <small>Vol: $${(coin.total_volume / 1000000).toFixed(1)}M</small>
+            <small>Cap: $${(coin.market_cap / 1000000000).toFixed(1)}B</small>
+          </div>
+          <img alt="spark" src="${generateQuickChartUrl(coin.sparkline_in_7d?.price || [])}" width="100%" height="80" />
+          <footer class="actions">
+            <button aria-haspopup="dialog" onclick="openStory('spot-${coin.id}')">Story ▸</button>
+            <button>Watch</button>
+            <button>Trade</button>
+          </footer>
+        `;
+        trendingPanel.appendChild(card);
+      });
+      
+      // Add news cards
+      discoveryData.news.forEach(news => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <img class="thumb" alt="" src="${news.thumb}" width="100%" height="120" style="object-fit: cover;" />
+          <h3>${news.title}</h3>
+          <p><small>${news.source}</small> · <time>${news.published}</time></p>
+          <footer class="actions">
+            <button aria-haspopup="dialog" onclick="openStory('news-${news.source}')">Open Story ▸</button>
+            <a target="_blank" rel="noopener" href="${news.link}">Read</a>
+          </footer>
+        `;
+        trendingPanel.appendChild(card);
+      });
+    }
+
+    // Populate spot table with real data
+    function populateSpotTable() {
+      const spotTable = document.querySelector('#spot-panel tbody');
+      spotTable.innerHTML = '';
+      
+      discoveryData.spot.forEach(coin => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <img alt="" src="${coin.image}" width="20" height="20" /> 
+            <strong>${coin.symbol.toUpperCase()}</strong> 
+            <small>${coin.name}</small>
+          </td>
+          <td>$${coin.current_price?.toFixed(2) || '--'}</td>
+          <td class="${coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}">${coin.price_change_percentage_24h?.toFixed(2) || '--'}%</td>
+          <td>$${(coin.market_cap / 1000000000).toFixed(1)}B</td>
+          <td>$${(coin.total_volume / 1000000).toFixed(1)}M</td>
+          <td><img alt="" src="${generateQuickChartUrl(coin.sparkline_in_7d?.price || [])}" width="100" height="40" /></td>
+          <td><button aria-haspopup="dialog" onclick="openStory('spot-${coin.id}')">Story ▸</button></td>
+        `;
+        spotTable.appendChild(row);
+      });
+    }
+
+    // Populate news section
+    function populateNewsSection() {
+      const newsPanel = document.getElementById('news-panel');
+      newsPanel.innerHTML = '';
+      
+      discoveryData.news.forEach(news => {
+        const article = document.createElement('article');
+        article.className = 'news';
+        article.innerHTML = `
+          <img class="thumb" alt="" src="${news.thumb}" />
+          <div class="body">
+            <h3>${news.title}</h3>
+            <p><small>${news.source}</small> · <time>${news.published}</time></p>
+            <div class="tags"></div>
+          </div>
+          <div class="actions">
+            <button aria-haspopup="dialog" onclick="openStory('news-${news.source}')">Open Story ▸</button>
+            <a target="_blank" rel="noopener" href="${news.link}">Read</a>
+          </div>
+        `;
+        newsPanel.appendChild(article);
+      });
     }
 
     // Update chart URLs
