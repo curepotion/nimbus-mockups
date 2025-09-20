@@ -622,58 +622,17 @@
 
       <!-- 3) TABS (full-width) -->
       <nav class="tabs" role="tablist" aria-label="Sections">
-        <button role="tab" aria-selected="true" data-tab="trending">Trending</button>
-        <button role="tab" data-tab="hip3">HIP-3</button>
+        <button role="tab" aria-selected="true" data-tab="spot">Spot</button>
         <button role="tab" data-tab="perps">Perps</button>
-        <button role="tab" data-tab="spot">Spot</button>
-        <button role="tab" data-tab="news">News</button>
+        <button role="tab" data-tab="hip3">HIP-3</button>
       </nav>
 
-      <!-- 4) TRENDING STRIP (full-bleed, responsive grid; cards expand) -->
-      <section role="tabpanel" aria-label="Trending" class="row grid auto-fit" id="trending-panel">
-        <!-- HIP-3 Perp Card (HL) -->
-        <article class="card">
-          <header class="badges">
-            <img alt="" src="https://api.iconify.design/mdi/playlist-star.svg" />
-            <span>HIP-3 Perp</span>
-            <span data-bind="hl.maxLeverage">Max Lev: 10x</span>
-          </header>
-          <h3 data-bind="hl.symbol">vSTRIPE</h3>
-          <p data-bind="hl.instrument">vntls:vSTRIPE</p>
-          <div class="kpis">
-            <output data-bind="hl.markPx">--</output>
-            <small data-bind="pct(prevDayPx, markPx)">--%</small>
-            <small data-bind="hl.openInterest">OI: --</small>
-            <small data-bind="hl.funding">F: --</small>
-          </div>
-          <img alt="series" data-bind-src="quickchartUrl(line(hl.candles.map(c=>c.c)))" width="100%" height="50" />
-          <footer class="actions">
-            <button aria-haspopup="dialog" onclick="openStory('hl')">Story ▸</button>
-            <button>Watch</button>
-            <button>Trade</button>
-          </footer>
-        </article>
-
-        <!-- Perp Card (CoinGecko logo + sparkline) -->
-        <article class="card">
-          <header class="badges">
-            <img alt="" src="https://api.iconify.design/mdi/chart-line-variant.svg" /><span>Perp</span>
-          </header>
-          <h3><img alt="" data-bind-src="row.image" /> ETH-PERP</h3>
-          <div class="kpis"><output data-bind="row.price">--</output><small data-bind="row.change24h">--%</small></div>
-          <img alt="spark" data-bind-src="quickchartUrl(line(row.spark))" width="100%" height="50" />
-          <footer class="actions"><button aria-haspopup="dialog" onclick="openStory('perp')">Story ▸</button><button>Watch</button><button>Trade</button></footer>
-        </article>
-
-        <!-- News Card (thumbnail if present) -->
-        <article class="card">
-          <img class="thumb" alt="" data-bind-src="news.thumb || 'https://api.iconify.design/mdi/newspaper.svg'" width="100%" height="80" style="object-fit: cover;" />
-          <h3 data-bind="news.title">Headline</h3>
-          <p><small data-bind="news.source">Source</small> · <time data-bind="news.published">--</time></p>
-          <footer class="actions"><button aria-haspopup="dialog" onclick="openStory('news')">Open Story ▸</button><a target="_blank" rel="noopener" data-bind-href="news.link">Read</a></footer>
-        </article>
-
-        <!-- Repeat more cards; grid auto-fits to fill each row fully -->
+      <!-- 4) SPOT TABLE (full-width) -->
+      <section role="tabpanel" aria-label="Spot" class="row table" id="spot-panel">
+        <table role="table" aria-label="Spot markets">
+          <thead><tr><th>Symbol</th><th>Price</th><th>24h %</th><th>Mkt Cap</th><th>Volume</th><th>Spark</th><th>Story</th></tr></thead>
+          <tbody><!-- CoinGecko rows; logo row.image; sparkline_in_7d.price → QuickChart --></tbody>
+        </table>
       </section>
 
       <!-- 5) HIP-3 GRID (full-width; all universe items; auto-fit, fills rows) -->
@@ -720,30 +679,6 @@
         </table>
       </section>
 
-      <!-- 7) SPOT TABLE (full-width) -->
-      <section role="tabpanel" hidden aria-label="Spot" class="row table" id="spot-panel">
-        <table role="table" aria-label="Spot markets">
-          <thead><tr><th>Symbol</th><th>Price</th><th>24h %</th><th>Mkt Cap</th><th>Volume</th><th>Spark</th><th>Story</th></tr></thead>
-          <tbody><!-- CoinGecko rows; logo row.image; sparkline_in_7d.price → QuickChart --></tbody>
-        </table>
-      </section>
-
-      <!-- 8) NEWS STREAM (full-width; each item stretches) -->
-      <section role="tabpanel" hidden aria-label="News" class="row list" id="news-panel">
-        <article class="news">
-          <img class="thumb" alt="" data-bind-src="news.thumb || 'https://api.iconify.design/mdi/newspaper.svg'" />
-          <div class="body">
-            <h3 data-bind="news.title">Headline</h3>
-            <p><small data-bind="news.source">Source</small> · <time data-bind="news.published">--</time></p>
-            <div class="tags"><!-- tags --></div>
-          </div>
-          <div class="actions">
-            <button aria-haspopup="dialog" onclick="openStory('news')">Open Story ▸</button>
-            <a target="_blank" rel="noopener" data-bind-href="news.link">Read</a>
-          </div>
-        </article>
-        <!-- Repeat; each article fills row width -->
-      </section>
 
       <!-- 9) STORY OVERLAY (full-width dialog that covers content) -->
       <div role="dialog" aria-modal="true" hidden class="overlay story" id="story-overlay">
@@ -800,7 +735,7 @@
 
   <script>
     // Discovery Page JavaScript
-    let currentTab = 'trending';
+    let currentTab = 'spot';
     let discoveryData = {
       fgi: { value: '--', delta24h: '--%', series: [] },
       btcDom: { value: '--%', delta24h: '--%', series: [] },
@@ -832,6 +767,15 @@
     function initTabs() {
       const tabs = document.querySelectorAll('[role="tab"]');
       const panels = document.querySelectorAll('[role="tabpanel"]');
+      
+      // Initialize with spot panel visible
+      panels.forEach(panel => {
+        panel.hidden = true;
+      });
+      const spotPanel = document.getElementById('spot-panel');
+      if (spotPanel) {
+        spotPanel.hidden = false;
+      }
       
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -1046,8 +990,6 @@
       // Populate spot table with real data
       populateSpotTable();
       
-      // Populate news section
-      populateNewsSection();
       
       // Hide loading state
       document.getElementById('loading-state').style.display = 'none';
@@ -1132,29 +1074,6 @@
       });
     }
 
-    // Populate news section
-    function populateNewsSection() {
-      const newsPanel = document.getElementById('news-panel');
-      newsPanel.innerHTML = '';
-      
-      discoveryData.news.forEach(news => {
-        const article = document.createElement('article');
-        article.className = 'news';
-        article.innerHTML = `
-          <img class="thumb" alt="" src="${news.thumb}" />
-          <div class="body">
-            <h3>${news.title}</h3>
-            <p><small>${news.source}</small> · <time>${news.published}</time></p>
-            <div class="tags"></div>
-          </div>
-          <div class="actions">
-            <button aria-haspopup="dialog" onclick="openStory('news-${news.source}')">Open Story ▸</button>
-            <a target="_blank" rel="noopener" href="${news.link}">Read</a>
-          </div>
-        `;
-        newsPanel.appendChild(article);
-      });
-    }
 
     // Update chart URLs
     function updateChartUrls() {
