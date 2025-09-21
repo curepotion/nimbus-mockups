@@ -2027,9 +2027,16 @@
       
       cards.forEach(card => {
         // Skip if already updated
-        if (card.querySelector('.token-card-inner')) return;
+        if (card.querySelector('.token-card-content')) return;
         
         const tokenName = card.querySelector('.token-name')?.textContent;
+        const tokenPrice = card.querySelector('.token-price')?.textContent;
+        const tokenChange = card.querySelector('.token-change')?.textContent;
+        const tokenVolume = card.querySelector('.token-volume')?.textContent;
+        const tokenCompany = card.querySelector('.token-company')?.textContent;
+        const tokenInfo = card.querySelector('.token-info')?.textContent;
+        const tokenIcon = card.querySelector('.token-icon')?.outerHTML;
+        
         const changeElement = card.querySelector('.token-change');
         const isPositive = changeElement?.classList.contains('positive');
         const isNegative = changeElement?.classList.contains('negative');
@@ -2051,7 +2058,29 @@
           { title: 'Community growth continues', time: '8 hours ago' }
         ];
         
-        const frontContent = card.innerHTML;
+        const frontContent = `
+          <div class="token-card-content">
+            <div class="token-card-left">
+              <div class="token-card-header">
+                ${tokenIcon}
+                <div class="token-name">${tokenName}</div>
+              </div>
+              <div class="token-company">${tokenCompany}</div>
+              <div class="token-info">${tokenInfo}</div>
+              <div class="token-volume">${tokenVolume}</div>
+            </div>
+            <div class="token-card-right">
+              <div class="token-price">${tokenPrice}</div>
+              <div class="token-change ${isPositive ? 'positive' : isNegative ? 'negative' : ''}">${tokenChange}</div>
+              <div class="token-chart">
+                <svg viewBox="0 0 100 40">
+                  <path class="token-chart-line ${chartClass}" d="${chartPath}" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        `;
+        
         const backContent = `
           <div class="token-news">
             ${news.map(item => `
@@ -2063,22 +2092,7 @@
           </div>
         `;
         
-        card.innerHTML = `
-          <div class="token-card-inner">
-            <div class="token-card-front">
-              ${frontContent.replace('<div class="token-chart"></div>', `
-                <div class="token-chart">
-                  <svg viewBox="0 0 100 32">
-                    <path class="token-chart-line ${chartClass}" d="${chartPath}" />
-                  </svg>
-                </div>
-              `)}
-            </div>
-            <div class="token-card-back">
-              ${backContent}
-            </div>
-          </div>
-        `;
+        card.innerHTML = frontContent + backContent;
       });
     }
     let discoveryData = {
