@@ -264,6 +264,120 @@
       overflow: hidden;
     }
 
+    /* Trading Info Bar Styles */
+    .trading-info-bar {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 0.75rem 1rem;
+      background: rgba(11, 15, 20, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      flex-shrink: 0;
+    }
+
+    .info-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .asset-pair {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .asset-icon {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .asset-icon img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .pair-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+
+    .pair-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .pair-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+    }
+
+    .base-currency {
+      font-size: 0.75rem;
+      color: rgba(156, 163, 175, 0.8);
+    }
+
+    .dropdown-arrow {
+      color: rgba(156, 163, 175, 0.6);
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: rgba(156, 163, 175, 0.8);
+      font-weight: 400;
+    }
+
+    .info-label[title] {
+      border-bottom: 1px dotted rgba(156, 163, 175, 0.4);
+      cursor: help;
+    }
+
+    .info-value {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .change-negative {
+      color: #ef4444;
+    }
+
+    .change-positive {
+      color: #10b981;
+    }
+
+    .funding-rate.positive {
+      color: #10b981;
+    }
+
+    .funding-rate.negative {
+      color: #ef4444;
+    }
+
+    .separator {
+      color: rgba(156, 163, 175, 0.6);
+      margin: 0 0.25rem;
+    }
+
+    .countdown {
+      color: white;
+    }
+
     /* Chart Layout Styles */
     .chart-layout-option.active {
       background: rgba(110, 231, 183, 0.1);
@@ -297,6 +411,74 @@
           <div class="chart-section">
             <div id="coreArea" class="flex-1 min-w-0 flex flex-col">
           <!-- Chart header controls -->
+
+            <!-- Trading Info Bar -->
+            <div class="trading-info-bar">
+              <div class="info-section">
+                <div class="asset-pair">
+                  <div class="asset-icon">
+                    <img src="https://api.iconify.design/cryptocurrency:btc.svg" alt="BTC" width="24" height="24" />
+                  </div>
+                  <div class="pair-info">
+                    <span class="pair-name">BTC-USD</span>
+                    <div class="pair-dropdown">
+                      <span class="base-currency">USD</span>
+                      <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="info-section">
+                <div class="info-item">
+                  <label class="info-label" title="Current market price">Mark</label>
+                  <span class="info-value" id="mark-price">115,608</span>
+                </div>
+              </div>
+              
+              <div class="info-section">
+                <div class="info-item">
+                  <label class="info-label" title="Oracle price reference">Oracle</label>
+                  <span class="info-value" id="oracle-price">115,606</span>
+                </div>
+              </div>
+              
+              <div class="info-section">
+                <div class="info-item">
+                  <label class="info-label">24h Change</label>
+                  <span class="info-value change-negative" id="change-24h">-216.5 / -0.19%</span>
+                </div>
+              </div>
+              
+              <div class="info-section">
+                <div class="info-item">
+                  <label class="info-label">24h Vol</label>
+                  <span class="info-value" id="volume-24h">$833,473,307.70</span>
+                </div>
+              </div>
+              
+              <div class="info-section">
+                <div class="info-item">
+                  <label class="info-label">Open Interest</label>
+                  <span class="info-value" id="open-interest">$3,980,497,524.29</span>
+                </div>
+              </div>
+              
+              <div class="info-section">
+                <div class="info-item">
+                  <label class="info-label">
+                    <span class="info-label" title="Funding rate">Funding</span> / Countdown
+                  </label>
+                  <span class="info-value">
+                    <span class="funding-rate positive" id="funding-rate">0.0013%</span>
+                    <span class="separator">/</span>
+                    <span class="countdown" id="funding-countdown">20:42</span>
+                  </span>
+                </div>
+              </div>
+            </div>
 
             <!-- TradingView Chart Container -->
             <div id="chartContainer" class="relative flex-1 overflow-hidden">
