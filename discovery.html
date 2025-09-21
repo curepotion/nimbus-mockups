@@ -103,18 +103,42 @@
           <div class="token-column" data-filter="all-coins">
             <!-- Row 1 -->
             <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:btc.svg" alt="BTC" class="token-icon" />
-                <div class="token-name">Bitcoin</div>
-                <div class="token-price">$115,608</div>
+              <div class="token-card-inner">
+                <div class="token-card-front">
+                  <div class="token-card-header">
+                    <img src="https://api.iconify.design/cryptocurrency:btc.svg" alt="BTC" class="token-icon" />
+                    <div class="token-name">Bitcoin</div>
+                    <div class="token-price">$115,608</div>
+                  </div>
+                  <div class="token-metrics">
+                    <div class="token-volume">Vol: $2.1B</div>
+                    <div class="token-change negative">-0.19%</div>
+                  </div>
+                  <div class="token-company">Satoshi Nakamoto</div>
+                  <div class="token-info">Digital gold, store of value</div>
+                  <div class="token-chart">
+                    <svg viewBox="0 0 100 32">
+                      <path class="token-chart-line negative" d="M0,20 Q25,15 50,18 T100,12" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="token-card-back">
+                  <div class="token-news">
+                    <div class="news-item">
+                      <div class="news-title">Bitcoin ETF sees record inflows</div>
+                      <div class="news-time">2 hours ago</div>
+                    </div>
+                    <div class="news-item">
+                      <div class="news-title">Major bank announces BTC custody</div>
+                      <div class="news-time">5 hours ago</div>
+                    </div>
+                    <div class="news-item">
+                      <div class="news-title">Institutional adoption continues</div>
+                      <div class="news-time">8 hours ago</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $2.1B</div>
-                <div class="token-change negative">-0.19%</div>
-              </div>
-              <div class="token-company">Satoshi Nakamoto</div>
-              <div class="token-info">Digital gold, store of value</div>
-              <div class="token-chart"></div>
             </div>
             
             <div class="token-card">
@@ -1965,6 +1989,98 @@
   <script>
     // Discovery Page JavaScript
     let currentTab = 'spot';
+
+    // Sample news data for tokens
+    const tokenNews = {
+      'Bitcoin': [
+        { title: 'Bitcoin ETF sees record inflows', time: '2 hours ago' },
+        { title: 'Major bank announces BTC custody', time: '5 hours ago' },
+        { title: 'Institutional adoption continues', time: '8 hours ago' }
+      ],
+      'Ethereum': [
+        { title: 'Ethereum 2.0 upgrade successful', time: '1 hour ago' },
+        { title: 'DeFi TVL reaches new high', time: '4 hours ago' },
+        { title: 'Layer 2 solutions gain traction', time: '7 hours ago' }
+      ],
+      'Solana': [
+        { title: 'Solana breaks transaction records', time: '3 hours ago' },
+        { title: 'New DeFi protocols launch', time: '6 hours ago' },
+        { title: 'NFT marketplace sees growth', time: '9 hours ago' }
+      ],
+      'BNB': [
+        { title: 'Binance Smart Chain updates', time: '2 hours ago' },
+        { title: 'New token listings announced', time: '5 hours ago' },
+        { title: 'Exchange volume increases', time: '8 hours ago' }
+      ]
+    };
+
+    // Chart data for different trends
+    const chartPaths = {
+      positive: 'M0,25 Q25,20 50,15 T100,8',
+      negative: 'M0,8 Q25,15 50,18 T100,25',
+      neutral: 'M0,16 Q25,16 50,16 T100,16'
+    };
+
+    // Function to update all token cards with new structure
+    function updateTokenCards() {
+      const cards = document.querySelectorAll('.token-card');
+      
+      cards.forEach(card => {
+        // Skip if already updated
+        if (card.querySelector('.token-card-inner')) return;
+        
+        const tokenName = card.querySelector('.token-name')?.textContent;
+        const changeElement = card.querySelector('.token-change');
+        const isPositive = changeElement?.classList.contains('positive');
+        const isNegative = changeElement?.classList.contains('negative');
+        
+        let chartClass = 'neutral';
+        let chartPath = chartPaths.neutral;
+        
+        if (isPositive) {
+          chartClass = 'positive';
+          chartPath = chartPaths.positive;
+        } else if (isNegative) {
+          chartClass = 'negative';
+          chartPath = chartPaths.negative;
+        }
+        
+        const news = tokenNews[tokenName] || [
+          { title: 'Market analysis update', time: '2 hours ago' },
+          { title: 'Trading volume increases', time: '5 hours ago' },
+          { title: 'Community growth continues', time: '8 hours ago' }
+        ];
+        
+        const frontContent = card.innerHTML;
+        const backContent = `
+          <div class="token-news">
+            ${news.map(item => `
+              <div class="news-item">
+                <div class="news-title">${item.title}</div>
+                <div class="news-time">${item.time}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        
+        card.innerHTML = `
+          <div class="token-card-inner">
+            <div class="token-card-front">
+              ${frontContent.replace('<div class="token-chart"></div>', `
+                <div class="token-chart">
+                  <svg viewBox="0 0 100 32">
+                    <path class="token-chart-line ${chartClass}" d="${chartPath}" />
+                  </svg>
+                </div>
+              `)}
+            </div>
+            <div class="token-card-back">
+              ${backContent}
+            </div>
+          </div>
+        `;
+      });
+    }
     let discoveryData = {
       fgi: { value: '--', delta24h: '--%', series: [] },
       btcDom: { value: '--%', delta24h: '--%', series: [] },
@@ -1991,6 +2107,7 @@
       initFilterChips();
       loadMarketData();
       loadHLData();
+      updateTokenCards(); // Add the new card structure
     });
 
     // Filter tab functionality
