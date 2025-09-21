@@ -20,17 +20,37 @@
   <script src="assets/js/navbar.js"></script>
 
   <style>
-    /* Discovery Page Styles - Full Width Layout */
-    .discovery-container {
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      margin-right: calc(-50vw + 50%);
+    /* Discovery Page Styles - Two Column Layout */
+    .discovery-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
     }
 
-    .full-width {
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      margin-right: calc(-50vw + 50%);
+    .discovery-layout {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .left-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .right-column {
+      flex: 0 0 350px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .top-bar {
@@ -788,19 +808,14 @@
       margin-top: auto;
     }
 
-    /* Token List Sidebar */
-    .token-list-sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 300px;
-      height: 100vh;
-      background: rgba(11, 15, 20, 0.95);
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      z-index: 40;
+    /* Token List Container */
+    .token-list-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+      background: rgba(11, 15, 20, 0.3);
     }
 
     .token-list-header {
@@ -900,12 +915,23 @@
       text-align: right;
     }
 
-    /* Adjust main content for sidebar */
-    .discovery-container {
-      margin-right: 300px;
+    /* Mobile Responsive */
+    @media (max-width: 1024px) {
+      .discovery-layout {
+        flex-direction: column;
+      }
+      
+      .right-column {
+        flex: 0 0 300px;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      
+      .token-columns {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
-    /* Mobile Responsive */
     @media (max-width: 768px) {
       .bar {
         flex-direction: column;
@@ -922,28 +948,78 @@
         padding-bottom: 0.5rem;
       }
 
-      .stats {
+      .dashboard-widgets {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
       }
 
-      .grid {
+      .token-columns {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
       }
 
-      .tabs {
+      .filter-tabs {
         overflow-x: auto;
+        padding-bottom: 0.5rem;
       }
 
-      .table {
-        overflow-x: auto;
+      .filter-tabs button {
+        white-space: nowrap;
       }
 
-      .news {
-        flex-direction: column;
+      .right-column {
+        flex: 0 0 250px;
       }
 
-      .kpi-fullrow {
-        grid-template-columns: 1fr;
+      .token-list-item {
+        padding: 0.5rem;
+      }
+
+      .token-icon-small {
+        width: 28px;
+        height: 28px;
+      }
+
+      .token-symbol {
+        font-size: 0.8rem;
+      }
+
+      .token-name {
+        font-size: 0.7rem;
+      }
+
+      .token-price {
+        font-size: 0.8rem;
+      }
+
+      .token-change {
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-widgets {
+        padding: 0.75rem;
+      }
+
+      .widget {
+        padding: 0.75rem;
+      }
+
+      .trending-section {
+        padding: 0.75rem;
+      }
+
+      .token-list-header {
+        padding: 0.75rem;
+      }
+
+      .token-list-content {
+        padding: 0.25rem;
+      }
+
+      .right-column {
+        flex: 0 0 200px;
       }
     }
   </style>
@@ -955,7 +1031,7 @@
     <div id="navbar-container"></div>
 
     <!-- Discovery Page -->
-    <main aria-label="Discovery" class="discovery-container">
+    <main aria-label="Discovery" class="discovery-main">
       
       <!-- 1) TOP BAR (single line; minimal controls; sticky; full-width) -->
       <header role="banner" class="top-bar">
@@ -974,6 +1050,11 @@
           </div>
         </div>
       </header>
+
+      <!-- 2) TWO COLUMN LAYOUT -->
+      <div class="discovery-layout">
+        <!-- LEFT COLUMN: Dashboard & Trending Sections -->
+        <div class="left-column">
 
       <!-- 2) DASHBOARD WIDGETS (3-column layout) -->
       <section aria-label="Market Dashboard" class="dashboard-widgets">
@@ -1262,9 +1343,11 @@
           </div>
         </div>
       </section>
+        </div>
 
-      <!-- 5) TOKEN LIST (right side, full height) -->
-      <aside class="token-list-sidebar">
+        <!-- RIGHT COLUMN: Token List -->
+        <div class="right-column">
+          <div class="token-list-container">
         <div class="token-list-header">
           <h3>Token List</h3>
           <div class="token-list-controls">
@@ -1394,8 +1477,9 @@
             <div class="token-price">$14.56</div>
             <div class="token-change negative">-1.45%</div>
           </div>
+          </div>
         </div>
-      </aside>
+      </div>
 
       <!-- 9) STORY OVERLAY (full-width dialog that covers content) -->
       <div role="dialog" aria-modal="true" hidden class="overlay story" id="story-overlay">
@@ -1751,11 +1835,14 @@
       // Update chart URLs
       updateChartUrls();
       
-      // Populate trending cards with real data
-      populateTrendingCards();
-      
-      // Populate spot table with real data
-      populateSpotTable();
+        // Populate trending cards with real data
+        populateTrendingCards();
+        
+        // Populate spot table with real data
+        populateSpotTable();
+        
+        // Populate token list with real data
+        populateTokenList();
       
       
       // Hide loading state
@@ -1820,24 +1907,60 @@
     // Populate spot table with real data
     function populateSpotTable() {
       const spotTable = document.querySelector('#spot-panel tbody');
-      spotTable.innerHTML = '';
+      if (spotTable) {
+        spotTable.innerHTML = '';
+        
+        discoveryData.spot.forEach(coin => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>
+              <img alt="" src="${coin.image}" width="20" height="20" /> 
+              <strong>${coin.symbol.toUpperCase()}</strong> 
+              <small>${coin.name}</small>
+            </td>
+            <td>$${coin.current_price?.toFixed(2) || '--'}</td>
+            <td class="${coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}">${coin.price_change_percentage_24h?.toFixed(2) || '--'}%</td>
+            <td>$${(coin.market_cap / 1000000000).toFixed(1)}B</td>
+            <td>$${(coin.total_volume / 1000000).toFixed(1)}M</td>
+            <td><img alt="" src="${generateQuickChartUrl(coin.sparkline_in_7d?.price || [])}" width="80" height="30" /></td>
+            <td><button aria-haspopup="dialog" onclick="openStory('spot-${coin.id}')">Story ▸</button></td>
+          `;
+          spotTable.appendChild(row);
+        });
+      }
+    }
+
+    // Populate token list with real data
+    function populateTokenList() {
+      const tokenListContent = document.querySelector('.token-list-content');
+      if (!tokenListContent || !discoveryData.spot.length) return;
       
-      discoveryData.spot.forEach(coin => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>
-            <img alt="" src="${coin.image}" width="20" height="20" /> 
-            <strong>${coin.symbol.toUpperCase()}</strong> 
-            <small>${coin.name}</small>
-          </td>
-          <td>$${coin.current_price?.toFixed(2) || '--'}</td>
-          <td class="${coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}">${coin.price_change_percentage_24h?.toFixed(2) || '--'}%</td>
-          <td>$${(coin.market_cap / 1000000000).toFixed(1)}B</td>
-          <td>$${(coin.total_volume / 1000000).toFixed(1)}M</td>
-          <td><img alt="" src="${generateQuickChartUrl(coin.sparkline_in_7d?.price || [])}" width="80" height="30" /></td>
-          <td><button aria-haspopup="dialog" onclick="openStory('spot-${coin.id}')">Story ▸</button></td>
+      tokenListContent.innerHTML = '';
+      
+      // Use top 20 coins from the spot data
+      discoveryData.spot.slice(0, 20).forEach(coin => {
+        const tokenItem = document.createElement('div');
+        tokenItem.className = 'token-list-item';
+        tokenItem.innerHTML = `
+          <div class="token-icon-small">
+            <img src="${coin.image}" alt="${coin.symbol}" width="20" height="20" />
+          </div>
+          <div class="token-details">
+            <div class="token-symbol">${coin.symbol.toUpperCase()}</div>
+            <div class="token-name">${coin.name}</div>
+          </div>
+          <div class="token-price">$${coin.current_price?.toFixed(coin.current_price > 1 ? 2 : 4) || '--'}</div>
+          <div class="token-change ${coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}">
+            ${coin.price_change_percentage_24h >= 0 ? '+' : ''}${coin.price_change_percentage_24h?.toFixed(2) || '--'}%
+          </div>
         `;
-        spotTable.appendChild(row);
+        
+        // Add click handler to open trading
+        tokenItem.addEventListener('click', () => {
+          openTrade(coin.symbol.toLowerCase());
+        });
+        
+        tokenListContent.appendChild(tokenItem);
       });
     }
 
@@ -1965,7 +2088,12 @@
         'alt': 'ETHUSDT'  // Altcoin Season -> ETH
       };
       
-      const symbol = tradeMap[type] || 'BTCUSDT';
+      let symbol = tradeMap[type] || type.toUpperCase() + 'USDT';
+      
+      // If it's already a symbol (from token list), use it directly
+      if (type.length <= 5 && type.match(/^[A-Z]+$/)) {
+        symbol = type + 'USDT';
+      }
       
       // In a real app, this would open the trading interface
       // For now, we'll show an alert or redirect to charts page
