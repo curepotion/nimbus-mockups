@@ -2082,13 +2082,15 @@
         `;
         
         const backContent = `
-          <div class="token-news">
-            ${news.map(item => `
-              <div class="news-item">
-                <div class="news-title">${item.title}</div>
-                <div class="news-time">${item.time}</div>
-              </div>
-            `).join('')}
+          <div class="token-card-back">
+            <div class="token-news">
+              ${news.map(item => `
+                <div class="news-item">
+                  <div class="news-title">${item.title}</div>
+                  <div class="news-time">${item.time}</div>
+                </div>
+              `).join('')}
+            </div>
           </div>
         `;
         
