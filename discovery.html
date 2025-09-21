@@ -1787,17 +1787,6 @@
         </section>
       </div>
 
-      <!-- 10) STATES (full-width rows) -->
-      <section aria-label="States" class="row">
-        <div data-state="loading" id="loading-state">Loading…</div>
-        <div data-state="empty" id="empty-state" style="display: none;">No results. Adjust top filters.</div>
-        <div data-state="error" id="error-state" style="display: none;">Couldn't load data. Retry.</div>
-      </section>
-
-      <!-- 11) PAGINATION (full-width) -->
-      <nav aria-label="Pagination" class="row">
-        <button onclick="loadMore()">Load more</button>
-      </nav>
     </main>
   </div>
 
@@ -2325,17 +2314,7 @@
       document.body.style.overflow = 'auto';
     }
 
-    // Load more functionality
-    function loadMore() {
-      console.log('Loading more data...');
-      // Implementation would load additional data
-    }
 
-    // Error handling
-    function showError() {
-      document.getElementById('loading-state').style.display = 'none';
-      document.getElementById('error-state').style.display = 'block';
-    }
 
     // Close story on Escape key
     document.addEventListener('keydown', function(e) {
