@@ -1542,9 +1542,9 @@ input[type=number] {
   -webkit-backdrop-filter: none;
   z-index: 1000;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 4rem 0 0 4rem;
 }
 
 .symbol-search-modal {
@@ -1929,10 +1929,10 @@ input[type=number] {
 }
 
 /* Modal responsive */
-@media (max-width: 768px) {
-  .modal-overlay {
-    padding: 0.75rem;
-  }
+  @media (max-width: 768px) {
+    .modal-overlay {
+      padding: 2rem 0 0 2rem;
+    }
   
   .symbol-search-modal {
     width: 90vw;
