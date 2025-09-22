@@ -1573,13 +1573,6 @@ input[type=number] {
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
-.modal-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
 .modal-close {
   background: none;
   border: none;
@@ -1624,7 +1617,6 @@ input[type=number] {
 .filter-tabs {
   display: flex;
   gap: 0.375rem;
-  padding: 0 1.5rem 0.75rem;
 }
 
 .filter-tab {
