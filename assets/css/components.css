@@ -1604,9 +1604,11 @@ input[type=number] {
   margin: 0;
   border-bottom: none;
   background: transparent;
+  width: 100%;
 }
 
 .filter-tab {
+  flex: 1;
   padding: 0.875rem 1.5rem;
   background: transparent;
   border: none;
@@ -1619,7 +1621,6 @@ input[type=number] {
   position: relative;
   white-space: nowrap;
   text-align: center;
-  min-width: 80px;
 }
 
 .filter-tab:hover {
