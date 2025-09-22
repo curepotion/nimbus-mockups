@@ -7718,7 +7718,16 @@
       // Remove existing classes and add new one
       tableHeader.className = 'table-header ' + currentFilter;
       
-      if (currentFilter === 'spot') {
+      if (currentFilter === 'all') {
+        headers = `
+          <div class="header-cell">Symbol</div>
+          <div class="header-cell">Last Price</div>
+          <div class="header-cell">24hr Change</div>
+          <div class="header-cell">8hr Funding</div>
+          <div class="header-cell">Volume</div>
+          <div class="header-cell">Open Interest</div>
+        `;
+      } else if (currentFilter === 'spot') {
         headers = `
           <div class="header-cell">Symbol</div>
           <div class="header-cell">Last Price</div>
@@ -7766,7 +7775,16 @@
       tableBody.innerHTML = filteredData.map(symbol => {
         // Determine tag based on symbol type
         let tag = '';
-        if (currentFilter === 'spot') {
+        if (currentFilter === 'all') {
+          // Show appropriate tag based on symbol's actual type
+          if (symbol.type === 'spot') {
+            tag = '<span class="spot-tag">SPOT</span>';
+          } else if (symbol.type === 'perp') {
+            tag = '<span class="leverage-tag">10x</span>';
+          } else if (symbol.type === 'hip3') {
+            tag = '<span class="leverage-tag">10x</span>';
+          }
+        } else if (currentFilter === 'spot') {
           tag = '<span class="spot-tag">SPOT</span>';
         } else if (currentFilter === 'perp') {
           tag = '<span class="leverage-tag">10x</span>';
@@ -7790,7 +7808,15 @@
             </div>
         `;
         
-        if (currentFilter === 'spot') {
+        if (currentFilter === 'all') {
+          // For "All" filter, show funding and interest columns (like perp/hip3)
+          rowContent += `
+            <div class="funding-cell">${symbol.funding.toFixed(4)}%</div>
+            <div class="volume-cell">$${(symbol.volume / 1000000).toFixed(1)}M</div>
+            <div class="interest-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>
+          </div>
+        `;
+        } else if (currentFilter === 'spot') {
           rowContent += `
             <div class="volume-cell">$${(symbol.volume / 1000000).toFixed(1)}M</div>
             <div class="market-cap-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>
@@ -7943,11 +7969,12 @@
         <input type="text" id="symbolSearchInput" class="search-input" placeholder="Search" />
       </div>
       
-      <div class="filter-tabs">
-        <button class="filter-tab active" data-type="spot">Spot</button>
-        <button class="filter-tab" data-type="perp">Perp</button>
-        <button class="filter-tab" data-type="hip3">HIP-3</button>
-      </div>
+            <div class="filter-tabs">
+              <button class="filter-tab" data-type="all">All</button>
+              <button class="filter-tab active" data-type="spot">Spot</button>
+              <button class="filter-tab" data-type="perp">Perp</button>
+              <button class="filter-tab" data-type="hip3">HIP-3</button>
+            </div>
       
       <div class="category-filters">
         <button class="category-filter" data-category="pre-ipo">Pre-IPO</button>
