@@ -413,7 +413,7 @@
           <!-- Chart header controls -->
 
             <!-- Trading Info Bar -->
-            <div class="trading-info-bar">
+            <div class="trading-info-bar" style="position: relative;">
               <div class="info-section">
                 <div class="asset-pair" onclick="openSymbolSearch()">
                   <div class="asset-icon">
@@ -476,6 +476,60 @@
                     <span class="separator">/</span>
                     <span class="countdown" id="funding-countdown">20:42</span>
                   </span>
+                </div>
+              </div>
+              
+              <!-- Symbol Search Modal -->
+              <div id="symbolSearchModal" class="modal-overlay" style="display: none;">
+                <div class="symbol-search-modal">
+                  <div class="modal-header">
+                    <h2 class="modal-title">Symbol Search</h2>
+                    <button class="modal-close" onclick="closeSymbolSearch()">&times;</button>
+                  </div>
+                  
+                  <div class="search-container">
+                    <input type="text" id="symbolSearchInput" class="search-input" placeholder="Search" />
+                  </div>
+                  
+                  <div class="filter-tabs">
+                    <button class="filter-tab active" data-type="spot">Spot</button>
+                    <button class="filter-tab" data-type="perp">Perp</button>
+                    <button class="filter-tab" data-type="hip3">HIP-3</button>
+                  </div>
+                  
+                  <div class="category-filters">
+                    <button class="category-filter" data-category="pre-ipo">Pre-IPO</button>
+                    <button class="category-filter" data-category="volume">Volume</button>
+                    <button class="category-filter" data-category="stocks">Stocks</button>
+                    <button class="category-filter" data-category="commodities">Commodities</button>
+                    <div class="dropdown-filter">
+                      <button class="dropdown-toggle" data-category="publishers">
+                        All Publishers <span class="dropdown-arrow">▼</span>
+                      </button>
+                      <div class="dropdown-menu" style="display: none;">
+                        <div class="dropdown-item active" data-value="all">All Publishers</div>
+                        <div class="dropdown-item" data-value="ventuals">Ventuals</div>
+                        <div class="dropdown-item" data-value="volmex">VOLMEX</div>
+                        <div class="dropdown-item" data-value="zigg">ZIGG</div>
+                        <div class="dropdown-item" data-value="hb">HB</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="symbol-table">
+                    <div class="table-header">
+                      <div class="header-cell">Symbol</div>
+                      <div class="header-cell">Last Price</div>
+                      <div class="header-cell">24hr Change</div>
+                      <div class="header-cell">8hr Funding</div>
+                      <div class="header-cell">Volume</div>
+                      <div class="header-cell">Open Interest</div>
+                    </div>
+                    
+                    <div class="table-body" id="symbolTableBody">
+                      <!-- Symbol rows will be populated by JavaScript -->
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -7852,9 +7906,9 @@
         dropdownMenu.style.display = 'none';
       });
 
-      // Close modal when clicking overlay
-      document.getElementById('symbolSearchModal').addEventListener('click', function(e) {
-        if (e.target === this) {
+      // Close modal when clicking outside (ESC key)
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
           closeSymbolSearch();
         }
       });
@@ -7862,59 +7916,6 @@
 
   </script>
 
-  <!-- Symbol Search Modal -->
-  <div id="symbolSearchModal" class="modal-overlay" style="display: none;">
-    <div class="symbol-search-modal">
-      <div class="modal-header">
-        <h2 class="modal-title">Symbol Search</h2>
-        <button class="modal-close" onclick="closeSymbolSearch()">&times;</button>
-      </div>
-      
-      <div class="search-container">
-        <input type="text" id="symbolSearchInput" class="search-input" placeholder="Search" />
-      </div>
-      
-      <div class="filter-tabs">
-        <button class="filter-tab active" data-type="spot">Spot</button>
-        <button class="filter-tab" data-type="perp">Perp</button>
-        <button class="filter-tab" data-type="hip3">HIP-3</button>
-      </div>
-      
-      <div class="category-filters">
-        <button class="category-filter" data-category="pre-ipo">Pre-IPO</button>
-        <button class="category-filter" data-category="volume">Volume</button>
-        <button class="category-filter" data-category="stocks">Stocks</button>
-        <button class="category-filter" data-category="commodities">Commodities</button>
-        <div class="dropdown-filter">
-          <button class="dropdown-toggle" data-category="publishers">
-            All Publishers <span class="dropdown-arrow">▼</span>
-          </button>
-          <div class="dropdown-menu" style="display: none;">
-            <div class="dropdown-item active" data-value="all">All Publishers</div>
-            <div class="dropdown-item" data-value="ventuals">Ventuals</div>
-            <div class="dropdown-item" data-value="volmex">VOLMEX</div>
-            <div class="dropdown-item" data-value="zigg">ZIGG</div>
-            <div class="dropdown-item" data-value="hb">HB</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="symbol-table">
-        <div class="table-header">
-          <div class="header-cell">Symbol</div>
-          <div class="header-cell">Last Price</div>
-          <div class="header-cell">24hr Change</div>
-          <div class="header-cell">8hr Funding</div>
-          <div class="header-cell">Volume</div>
-          <div class="header-cell">Open Interest</div>
-        </div>
-        
-        <div class="table-body" id="symbolTableBody">
-          <!-- Symbol rows will be populated by JavaScript -->
-        </div>
-      </div>
-    </div>
-  </div>
 
 </body>
 </html>
