@@ -1557,11 +1557,12 @@ input[type=number] {
   -webkit-backdrop-filter: blur(32px) saturate(180%);
   border: 1px solid var(--color-border-subtle);
   border-radius: 1rem;
-  width: 100%;
-  max-width: 1000px;
-  max-height: 70vh;
+  width: 1000px;
+  height: 600px;
   overflow: hidden;
   box-shadow: var(--shadow-glass);
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-header {
@@ -1781,7 +1782,25 @@ input[type=number] {
 .table-body {
   flex: 1;
   overflow-y: auto;
-  max-height: 350px;
+  height: 0;
+}
+
+.table-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.table-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.table-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .symbol-row {
@@ -1883,7 +1902,10 @@ input[type=number] {
   }
   
   .symbol-search-modal {
-    max-height: 85vh;
+    width: 90vw;
+    height: 80vh;
+    max-width: 900px;
+    max-height: 600px;
   }
   
   .modal-header {
@@ -1912,9 +1934,5 @@ input[type=number] {
   
   .dropdown-filter {
     margin-left: 0;
-  }
-  
-  .table-body {
-    max-height: 300px;
   }
 }

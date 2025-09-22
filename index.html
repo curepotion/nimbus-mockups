@@ -7593,36 +7593,105 @@
 
     // Symbol Search Modal Functions
     let symbolData = [
-      // Major Cryptocurrencies
+      // Spot Trading (20+ tokens)
       { symbol: 'BTC-USD', price: 115608.42, change: -0.19, changePercent: -5.20, funding: 0.0122, volume: 20943434, interest: 44026695, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: true },
       { symbol: 'ETH-USD', price: 3245.67, change: 2.34, changePercent: 7.2, funding: 0.0089, volume: 15678923, interest: 28945678, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
       { symbol: 'SOL-USD', price: 142.89, change: -1.23, changePercent: -0.85, funding: 0.0156, volume: 8934567, interest: 15678934, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
       { symbol: 'ADA-USD', price: 0.4567, change: 0.0234, changePercent: 5.4, funding: 0.0098, volume: 5678901, interest: 12345678, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
       { symbol: 'DOT-USD', price: 6.78, change: -0.45, changePercent: -6.2, funding: 0.0112, volume: 3456789, interest: 9876543, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'AVAX-USD', price: 28.45, change: 1.23, changePercent: 4.5, funding: 0.0089, volume: 4567890, interest: 8765432, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'MATIC-USD', price: 0.8234, change: -0.0456, changePercent: -5.25, funding: 0.0111, volume: 3456789, interest: 7654321, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'LINK-USD', price: 12.34, change: 0.567, changePercent: 4.8, funding: 0.0078, volume: 6789012, interest: 9876543, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'UNI-USD', price: 8.91, change: -0.234, changePercent: -2.56, funding: 0.0098, volume: 2345678, interest: 4567890, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ATOM-USD', price: 7.65, change: 0.345, changePercent: 4.73, funding: 0.0067, volume: 3456789, interest: 5678901, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'NEAR-USD', price: 3.45, change: -0.123, changePercent: -3.45, funding: 0.0123, volume: 4567890, interest: 6789012, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'FTM-USD', price: 0.4567, change: 0.0234, changePercent: 5.38, funding: 0.0089, volume: 2345678, interest: 3456789, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ALGO-USD', price: 0.2345, change: -0.0123, changePercent: -4.98, funding: 0.0112, volume: 3456789, interest: 4567890, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'VET-USD', price: 0.0234, change: 0.0012, changePercent: 5.41, funding: 0.0078, volume: 4567890, interest: 5678901, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ICP-USD', price: 4.56, change: -0.234, changePercent: -4.89, funding: 0.0098, volume: 2345678, interest: 3456789, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'FIL-USD', price: 5.67, change: 0.345, changePercent: 6.47, funding: 0.0067, volume: 3456789, interest: 4567890, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'TRX-USD', price: 0.1234, change: 0.0056, changePercent: 4.76, funding: 0.0089, volume: 5678901, interest: 6789012, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'XRP-USD', price: 0.6789, change: 0.0234, changePercent: 3.57, funding: 0.0056, volume: 6789012, interest: 7890123, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'LTC-USD', price: 78.90, change: -1.23, changePercent: -1.54, funding: 0.0078, volume: 4567890, interest: 5678901, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'BCH-USD', price: 234.56, change: 5.67, changePercent: 2.48, funding: 0.0098, volume: 3456789, interest: 4567890, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'EOS-USD', price: 0.8901, change: -0.0456, changePercent: -4.87, funding: 0.0111, volume: 2345678, interest: 3456789, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'XLM-USD', price: 0.1234, change: 0.0056, changePercent: 4.76, funding: 0.0067, volume: 4567890, interest: 5678901, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'DOGE-USD', price: 0.0890, change: 0.0034, changePercent: 3.97, funding: 0.0089, volume: 5678901, interest: 6789012, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
       
-      // Perpetual Futures
+      // Perpetual Futures (20+ tokens)
       { symbol: 'BTC-PERP', price: 115623.15, change: -0.21, changePercent: -5.18, funding: 0.0122, volume: 45321678, interest: 87654321, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
       { symbol: 'ETH-PERP', price: 3247.89, change: 2.45, changePercent: 7.5, funding: 0.0089, volume: 32145678, interest: 56789012, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
       { symbol: 'SOL-PERP', price: 143.12, change: -1.18, changePercent: -0.82, funding: 0.0156, volume: 18765432, interest: 23456789, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ADA-PERP', price: 0.4578, change: 0.0234, changePercent: 5.39, funding: 0.0098, volume: 8765432, interest: 23456789, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'DOT-PERP', price: 6.79, change: -0.44, changePercent: -6.09, funding: 0.0112, volume: 7654321, interest: 19876543, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'AVAX-PERP', price: 28.46, change: 1.24, changePercent: 4.56, funding: 0.0089, volume: 8765432, interest: 17654321, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'MATIC-PERP', price: 0.8235, change: -0.0455, changePercent: -5.24, funding: 0.0111, volume: 6543210, interest: 15432109, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'LINK-PERP', price: 12.35, change: 0.568, changePercent: 4.83, funding: 0.0078, volume: 9876543, interest: 19876543, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'UNI-PERP', price: 8.92, change: -0.233, changePercent: -2.55, funding: 0.0098, volume: 5432109, interest: 10987654, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ATOM-PERP', price: 7.66, change: 0.346, changePercent: 4.74, funding: 0.0067, volume: 6543210, interest: 11345679, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'NEAR-PERP', price: 3.46, change: -0.122, changePercent: -3.41, funding: 0.0123, volume: 7654321, interest: 12345678, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'FTM-PERP', price: 0.4568, change: 0.0235, changePercent: 5.39, funding: 0.0089, volume: 4321098, interest: 8654321, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ALGO-PERP', price: 0.2346, change: -0.0122, changePercent: -4.94, funding: 0.0112, volume: 5432109, interest: 9765432, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'VET-PERP', price: 0.0235, change: 0.0013, changePercent: 5.86, funding: 0.0078, volume: 6543210, interest: 11345679, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ICP-PERP', price: 4.57, change: -0.233, changePercent: -4.85, funding: 0.0098, volume: 4321098, interest: 7654321, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'FIL-PERP', price: 5.68, change: 0.346, changePercent: 6.49, funding: 0.0067, volume: 5432109, interest: 9765432, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'TRX-PERP', price: 0.1235, change: 0.0057, changePercent: 4.84, funding: 0.0089, volume: 7654321, interest: 13567890, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'XRP-PERP', price: 0.6790, change: 0.0235, changePercent: 3.58, funding: 0.0056, volume: 8765432, interest: 15765432, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'LTC-PERP', price: 78.91, change: -1.22, changePercent: -1.52, funding: 0.0078, volume: 6543210, interest: 11345679, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'BCH-PERP', price: 234.57, change: 5.68, changePercent: 2.48, funding: 0.0098, volume: 5432109, interest: 9765432, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'EOS-PERP', price: 0.8902, change: -0.0455, changePercent: -4.86, funding: 0.0111, volume: 4321098, interest: 7654321, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'XLM-PERP', price: 0.1235, change: 0.0057, changePercent: 4.84, funding: 0.0067, volume: 6543210, interest: 11345679, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'DOGE-PERP', price: 0.0891, change: 0.0035, changePercent: 4.08, funding: 0.0089, volume: 7654321, interest: 13567890, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
       
-      // HIP-3 Tokens
+      // HIP-3 Stocks (20+ tokens)
       { symbol: 'AAPL-USD', price: 234.56, change: 3.45, changePercent: 1.49, funding: 0.0056, volume: 12345678, interest: 34567890, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
       { symbol: 'TSLA-USD', price: 245.78, change: -8.92, changePercent: -3.50, funding: 0.0078, volume: 9876543, interest: 45678901, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
       { symbol: 'GOOGL-USD', price: 156.34, change: 1.23, changePercent: 0.79, funding: 0.0045, volume: 7654321, interest: 56789012, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
       { symbol: 'MSFT-USD', price: 378.91, change: 2.67, changePercent: 0.71, funding: 0.0034, volume: 5432109, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
-      
-      // Commodities
-      { symbol: 'GOLD-USD', price: 2654.32, change: -12.45, changePercent: -0.47, funding: 0.0023, volume: 8765432, interest: 23456789, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
-      { symbol: 'OIL-USD', price: 78.45, change: 1.23, changePercent: 1.59, funding: 0.0067, volume: 6543210, interest: 34567890, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
-      
-      // Pre-IPO
-      { symbol: 'SPACEX-USD', price: 456.78, change: 12.34, changePercent: 2.78, funding: 0.0098, volume: 4321098, interest: 12345678, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
-      { symbol: 'STRIPE-USD', price: 234.56, change: -3.45, changePercent: -1.45, funding: 0.0089, volume: 3210987, interest: 23456789, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
-      
-      // More tokens from different publishers
       { symbol: 'NVDA-USD', price: 789.12, change: 15.67, changePercent: 2.03, funding: 0.0045, volume: 10987654, interest: 45678901, type: 'hip3', category: 'stocks', publisher: 'volmex', favorite: false },
       { symbol: 'AMZN-USD', price: 145.67, change: -2.34, changePercent: -1.58, funding: 0.0034, volume: 8765432, interest: 56789012, type: 'hip3', category: 'stocks', publisher: 'zigg', favorite: false },
-      { symbol: 'META-USD', price: 345.89, change: 8.91, changePercent: 2.64, funding: 0.0056, volume: 7654321, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'hb', favorite: false }
+      { symbol: 'META-USD', price: 345.89, change: 8.91, changePercent: 2.64, funding: 0.0056, volume: 7654321, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'hb', favorite: false },
+      { symbol: 'NFLX-USD', price: 456.78, change: -12.34, changePercent: -2.63, funding: 0.0067, volume: 6543210, interest: 23456789, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'AMD-USD', price: 123.45, change: 4.56, changePercent: 3.83, funding: 0.0056, volume: 5432109, interest: 34567890, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'INTC-USD', price: 34.56, change: -0.78, changePercent: -2.21, funding: 0.0045, volume: 4321098, interest: 45678901, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'CRM-USD', price: 267.89, change: 5.67, changePercent: 2.16, funding: 0.0056, volume: 3210987, interest: 56789012, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'ORCL-USD', price: 89.12, change: -1.23, changePercent: -1.36, funding: 0.0034, volume: 2109876, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'ADBE-USD', price: 567.89, change: 12.34, changePercent: 2.22, funding: 0.0067, volume: 1098765, interest: 78901234, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'PYPL-USD', price: 78.90, change: -2.34, changePercent: -2.88, funding: 0.0045, volume: 9876543, interest: 89012345, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'UBER-USD', price: 45.67, change: 1.23, changePercent: 2.77, funding: 0.0056, volume: 8765432, interest: 90123456, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'SQ-USD', price: 67.89, change: -3.45, changePercent: -4.84, funding: 0.0067, volume: 7654321, interest: 12345678, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'ZM-USD', price: 89.01, change: 2.34, changePercent: 2.70, funding: 0.0034, volume: 6543210, interest: 23456789, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'SHOP-USD', price: 123.45, change: -5.67, changePercent: -4.39, funding: 0.0056, volume: 5432109, interest: 34567890, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'TWLO-USD', price: 56.78, change: 1.23, changePercent: 2.21, funding: 0.0045, volume: 4321098, interest: 45678901, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'OKTA-USD', price: 78.90, change: -1.23, changePercent: -1.53, funding: 0.0034, volume: 3210987, interest: 56789012, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'DDOG-USD', price: 234.56, change: 8.90, changePercent: 3.94, funding: 0.0067, volume: 2109876, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'SNOW-USD', price: 345.67, change: -12.34, changePercent: -3.45, funding: 0.0056, volume: 1098765, interest: 78901234, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      
+      // HIP-3 Commodities (10+ tokens)
+      { symbol: 'GOLD-USD', price: 2654.32, change: -12.45, changePercent: -0.47, funding: 0.0023, volume: 8765432, interest: 23456789, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'OIL-USD', price: 78.45, change: 1.23, changePercent: 1.59, funding: 0.0067, volume: 6543210, interest: 34567890, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'SILVER-USD', price: 23.45, change: 0.56, changePercent: 2.45, funding: 0.0034, volume: 5432109, interest: 45678901, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'COPPER-USD', price: 4.23, change: -0.12, changePercent: -2.76, funding: 0.0045, volume: 4321098, interest: 56789012, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'WHEAT-USD', price: 567.89, change: 12.34, changePercent: 2.22, funding: 0.0056, volume: 3210987, interest: 67890123, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'CORN-USD', price: 678.90, change: -23.45, changePercent: -3.34, funding: 0.0067, volume: 2109876, interest: 78901234, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'SOYBEAN-USD', price: 1456.78, change: 34.56, changePercent: 2.43, funding: 0.0034, volume: 1098765, interest: 89012345, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'SUGAR-USD', price: 23.45, change: -0.67, changePercent: -2.78, funding: 0.0045, volume: 9876543, interest: 90123456, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'COFFEE-USD', price: 156.78, change: 2.34, changePercent: 1.51, funding: 0.0056, volume: 8765432, interest: 12345678, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'COTTON-USD', price: 89.12, change: -1.23, changePercent: -1.36, funding: 0.0034, volume: 7654321, interest: 23456789, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'NATURAL-GAS-USD', price: 3.45, change: 0.12, changePercent: 3.60, funding: 0.0067, volume: 6543210, interest: 34567890, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      
+      // HIP-3 Pre-IPO (10+ tokens)
+      { symbol: 'SPACEX-USD', price: 456.78, change: 12.34, changePercent: 2.78, funding: 0.0098, volume: 4321098, interest: 12345678, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'STRIPE-USD', price: 234.56, change: -3.45, changePercent: -1.45, funding: 0.0089, volume: 3210987, interest: 23456789, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'DATABRICKS-USD', price: 345.67, change: 8.90, changePercent: 2.64, funding: 0.0078, volume: 2109876, interest: 34567890, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'CANVA-USD', price: 567.89, change: -12.34, changePercent: -2.13, funding: 0.0067, volume: 1098765, interest: 45678901, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'DISCORD-USD', price: 123.45, change: 5.67, changePercent: 4.83, funding: 0.0056, volume: 9876543, interest: 56789012, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'OPENAI-USD', price: 678.90, change: 23.45, changePercent: 3.58, funding: 0.0089, volume: 8765432, interest: 67890123, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'ANTHROPIC-USD', price: 234.56, change: -8.90, changePercent: -3.65, funding: 0.0078, volume: 7654321, interest: 78901234, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'REDDIT-USD', price: 89.12, change: 2.34, changePercent: 2.70, funding: 0.0045, volume: 6543210, interest: 89012345, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'PINTEREST-USD', price: 156.78, change: -3.45, changePercent: -2.15, funding: 0.0067, volume: 5432109, interest: 90123456, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'SNAPCHAT-USD', price: 67.89, change: 1.23, changePercent: 1.84, funding: 0.0034, volume: 4321098, interest: 12345678, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'TIKTOK-USD', price: 789.01, change: 34.56, changePercent: 4.58, funding: 0.0098, volume: 3210987, interest: 23456789, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false }
     ];
 
     let currentFilter = 'spot';
