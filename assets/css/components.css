@@ -1563,30 +1563,30 @@ input[type=number] {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .modal-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 1);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .modal-close {
   background: none;
   border: none;
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   font-size: 1.25rem;
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 0.25rem;
-  transition: all 0.2s;
+  transition: var(--transition-fast);
 }
 
 .modal-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 1);
+  background: var(--color-bg-glass-light);
+  color: var(--color-text-primary);
 }
 
 .search-container {
@@ -1595,23 +1595,23 @@ input[type=number] {
 
 .search-input {
   width: 100%;
-  padding: 0.75rem 0.875rem;
-  background: rgba(255, 255, 255, 1);
-  border: 1px solid rgba(229, 231, 235, 1);
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  color: rgba(17, 24, 39, 1);
-  outline: none;
-  transition: border-color 0.2s;
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  transition: var(--transition-fast);
 }
 
 .search-input::placeholder {
-  color: rgba(107, 114, 128, 1);
+  color: var(--color-text-muted);
 }
 
 .search-input:focus {
-  border-color: rgba(59, 130, 246, 1);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-color: var(--color-accent);
 }
 
 .filter-tabs {
@@ -1622,25 +1622,27 @@ input[type=number] {
 
 .filter-tab {
   padding: 0.375rem 0.75rem;
-  background: rgba(31, 41, 55, 1);
-  border: 1px solid rgba(75, 85, 99, 1);
-  border-radius: 0.375rem;
-  color: rgba(156, 163, 175, 1);
+  background: var(--color-bg-glass-medium);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition-fast);
 }
 
 .filter-tab:hover {
-  background: rgba(55, 65, 81, 1);
-  color: rgba(255, 255, 255, 1);
+  background: var(--color-bg-glass-heavy);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-medium);
 }
 
 .filter-tab.active {
-  background: rgba(59, 130, 246, 1);
-  border-color: rgba(59, 130, 246, 1);
-  color: rgba(255, 255, 255, 1);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-button-primary);
 }
 
 .category-filters {
@@ -1654,16 +1656,16 @@ input[type=number] {
   padding: 0.375rem 0.75rem;
   background: none;
   border: none;
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   font-weight: 400;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: var(--transition-fast);
   white-space: nowrap;
 }
 
 .category-filter:hover {
-  color: rgba(255, 255, 255, 1);
+  color: var(--color-text-primary);
 }
 
 .dropdown-filter {
@@ -1678,15 +1680,15 @@ input[type=number] {
   padding: 0.375rem 0.75rem;
   background: none;
   border: none;
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   font-weight: 400;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: var(--transition-fast);
 }
 
 .dropdown-toggle:hover {
-  color: rgba(255, 255, 255, 1);
+  color: var(--color-text-primary);
 }
 
 .dropdown-arrow {
@@ -1698,9 +1700,10 @@ input[type=number] {
   position: absolute;
   top: 100%;
   right: 0;
-  background: rgba(31, 41, 55, 1);
-  border: 1px solid rgba(75, 85, 99, 1);
-  border-radius: 0.5rem;
+  background: var(--color-bg-glass-strong);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-md);
   min-width: 150px;
   z-index: 10;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
@@ -1708,20 +1711,20 @@ input[type=number] {
 
 .dropdown-item {
   padding: 0.75rem 1rem;
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition-fast);
 }
 
 .dropdown-item:hover {
-  background: rgba(55, 65, 81, 1);
-  color: rgba(255, 255, 255, 1);
+  background: var(--color-bg-glass-medium);
+  color: var(--color-text-primary);
 }
 
 .dropdown-item.active {
-  background: rgba(59, 130, 246, 1);
-  color: rgba(255, 255, 255, 1);
+  background: var(--color-accent);
+  color: var(--color-text-primary);
 }
 
 .symbol-table {
@@ -1736,14 +1739,14 @@ input[type=number] {
   grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
   gap: 0.75rem;
   padding: 0.75rem 1.5rem;
-  background: rgba(31, 41, 55, 0.5);
-  border-bottom: 1px solid rgba(75, 85, 99, 1);
+  background: var(--color-bg-glass-medium);
+  border-bottom: 1px solid var(--color-border-medium);
 }
 
 .header-cell {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   text-align: left;
 }
 
@@ -1758,13 +1761,13 @@ input[type=number] {
   grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
   gap: 0.75rem;
   padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+  border-bottom: 1px solid var(--color-border-row);
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: var(--transition-fast);
 }
 
 .symbol-row:hover {
-  background: rgba(55, 65, 81, 0.3);
+  background: var(--color-bg-glass-light);
 }
 
 .symbol-cell {
@@ -1772,7 +1775,7 @@ input[type=number] {
   align-items: center;
   gap: 0.375rem;
   font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 1);
+  color: var(--color-text-primary);
 }
 
 .symbol-name {
@@ -1780,8 +1783,8 @@ input[type=number] {
 }
 
 .leverage-tag {
-  background: rgba(75, 85, 99, 1);
-  color: rgba(255, 255, 255, 1);
+  background: var(--color-bg-glass-heavy);
+  color: var(--color-text-primary);
   padding: 0.125rem 0.25rem;
   border-radius: 0.1875rem;
   font-size: 0.6875rem;
@@ -1790,7 +1793,7 @@ input[type=number] {
 
 .price-cell {
   font-weight: 500;
-  color: rgba(255, 255, 255, 1);
+  color: var(--color-text-primary);
   font-size: 0.8125rem;
 }
 
@@ -1800,25 +1803,25 @@ input[type=number] {
 }
 
 .change-positive {
-  color: rgba(16, 185, 129, 1);
+  color: var(--color-positive);
 }
 
 .change-negative {
-  color: rgba(239, 68, 68, 1);
+  color: var(--color-negative);
 }
 
 .funding-cell {
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   font-size: 0.8125rem;
 }
 
 .volume-cell {
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   font-size: 0.8125rem;
 }
 
 .interest-cell {
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
   font-size: 0.8125rem;
 }
 
@@ -1830,15 +1833,15 @@ input[type=number] {
 }
 
 .star-icon:hover {
-  color: rgba(251, 191, 36, 1);
+  color: var(--color-warning);
 }
 
 .star-filled {
-  color: rgba(251, 191, 36, 1);
+  color: var(--color-warning);
 }
 
 .star-outline {
-  color: rgba(156, 163, 175, 1);
+  color: var(--color-text-secondary);
 }
 
 /* Modal responsive */
