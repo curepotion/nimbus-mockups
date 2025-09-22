@@ -1532,8 +1532,8 @@ input[type=number] {
 
 /* Symbol Search Modal */
 .modal-overlay {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 80px;
   left: 0;
   background: transparent;
   z-index: 99999;
