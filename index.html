@@ -7631,6 +7631,9 @@
 
     function openSymbolSearch() {
       document.getElementById('symbolSearchModal').style.display = 'flex';
+      // Ensure category filters are hidden since Spot is default
+      const categoryFilters = document.querySelector('.category-filters');
+      categoryFilters.classList.remove('visible');
       populateSymbolTable();
     }
 
@@ -7710,6 +7713,20 @@
           document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
           this.classList.add('active');
           currentFilter = this.dataset.type;
+          
+          // Show/hide category filters based on active tab
+          const categoryFilters = document.querySelector('.category-filters');
+          if (currentFilter === 'hip3') {
+            categoryFilters.classList.add('visible');
+          } else {
+            categoryFilters.classList.remove('visible');
+            // Reset publisher filter when switching away from HIP-3
+            currentPublisher = 'all';
+            document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
+            document.querySelector('[data-value="all"]').classList.add('active');
+            document.querySelector('.dropdown-toggle').innerHTML = 'All Publishers <span class="dropdown-arrow">▼</span>';
+          }
+          
           populateSymbolTable();
         });
       });
@@ -7720,15 +7737,18 @@
         populateSymbolTable();
       });
 
-      // Category filters
+      // Category filters (only active when HIP-3 is selected)
       document.querySelectorAll('.category-filter').forEach(filter => {
         filter.addEventListener('click', function() {
-          // Reset publisher filter when changing category
-          currentPublisher = 'all';
-          document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
-          document.querySelector('[data-value="all"]').classList.add('active');
-          document.querySelector('.dropdown-toggle').innerHTML = 'All Publishers <span class="dropdown-arrow">▼</span>';
-          populateSymbolTable();
+          // Only process if HIP-3 is active
+          if (currentFilter === 'hip3') {
+            // Reset publisher filter when changing category
+            currentPublisher = 'all';
+            document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
+            document.querySelector('[data-value="all"]').classList.add('active');
+            document.querySelector('.dropdown-toggle').innerHTML = 'All Publishers <span class="dropdown-arrow">▼</span>';
+            populateSymbolTable();
+          }
         });
       });
 
@@ -7738,17 +7758,23 @@
 
       dropdownToggle.addEventListener('click', function(e) {
         e.stopPropagation();
-        dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+        // Only allow dropdown when HIP-3 is active
+        if (currentFilter === 'hip3') {
+          dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+        }
       });
 
       document.querySelectorAll('.dropdown-item').forEach(item => {
         item.addEventListener('click', function() {
-          currentPublisher = this.dataset.value;
-          document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
-          this.classList.add('active');
-          dropdownToggle.innerHTML = `${this.textContent} <span class="dropdown-arrow">▼</span>`;
-          dropdownMenu.style.display = 'none';
-          populateSymbolTable();
+          // Only process if HIP-3 is active
+          if (currentFilter === 'hip3') {
+            currentPublisher = this.dataset.value;
+            document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            dropdownToggle.innerHTML = `${this.textContent} <span class="dropdown-arrow">▼</span>`;
+            dropdownMenu.style.display = 'none';
+            populateSymbolTable();
+          }
         });
       });
 

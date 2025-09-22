@@ -1646,10 +1646,17 @@ input[type=number] {
 }
 
 .category-filters {
-  display: flex;
+  display: none;
   gap: 0.75rem;
   padding: 0 1.5rem 1rem;
   align-items: center;
+  opacity: 0;
+  transition: var(--transition-fast);
+}
+
+.category-filters.visible {
+  display: flex;
+  opacity: 1;
 }
 
 .category-filter {
