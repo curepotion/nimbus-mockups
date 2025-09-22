@@ -1630,25 +1630,30 @@ input[type=number] {
   border-color: var(--color-accent);
 }
 
+/* New Reference-Style Filter Tabs */
 .filter-tabs {
   display: flex;
   gap: 0;
   padding: 0;
+  margin: 0;
   border-bottom: none;
+  background: transparent;
 }
 
 .filter-tab {
-  padding: 1rem 2rem;
+  padding: 0.875rem 1.5rem;
   background: transparent;
   border: none;
   border-bottom: 3px solid transparent;
   color: #9CA3AF;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.15s ease, border-color 0.15s ease;
   position: relative;
   white-space: nowrap;
+  text-align: center;
+  min-width: 80px;
 }
 
 .filter-tab:hover {
@@ -1658,7 +1663,7 @@ input[type=number] {
 .filter-tab.active {
   color: #ffffff;
   border-bottom-color: #FF6B35;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .category-filters {
