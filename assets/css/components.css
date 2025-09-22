@@ -1535,12 +1535,11 @@ input[type=number] {
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
   background: transparent;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
-  justify-content: center;
-  padding: 1rem 2rem;
+  justify-content: flex-start;
+  padding: 1rem 0;
 }
 
 .symbol-search-modal {
@@ -1559,6 +1558,8 @@ input[type=number] {
   box-shadow: var(--shadow-glass);
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 10000;
 }
 
 .modal-header {
@@ -1894,7 +1895,8 @@ input[type=number] {
 /* Modal responsive */
 @media (max-width: 768px) {
   .modal-overlay {
-    padding: 0.5rem;
+    padding: 0.5rem 0;
+    justify-content: flex-start;
   }
   
   .symbol-search-modal {
