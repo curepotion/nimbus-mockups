@@ -1552,8 +1552,8 @@ input[type=number] {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
   width: 100%;
-  max-width: 1200px;
-  max-height: 80vh;
+  max-width: 1000px;
+  max-height: 70vh;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
@@ -1562,12 +1562,12 @@ input[type=number] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .modal-title {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 1);
   margin: 0;
@@ -1577,10 +1577,10 @@ input[type=number] {
   background: none;
   border: none;
   color: rgba(156, 163, 175, 1);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
   transition: all 0.2s;
 }
 
@@ -1590,16 +1590,16 @@ input[type=number] {
 }
 
 .search-container {
-  padding: 1.5rem 2rem 1rem;
+  padding: 1rem 1.5rem 0.75rem;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.875rem 1rem;
+  padding: 0.75rem 0.875rem;
   background: rgba(255, 255, 255, 1);
   border: 1px solid rgba(229, 231, 235, 1);
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: rgba(17, 24, 39, 1);
   outline: none;
   transition: border-color 0.2s;
@@ -1616,17 +1616,17 @@ input[type=number] {
 
 .filter-tabs {
   display: flex;
-  gap: 0.5rem;
-  padding: 0 2rem 1rem;
+  gap: 0.375rem;
+  padding: 0 1.5rem 0.75rem;
 }
 
 .filter-tab {
-  padding: 0.5rem 1rem;
+  padding: 0.375rem 0.75rem;
   background: rgba(31, 41, 55, 1);
   border: 1px solid rgba(75, 85, 99, 1);
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   color: rgba(156, 163, 175, 1);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -1645,8 +1645,8 @@ input[type=number] {
 
 .category-filters {
   display: flex;
-  gap: 1rem;
-  padding: 0 2rem 1.5rem;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1rem;
   align-items: center;
 }
 
@@ -1734,14 +1734,14 @@ input[type=number] {
 .table-header {
   display: grid;
   grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
-  gap: 1rem;
-  padding: 1rem 2rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
   background: rgba(31, 41, 55, 0.5);
   border-bottom: 1px solid rgba(75, 85, 99, 1);
 }
 
 .header-cell {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: rgba(156, 163, 175, 1);
   text-align: left;
@@ -1750,14 +1750,14 @@ input[type=number] {
 .table-body {
   flex: 1;
   overflow-y: auto;
-  max-height: 400px;
+  max-height: 350px;
 }
 
 .symbol-row {
   display: grid;
   grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
-  gap: 1rem;
-  padding: 1rem 2rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
   border-bottom: 1px solid rgba(75, 85, 99, 0.3);
   cursor: pointer;
   transition: background-color 0.2s;
@@ -1770,8 +1770,8 @@ input[type=number] {
 .symbol-cell {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
   color: rgba(255, 255, 255, 1);
 }
 
@@ -1782,19 +1782,21 @@ input[type=number] {
 .leverage-tag {
   background: rgba(75, 85, 99, 1);
   color: rgba(255, 255, 255, 1);
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.1875rem;
+  font-size: 0.6875rem;
   font-weight: 500;
 }
 
 .price-cell {
   font-weight: 500;
   color: rgba(255, 255, 255, 1);
+  font-size: 0.8125rem;
 }
 
 .change-cell {
   font-weight: 500;
+  font-size: 0.8125rem;
 }
 
 .change-positive {
@@ -1807,19 +1809,22 @@ input[type=number] {
 
 .funding-cell {
   color: rgba(156, 163, 175, 1);
+  font-size: 0.8125rem;
 }
 
 .volume-cell {
   color: rgba(156, 163, 175, 1);
+  font-size: 0.8125rem;
 }
 
 .interest-cell {
   color: rgba(156, 163, 175, 1);
+  font-size: 0.8125rem;
 }
 
 .star-icon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   cursor: pointer;
   transition: color 0.2s;
 }
@@ -1839,38 +1844,42 @@ input[type=number] {
 /* Modal responsive */
 @media (max-width: 768px) {
   .modal-overlay {
-    padding: 1rem;
+    padding: 0.75rem;
   }
   
   .symbol-search-modal {
-    max-height: 90vh;
+    max-height: 85vh;
   }
   
   .modal-header {
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1rem;
   }
   
   .search-container,
   .filter-tabs,
   .category-filters {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   
   .table-header,
   .symbol-row {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     grid-template-columns: 1.5fr 1fr 1fr 0.8fr 1fr 1fr;
-    gap: 0.5rem;
+    gap: 0.375rem;
   }
   
   .category-filters {
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.375rem;
   }
   
   .dropdown-filter {
     margin-left: 0;
+  }
+  
+  .table-body {
+    max-height: 300px;
   }
 }

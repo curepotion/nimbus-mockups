@@ -7625,7 +7625,7 @@
       { symbol: 'META-USD', price: 345.89, change: 8.91, changePercent: 2.64, funding: 0.0056, volume: 7654321, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'hb', favorite: false }
     ];
 
-    let currentFilter = 'hip3';
+    let currentFilter = 'spot';
     let currentPublisher = 'all';
     let searchQuery = '';
 
@@ -7780,9 +7780,9 @@
       </div>
       
       <div class="filter-tabs">
-        <button class="filter-tab" data-type="spot">Spot</button>
+        <button class="filter-tab active" data-type="spot">Spot</button>
         <button class="filter-tab" data-type="perp">Perp</button>
-        <button class="filter-tab active" data-type="hip3">HIP-3</button>
+        <button class="filter-tab" data-type="hip3">HIP-3</button>
       </div>
       
       <div class="category-filters">
