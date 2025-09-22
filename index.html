@@ -7703,6 +7703,9 @@
       // Ensure category filters are hidden since Spot is default
       const categoryFilters = document.querySelector('.category-filters');
       categoryFilters.classList.remove('visible');
+      // Set currentFilter to spot and update headers
+      currentFilter = 'spot';
+      updateTableHeaders();
       populateSymbolTable();
     }
 
@@ -7717,27 +7720,67 @@
         const matchesPublisher = currentPublisher === 'all' || symbol.publisher === currentPublisher;
         const matchesSearch = searchQuery === '' || 
           symbol.symbol.toLowerCase().includes(searchQuery.toLowerCase());
+        
+        // Additional filtering for HIP-3 categories
+        if (currentFilter === 'hip3') {
+          const activeCategoryFilter = document.querySelector('.category-filter.active')?.dataset.category || 'all';
+          const matchesCategory = activeCategoryFilter === 'all' || symbol.category === activeCategoryFilter;
+          return matchesType && matchesPublisher && matchesSearch && matchesCategory;
+        }
+        
         return matchesType && matchesPublisher && matchesSearch;
       });
 
-      tableBody.innerHTML = filteredData.map(symbol => `
-        <div class="symbol-row" onclick="selectSymbol('${symbol.symbol}')">
-          <div class="symbol-cell">
-            <span class="star-icon ${symbol.favorite ? 'star-filled' : 'star-outline'}" onclick="event.stopPropagation(); toggleFavorite('${symbol.symbol}')">
-              ★
-            </span>
-            <span class="symbol-name">${symbol.symbol}</span>
-            <span class="leverage-tag">10x</span>
+      // Update table headers based on current filter
+      updateTableHeaders();
+
+      tableBody.innerHTML = filteredData.map(symbol => {
+        const tagText = currentFilter === 'spot' ? 'SPOT' : '10x';
+        const tagClass = currentFilter === 'spot' ? 'spot-tag' : 'leverage-tag';
+        
+        return `
+          <div class="symbol-row" onclick="selectSymbol('${symbol.symbol}')">
+            <div class="symbol-cell">
+              <span class="star-icon ${symbol.favorite ? 'star-filled' : 'star-outline'}" onclick="event.stopPropagation(); toggleFavorite('${symbol.symbol}')">
+                ★
+              </span>
+              <span class="symbol-name">${symbol.symbol}</span>
+              <span class="${tagClass}">${tagText}</span>
+            </div>
+            <div class="price-cell">${symbol.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}</div>
+            <div class="change-cell ${symbol.change >= 0 ? 'change-positive' : 'change-negative'}">
+              ${symbol.change >= 0 ? '+' : ''}${symbol.change.toFixed(4)} / ${symbol.change >= 0 ? '+' : ''}${symbol.changePercent.toFixed(2)}%
+            </div>
+            ${currentFilter === 'spot' ? 
+              `<div class="market-cap-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>` :
+              `<div class="funding-cell">${symbol.funding.toFixed(4)}%</div>`
+            }
+            <div class="volume-cell">$${(symbol.volume / 1000000).toFixed(1)}M</div>
+            <div class="interest-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>
           </div>
-          <div class="price-cell">${symbol.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}</div>
-          <div class="change-cell ${symbol.change >= 0 ? 'change-positive' : 'change-negative'}">
-            ${symbol.change >= 0 ? '+' : ''}${symbol.change.toFixed(4)} / ${symbol.change >= 0 ? '+' : ''}${symbol.changePercent.toFixed(2)}%
-          </div>
-          <div class="funding-cell">${symbol.funding.toFixed(4)}%</div>
-          <div class="volume-cell">$${(symbol.volume / 1000000).toFixed(1)}M</div>
-          <div class="interest-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    function updateTableHeaders() {
+      const headerCells = document.querySelectorAll('.header-cell');
+      if (currentFilter === 'spot') {
+        // Spot: Symbol, Last Price, 24hr Change, Market Cap, Volume, Open Interest
+        headerCells[0].textContent = 'Symbol';
+        headerCells[1].textContent = 'Last Price';
+        headerCells[2].textContent = '24hr Change';
+        headerCells[3].textContent = 'Market Cap';
+        headerCells[4].textContent = 'Volume';
+        headerCells[5].textContent = 'Open Interest';
+      } else {
+        // Perp/HIP-3: Symbol, Last Price, 24hr Change, 8hr Funding, Volume, Open Interest
+        headerCells[0].textContent = 'Symbol';
+        headerCells[1].textContent = 'Last Price';
+        headerCells[2].textContent = '24hr Change';
+        headerCells[3].textContent = '8hr Funding';
+        headerCells[4].textContent = 'Volume';
+        headerCells[5].textContent = 'Open Interest';
+      }
     }
 
     function selectSymbol(symbol) {
