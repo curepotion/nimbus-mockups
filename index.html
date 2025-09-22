@@ -415,7 +415,7 @@
             <!-- Trading Info Bar -->
             <div class="trading-info-bar">
               <div class="info-section">
-                <div class="asset-pair">
+                <div class="asset-pair" onclick="openSymbolSearch()">
                   <div class="asset-icon">
                     <img src="https://api.iconify.design/cryptocurrency:btc.svg" alt="BTC" width="24" height="24" />
                   </div>
@@ -7591,6 +7591,235 @@
       alert(`TP/SL settings applied for ${currentTpSlData.symbol}: TP ${tpPrice > 0 ? '$' + tpPrice.toFixed(2) : 'off'}, SL ${slPrice > 0 ? '$' + slPrice.toFixed(2) : 'off'}`);
     });
 
+    // Symbol Search Modal Functions
+    let symbolData = [
+      // Major Cryptocurrencies
+      { symbol: 'BTC-USD', price: 115608.42, change: -0.19, changePercent: -5.20, funding: 0.0122, volume: 20943434, interest: 44026695, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: true },
+      { symbol: 'ETH-USD', price: 3245.67, change: 2.34, changePercent: 7.2, funding: 0.0089, volume: 15678923, interest: 28945678, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'SOL-USD', price: 142.89, change: -1.23, changePercent: -0.85, funding: 0.0156, volume: 8934567, interest: 15678934, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ADA-USD', price: 0.4567, change: 0.0234, changePercent: 5.4, funding: 0.0098, volume: 5678901, interest: 12345678, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'DOT-USD', price: 6.78, change: -0.45, changePercent: -6.2, funding: 0.0112, volume: 3456789, interest: 9876543, type: 'spot', category: 'crypto', publisher: 'ventuals', favorite: false },
+      
+      // Perpetual Futures
+      { symbol: 'BTC-PERP', price: 115623.15, change: -0.21, changePercent: -5.18, funding: 0.0122, volume: 45321678, interest: 87654321, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'ETH-PERP', price: 3247.89, change: 2.45, changePercent: 7.5, funding: 0.0089, volume: 32145678, interest: 56789012, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      { symbol: 'SOL-PERP', price: 143.12, change: -1.18, changePercent: -0.82, funding: 0.0156, volume: 18765432, interest: 23456789, type: 'perp', category: 'crypto', publisher: 'ventuals', favorite: false },
+      
+      // HIP-3 Tokens
+      { symbol: 'AAPL-USD', price: 234.56, change: 3.45, changePercent: 1.49, funding: 0.0056, volume: 12345678, interest: 34567890, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'TSLA-USD', price: 245.78, change: -8.92, changePercent: -3.50, funding: 0.0078, volume: 9876543, interest: 45678901, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'GOOGL-USD', price: 156.34, change: 1.23, changePercent: 0.79, funding: 0.0045, volume: 7654321, interest: 56789012, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      { symbol: 'MSFT-USD', price: 378.91, change: 2.67, changePercent: 0.71, funding: 0.0034, volume: 5432109, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'ventuals', favorite: false },
+      
+      // Commodities
+      { symbol: 'GOLD-USD', price: 2654.32, change: -12.45, changePercent: -0.47, funding: 0.0023, volume: 8765432, interest: 23456789, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      { symbol: 'OIL-USD', price: 78.45, change: 1.23, changePercent: 1.59, funding: 0.0067, volume: 6543210, interest: 34567890, type: 'hip3', category: 'commodities', publisher: 'ventuals', favorite: false },
+      
+      // Pre-IPO
+      { symbol: 'SPACEX-USD', price: 456.78, change: 12.34, changePercent: 2.78, funding: 0.0098, volume: 4321098, interest: 12345678, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      { symbol: 'STRIPE-USD', price: 234.56, change: -3.45, changePercent: -1.45, funding: 0.0089, volume: 3210987, interest: 23456789, type: 'hip3', category: 'pre-ipo', publisher: 'ventuals', favorite: false },
+      
+      // More tokens from different publishers
+      { symbol: 'NVDA-USD', price: 789.12, change: 15.67, changePercent: 2.03, funding: 0.0045, volume: 10987654, interest: 45678901, type: 'hip3', category: 'stocks', publisher: 'volmex', favorite: false },
+      { symbol: 'AMZN-USD', price: 145.67, change: -2.34, changePercent: -1.58, funding: 0.0034, volume: 8765432, interest: 56789012, type: 'hip3', category: 'stocks', publisher: 'zigg', favorite: false },
+      { symbol: 'META-USD', price: 345.89, change: 8.91, changePercent: 2.64, funding: 0.0056, volume: 7654321, interest: 67890123, type: 'hip3', category: 'stocks', publisher: 'hb', favorite: false }
+    ];
+
+    let currentFilter = 'hip3';
+    let currentPublisher = 'all';
+    let searchQuery = '';
+
+    function openSymbolSearch() {
+      document.getElementById('symbolSearchModal').style.display = 'flex';
+      populateSymbolTable();
+    }
+
+    function closeSymbolSearch() {
+      document.getElementById('symbolSearchModal').style.display = 'none';
+    }
+
+    function populateSymbolTable() {
+      const tableBody = document.getElementById('symbolTableBody');
+      const filteredData = symbolData.filter(symbol => {
+        const matchesType = currentFilter === 'all' || symbol.type === currentFilter;
+        const matchesPublisher = currentPublisher === 'all' || symbol.publisher === currentPublisher;
+        const matchesSearch = searchQuery === '' || 
+          symbol.symbol.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesType && matchesPublisher && matchesSearch;
+      });
+
+      tableBody.innerHTML = filteredData.map(symbol => `
+        <div class="symbol-row" onclick="selectSymbol('${symbol.symbol}')">
+          <div class="symbol-cell">
+            <span class="star-icon ${symbol.favorite ? 'star-filled' : 'star-outline'}" onclick="event.stopPropagation(); toggleFavorite('${symbol.symbol}')">
+              ★
+            </span>
+            <span class="symbol-name">${symbol.symbol}</span>
+            <span class="leverage-tag">10x</span>
+          </div>
+          <div class="price-cell">${symbol.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}</div>
+          <div class="change-cell ${symbol.change >= 0 ? 'change-positive' : 'change-negative'}">
+            ${symbol.change >= 0 ? '+' : ''}${symbol.change.toFixed(4)} / ${symbol.change >= 0 ? '+' : ''}${symbol.changePercent.toFixed(2)}%
+          </div>
+          <div class="funding-cell">${symbol.funding.toFixed(4)}%</div>
+          <div class="volume-cell">$${(symbol.volume / 1000000).toFixed(1)}M</div>
+          <div class="interest-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>
+        </div>
+      `).join('');
+    }
+
+    function selectSymbol(symbol) {
+      // Update the trading info bar with selected symbol
+      const symbolData = symbol.split('-');
+      const baseSymbol = symbolData[0];
+      const quoteSymbol = symbolData[1];
+      
+      // Update the asset pair display
+      document.querySelector('.pair-name').textContent = symbol;
+      document.querySelector('.base-currency').textContent = quoteSymbol;
+      
+      // Update asset icon based on symbol
+      const iconMap = {
+        'BTC': 'cryptocurrency:btc',
+        'ETH': 'cryptocurrency:eth',
+        'SOL': 'cryptocurrency:sol',
+        'ADA': 'cryptocurrency:ada',
+        'DOT': 'cryptocurrency:dot'
+      };
+      
+      const iconName = iconMap[baseSymbol] || 'cryptocurrency:btc';
+      document.querySelector('.asset-icon img').src = `https://api.iconify.design/${iconName}.svg`;
+      document.querySelector('.asset-icon img').alt = baseSymbol;
+      
+      closeSymbolSearch();
+    }
+
+    function toggleFavorite(symbol) {
+      const symbolIndex = symbolData.findIndex(s => s.symbol === symbol);
+      if (symbolIndex !== -1) {
+        symbolData[symbolIndex].favorite = !symbolData[symbolIndex].favorite;
+        populateSymbolTable();
+      }
+    }
+
+    // Initialize modal functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filter tabs
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentFilter = this.dataset.type;
+          populateSymbolTable();
+        });
+      });
+
+      // Search input
+      document.getElementById('symbolSearchInput').addEventListener('input', function() {
+        searchQuery = this.value;
+        populateSymbolTable();
+      });
+
+      // Category filters
+      document.querySelectorAll('.category-filter').forEach(filter => {
+        filter.addEventListener('click', function() {
+          // Reset publisher filter when changing category
+          currentPublisher = 'all';
+          document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
+          document.querySelector('[data-value="all"]').classList.add('active');
+          document.querySelector('.dropdown-toggle').innerHTML = 'All Publishers <span class="dropdown-arrow">▼</span>';
+          populateSymbolTable();
+        });
+      });
+
+      // Dropdown functionality
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+
+      dropdownToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+      });
+
+      document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function() {
+          currentPublisher = this.dataset.value;
+          document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          dropdownToggle.innerHTML = `${this.textContent} <span class="dropdown-arrow">▼</span>`;
+          dropdownMenu.style.display = 'none';
+          populateSymbolTable();
+        });
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function() {
+        dropdownMenu.style.display = 'none';
+      });
+
+      // Close modal when clicking overlay
+      document.getElementById('symbolSearchModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeSymbolSearch();
+        }
+      });
+    });
+
   </script>
+
+  <!-- Symbol Search Modal -->
+  <div id="symbolSearchModal" class="modal-overlay" style="display: none;">
+    <div class="symbol-search-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Symbol Search</h2>
+        <button class="modal-close" onclick="closeSymbolSearch()">&times;</button>
+      </div>
+      
+      <div class="search-container">
+        <input type="text" id="symbolSearchInput" class="search-input" placeholder="Search" />
+      </div>
+      
+      <div class="filter-tabs">
+        <button class="filter-tab" data-type="spot">Spot</button>
+        <button class="filter-tab" data-type="perp">Perp</button>
+        <button class="filter-tab active" data-type="hip3">HIP-3</button>
+      </div>
+      
+      <div class="category-filters">
+        <button class="category-filter" data-category="pre-ipo">Pre-IPO</button>
+        <button class="category-filter" data-category="volume">Volume</button>
+        <button class="category-filter" data-category="stocks">Stocks</button>
+        <button class="category-filter" data-category="commodities">Commodities</button>
+        <div class="dropdown-filter">
+          <button class="dropdown-toggle" data-category="publishers">
+            All Publishers <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-menu" style="display: none;">
+            <div class="dropdown-item active" data-value="all">All Publishers</div>
+            <div class="dropdown-item" data-value="ventuals">Ventuals</div>
+            <div class="dropdown-item" data-value="volmex">VOLMEX</div>
+            <div class="dropdown-item" data-value="zigg">ZIGG</div>
+            <div class="dropdown-item" data-value="hb">HB</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="symbol-table">
+        <div class="table-header">
+          <div class="header-cell">Symbol</div>
+          <div class="header-cell">Last Price</div>
+          <div class="header-cell">24hr Change</div>
+          <div class="header-cell">8hr Funding</div>
+          <div class="header-cell">Volume</div>
+          <div class="header-cell">Open Interest</div>
+        </div>
+        
+        <div class="table-body" id="symbolTableBody">
+          <!-- Symbol rows will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

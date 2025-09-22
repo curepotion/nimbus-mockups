@@ -1529,3 +1529,348 @@ input[type=number]::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* Symbol Search Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.symbol-search-modal {
+  background: rgba(11, 15, 20, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: rgba(156, 163, 175, 1);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.search-container {
+  padding: 1.5rem 2rem 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(229, 231, 235, 1);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: rgba(17, 24, 39, 1);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input::placeholder {
+  color: rgba(107, 114, 128, 1);
+}
+
+.search-input:focus {
+  border-color: rgba(59, 130, 246, 1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 2rem 1rem;
+}
+
+.filter-tab {
+  padding: 0.5rem 1rem;
+  background: rgba(31, 41, 55, 1);
+  border: 1px solid rgba(75, 85, 99, 1);
+  border-radius: 0.5rem;
+  color: rgba(156, 163, 175, 1);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tab:hover {
+  background: rgba(55, 65, 81, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.filter-tab.active {
+  background: rgba(59, 130, 246, 1);
+  border-color: rgba(59, 130, 246, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.category-filters {
+  display: flex;
+  gap: 1rem;
+  padding: 0 2rem 1.5rem;
+  align-items: center;
+}
+
+.category-filter {
+  padding: 0.375rem 0.75rem;
+  background: none;
+  border: none;
+  color: rgba(156, 163, 175, 1);
+  font-size: 0.875rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.category-filter:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.dropdown-filter {
+  position: relative;
+  margin-left: auto;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background: none;
+  border: none;
+  color: rgba(156, 163, 175, 1);
+  font-size: 0.875rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.dropdown-toggle:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.dropdown-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(31, 41, 55, 1);
+  border: 1px solid rgba(75, 85, 99, 1);
+  border-radius: 0.5rem;
+  min-width: 150px;
+  z-index: 10;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-item {
+  padding: 0.75rem 1rem;
+  color: rgba(156, 163, 175, 1);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(55, 65, 81, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.dropdown-item.active {
+  background: rgba(59, 130, 246, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.symbol-table {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: rgba(31, 41, 55, 0.5);
+  border-bottom: 1px solid rgba(75, 85, 99, 1);
+}
+
+.header-cell {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(156, 163, 175, 1);
+  text-align: left;
+}
+
+.table-body {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.symbol-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.symbol-row:hover {
+  background: rgba(55, 65, 81, 0.3);
+}
+
+.symbol-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 1);
+}
+
+.symbol-name {
+  font-weight: 500;
+}
+
+.leverage-tag {
+  background: rgba(75, 85, 99, 1);
+  color: rgba(255, 255, 255, 1);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.price-cell {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+}
+
+.change-cell {
+  font-weight: 500;
+}
+
+.change-positive {
+  color: rgba(16, 185, 129, 1);
+}
+
+.change-negative {
+  color: rgba(239, 68, 68, 1);
+}
+
+.funding-cell {
+  color: rgba(156, 163, 175, 1);
+}
+
+.volume-cell {
+  color: rgba(156, 163, 175, 1);
+}
+
+.interest-cell {
+  color: rgba(156, 163, 175, 1);
+}
+
+.star-icon {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-icon:hover {
+  color: rgba(251, 191, 36, 1);
+}
+
+.star-filled {
+  color: rgba(251, 191, 36, 1);
+}
+
+.star-outline {
+  color: rgba(156, 163, 175, 1);
+}
+
+/* Modal responsive */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 1rem;
+  }
+  
+  .symbol-search-modal {
+    max-height: 90vh;
+  }
+  
+  .modal-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .search-container,
+  .filter-tabs,
+  .category-filters {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .table-header,
+  .symbol-row {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    grid-template-columns: 1.5fr 1fr 1fr 0.8fr 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  .category-filters {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .dropdown-filter {
+    margin-left: 0;
+  }
+}
