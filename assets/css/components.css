@@ -1544,7 +1544,7 @@ input[type=number] {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 4rem 0 0 4rem;
+  padding: 5rem 0 0 4rem;
 }
 
 .symbol-search-modal {
@@ -1931,7 +1931,7 @@ input[type=number] {
 /* Modal responsive */
   @media (max-width: 768px) {
     .modal-overlay {
-      padding: 2rem 0 0 2rem;
+      padding: 3rem 0 0 2rem;
     }
   
   .symbol-search-modal {
