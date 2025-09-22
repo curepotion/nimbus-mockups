@@ -1536,7 +1536,7 @@ input[type=number] {
   top: 100%;
   left: 0;
   background: transparent;
-  z-index: 9999;
+  z-index: 99999;
   display: flex;
   justify-content: flex-start;
   padding: 1rem 0;
@@ -1553,7 +1553,7 @@ input[type=number] {
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 10000;
+  z-index: 100000;
 }
 
 .modal-header {
