@@ -7753,7 +7753,11 @@
     let searchQuery = '';
 
     function openSymbolSearch() {
-      document.getElementById('symbolSearchModal').style.display = 'flex';
+      const modal = document.getElementById('symbolSearchModal');
+      modal.style.display = 'flex';
+      modal.style.visibility = 'visible';
+      modal.style.opacity = '1';
+      modal.style.zIndex = '999999';
       // Ensure category filters are hidden since Spot is default
       const categoryFilters = document.querySelector('.category-filters');
       categoryFilters.classList.remove('visible');
@@ -7761,7 +7765,10 @@
     }
 
     function closeSymbolSearch() {
-      document.getElementById('symbolSearchModal').style.display = 'none';
+      const modal = document.getElementById('symbolSearchModal');
+      modal.style.display = 'none';
+      modal.style.visibility = 'hidden';
+      modal.style.opacity = '0';
     }
 
     function populateSymbolTable() {
