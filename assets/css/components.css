@@ -1533,17 +1533,10 @@ input[type=number] {
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 1rem 1.5rem 0;
   border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.header-left {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  flex: 1;
 }
 
 .modal-title {
