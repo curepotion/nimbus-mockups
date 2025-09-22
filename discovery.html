@@ -16,6 +16,8 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   <link rel="stylesheet" href="assets/css/components.css">
   <script src="assets/js/navbar.js"></script>
 
@@ -42,13 +44,12 @@
           <div class="widget-header">
             <h3>Fear & Greed</h3>
           </div>
-          <div class="gauge-container">
-            <div class="gauge">
-              <div class="gauge-needle" style="transform: rotate(48deg);"></div>
-              <div class="gauge-center"></div>
+          <div class="chart-container">
+            <canvas id="fearGreedChart" width="120" height="120"></canvas>
+            <div class="chart-overlay">
+              <div class="chart-value">48</div>
+              <div class="chart-label">Neutral</div>
             </div>
-            <div class="gauge-value">48</div>
-            <div class="gauge-label">Neutral</div>
           </div>
         </div>
         
@@ -56,16 +57,13 @@
           <div class="widget-header">
             <h3>Altcoin Season</h3>
           </div>
-          <div class="slider-container">
-            <div class="slider-track">
-              <div class="slider-fill" style="width: 76%;"></div>
-              <div class="slider-handle" style="left: 76%;"></div>
-            </div>
-            <div class="slider-labels">
+          <div class="chart-container">
+            <canvas id="altcoinSeasonChart" width="200" height="80"></canvas>
+            <div class="chart-labels">
               <span>Bitcoin</span>
               <span>Altcoin</span>
             </div>
-            <div class="slider-value">76/100</div>
+            <div class="chart-value">76/100</div>
           </div>
         </div>
         
@@ -76,11 +74,8 @@
           <div class="market-data">
             <div class="market-value">$4.04T</div>
             <div class="market-change negative">-1.03%</div>
-            <div class="market-chart">
-              <svg width="100" height="20" viewBox="0 0 100 20">
-                <polyline points="0,15 20,12 40,8 60,10 80,5 100,3" 
-                         stroke="#ef4444" stroke-width="2" fill="none"/>
-              </svg>
+            <div class="chart-container">
+              <canvas id="marketCapChart" width="200" height="60"></canvas>
             </div>
           </div>
         </div>
@@ -2653,6 +2648,186 @@
         window.location.href = `index.html?symbol=${symbol}`;
       }
     }
+
+    // Chart.js Implementation
+    // Chart.js Configuration
+    Chart.defaults.color = '#9CA3AF';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+
+    // Fear & Greed Gauge Chart
+    const fearGreedCtx = document.getElementById('fearGreedChart').getContext('2d');
+    const fearGreedChart = new Chart(fearGreedCtx, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [48, 52],
+          backgroundColor: ['#10b981', 'rgba(255, 255, 255, 0.1)'],
+          borderWidth: 0,
+          cutout: '75%'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        },
+        animation: {
+          animateRotate: true,
+          duration: 2000
+        }
+      }
+    });
+
+    // Altcoin Season Progress Chart
+    const altcoinSeasonCtx = document.getElementById('altcoinSeasonChart').getContext('2d');
+    const altcoinSeasonChart = new Chart(altcoinSeasonCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Bitcoin', 'Altcoin'],
+        datasets: [{
+          data: [24, 76],
+          backgroundColor: ['#f59e0b', '#10b981'],
+          borderRadius: 8,
+          borderSkipped: false,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: false }
+        },
+        scales: {
+          x: {
+            display: false,
+            stacked: true
+          },
+          y: {
+            display: false,
+            stacked: true
+          }
+        },
+        animation: {
+          duration: 2000,
+          easing: 'easeOutQuart'
+        }
+      }
+    });
+
+    // Market Cap Line Chart
+    const marketCapCtx = document.getElementById('marketCapChart').getContext('2d');
+    const marketCapChart = new Chart(marketCapCtx, {
+      type: 'line',
+      data: {
+        labels: ['1D', '2D', '3D', '4D', '5D', '6D', '7D'],
+        datasets: [{
+          data: [4.1, 4.05, 4.08, 4.12, 4.15, 4.08, 4.04],
+          borderColor: '#ef4444',
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 0,
+          pointHoverRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            enabled: true,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#10b981',
+            borderWidth: 1,
+            callbacks: {
+              label: function(context) {
+                return '$' + context.parsed.y + 'T';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            display: false
+          },
+          y: {
+            display: false
+          }
+        },
+        animation: {
+          duration: 2000,
+          easing: 'easeOutQuart'
+        }
+      }
+    });
+
+    // Update charts with real-time data (simulated)
+    function updateCharts() {
+      // Update Fear & Greed (simulate real-time changes)
+      const newFearGreed = Math.floor(Math.random() * 100);
+      fearGreedChart.data.datasets[0].data = [newFearGreed, 100 - newFearGreed];
+      
+      // Update chart overlay text
+      const fearGreedValue = document.querySelector('.fear-greed .chart-value');
+      const fearGreedLabel = document.querySelector('.fear-greed .chart-label');
+      fearGreedValue.textContent = newFearGreed;
+      
+      if (newFearGreed < 25) {
+        fearGreedLabel.textContent = 'Extreme Fear';
+        fearGreedChart.data.datasets[0].backgroundColor = ['#ef4444', 'rgba(255, 255, 255, 0.1)'];
+      } else if (newFearGreed < 45) {
+        fearGreedLabel.textContent = 'Fear';
+        fearGreedChart.data.datasets[0].backgroundColor = ['#f59e0b', 'rgba(255, 255, 255, 0.1)'];
+      } else if (newFearGreed < 55) {
+        fearGreedLabel.textContent = 'Neutral';
+        fearGreedChart.data.datasets[0].backgroundColor = ['#10b981', 'rgba(255, 255, 255, 0.1)'];
+      } else if (newFearGreed < 75) {
+        fearGreedLabel.textContent = 'Greed';
+        fearGreedChart.data.datasets[0].backgroundColor = ['#10b981', 'rgba(255, 255, 255, 0.1)'];
+      } else {
+        fearGreedLabel.textContent = 'Extreme Greed';
+        fearGreedChart.data.datasets[0].backgroundColor = ['#ef4444', 'rgba(255, 255, 255, 0.1)'];
+      }
+      fearGreedChart.update('active');
+
+      // Update Altcoin Season
+      const newAltcoinSeason = Math.floor(Math.random() * 100);
+      altcoinSeasonChart.data.datasets[0].data = [100 - newAltcoinSeason, newAltcoinSeason];
+      altcoinSeasonChart.update('active');
+      
+      // Update chart value text
+      const altcoinValue = document.querySelector('.altcoin-season .chart-value');
+      altcoinValue.textContent = newAltcoinSeason + '/100';
+
+      // Update Market Cap
+      const newMarketCap = 4.04 + (Math.random() - 0.5) * 0.2;
+      const newData = marketCapChart.data.datasets[0].data.slice(1);
+      newData.push(parseFloat(newMarketCap.toFixed(2)));
+      marketCapChart.data.datasets[0].data = newData;
+      
+      // Update market value and change
+      const marketValue = document.querySelector('.market-cap .market-value');
+      const marketChange = document.querySelector('.market-cap .market-change');
+      const change = ((newMarketCap - 4.04) / 4.04 * 100).toFixed(2);
+      
+      marketValue.textContent = '$' + newMarketCap.toFixed(2) + 'T';
+      marketChange.textContent = (change >= 0 ? '+' : '') + change + '%';
+      marketChange.className = 'market-change ' + (change >= 0 ? 'positive' : 'negative');
+      
+      marketCapChart.update('active');
+    }
+
+    // Update charts every 30 seconds
+    setInterval(updateCharts, 30000);
   </script>
 </body>
 </html>
