@@ -7703,9 +7703,6 @@
       // Ensure category filters are hidden since Spot is default
       const categoryFilters = document.querySelector('.category-filters');
       categoryFilters.classList.remove('visible');
-      // Set currentFilter to spot and update headers
-      currentFilter = 'spot';
-      updateTableHeaders();
       populateSymbolTable();
     }
 
@@ -7713,74 +7710,103 @@
       document.getElementById('symbolSearchModal').style.display = 'none';
     }
 
+    // Function to populate table headers based on current filter
+    function populateTableHeaders() {
+      const tableHeader = document.getElementById('tableHeader');
+      let headers = '';
+      
+      // Remove existing classes and add new one
+      tableHeader.className = 'table-header ' + currentFilter;
+      
+      if (currentFilter === 'spot') {
+        headers = `
+          <div class="header-cell">Symbol</div>
+          <div class="header-cell">Last Price</div>
+          <div class="header-cell">24hr Change</div>
+          <div class="header-cell">Volume</div>
+          <div class="header-cell">Market Cap</div>
+        `;
+      } else if (currentFilter === 'perp') {
+        headers = `
+          <div class="header-cell">Symbol</div>
+          <div class="header-cell">Last Price</div>
+          <div class="header-cell">24hr Change</div>
+          <div class="header-cell">8hr Funding</div>
+          <div class="header-cell">Volume</div>
+          <div class="header-cell">Open Interest</div>
+        `;
+      } else if (currentFilter === 'hip3') {
+        headers = `
+          <div class="header-cell">Symbol</div>
+          <div class="header-cell">Last Price</div>
+          <div class="header-cell">24hr Change</div>
+          <div class="header-cell">8hr Funding</div>
+          <div class="header-cell">Volume</div>
+          <div class="header-cell">Open Interest</div>
+        `;
+      }
+      
+      tableHeader.innerHTML = headers;
+    }
+
     function populateSymbolTable() {
       const tableBody = document.getElementById('symbolTableBody');
+      
+      // Update table headers first
+      populateTableHeaders();
+      
       const filteredData = symbolData.filter(symbol => {
         const matchesType = currentFilter === 'all' || symbol.type === currentFilter;
         const matchesPublisher = currentPublisher === 'all' || symbol.publisher === currentPublisher;
         const matchesSearch = searchQuery === '' || 
           symbol.symbol.toLowerCase().includes(searchQuery.toLowerCase());
-        
-        // Additional filtering for HIP-3 categories
-        if (currentFilter === 'hip3') {
-          const activeCategoryFilter = document.querySelector('.category-filter.active')?.dataset.category || 'all';
-          const matchesCategory = activeCategoryFilter === 'all' || symbol.category === activeCategoryFilter;
-          return matchesType && matchesPublisher && matchesSearch && matchesCategory;
-        }
-        
         return matchesType && matchesPublisher && matchesSearch;
       });
 
-      // Update table headers based on current filter
-      updateTableHeaders();
-
       tableBody.innerHTML = filteredData.map(symbol => {
-        const tagText = currentFilter === 'spot' ? 'SPOT' : '10x';
-        const tagClass = currentFilter === 'spot' ? 'spot-tag' : 'leverage-tag';
+        // Determine tag based on symbol type
+        let tag = '';
+        if (currentFilter === 'spot') {
+          tag = '<span class="spot-tag">SPOT</span>';
+        } else if (currentFilter === 'perp') {
+          tag = '<span class="leverage-tag">10x</span>';
+        } else if (currentFilter === 'hip3') {
+          tag = '<span class="leverage-tag">10x</span>';
+        }
         
-        return `
-          <div class="symbol-row" onclick="selectSymbol('${symbol.symbol}')">
+        // Build row content based on current filter
+        let rowContent = `
+          <div class="symbol-row ${currentFilter}" onclick="selectSymbol('${symbol.symbol}')">
             <div class="symbol-cell">
               <span class="star-icon ${symbol.favorite ? 'star-filled' : 'star-outline'}" onclick="event.stopPropagation(); toggleFavorite('${symbol.symbol}')">
                 ★
               </span>
               <span class="symbol-name">${symbol.symbol}</span>
-              <span class="${tagClass}">${tagText}</span>
+              ${tag}
             </div>
             <div class="price-cell">${symbol.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}</div>
             <div class="change-cell ${symbol.change >= 0 ? 'change-positive' : 'change-negative'}">
               ${symbol.change >= 0 ? '+' : ''}${symbol.change.toFixed(4)} / ${symbol.change >= 0 ? '+' : ''}${symbol.changePercent.toFixed(2)}%
             </div>
-            ${currentFilter === 'spot' ? 
-              `<div class="market-cap-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>` :
-              `<div class="funding-cell">${symbol.funding.toFixed(4)}%</div>`
-            }
+        `;
+        
+        if (currentFilter === 'spot') {
+          rowContent += `
+            <div class="volume-cell">$${(symbol.volume / 1000000).toFixed(1)}M</div>
+            <div class="market-cap-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>
+          </div>
+        `;
+        } else {
+          rowContent += `
+            <div class="funding-cell">${symbol.funding.toFixed(4)}%</div>
             <div class="volume-cell">$${(symbol.volume / 1000000).toFixed(1)}M</div>
             <div class="interest-cell">$${(symbol.interest / 1000000).toFixed(1)}M</div>
           </div>
         `;
+        }
+        
+        return rowContent;
       }).join('');
-    }
-
-    function updateTableHeaders() {
-      const headerCells = document.querySelectorAll('.header-cell');
-      if (currentFilter === 'spot') {
-        // Spot: Symbol, Last Price, 24hr Change, Market Cap, Volume, Open Interest
-        headerCells[0].textContent = 'Symbol';
-        headerCells[1].textContent = 'Last Price';
-        headerCells[2].textContent = '24hr Change';
-        headerCells[3].textContent = 'Market Cap';
-        headerCells[4].textContent = 'Volume';
-        headerCells[5].textContent = 'Open Interest';
-      } else {
-        // Perp/HIP-3: Symbol, Last Price, 24hr Change, 8hr Funding, Volume, Open Interest
-        headerCells[0].textContent = 'Symbol';
-        headerCells[1].textContent = 'Last Price';
-        headerCells[2].textContent = '24hr Change';
-        headerCells[3].textContent = '8hr Funding';
-        headerCells[4].textContent = 'Volume';
-        headerCells[5].textContent = 'Open Interest';
-      }
     }
 
     function selectSymbol(symbol) {
@@ -7942,20 +7968,15 @@
         </div>
       </div>
       
-      <div class="symbol-table">
-        <div class="table-header">
-          <div class="header-cell">Symbol</div>
-          <div class="header-cell">Last Price</div>
-          <div class="header-cell">24hr Change</div>
-          <div class="header-cell">8hr Funding</div>
-          <div class="header-cell">Volume</div>
-          <div class="header-cell">Open Interest</div>
-        </div>
-        
-        <div class="table-body" id="symbolTableBody">
-          <!-- Symbol rows will be populated by JavaScript -->
-        </div>
-      </div>
+            <div class="symbol-table">
+              <div class="table-header" id="tableHeader">
+                <!-- Table headers will be populated by JavaScript based on active tab -->
+              </div>
+              
+              <div class="table-body" id="symbolTableBody">
+                <!-- Symbol rows will be populated by JavaScript -->
+              </div>
+            </div>
     </div>
   </div>
 
