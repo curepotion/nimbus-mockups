@@ -500,7 +500,7 @@
   justify-content: space-between;
 }
 
-.gauge-container canvas {
+#fearGreedGauge {
   max-width: 100%;
   height: auto;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
@@ -508,38 +508,9 @@
   z-index: 1;
 }
 
-.gauge-needle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: bottom center;
-  transform: translateX(-50%) translateY(-50%) rotate(36deg);
-  width: 3px;
-  height: 55px;
-  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
-  border-radius: 9999px;
-  transition: transform 0.7s ease-out;
-  pointer-events: none;
-  box-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  z-index: 5;
-}
-
-.gauge-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  width: 1.25rem;
-  height: 1.25rem;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 50%;
-  box-shadow: 
-    0 0 0 3px rgba(0, 0, 0, 0.3),
-    0 4px 12px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  z-index: 10;
+#fearGreedGauge svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .gauge-value {

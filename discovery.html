@@ -16,7 +16,8 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gauge-chart@0.3.6/dist/bundle.js"></script>
   <link rel="stylesheet" href="assets/css/components.css">
   <script src="assets/js/navbar.js"></script>
 
@@ -93,18 +94,9 @@
             </svg>
           </div>
           <div class="gauge-container">
-            <canvas id="fearGreedChart" width="120" height="120"></canvas>
-            <div class="gauge-needle"></div>
-            <div class="gauge-center"></div>
+            <div id="fearGreedGauge"></div>
             <div class="gauge-value">40</div>
             <div class="gauge-label">Neutral</div>
-            <div class="gauge-ticks">
-              <span>0</span>
-              <span>25</span>
-              <span>50</span>
-              <span>75</span>
-              <span>100</span>
-            </div>
           </div>
         </div>
       </section>
@@ -2104,40 +2096,41 @@
 
     // Initialize Dashboard Charts
     function initDashboardCharts() {
-      // Fear & Greed Gauge Chart - Beautiful Enhanced Design
-      const fearGreedCtx = document.getElementById('fearGreedChart').getContext('2d');
-      new Chart(fearGreedCtx, {
-        type: 'doughnut',
-        data: {
-          datasets: [{
-            data: [20, 20, 20, 20, 20], // Equal segments for 5 colors
-            backgroundColor: [
-              'rgba(239, 68, 68, 0.9)', // Red - Extreme Fear
-              'rgba(249, 115, 22, 0.9)', // Orange - Fear
-              'rgba(234, 179, 8, 0.9)', // Yellow - Neutral
-              'rgba(34, 197, 94, 0.9)', // Light Green - Greed
-              'rgba(22, 163, 74, 0.9)'  // Green - Extreme Greed
-            ],
-            borderWidth: 0,
-            cutout: '75%'
-          }]
-        },
-        options: {
-          responsive: false,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: false }
-          },
-          rotation: -90,
-          circumference: 180,
-          animation: {
-            animateRotate: true,
-            duration: 2500,
-            easing: 'easeOutQuart'
-          }
+      // Fear & Greed Gauge Chart - Using Gauge.js Library
+      const fearGreedGauge = GaugeChart.gaugeChart(
+        document.getElementById('fearGreedGauge'),
+        120, // width
+        120, // height
+        {
+          hasNeedle: true,
+          needleColor: 'rgba(255, 255, 255, 0.9)',
+          needleUpdateSpeed: 1000,
+          arcColors: [
+            'rgba(239, 68, 68, 0.9)', // Red - Extreme Fear
+            'rgba(249, 115, 22, 0.9)', // Orange - Fear
+            'rgba(234, 179, 8, 0.9)', // Yellow - Neutral
+            'rgba(34, 197, 94, 0.9)', // Light Green - Greed
+            'rgba(22, 163, 74, 0.9)'  // Green - Extreme Greed
+          ],
+          arcDelimiters: [20, 40, 60, 80],
+          rangeLabel: ['0', '100'],
+          centralLabel: '',
+          labelsFont: '12px sans-serif',
+          labelsFontColor: 'rgba(167, 176, 192, 0.8)',
+          needleRadius: 0.8,
+          needleStartValue: 40,
+          needleValue: 40,
+          arcPadding: 0.02,
+          arcPaddingColor: 'transparent',
+          arcWidth: 0.15,
+          arcOverEffect: false,
+          animateOnLoad: true,
+          animateOnUpdate: true
         }
-      });
+      );
+
+      // Store gauge reference for updates
+      window.fearGreedGauge = fearGreedGauge;
 
       // Market Cap Sparkline Chart - Beautiful Enhanced
       const marketCapCtx = document.getElementById('marketCapChart').getContext('2d');
@@ -2175,6 +2168,27 @@
           }
         }
       });
+    }
+
+    // Function to update Fear & Greed gauge
+    function updateFearGreedGauge(value) {
+      if (window.fearGreedGauge) {
+        window.fearGreedGauge.updateNeedle(value);
+        
+        // Update the displayed value and label
+        const valueElement = document.querySelector('.gauge-value');
+        const labelElement = document.querySelector('.gauge-label');
+        
+        if (valueElement) valueElement.textContent = value;
+        
+        if (labelElement) {
+          if (value <= 20) labelElement.textContent = 'Extreme Fear';
+          else if (value <= 40) labelElement.textContent = 'Fear';
+          else if (value <= 60) labelElement.textContent = 'Neutral';
+          else if (value <= 80) labelElement.textContent = 'Greed';
+          else labelElement.textContent = 'Extreme Greed';
+        }
+      }
     }
 
     // Filter tab functionality
