@@ -1802,136 +1802,87 @@
 
         <!-- RIGHT COLUMN: Token List -->
         <div class="right-column">
-          <div class="token-list-container">
-            <div class="token-list-header">
-              <h3>Token List</h3>
-              <div class="token-list-controls">
-                <button class="list-control-btn" title="Refresh">🔄</button>
-                <button class="list-control-btn" title="Filter">🔍</button>
-                <button class="list-control-btn" title="Sort">📊</button>
+          <div class="token-list border-l glass border-subtle">
+            <!-- Header -->
+            <div class="shrink-0 px-3 py-3 border-b border-subtle">
+              <!-- Tabs and Search Row -->
+              <div class="flex items-center gap-3">
+                <!-- Tabs -->
+                <div class="relative grid grid-cols-2 rounded-md ring-1 ring-white/10 bg-white/5 p-1 flex-shrink-0">
+                  <button id="tab-spot" class="group relative z-10 text-center py-1.5 px-3 text-[12px] font-semibold tracking-tight">Spot</button>
+                  <button id="tab-perp" class="group relative z-10 text-center py-1.5 px-3 text-[12px] font-semibold tracking-tight text-neutral-400">Perp</button>
+                  <div id="tokenTabSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 backdrop-blur-md shadow-[inset_0_0_0_1px_rgba(255,255,255,0.10)] transition-all duration-200 ease-out"></div>
+                </div>
+
+                <!-- Search -->
+                <div class="relative flex-1">
+                  <span class="absolute left-2 top-1/2 -translate-y-1/2 text-neutral-400">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"/>
+                      <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                  </span>
+                  <input id="searchInput" placeholder="Search tokens" class="w-full pl-7 pr-3 py-1.5 text-[11px] rounded-md ring-1 ring-white/10 bg-white/5 text-neutral-200 placeholder-neutral-500 focus:ring-white/20 focus:bg-white/10 transition-all outline-none cursor-pointer" readonly onclick="openTokenSearchModal()" />
+                </div>
               </div>
             </div>
-            
-            <div class="token-list-content">
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:btc.svg" alt="BTC" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">BTC</div>
-                  <div class="token-name">Bitcoin</div>
-                </div>
-                <div class="token-price">$115,608</div>
-                <div class="token-change negative">-0.19%</div>
+
+            <!-- Column Headers -->
+            <div id="sortBar" class="grid grid-cols-12 gap-1 px-3 pb-1 text-[10px] text-gray-500 font-medium border-b border-subtle">
+              <div class="col-span-6 flex items-center gap-2">
+                <button data-sort="rank" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
+                  <span>Rank</span>
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 9l4-4 4 4"/>
+                    <path d="M16 15l-4 4-4-4"/>
+                  </svg>
+                </button>
+                <button data-sort="token" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
+                  <span>Token</span>
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 9l4-4 4 4"/>
+                    <path d="M16 15l-4 4-4-4"/>
+                  </svg>
+                </button>
               </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:eth.svg" alt="ETH" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">ETH</div>
-                  <div class="token-name">Ethereum</div>
-                </div>
-                <div class="token-price">$3,245</div>
-                <div class="token-change positive">+2.34%</div>
+              <div class="col-span-3 text-right">
+                <button data-sort="price" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
+                  <span>Price</span>
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 9l4-4 4 4"/>
+                    <path d="M16 15l-4 4-4-4"/>
+                  </svg>
+                </button>
               </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:sol.svg" alt="SOL" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">SOL</div>
-                  <div class="token-name">Solana</div>
-                </div>
-                <div class="token-price">$245.80</div>
-                <div class="token-change positive">+5.67%</div>
+              <div class="col-span-3 text-right">
+                <button data-sort="change" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
+                  <span>24h</span>
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 9l4-4 4 4"/>
+                    <path d="M16 15l-4 4-4-4"/>
+                  </svg>
+                </button>
               </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:bnb.svg" alt="BNB" width="20" height="20" />
+            </div>
+
+            <!-- Token list -->
+            <div id="listContainer" class="flex-1 overflow-auto px-3">
+              <div id="emptyState" class="text-center text-gray-400 py-8 text-[12px]">
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4 mx-auto">
+                  <svg class="w-6 h-6 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                  </svg>
                 </div>
-                <div class="token-details">
-                  <div class="token-symbol">BNB</div>
-                  <div class="token-name">BNB</div>
-                </div>
-                <div class="token-price">$645.20</div>
-                <div class="token-change negative">-1.23%</div>
+                <h3 class="text-[14px] font-medium text-neutral-300 mb-2">Loading tokens...</h3>
+                <p class="text-[12px] text-neutral-500 mb-4 max-w-[200px] mx-auto">
+                  Fetching real-time market data
+                </p>
               </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:xrp.svg" alt="XRP" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">XRP</div>
-                  <div class="token-name">XRP</div>
-                </div>
-                <div class="token-price">$0.5234</div>
-                <div class="token-change positive">+3.45%</div>
-              </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:ada.svg" alt="ADA" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">ADA</div>
-                  <div class="token-name">Cardano</div>
-                </div>
-                <div class="token-price">$0.4567</div>
-                <div class="token-change positive">+1.89%</div>
-              </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:avax.svg" alt="AVAX" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">AVAX</div>
-                  <div class="token-name">Avalanche</div>
-                </div>
-                <div class="token-price">$38.90</div>
-                <div class="token-change negative">-0.67%</div>
-              </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:matic.svg" alt="MATIC" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">MATIC</div>
-                  <div class="token-name">Polygon</div>
-                </div>
-                <div class="token-price">$0.8234</div>
-                <div class="token-change positive">+4.12%</div>
-              </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:dot.svg" alt="DOT" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">DOT</div>
-                  <div class="token-name">Polkadot</div>
-                </div>
-                <div class="token-price">$7.89</div>
-                <div class="token-change positive">+2.78%</div>
-              </div>
-              
-              <div class="token-list-item">
-                <div class="token-icon-small">
-                  <img src="https://api.iconify.design/cryptocurrency:link.svg" alt="LINK" width="20" height="20" />
-                </div>
-                <div class="token-details">
-                  <div class="token-symbol">LINK</div>
-                  <div class="token-name">Chainlink</div>
-                </div>
-                <div class="token-price">$14.56</div>
-                <div class="token-change negative">-1.45%</div>
-              </div>
+
+              <ul id="tokenList" class=""></ul>
+              <!-- Sentinel for infinite load -->
+              <div id="sentinel" class="h-4"></div>
             </div>
           </div>
         </div>
@@ -2118,6 +2069,7 @@
       loadHLData();
       updateTokenCards(); // Add the new card structure
       initDashboardCharts(); // Initialize Chart.js charts
+      populateTokenList(); // Populate token list with real data
     });
 
     // Initialize Dashboard Charts
@@ -2600,38 +2552,113 @@
       }
     }
 
+    // Token list state and data
+    const tokenListState = {
+      allTokens: [],
+      filtered: [],
+      active: null,
+      renderCount: 60,
+      sortBy: 'rank',
+      sortDir: 'asc',
+      rowMap: new Map()
+    };
+
+    const tokenListEls = {
+      tokenList: document.getElementById('tokenList'),
+      emptyState: document.getElementById('emptyState'),
+      sentinel: document.getElementById('sentinel'),
+      tabSpot: document.getElementById('tab-spot'),
+      tabPerp: document.getElementById('tab-perp'),
+      search: document.getElementById('searchInput'),
+      listContainer: document.getElementById('listContainer'),
+      sortBar: document.getElementById('sortBar')
+    };
+
+    // Format price helper
+    const fmtPrice = (n) => {
+      if (n === null || n === undefined || isNaN(n)) return '—';
+      if (n >= 1000) return '$' + n.toLocaleString(undefined, {maximumFractionDigits: 0});
+      if (n >= 1) return '$' + n.toFixed(2);
+      if (n >= 0.01) return '$' + n.toFixed(4);
+      return '$' + n.toFixed(6);
+    };
+
+    // Format change helper
+    const fmtChange = (n) => {
+      if (n === null || n === undefined || isNaN(n)) return '—';
+      const sign = n >= 0 ? '+' : '';
+      return sign + n.toFixed(2) + '%';
+    };
+
     // Populate token list with real data
     function populateTokenList() {
-      const tokenListContent = document.querySelector('.token-list-content');
-      if (!tokenListContent || !discoveryData.spot.length) return;
+      if (!discoveryData.spot.length) return;
       
-      tokenListContent.innerHTML = '';
-      
-      // Use top 20 coins from the spot data
-      discoveryData.spot.slice(0, 20).forEach(coin => {
-        const tokenItem = document.createElement('div');
-        tokenItem.className = 'token-list-item';
-        tokenItem.innerHTML = `
-          <div class="token-icon-small">
-            <img src="${coin.image}" alt="${coin.symbol}" width="20" height="20" />
-          </div>
-          <div class="token-details">
-            <div class="token-symbol">${coin.symbol.toUpperCase()}</div>
-            <div class="token-name">${coin.name}</div>
-          </div>
-          <div class="token-price">$${coin.current_price?.toFixed(coin.current_price > 1 ? 2 : 4) || '--'}</div>
-          <div class="token-change ${coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}">
-            ${coin.price_change_percentage_24h >= 0 ? '+' : ''}${coin.price_change_percentage_24h?.toFixed(2) || '--'}%
+      // Transform API data to match index.html format
+      tokenListState.allTokens = discoveryData.spot.slice(0, 100).map((coin, index) => ({
+        symbol: coin.symbol.toUpperCase(),
+        name: coin.name,
+        image: coin.image,
+        price: coin.current_price,
+        change: coin.price_change_percentage_24h,
+        rank: index + 1,
+        pair: `${coin.symbol.toUpperCase()}USDT`
+      }));
+
+      tokenListState.filtered = [...tokenListState.allTokens];
+      renderTokenList();
+    }
+
+    // Render token list
+    function renderTokenList() {
+      const arr = tokenListState.filtered;
+      tokenListEls.tokenList.innerHTML = '';
+      tokenListState.rowMap.clear();
+
+      // Show empty state when no tokens
+      if (!arr.length) {
+        tokenListEls.emptyState.classList.remove('hidden');
+        return;
+      } else {
+        tokenListEls.emptyState.classList.add('hidden');
+      }
+
+      const take = arr.slice(0, tokenListState.renderCount);
+      for (const token of take) {
+        const isActive = tokenListState.active && tokenListState.active.symbol === token.symbol;
+        const li = document.createElement('li');
+        li.className = "";
+        li.innerHTML = `
+          <div class="group flex items-center gap-2 px-1 py-0.5 hover:bg-white/5 border-b border-gray-700/30 last:border-b-0 ${isActive ? 'bg-gray-700/50' : ''}">
+            <button class="flex-1 flex items-center gap-2 cursor-pointer" data-symbol="${token.symbol}">
+            <img src="${token.image}" alt="${token.symbol}" class="w-4 h-4 rounded-full object-cover border border-gray-700 bg-gray-800" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=80&q=60&auto=format&fit=crop'"/>
+            <div class="grid grid-cols-12 gap-1 w-full text-[10px] mono">
+              <div class="col-span-1 text-gray-500">${token.rank}</div>
+              <div class="col-span-5 text-left">
+                <div class="font-medium text-gray-200">${token.symbol}</div>
+                <div class="text-gray-500 truncate">${token.name}</div>
+              </div>
+              <div class="col-span-3 text-right font-medium text-gray-200" data-role="price">${fmtPrice(token.price)}</div>
+              <div class="col-span-3 text-right font-medium ${token.change >= 0 ? 'text-emerald-400' : 'text-red-400'}" data-role="change">${fmtChange(token.change)}</div>
+            </div>
+            </button>
           </div>
         `;
         
-        // Add click handler to open trading
-        tokenItem.addEventListener('click', () => {
-          openTrade(coin.symbol.toLowerCase());
-        });
-        
-        tokenListContent.appendChild(tokenItem);
-      });
+        const btn = li.querySelector('button');
+        btn.addEventListener('click', () => onTokenClick(token));
+        const priceEl = li.querySelector('[data-role="price"]');
+        const chgEl = li.querySelector('[data-role="change"]');
+        tokenListEls.tokenList.appendChild(li);
+        tokenListState.rowMap.set(token.pair, { priceEl, chgEl, root: btn });
+      }
+    }
+
+    // Token click handler
+    function onTokenClick(token) {
+      tokenListState.active = token;
+      renderTokenList();
+      console.log('Selected token:', token.symbol);
     }
 
 
