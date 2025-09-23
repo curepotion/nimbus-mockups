@@ -100,13 +100,14 @@
   font-size: 0.75rem;
 }
 
-/* Dashboard Widgets */
+/* Dashboard Widgets - Redesigned Layout */
 .dashboard-widgets {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  padding: 1rem;
-  background: rgba(11, 15, 20, 0.3);
+  margin-bottom: 2rem;
+  align-items: stretch;
+  min-height: 120px;
 }
 
 .widget {
@@ -282,40 +283,27 @@
 }
 
 
-/* Beautiful Enhanced Dashboard Widgets */
+/* Redesigned Dashboard Widgets */
 .widget {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.5rem;
-  padding: 1.5rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.4),
-    0 8px 16px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.widget::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .widget:hover {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.7) 100%);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 
-    0 32px 64px rgba(0, 0, 0, 0.5),
-    0 16px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
 }
 
 .widget-header {
@@ -346,44 +334,33 @@
   transform: translateX(2px);
 }
 
-/* Market Cap Widget - Optimized Space Usage */
+/* Market Cap Widget - Clean Design */
 .market-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 0.75rem;
-  position: relative;
-  z-index: 2;
 }
 
 .market-header h3 {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .market-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
   flex: 1;
 }
 
 .market-value {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   line-height: 1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: -0.05em;
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  flex-shrink: 0;
 }
 
 .market-change {
@@ -391,50 +368,35 @@
   font-weight: 600;
   padding: 0.25rem 0.5rem;
   border-radius: 9999px;
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.15) 100%);
-  color: #22c55e;
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  white-space: nowrap;
-}
-
-.market-change.negative {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+  background: rgba(239, 68, 68, 0.2);
   color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.3);
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .market-chart {
-  position: relative;
-  height: 32px;
-  width: 120px;
+  height: 24px;
+  width: 80px;
   flex-shrink: 0;
 }
 
 .market-chart canvas {
   width: 100%;
   height: 100%;
-  border-radius: 4px;
 }
 
-/* Altcoin Season Widget - Exact Design Match */
+/* Altcoin Season Widget - Clean Design */
 .altcoin-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-  position: relative;
-  z-index: 2;
+  align-items: center;
+  margin-bottom: 0.75rem;
 }
 
 .altcoin-header h3 {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .altcoin-score {
@@ -442,20 +404,17 @@
 }
 
 .score-value {
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   line-height: 1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: -0.05em;
 }
 
 .score-total {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.5);
   margin-left: 0.125rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .altcoin-scale {
@@ -467,8 +426,7 @@
 .scale-labels {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 0.75rem;
+  font-size: 0.625rem;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 0.25rem;
 }
@@ -511,26 +469,23 @@
   background: white;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.5);
-  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: left 0.4s ease;
   z-index: 10;
 }
 
-/* Fear & Greed Widget - Optimized Space Usage */
+/* Fear & Greed Widget - Clean Design */
 .fear-greed-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 0.75rem;
-  position: relative;
-  z-index: 2;
 }
 
 .fear-greed-header h3 {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .gauge-container {
@@ -545,9 +500,6 @@
 #fearGreedGauge {
   max-width: 100%;
   height: auto;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  position: relative;
-  z-index: 1;
   margin-bottom: 0.5rem;
 }
 
@@ -557,23 +509,16 @@
 }
 
 .gauge-value {
-  font-size: 1.75rem;
-  font-weight: 800;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   line-height: 1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: -0.05em;
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .gauge-label {
-  font-size: 0.75rem;
-  color: rgba(167, 176, 192, 0.8);
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 
