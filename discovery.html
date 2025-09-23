@@ -2104,7 +2104,7 @@
 
     // Initialize Dashboard Charts
     function initDashboardCharts() {
-      // Fear & Greed Gauge Chart - Enhanced Design
+      // Fear & Greed Gauge Chart - Beautiful Enhanced Design
       const fearGreedCtx = document.getElementById('fearGreedChart').getContext('2d');
       new Chart(fearGreedCtx, {
         type: 'doughnut',
@@ -2112,11 +2112,11 @@
           datasets: [{
             data: [20, 20, 20, 20, 20], // Equal segments for 5 colors
             backgroundColor: [
-              '#ef4444', // Red - Extreme Fear
-              '#f97316', // Orange - Fear
-              '#eab308', // Yellow - Neutral
-              '#22c55e', // Light Green - Greed
-              '#16a34a'  // Green - Extreme Greed
+              'rgba(239, 68, 68, 0.9)', // Red - Extreme Fear
+              'rgba(249, 115, 22, 0.9)', // Orange - Fear
+              'rgba(234, 179, 8, 0.9)', // Yellow - Neutral
+              'rgba(34, 197, 94, 0.9)', // Light Green - Greed
+              'rgba(22, 163, 74, 0.9)'  // Green - Extreme Greed
             ],
             borderWidth: 0,
             cutout: '75%'
@@ -2133,13 +2133,13 @@
           circumference: 180,
           animation: {
             animateRotate: true,
-            duration: 2000,
+            duration: 2500,
             easing: 'easeOutQuart'
           }
         }
       });
 
-      // Market Cap Sparkline Chart - Enhanced
+      // Market Cap Sparkline Chart - Beautiful Enhanced
       const marketCapCtx = document.getElementById('marketCapChart').getContext('2d');
       new Chart(marketCapCtx, {
         type: 'line',
@@ -2147,13 +2147,15 @@
           labels: Array.from({length: 30}, (_, i) => i),
           datasets: [{
             data: [4.1, 4.05, 4.08, 4.12, 4.15, 4.18, 4.16, 4.14, 4.11, 4.09, 4.07, 4.05, 4.03, 4.01, 4.00, 4.02, 4.04, 4.06, 4.08, 4.04, 4.02, 4.00, 3.98, 3.96, 3.94, 3.92, 3.90, 3.88, 3.86, 4.04],
-            borderColor: '#ef4444',
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            borderWidth: 2,
+            borderColor: 'rgba(239, 68, 68, 0.8)',
+            backgroundColor: 'rgba(239, 68, 68, 0.15)',
+            borderWidth: 3,
             fill: true,
-            tension: 0.4,
+            tension: 0.5,
             pointRadius: 0,
-            pointHoverRadius: 0
+            pointHoverRadius: 0,
+            borderCapStyle: 'round',
+            borderJoinStyle: 'round'
           }]
         },
         options: {
@@ -2168,7 +2170,7 @@
             y: { display: false }
           },
           animation: {
-            duration: 2000,
+            duration: 2500,
             easing: 'easeOutQuart'
           }
         }
