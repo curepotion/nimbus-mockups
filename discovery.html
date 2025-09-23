@@ -42,14 +42,29 @@
       <section aria-label="Market Dashboard" class="dashboard-widgets">
         <!-- Card 1: Market Cap -->
         <div class="widget market-cap">
-          <div class="market-header">
-            <h3>Market Cap</h3>
-            <div class="market-change negative">-1.03%</div>
+          <div class="flex flex-col justify-between">
+            <div class="flex items-center gap-2">
+              <h3 class="text-[16.5px] font-semibold text-white/90">Market Cap</h3>
+              <svg class="w-4 h-4 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </div>
+            <div class="mt-2 flex items-end gap-3">
+              <div class="flex items-baseline">
+                <span id="capValue" class="tabular-nums text-[30px] leading-none font-semibold text-[#e7eef8]">$0.00T</span>
+              </div>
+              <span id="capDelta"
+                class="tabular-nums text-[13px] font-semibold px-2 py-1 rounded-full bg-[#2dd79f]/15 text-[#2dd79f] ring-1 ring-[#2dd79f]/25"
+              >▲ 0.00%</span>
+            </div>
           </div>
-          <div class="market-main">
-            <div class="market-value">$4.04T</div>
-            <div class="market-chart">
-              <canvas id="marketCapChart" width="120" height="32"></canvas>
+
+          <!-- Sparkline area -->
+          <div class="ml-4 flex-1 relative">
+            <div class="absolute inset-0 flex items-end">
+              <div class="w-full h-[56px]">
+                <canvas id="sparkline"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -2089,42 +2104,95 @@
       // Fear & Greed Gauge Chart - Using D3.js
       createFearGreedGauge();
 
-      // Market Cap Sparkline Chart - Beautiful Enhanced
-      const marketCapCtx = document.getElementById('marketCapChart').getContext('2d');
-      new Chart(marketCapCtx, {
+      // Initialize Market Cap Card
+      initMarketCapCard();
+    }
+
+    // Market Cap Card Functions
+    const up = '#2dd79f';
+    const down = '#ff6b6b';
+    const inkPrimary = '#e7eef8';
+
+    // Animate numbers
+    function countUp(el, target, { duration = 800, prefix = '', suffix = '', decimals = 0 } = {}) {
+      const start = performance.now();
+      const from = 0;
+      function frame(now) {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = from + (target - from) * eased;
+        el.textContent = prefix + val.toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // Sparkline chart
+    function renderSparkline(ctx, values) {
+      const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+      gradient.addColorStop(0, 'rgba(45,215,159,0.28)');
+      gradient.addColorStop(1, 'rgba(45,215,159,0.02)');
+
+      return new Chart(ctx, {
         type: 'line',
         data: {
-          labels: Array.from({length: 30}, (_, i) => i),
+          labels: values.map((_, i) => i + 1),
           datasets: [{
-            data: [4.1, 4.05, 4.08, 4.12, 4.15, 4.18, 4.16, 4.14, 4.11, 4.09, 4.07, 4.05, 4.03, 4.01, 4.00, 4.02, 4.04, 4.06, 4.08, 4.04, 4.02, 4.00, 3.98, 3.96, 3.94, 3.92, 3.90, 3.88, 3.86, 4.04],
-            borderColor: 'rgba(239, 68, 68, 0.8)',
-            backgroundColor: 'rgba(239, 68, 68, 0.15)',
-            borderWidth: 3,
-            fill: true,
-            tension: 0.5,
+            data: values,
+            borderColor: up,
+            backgroundColor: gradient,
+            tension: 0.35,
+            borderWidth: 2,
             pointRadius: 0,
-            pointHoverRadius: 0,
-            borderCapStyle: 'round',
-            borderJoinStyle: 'round'
-          }]
+            fill: true,
+          }],
         },
         options: {
-          responsive: false,
+          responsive: true,
           maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
-            tooltip: { enabled: false }
+            tooltip: {
+              enabled: true,
+              backgroundColor: 'rgba(20,24,32,0.95)',
+              borderColor: 'rgba(255,255,255,0.08)',
+              borderWidth: 1,
+              padding: 10,
+              titleColor: inkPrimary,
+              bodyColor: inkPrimary,
+              displayColors: false,
+              callbacks: {
+                label: ctx => `$${ctx.raw.toFixed(2)}T`,
+              },
+            },
           },
-          scales: {
-            x: { display: false },
-            y: { display: false }
-          },
-          animation: {
-            duration: 2500,
-            easing: 'easeOutQuart'
-          }
-        }
+          scales: { x: { display: false }, y: { display: false } },
+        },
       });
+    }
+
+    // Init Market Cap card
+    function initMarketCapCard() {
+      const mcData = {
+        series: [3.72, 3.75, 3.84, 3.77, 3.80, 3.81, 3.74, 3.86, 3.83, 3.88, 3.79, 3.91],
+        current: 3.91,
+        deltaPct: 0.74,
+      };
+
+      // Value + delta
+      countUp(document.getElementById('capValue'), mcData.current, { duration: 900, prefix: '$', suffix: 'T', decimals: 2 });
+      const capDeltaEl = document.getElementById('capDelta');
+      const pos = mcData.deltaPct >= 0;
+      capDeltaEl.textContent = `${pos ? '▲' : '▼'} ${Math.abs(mcData.deltaPct).toFixed(2)}%`;
+      capDeltaEl.className =
+        'tabular-nums text-[13px] font-semibold px-2 py-1 rounded-full ring-1 transition-colors ' +
+        (pos
+          ? 'bg-[#2dd79f]/15 text-[#2dd79f] ring-[#2dd79f]/25'
+          : 'bg-[#ff6b6b]/15 text-[#ff6b6b] ring-[#ff6b6b]/25');
+
+      // Sparkline
+      const ctx = document.getElementById('sparkline').getContext('2d');
+      renderSparkline(ctx, mcData.series);
     }
 
     // Create Enhanced Fear & Greed Gauge with D3.js
