@@ -42,19 +42,15 @@
       <section aria-label="Market Dashboard" class="dashboard-widgets">
         <!-- Card 1: Market Cap -->
         <div class="widget market-cap">
-          <div class="widget-header">
+          <div class="market-header">
             <h3>Market Cap</h3>
-            <svg class="w-4 h-4 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
-          </div>
-          <div class="market-data">
-            <div class="market-value">$4.04T</div>
             <div class="market-change negative">-1.03%</div>
           </div>
-          <!-- Sparkline -->
-          <div class="market-chart">
-            <canvas id="marketCapChart" width="100" height="20"></canvas>
+          <div class="market-main">
+            <div class="market-value">$4.04T</div>
+            <div class="market-chart">
+              <canvas id="marketCapChart" width="120" height="32"></canvas>
+            </div>
           </div>
         </div>
 
@@ -84,15 +80,12 @@
 
         <!-- Card 3: Fear & Greed -->
         <div class="widget fear-greed">
-          <div class="widget-header">
+          <div class="fear-greed-header">
             <h3>Fear & Greed</h3>
-            <svg class="w-4 h-4 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
+            <div class="gauge-value">40</div>
           </div>
           <div class="gauge-container">
             <div id="fearGreedGauge"></div>
-            <div class="gauge-value">40</div>
             <div class="gauge-label">Neutral</div>
           </div>
         </div>
@@ -2134,21 +2127,21 @@
       });
     }
 
-    // Create Fear & Greed Gauge with D3.js
+    // Create Enhanced Fear & Greed Gauge with D3.js
     function createFearGreedGauge() {
       const container = d3.select('#fearGreedGauge');
       container.selectAll('*').remove(); // Clear any existing content
       
-      const width = 120;
-      const height = 120;
-      const radius = Math.min(width, height) / 2 - 10;
+      const width = 100;
+      const height = 80;
+      const radius = Math.min(width, height) / 2 - 5;
       
       const svg = container
         .append('svg')
         .attr('width', width)
         .attr('height', height)
         .append('g')
-        .attr('transform', `translate(${width/2}, ${height/2})`);
+        .attr('transform', `translate(${width/2}, ${height/2 + 5})`);
       
       // Define the gauge scale
       const scale = d3.scaleLinear()
@@ -2157,12 +2150,12 @@
       
       // Create the arc generator
       const arc = d3.arc()
-        .innerRadius(radius * 0.6)
+        .innerRadius(radius * 0.5)
         .outerRadius(radius * 0.8)
         .startAngle(-Math.PI/2)
         .endAngle(Math.PI/2);
       
-      // Define color segments
+      // Define color segments with enhanced contrast
       const segments = [
         { start: 0, end: 20, color: '#ef4444', label: 'Extreme Fear' },
         { start: 20, end: 40, color: '#f97316', label: 'Fear' },
@@ -2171,21 +2164,21 @@
         { start: 80, end: 100, color: '#16a34a', label: 'Extreme Greed' }
       ];
       
-      // Create background arc
+      // Create background arc with subtle styling
       svg.append('path')
         .datum({ endAngle: Math.PI/2 })
-        .style('fill', 'rgba(255, 255, 255, 0.1)')
-        .style('stroke', 'rgba(255, 255, 255, 0.2)')
-        .style('stroke-width', 1)
+        .style('fill', 'rgba(255, 255, 255, 0.05)')
+        .style('stroke', 'rgba(255, 255, 255, 0.1)')
+        .style('stroke-width', 0.5)
         .attr('d', arc);
       
-      // Create colored segments
+      // Create colored segments with enhanced visibility
       segments.forEach(segment => {
         const startAngle = scale(segment.start);
         const endAngle = scale(segment.end);
         
         const segmentArc = d3.arc()
-          .innerRadius(radius * 0.6)
+          .innerRadius(radius * 0.5)
           .outerRadius(radius * 0.8)
           .startAngle(startAngle)
           .endAngle(endAngle);
@@ -2193,37 +2186,42 @@
         svg.append('path')
           .datum({ endAngle })
           .style('fill', segment.color)
-          .style('opacity', 0.9)
+          .style('opacity', 0.95)
+          .style('stroke', 'rgba(255, 255, 255, 0.1)')
+          .style('stroke-width', 0.5)
           .attr('d', segmentArc);
       });
       
-      // Create needle
+      // Create enhanced needle with better visibility
       const needleGroup = svg.append('g').attr('class', 'needle-group');
       
+      // Needle line with enhanced styling
       const needle = needleGroup.append('line')
         .attr('x1', 0)
         .attr('y1', 0)
         .attr('x2', 0)
-        .attr('y2', -radius * 0.7)
-        .style('stroke', 'rgba(255, 255, 255, 0.95)')
-        .style('stroke-width', 3)
+        .attr('y2', -radius * 0.6)
+        .style('stroke', '#ffffff')
+        .style('stroke-width', 2.5)
         .style('stroke-linecap', 'round')
-        .style('filter', 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))');
+        .style('filter', 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4))');
       
-      // Create center dot
+      // Enhanced center dot
       needleGroup.append('circle')
         .attr('cx', 0)
         .attr('cy', 0)
-        .attr('r', 6)
-        .style('fill', 'rgba(255, 255, 255, 0.95)')
-        .style('filter', 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))');
+        .attr('r', 4)
+        .style('fill', '#ffffff')
+        .style('stroke', 'rgba(0, 0, 0, 0.2)')
+        .style('stroke-width', 1)
+        .style('filter', 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))');
       
-      // Add tick marks
+      // Add subtle tick marks for better readability
       const ticks = [0, 25, 50, 75, 100];
       ticks.forEach(tick => {
         const angle = scale(tick);
-        const x1 = Math.cos(angle) * (radius * 0.85);
-        const y1 = Math.sin(angle) * (radius * 0.85);
+        const x1 = Math.cos(angle) * (radius * 0.9);
+        const y1 = Math.sin(angle) * (radius * 0.9);
         const x2 = Math.cos(angle) * (radius * 0.95);
         const y2 = Math.sin(angle) * (radius * 0.95);
         
@@ -2232,22 +2230,8 @@
           .attr('y1', y1)
           .attr('x2', x2)
           .attr('y2', y2)
-          .style('stroke', 'rgba(167, 176, 192, 0.6)')
+          .style('stroke', 'rgba(255, 255, 255, 0.4)')
           .style('stroke-width', 1);
-        
-        // Add tick labels
-        const labelX = Math.cos(angle) * (radius * 1.05);
-        const labelY = Math.sin(angle) * (radius * 1.05);
-        
-        svg.append('text')
-          .attr('x', labelX)
-          .attr('y', labelY)
-          .attr('text-anchor', 'middle')
-          .attr('dominant-baseline', 'middle')
-          .style('fill', 'rgba(167, 176, 192, 0.8)')
-          .style('font-size', '10px')
-          .style('font-weight', '500')
-          .text(tick);
       });
       
       // Store references for updates
