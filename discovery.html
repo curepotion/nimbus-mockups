@@ -45,7 +45,8 @@
           </div>
           <div class="gauge-container">
             <canvas id="fearGreedChart" width="120" height="120"></canvas>
-            <div class="gauge-value">48</div>
+            <div class="gauge-pointer"></div>
+            <div class="gauge-value">40</div>
             <div class="gauge-label">Neutral</div>
           </div>
         </div>
@@ -2121,19 +2122,22 @@
 
     // Initialize Dashboard Charts
     function initDashboardCharts() {
-      // Fear & Greed Gauge Chart - Enhanced
+      // Fear & Greed Gauge Chart - Exact Design Match
       const fearGreedCtx = document.getElementById('fearGreedChart').getContext('2d');
       new Chart(fearGreedCtx, {
         type: 'doughnut',
         data: {
           datasets: [{
-            data: [48, 52],
+            data: [20, 20, 20, 20, 20], // Equal segments for 5 colors
             backgroundColor: [
-              'rgba(16, 185, 129, 0.8)', // Green for fear/greed value
-              'rgba(255, 255, 255, 0.1)' // Transparent for remaining
+              '#ef4444', // Red - Extreme Fear
+              '#f97316', // Orange - Fear
+              '#eab308', // Yellow - Neutral
+              '#22c55e', // Light Green - Greed
+              '#16a34a'  // Green - Extreme Greed
             ],
             borderWidth: 0,
-            cutout: '75%'
+            cutout: '70%'
           }]
         },
         options: {
