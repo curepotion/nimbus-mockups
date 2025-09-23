@@ -2121,14 +2121,17 @@
 
     // Initialize Dashboard Charts
     function initDashboardCharts() {
-      // Fear & Greed Gauge Chart
+      // Fear & Greed Gauge Chart - Enhanced
       const fearGreedCtx = document.getElementById('fearGreedChart').getContext('2d');
       new Chart(fearGreedCtx, {
         type: 'doughnut',
         data: {
           datasets: [{
             data: [48, 52],
-            backgroundColor: ['#10b981', 'rgba(255, 255, 255, 0.1)'],
+            backgroundColor: [
+              'rgba(16, 185, 129, 0.8)', // Green for fear/greed value
+              'rgba(255, 255, 255, 0.1)' // Transparent for remaining
+            ],
             borderWidth: 0,
             cutout: '75%'
           }]
@@ -2141,11 +2144,15 @@
             tooltip: { enabled: false }
           },
           rotation: -90,
-          circumference: 180
+          circumference: 180,
+          animation: {
+            animateRotate: true,
+            duration: 2000
+          }
         }
       });
 
-      // Altcoin Season Progress Chart
+      // Altcoin Season Progress Chart - Enhanced
       const altcoinCtx = document.getElementById('altcoinSeasonChart').getContext('2d');
       new Chart(altcoinCtx, {
         type: 'bar',
@@ -2153,9 +2160,13 @@
           labels: ['Bitcoin', 'Altcoin'],
           datasets: [{
             data: [24, 76],
-            backgroundColor: ['#f59e0b', '#10b981'],
+            backgroundColor: [
+              'rgba(245, 158, 11, 0.8)', // Bitcoin orange
+              'rgba(16, 185, 129, 0.8)'  // Altcoin green
+            ],
             borderWidth: 0,
-            borderRadius: 4
+            borderRadius: 6,
+            borderSkipped: false
           }]
         },
         options: {
@@ -2169,11 +2180,15 @@
           scales: {
             x: { display: false },
             y: { display: false }
+          },
+          animation: {
+            duration: 1500,
+            easing: 'easeOutQuart'
           }
         }
       });
 
-      // Market Cap Line Chart
+      // Market Cap Line Chart - Enhanced
       const marketCapCtx = document.getElementById('marketCapChart').getContext('2d');
       new Chart(marketCapCtx, {
         type: 'line',
@@ -2182,12 +2197,14 @@
           datasets: [{
             data: [15, 12, 8, 10, 5, 3],
             borderColor: '#ef4444',
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            borderWidth: 2,
+            backgroundColor: 'rgba(239, 68, 68, 0.15)',
+            borderWidth: 2.5,
             fill: true,
             tension: 0.4,
             pointRadius: 0,
-            pointHoverRadius: 0
+            pointHoverRadius: 0,
+            pointBackgroundColor: '#ef4444',
+            pointBorderColor: '#ef4444'
           }]
         },
         options: {
@@ -2200,6 +2217,15 @@
           scales: {
             x: { display: false },
             y: { display: false }
+          },
+          animation: {
+            duration: 2000,
+            easing: 'easeInOutQuart'
+          },
+          elements: {
+            line: {
+              capBezierPoints: false
+            }
           }
         }
       });
