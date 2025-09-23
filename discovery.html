@@ -39,41 +39,71 @@
 
       <!-- 2) DASHBOARD WIDGETS (3-column layout) -->
       <section aria-label="Market Dashboard" class="dashboard-widgets">
-        <div class="widget fear-greed">
-          <div class="widget-header">
-            <h3>Fear & Greed</h3>
-          </div>
-          <div class="gauge-container">
-            <canvas id="fearGreedChart" width="120" height="120"></canvas>
-            <div class="gauge-pointer"></div>
-            <div class="gauge-value">40</div>
-            <div class="gauge-label">Neutral</div>
-          </div>
-        </div>
-        
-        <div class="widget altcoin-season">
-          <div class="widget-header">
-            <h3>Altcoin Season</h3>
-          </div>
-          <div class="slider-container">
-            <canvas id="altcoinSeasonChart" width="200" height="60"></canvas>
-            <div class="slider-labels">
-              <span>Bitcoin</span>
-              <span>Altcoin</span>
-            </div>
-            <div class="slider-value">76/100</div>
-          </div>
-        </div>
-        
+        <!-- Card 1: Market Cap -->
         <div class="widget market-cap">
           <div class="widget-header">
             <h3>Market Cap</h3>
+            <svg class="w-4 h-4 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
           </div>
           <div class="market-data">
             <div class="market-value">$4.04T</div>
             <div class="market-change negative">-1.03%</div>
-            <div class="market-chart">
-              <canvas id="marketCapChart" width="100" height="20"></canvas>
+          </div>
+          <!-- Sparkline -->
+          <div class="market-chart">
+            <canvas id="marketCapChart" width="100" height="20"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 2: Altcoin Season -->
+        <div class="widget altcoin-season">
+          <div class="widget-header">
+            <h3>Altcoin Season</h3>
+            <svg class="w-4 h-4 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div class="altcoin-score">
+            <span class="score-value">76</span>
+            <span class="score-total">/100</span>
+          </div>
+          <!-- Scale bar -->
+          <div class="altcoin-scale">
+            <div class="scale-track">
+              <div class="scale-segment bitcoin" style="width: 24%"></div>
+              <div class="scale-segment neutral" style="width: 20%"></div>
+              <div class="scale-segment altcoin" style="width: 56%"></div>
+            </div>
+            <div class="scale-dot" style="left: 76%"></div>
+            <div class="scale-labels">
+              <span>Bitcoin</span>
+              <span>Altcoin</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Fear & Greed -->
+        <div class="widget fear-greed">
+          <div class="widget-header">
+            <h3>Fear & Greed</h3>
+            <svg class="w-4 h-4 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div class="gauge-container">
+            <canvas id="fearGreedChart" width="120" height="120"></canvas>
+            <div class="gauge-needle" style="transform: rotate(48deg);"></div>
+            <div class="gauge-center"></div>
+            <div class="gauge-value">40</div>
+            <div class="gauge-label">Neutral</div>
+            <div class="gauge-ticks">
+              <span>0</span>
+              <span>25</span>
+              <span>50</span>
+              <span>75</span>
+              <span>100</span>
             </div>
           </div>
         </div>
@@ -2074,7 +2104,7 @@
 
     // Initialize Dashboard Charts
     function initDashboardCharts() {
-      // Fear & Greed Gauge Chart - Exact Design Match
+      // Fear & Greed Gauge Chart - Enhanced Design
       const fearGreedCtx = document.getElementById('fearGreedChart').getContext('2d');
       new Chart(fearGreedCtx, {
         type: 'doughnut',
@@ -2089,7 +2119,7 @@
               '#16a34a'  // Green - Extreme Greed
             ],
             borderWidth: 0,
-            cutout: '70%'
+            cutout: '75%'
           }]
         },
         options: {
@@ -2103,64 +2133,27 @@
           circumference: 180,
           animation: {
             animateRotate: true,
-            duration: 2000
-          }
-        }
-      });
-
-      // Altcoin Season Progress Chart - Enhanced
-      const altcoinCtx = document.getElementById('altcoinSeasonChart').getContext('2d');
-      new Chart(altcoinCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Bitcoin', 'Altcoin'],
-          datasets: [{
-            data: [24, 76],
-            backgroundColor: [
-              'rgba(245, 158, 11, 0.8)', // Bitcoin orange
-              'rgba(16, 185, 129, 0.8)'  // Altcoin green
-            ],
-            borderWidth: 0,
-            borderRadius: 6,
-            borderSkipped: false
-          }]
-        },
-        options: {
-          responsive: false,
-          maintainAspectRatio: false,
-          indexAxis: 'y',
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: false }
-          },
-          scales: {
-            x: { display: false },
-            y: { display: false }
-          },
-          animation: {
-            duration: 1500,
+            duration: 2000,
             easing: 'easeOutQuart'
           }
         }
       });
 
-      // Market Cap Line Chart - Enhanced
+      // Market Cap Sparkline Chart - Enhanced
       const marketCapCtx = document.getElementById('marketCapChart').getContext('2d');
       new Chart(marketCapCtx, {
         type: 'line',
         data: {
-          labels: ['', '', '', '', '', ''],
+          labels: Array.from({length: 30}, (_, i) => i),
           datasets: [{
-            data: [15, 12, 8, 10, 5, 3],
+            data: [4.1, 4.05, 4.08, 4.12, 4.15, 4.18, 4.16, 4.14, 4.11, 4.09, 4.07, 4.05, 4.03, 4.01, 4.00, 4.02, 4.04, 4.06, 4.08, 4.04, 4.02, 4.00, 3.98, 3.96, 3.94, 3.92, 3.90, 3.88, 3.86, 4.04],
             borderColor: '#ef4444',
-            backgroundColor: 'rgba(239, 68, 68, 0.15)',
-            borderWidth: 2.5,
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            borderWidth: 2,
             fill: true,
             tension: 0.4,
             pointRadius: 0,
-            pointHoverRadius: 0,
-            pointBackgroundColor: '#ef4444',
-            pointBorderColor: '#ef4444'
+            pointHoverRadius: 0
           }]
         },
         options: {
@@ -2176,12 +2169,7 @@
           },
           animation: {
             duration: 2000,
-            easing: 'easeInOutQuart'
-          },
-          elements: {
-            line: {
-              capBezierPoints: false
-            }
+            easing: 'easeOutQuart'
           }
         }
       });
