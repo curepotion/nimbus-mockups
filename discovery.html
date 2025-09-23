@@ -17,7 +17,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gauge-chart@0.3.6/dist/bundle.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
   <link rel="stylesheet" href="assets/css/components.css">
   <script src="assets/js/navbar.js"></script>
 
@@ -2096,41 +2096,8 @@
 
     // Initialize Dashboard Charts
     function initDashboardCharts() {
-      // Fear & Greed Gauge Chart - Using Gauge.js Library
-      const fearGreedGauge = GaugeChart.gaugeChart(
-        document.getElementById('fearGreedGauge'),
-        120, // width
-        120, // height
-        {
-          hasNeedle: true,
-          needleColor: 'rgba(255, 255, 255, 0.9)',
-          needleUpdateSpeed: 1000,
-          arcColors: [
-            'rgba(239, 68, 68, 0.9)', // Red - Extreme Fear
-            'rgba(249, 115, 22, 0.9)', // Orange - Fear
-            'rgba(234, 179, 8, 0.9)', // Yellow - Neutral
-            'rgba(34, 197, 94, 0.9)', // Light Green - Greed
-            'rgba(22, 163, 74, 0.9)'  // Green - Extreme Greed
-          ],
-          arcDelimiters: [20, 40, 60, 80],
-          rangeLabel: ['0', '100'],
-          centralLabel: '',
-          labelsFont: '12px sans-serif',
-          labelsFontColor: 'rgba(167, 176, 192, 0.8)',
-          needleRadius: 0.8,
-          needleStartValue: 40,
-          needleValue: 40,
-          arcPadding: 0.02,
-          arcPaddingColor: 'transparent',
-          arcWidth: 0.15,
-          arcOverEffect: false,
-          animateOnLoad: true,
-          animateOnUpdate: true
-        }
-      );
-
-      // Store gauge reference for updates
-      window.fearGreedGauge = fearGreedGauge;
+      // Fear & Greed Gauge Chart - Using D3.js
+      createFearGreedGauge();
 
       // Market Cap Sparkline Chart - Beautiful Enhanced
       const marketCapCtx = document.getElementById('marketCapChart').getContext('2d');
@@ -2170,10 +2137,140 @@
       });
     }
 
+    // Create Fear & Greed Gauge with D3.js
+    function createFearGreedGauge() {
+      const container = d3.select('#fearGreedGauge');
+      container.selectAll('*').remove(); // Clear any existing content
+      
+      const width = 120;
+      const height = 120;
+      const radius = Math.min(width, height) / 2 - 10;
+      
+      const svg = container
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', `translate(${width/2}, ${height/2})`);
+      
+      // Define the gauge scale
+      const scale = d3.scaleLinear()
+        .domain([0, 100])
+        .range([-Math.PI/2, Math.PI/2]);
+      
+      // Create the arc generator
+      const arc = d3.arc()
+        .innerRadius(radius * 0.6)
+        .outerRadius(radius * 0.8)
+        .startAngle(-Math.PI/2)
+        .endAngle(Math.PI/2);
+      
+      // Define color segments
+      const segments = [
+        { start: 0, end: 20, color: '#ef4444', label: 'Extreme Fear' },
+        { start: 20, end: 40, color: '#f97316', label: 'Fear' },
+        { start: 40, end: 60, color: '#eab308', label: 'Neutral' },
+        { start: 60, end: 80, color: '#22c55e', label: 'Greed' },
+        { start: 80, end: 100, color: '#16a34a', label: 'Extreme Greed' }
+      ];
+      
+      // Create background arc
+      svg.append('path')
+        .datum({ endAngle: Math.PI/2 })
+        .style('fill', 'rgba(255, 255, 255, 0.1)')
+        .style('stroke', 'rgba(255, 255, 255, 0.2)')
+        .style('stroke-width', 1)
+        .attr('d', arc);
+      
+      // Create colored segments
+      segments.forEach(segment => {
+        const startAngle = scale(segment.start);
+        const endAngle = scale(segment.end);
+        
+        const segmentArc = d3.arc()
+          .innerRadius(radius * 0.6)
+          .outerRadius(radius * 0.8)
+          .startAngle(startAngle)
+          .endAngle(endAngle);
+        
+        svg.append('path')
+          .datum({ endAngle })
+          .style('fill', segment.color)
+          .style('opacity', 0.9)
+          .attr('d', segmentArc);
+      });
+      
+      // Create needle
+      const needleGroup = svg.append('g').attr('class', 'needle-group');
+      
+      const needle = needleGroup.append('line')
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', 0)
+        .attr('y2', -radius * 0.7)
+        .style('stroke', 'rgba(255, 255, 255, 0.95)')
+        .style('stroke-width', 3)
+        .style('stroke-linecap', 'round')
+        .style('filter', 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))');
+      
+      // Create center dot
+      needleGroup.append('circle')
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .attr('r', 6)
+        .style('fill', 'rgba(255, 255, 255, 0.95)')
+        .style('filter', 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))');
+      
+      // Add tick marks
+      const ticks = [0, 25, 50, 75, 100];
+      ticks.forEach(tick => {
+        const angle = scale(tick);
+        const x1 = Math.cos(angle) * (radius * 0.85);
+        const y1 = Math.sin(angle) * (radius * 0.85);
+        const x2 = Math.cos(angle) * (radius * 0.95);
+        const y2 = Math.sin(angle) * (radius * 0.95);
+        
+        svg.append('line')
+          .attr('x1', x1)
+          .attr('y1', y1)
+          .attr('x2', x2)
+          .attr('y2', y2)
+          .style('stroke', 'rgba(167, 176, 192, 0.6)')
+          .style('stroke-width', 1);
+        
+        // Add tick labels
+        const labelX = Math.cos(angle) * (radius * 1.05);
+        const labelY = Math.sin(angle) * (radius * 1.05);
+        
+        svg.append('text')
+          .attr('x', labelX)
+          .attr('y', labelY)
+          .attr('text-anchor', 'middle')
+          .attr('dominant-baseline', 'middle')
+          .style('fill', 'rgba(167, 176, 192, 0.8)')
+          .style('font-size', '10px')
+          .style('font-weight', '500')
+          .text(tick);
+      });
+      
+      // Store references for updates
+      window.fearGreedNeedle = needleGroup;
+      window.fearGreedScale = scale;
+      
+      // Set initial value
+      updateFearGreedGauge(40);
+    }
+
     // Function to update Fear & Greed gauge
     function updateFearGreedGauge(value) {
-      if (window.fearGreedGauge) {
-        window.fearGreedGauge.updateNeedle(value);
+      if (window.fearGreedNeedle && window.fearGreedScale) {
+        const angle = window.fearGreedScale(value);
+        
+        window.fearGreedNeedle
+          .transition()
+          .duration(1000)
+          .ease(d3.easeElasticOut)
+          .attr('transform', `rotate(${angle * 180 / Math.PI})`);
         
         // Update the displayed value and label
         const valueElement = document.querySelector('.gauge-value');
