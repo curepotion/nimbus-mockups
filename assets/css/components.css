@@ -13,6 +13,8 @@
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  padding: 2rem;
+  gap: 2rem;
 }
 
 .discovery-layout {
@@ -20,6 +22,7 @@
   display: flex;
   min-height: 0;
   overflow: hidden;
+  gap: 2rem;
 }
 
 .left-column {
@@ -27,16 +30,169 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  overflow: hidden;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-y: auto;
+  gap: 2rem;
+  padding-right: 1rem;
 }
 
 .right-column {
-  flex: 0 0 350px;
+  flex: 0 0 400px;
   display: flex;
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 1rem;
+}
+
+/* Section spacing */
+.left-column > section {
+  margin-bottom: 2rem;
+}
+
+.left-column > section:last-child {
+  margin-bottom: 0;
+}
+
+/* Crypto Dashboard Specific Styles */
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-10 > * + * {
+  margin-top: 2.5rem;
+}
+
+/* Hero section spacing */
+.relative.overflow-hidden.rounded-2xl {
+  margin-bottom: 2rem;
+}
+
+/* Grid spacing adjustments */
+.grid.gap-3 {
+  gap: 0.75rem;
+}
+
+.grid.gap-4 {
+  gap: 1rem;
+}
+
+.grid.gap-3.sm\\:gap-4 {
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .grid.gap-3.sm\\:gap-4 {
+    gap: 1rem;
+  }
+}
+
+/* Responsive adjustments for better spacing */
+@media (max-width: 1024px) {
+  .discovery-main {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .discovery-layout {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .right-column {
+    flex: none;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-left: 0;
+    padding-top: 1rem;
+  }
+  
+  .left-column {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .discovery-main {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+  
+  .left-column {
+    gap: 1.5rem;
+  }
+  
+  .grid.sm\\:grid-cols-2.lg\\:grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid.grid-cols-2.sm\\:grid-cols-3.lg\\:grid-cols-6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid.grid-cols-2.sm\\:grid-cols-3.lg\\:grid-cols-6 {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid.grid-cols-2.md\\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Token List Specific Styles */
+.token-list {
+  height: calc(100vh - 200px);
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.token-list .flex-1 {
+  max-height: calc(100% - 120px);
+  overflow-y: auto;
+}
+
+/* Ensure proper spacing for token cards */
+.token-list .space-y-1 > * + * {
+  margin-top: 0.25rem;
+}
+
+/* Chart container heights */
+.h-24 {
+  height: 6rem;
+}
+
+.h-20 {
+  height: 5rem;
+}
+
+/* Ensure canvas elements are visible and properly sized */
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Chart containers */
+.h-24 canvas,
+.h-20 canvas {
+  min-height: 80px;
+}
+
+/* Ensure proper padding for sections */
+section {
+  padding: 0;
+}
+
+/* Fix any overflow issues */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 /* Top Bar */

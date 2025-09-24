@@ -5,25 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Discovery - Nimbus Trading Platform</title>
 
-  <!-- Fonts: Geist + Geist Mono -->
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/400.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/500.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/600.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/700.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/400.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/500.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/600.css" rel="stylesheet">
+  <!-- Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
   <link rel="stylesheet" href="assets/css/components.css">
   <script src="assets/js/navbar.js"></script>
 
 </head>
 
-<body class="h-full text-gray-200 antialiased bg-gradient-main">
+<body class="bg-zinc-950 text-zinc-100 antialiased [font-family:Inter,sans-serif]">
   <div class="min-h-screen flex flex-col">
     <!-- Navbar Container -->
     <div id="navbar-container"></div>
@@ -38,1795 +34,404 @@
         <!-- LEFT COLUMN: Dashboard & Trending Sections -->
         <div class="left-column">
 
-      <!-- 2) DASHBOARD WIDGETS (3-column layout) -->
-      <section aria-label="Market Dashboard" class="dashboard-widgets">
-        <!-- Card 1: Market Cap -->
-        <div class="widget market-cap">
-          <div class="flex flex-col justify-between">
+          <!-- Hero / Market Snapshot -->
+          <section class="relative overflow-hidden rounded-2xl bg-zinc-900/60 ring-1 ring-white/10">
+            <div class="absolute inset-0">
+              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2400&auto=format&fit=crop" alt="Abstract 3D render" class="h-full w-full object-cover opacity-20">
+              <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 via-zinc-900/70 to-transparent"></div>
+            </div>
+            <div class="relative p-6 sm:p-8">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">Today in Crypto</h1>
+                  <p class="text-zinc-300 mt-2 text-sm sm:text-base">A quick pulse on markets, narratives, and top movers — updated live.</p>
+              </div>
             <div class="flex items-center gap-2">
-              <h3 class="text-[16.5px] font-semibold text-white/90">Market Cap</h3>
-              <svg class="w-4 h-4 text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 18l6-6-6-6"/>
-              </svg>
+                  <button id="refresh" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-800 text-zinc-200 hover:bg-zinc-700 transition">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    <span class="text-sm font-medium">Refresh</span>
+                  </button>
+                  <div class="hidden sm:flex items-center gap-1 bg-zinc-800 rounded-lg p-1">
+                    <button data-range="24h" class="time-btn px-3 py-1.5 text-sm rounded-md bg-zinc-700 font-medium">24h</button>
+                    <button data-range="7d" class="time-btn px-3 py-1.5 text-sm rounded-md text-zinc-300">7d</button>
+                    <button data-range="30d" class="time-btn px-3 py-1.5 text-sm rounded-md text-zinc-300">30d</button>
             </div>
-            <div class="mt-2 flex items-end gap-3">
-              <div class="flex items-baseline">
-                <span id="capValue" class="tabular-nums text-[30px] leading-none font-semibold text-[#e7eef8]">$0.00T</span>
+            </div>
+          </div>
+
+              <!-- Snapshot Metrics -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-6">
+                <div class="rounded-xl bg-zinc-900/70 ring-1 ring-white/10 p-4">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs uppercase tracking-wide text-zinc-400">Total Market Cap</p>
+                    <i data-lucide="activity" class="w-4 h-4 text-zinc-400"></i>
               </div>
-              <span id="capDelta"
-                class="tabular-nums text-[13px] font-semibold px-2 py-1 rounded-full bg-[#2dd79f]/15 text-[#2dd79f] ring-1 ring-[#2dd79f]/25"
-              >▲ 0.00%</span>
+                  <p class="mt-2 text-lg sm:text-xl font-semibold tracking-tight">$1.92T</p>
+                  <p class="mt-1 text-emerald-400 text-sm font-medium">+1.8%</p>
             </div>
-          </div>
-
-          <!-- Sparkline area -->
-          <div class="ml-4 flex-1 relative">
-            <div class="absolute inset-0 flex items-end">
-              <div class="w-full h-[56px]">
-                <canvas id="sparkline"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2: Altcoin Season -->
-        <div class="widget altcoin-season">
-          <div class="altcoin-header">
-            <h3>Altcoin Season</h3>
-            <div class="altcoin-score">
-              <span class="score-value">67</span>
-              <span class="score-total">/100</span>
-            </div>
-          </div>
-          <div class="altcoin-scale">
-            <div class="scale-labels">
-              <span>Bitcoin</span>
-              <span>Altcoin</span>
-            </div>
-            <div class="scale-track">
-              <div class="scale-segment bitcoin" style="width: 35%"></div>
-              <div class="scale-segment neutral" style="width: 20%"></div>
-              <div class="scale-segment altcoin" style="width: 25%"></div>
-              <div class="scale-segment altcoin2" style="width: 20%"></div>
-            </div>
-            <div class="altcoin-indicator" style="left: 67%;"></div>
-          </div>
-        </div>
-
-        <!-- Card 3: Fear & Greed -->
-        <div class="widget fear-greed">
-          <div class="fear-greed-header">
-            <h3>Fear & Greed</h3>
-            <div class="gauge-value">40</div>
-          </div>
-          <div class="gauge-container">
-            <div id="fearGreedGauge"></div>
-            <div class="gauge-label">Neutral</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3) TRENDING TOKENS SECTION -->
-      <section class="trending-section">
-        <div class="section-header">
-          <h2>Trending Tokens</h2>
-          <nav class="filter-tabs" role="tablist" aria-label="Token filters">
-            <button role="tab" aria-selected="true" data-filter="all-coins">All Coins</button>
-            <button role="tab" data-filter="ai">AI</button>
-            <button role="tab" data-filter="defi">Defi</button>
-            <button role="tab" data-filter="layer1">Layer 1</button>
-            <button role="tab" data-filter="layer2">Layer 2</button>
-          </nav>
-        </div>
-        
-        <div class="token-columns">
-          <div class="token-column" data-filter="all-coins">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-inner">
-                <div class="token-card-front">
-                  <div class="token-card-header">
-                    <img src="https://api.iconify.design/cryptocurrency:btc.svg" alt="BTC" class="token-icon" />
-                    <div class="token-name">Bitcoin</div>
-                    <div class="token-price">$115,608</div>
+                <div class="rounded-xl bg-zinc-900/70 ring-1 ring-white/10 p-4">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs uppercase tracking-wide text-zinc-400">24h Volume</p>
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-zinc-400"></i>
                   </div>
-                  <div class="token-metrics">
-                    <div class="token-volume">Vol: $2.1B</div>
-                    <div class="token-change negative">-0.19%</div>
+                  <p class="mt-2 text-lg sm:text-xl font-semibold tracking-tight">$78.4B</p>
+                  <p class="mt-1 text-emerald-400 text-sm font-medium">+6.2%</p>
+                </div>
+                <div class="rounded-xl bg-zinc-900/70 ring-1 ring-white/10 p-4">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs uppercase tracking-wide text-zinc-400">BTC Dominance</p>
+                    <i data-lucide="pie-chart" class="w-4 h-4 text-zinc-400"></i>
                   </div>
-                  <div class="token-company">Satoshi Nakamoto</div>
-                  <div class="token-info">Digital gold, store of value</div>
-                  <div class="token-chart">
-                    <svg viewBox="0 0 100 32">
-                      <path class="token-chart-line negative" d="M0,20 Q25,15 50,18 T100,12" />
-                    </svg>
+                  <p class="mt-2 text-lg sm:text-xl font-semibold tracking-tight">52.8%</p>
+                  <p class="mt-1 text-red-400 text-sm font-medium">-0.3%</p>
+                </div>
+                <div class="rounded-xl bg-zinc-900/70 ring-1 ring-white/10 p-4">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs uppercase tracking-wide text-zinc-400">Fear & Greed</p>
+                    <i data-lucide="gauge" class="w-4 h-4 text-zinc-400"></i>
+                  </div>
+                  <p class="mt-2 text-lg sm:text-xl font-semibold tracking-tight">64 / Greed</p>
+                  <p class="mt-1 text-emerald-400 text-sm font-medium">+2 pts</p>
+          </div>
+        </div>
+
+              <!-- Key Pairs Mini Charts -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-orange-500 to-amber-300 flex items-center justify-center text-zinc-900 text-sm font-semibold">₿</div>
+                      <div>
+                        <p class="text-sm text-zinc-400">Bitcoin</p>
+                        <p class="text-lg font-semibold tracking-tight">BTC • $63,420</p>
+            </div>
+          </div>
+                    <span class="text-emerald-400 text-sm font-medium inline-flex items-center gap-1">
+                      <i data-lucide="trending-up" class="w-4 h-4"></i> 1.4%
+                    </span>
+            </div>
+                  <div class="mt-3">
+                    <div class="h-24"><canvas id="chart-btc"></canvas></div>
+            </div>
+          </div>
+                <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-indigo-500 to-cyan-300 flex items-center justify-center text-zinc-900 text-sm font-semibold">Ξ</div>
+                      <div>
+                        <p class="text-sm text-zinc-400">Ethereum</p>
+                        <p class="text-lg font-semibold tracking-tight">ETH • $3,210</p>
+        </div>
+          </div>
+                    <span class="text-emerald-400 text-sm font-medium inline-flex items-center gap-1">
+                      <i data-lucide="trending-up" class="w-4 h-4"></i> 2.3%
+                    </span>
+                  </div>
+                  <div class="mt-3">
+                    <div class="h-24"><canvas id="chart-eth"></canvas></div>
                   </div>
                 </div>
-                <div class="token-card-back">
-                  <div class="token-news">
-                    <div class="news-item">
-                      <div class="news-title">Bitcoin ETF sees record inflows</div>
-                      <div class="news-time">2 hours ago</div>
+          </div>
+        </div>
+      </section>
+
+          <!-- Trending Tokens -->
+          <section class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Trending Tokens</h2>
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1.5 rounded-lg bg-zinc-800 text-sm font-medium">All</button>
+                <button class="px-3 py-1.5 rounded-lg bg-zinc-900 ring-1 ring-white/10 text-sm text-zinc-300">L1</button>
+                <button class="px-3 py-1.5 rounded-lg bg-zinc-900 ring-1 ring-white/10 text-sm text-zinc-300">L2</button>
+                <button class="px-3 py-1.5 rounded-lg bg-zinc-900 ring-1 ring-white/10 text-sm text-zinc-300">DeFi</button>
+                <button class="px-3 py-1.5 rounded-lg bg-zinc-900 ring-1 ring-white/10 text-sm text-zinc-300">AI</button>
+            </div>
+        </div>
+        
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Token Card Template -->
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-gradient-to-br from-orange-500 to-yellow-300 flex items-center justify-center text-zinc-900 text-sm font-semibold">BTC</div>
+                    <div>
+                      <p class="text-sm text-zinc-400">Bitcoin</p>
+                      <p class="text-lg font-semibold tracking-tight">$63,420</p>
+                  </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-emerald-400 text-sm font-medium inline-flex items-center gap-1"><i data-lucide="trending-up" class="w-4 h-4"></i> +1.4%</p>
+                    <p class="text-xs text-zinc-400 mt-1">Vol: $22.4B</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <div class="h-20"><canvas id="spark-btc"></canvas></div>
                     </div>
-                    <div class="news-item">
-                      <div class="news-title">Major bank announces BTC custody</div>
-                      <div class="news-time">5 hours ago</div>
                     </div>
-                    <div class="news-item">
-                      <div class="news-title">Institutional adoption continues</div>
-                      <div class="news-time">8 hours ago</div>
+
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-300 flex items-center justify-center text-zinc-900 text-sm font-semibold">ETH</div>
+                    <div>
+                      <p class="text-sm text-zinc-400">Ethereum</p>
+                      <p class="text-lg font-semibold tracking-tight">$3,210</p>
                     </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-emerald-400 text-sm font-medium inline-flex items-center gap-1"><i data-lucide="trending-up" class="w-4 h-4"></i> +2.3%</p>
+                    <p class="text-xs text-zinc-400 mt-1">Vol: $12.1B</p>
+                </div>
+                </div>
+                <div class="mt-3">
+                  <div class="h-20"><canvas id="spark-eth"></canvas></div>
+              </div>
+            </div>
+            
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-300 flex items-center justify-center text-zinc-900 text-sm font-semibold">SOL</div>
+                    <div>
+                      <p class="text-sm text-zinc-400">Solana</p>
+                      <p class="text-lg font-semibold tracking-tight">$142.10</p>
+              </div>
+              </div>
+                  <div class="text-right">
+                    <p class="text-emerald-400 text-sm font-medium inline-flex items-center gap-1"><i data-lucide="trending-up" class="w-4 h-4"></i> +4.9%</p>
+                    <p class="text-xs text-zinc-400 mt-1">Vol: $3.9B</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <div class="h-20"><canvas id="spark-sol"></canvas></div>
+                </div>
+            </div>
+            
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-gradient-to-br from-emerald-400 to-lime-300 flex items-center justify-center text-zinc-900 text-sm font-semibold">BNB</div>
+                    <div>
+                      <p class="text-sm text-zinc-400">BNB</p>
+                      <p class="text-lg font-semibold tracking-tight">$571.80</p>
+              </div>
+              </div>
+                  <div class="text-right">
+                    <p class="text-red-400 text-sm font-medium inline-flex items-center gap-1"><i data-lucide="trending-down" class="w-4 h-4"></i> -0.8%</p>
+                    <p class="text-xs text-zinc-400 mt-1">Vol: $1.8B</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <div class="h-20"><canvas id="spark-bnb"></canvas></div>
+                    </div>
+            </div>
+            
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-gradient-to-br from-sky-400 to-blue-300 flex items-center justify-center text-zinc-900 text-sm font-semibold">XRP</div>
+                    <div>
+                      <p class="text-sm text-zinc-400">XRP</p>
+                      <p class="text-lg font-semibold tracking-tight">$0.61</p>
+              </div>
+              </div>
+                  <div class="text-right">
+                    <p class="text-emerald-400 text-sm font-medium inline-flex items-center gap-1"><i data-lucide="trending-up" class="w-4 h-4"></i> +0.7%</p>
+                    <p class="text-xs text-zinc-400 mt-1">Vol: $0.9B</p>
+                </div>
+              </div>
+                <div class="mt-3">
+                  <div class="h-20"><canvas id="spark-xrp"></canvas></div>
+              </div>
+            </div>
+            
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 rounded-full bg-gradient-to-br from-pink-400 to-fuchsia-400 flex items-center justify-center text-zinc-900 text-sm font-semibold">DOGE</div>
+                    <div>
+                      <p class="text-sm text-zinc-400">Dogecoin</p>
+                      <p class="text-lg font-semibold tracking-tight">$0.15</p>
+              </div>
+              </div>
+                  <div class="text-right">
+                    <p class="text-red-400 text-sm font-medium inline-flex items-center gap-1"><i data-lucide="trending-down" class="w-4 h-4"></i> -1.9%</p>
+                    <p class="text-xs text-zinc-400 mt-1">Vol: $1.1B</p>
+            </div>
+                </div>
+                <div class="mt-3">
+                  <div class="h-20"><canvas id="spark-doge"></canvas></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Narratives -->
+          <section class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Trending Narratives</h2>
+              <p class="text-sm text-zinc-400">Avg perf, last 24h</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              <div class="rounded-xl p-4 bg-gradient-to-b from-zinc-900 to-zinc-900/60 ring-1 ring-white/10">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-zinc-300">Layer 2</p>
+                  <i data-lucide="layers" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+                <p class="mt-2 text-lg font-semibold tracking-tight text-emerald-400">+2.8%</p>
+                <p class="text-xs text-zinc-400 mt-1">Arb, OP, BASE</p>
+              </div>
+              <div class="rounded-xl p-4 bg-gradient-to-b from-zinc-900 to-zinc-900/60 ring-1 ring-white/10">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-zinc-300">AI</p>
+                  <i data-lucide="cpu" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+                <p class="mt-2 text-lg font-semibold tracking-tight text-emerald-400">+5.2%</p>
+                <p class="text-xs text-zinc-400 mt-1">FET, TAO, NEAR</p>
+              </div>
+              <div class="rounded-xl p-4 bg-gradient-to-b from-zinc-900 to-zinc-900/60 ring-1 ring-white/10">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-zinc-300">RWA</p>
+                  <i data-lucide="banknote" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+                <p class="mt-2 text-lg font-semibold tracking-tight text-emerald-400">+1.6%</p>
+                <p class="text-xs text-zinc-400 mt-1">ONDO, MKR, CFG</p>
+              </div>
+              <div class="rounded-xl p-4 bg-gradient-to-b from-zinc-900 to-zinc-900/60 ring-1 ring-white/10">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-zinc-300">Restaking</p>
+                  <i data-lucide="repeat" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+                <p class="mt-2 text-lg font-semibold tracking-tight text-emerald-400">+3.1%</p>
+                <p class="text-xs text-zinc-400 mt-1">ENA, ETHFI, LSTs</p>
+              </div>
+              <div class="rounded-xl p-4 bg-gradient-to-b from-zinc-900 to-zinc-900/60 ring-1 ring-white/10">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-zinc-300">DePIN</p>
+                  <i data-lucide="satellite-dish" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+                <p class="mt-2 text-lg font-semibold tracking-tight text-emerald-400">+4.4%</p>
+                <p class="text-xs text-zinc-400 mt-1">HNT, AKT, IOTX</p>
+              </div>
+              <div class="rounded-xl p-4 bg-gradient-to-b from-zinc-900 to-zinc-900/60 ring-1 ring-white/10">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm text-zinc-300">Memes</p>
+                  <i data-lucide="sparkles" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+                <p class="mt-2 text-lg font-semibold tracking-tight text-red-400">-2.2%</p>
+                <p class="text-xs text-zinc-400 mt-1">DOGE, PEPE, WIF</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Top Movers -->
+          <section class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Top Movers</h2>
+              <p class="text-sm text-zinc-400">Largest change • 24h</p>
+              </div>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-center gap-2 mb-3">
+                  <i data-lucide="rocket" class="w-4 h-4 text-emerald-400"></i>
+                  <p class="text-sm font-medium text-zinc-300">Gainers</p>
+              </div>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-green-400 to-teal-300 text-zinc-900 text-xs font-semibold flex items-center justify-center">RNDR</div>
+                      <p class="text-sm">Render</p>
+                    </div>
+                    <p class="text-emerald-400 text-sm font-medium">+12.4%</p>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-indigo-400 to-purple-400 text-zinc-900 text-xs font-semibold flex items-center justify-center">TAO</div>
+                      <p class="text-sm">Bittensor</p>
+                    </div>
+                    <p class="text-emerald-400 text-sm font-medium">+9.7%</p>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-amber-400 to-rose-400 text-zinc-900 text-xs font-semibold flex items-center justify-center">ENA</div>
+                      <p class="text-sm">Ethena</p>
+                    </div>
+                    <p class="text-emerald-400 text-sm font-medium">+7.3%</p>
+                  </div>
+                </div>
+            </div>
+            
+              <div class="rounded-2xl bg-zinc-900/60 ring-1 ring-white/10 p-4">
+                <div class="flex items-center gap-2 mb-3">
+                  <i data-lucide="skull" class="w-4 h-4 text-red-400"></i>
+                  <p class="text-sm font-medium text-zinc-300">Losers</p>
+              </div>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-fuchsia-400 to-pink-400 text-zinc-900 text-xs font-semibold flex items-center justify-center">PEPE</div>
+                      <p class="text-sm">Pepe</p>
+              </div>
+                    <p class="text-red-400 text-sm font-medium">-8.1%</p>
+            </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-sky-300 to-cyan-400 text-zinc-900 text-xs font-semibold flex items-center justify-center">FIL</div>
+                      <p class="text-sm">Filecoin</p>
+                    </div>
+                    <p class="text-red-400 text-sm font-medium">-5.6%</p>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-lime-300 to-emerald-400 text-zinc-900 text-xs font-semibold flex items-center justify-center">APT</div>
+                      <p class="text-sm">Aptos</p>
+                    </div>
+                    <p class="text-red-400 text-sm font-medium">-3.9%</p>
                   </div>
                 </div>
               </div>
             </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:eth.svg" alt="ETH" class="token-icon" />
-                <div class="token-name">Ethereum</div>
-                <div class="token-price">$3,245</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $1.8B</div>
-                <div class="token-change positive">+2.34%</div>
-              </div>
-              <div class="token-company">Vitalik Buterin</div>
-              <div class="token-info">Smart contracts platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:sol.svg" alt="SOL" class="token-icon" />
-                <div class="token-name">Solana</div>
-                <div class="token-price">$245.80</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $890M</div>
-                <div class="token-change positive">+5.67%</div>
-              </div>
-              <div class="token-company">Solana Labs</div>
-              <div class="token-info">High-speed blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:bnb.svg" alt="BNB" class="token-icon" />
-                <div class="token-name">BNB</div>
-                <div class="token-price">$645.20</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $456M</div>
-                <div class="token-change negative">-1.23%</div>
-              </div>
-              <div class="token-company">Binance</div>
-              <div class="token-info">Exchange utility token</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:xrp.svg" alt="XRP" class="token-icon" />
-                <div class="token-name">XRP</div>
-                <div class="token-price">$0.5234</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $234M</div>
-                <div class="token-change positive">+3.45%</div>
-              </div>
-              <div class="token-company">Ripple Labs</div>
-              <div class="token-info">Cross-border payments</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ada.svg" alt="ADA" class="token-icon" />
-                <div class="token-name">Cardano</div>
-                <div class="token-price">$0.4567</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $189M</div>
-                <div class="token-change positive">+1.89%</div>
-              </div>
-              <div class="token-company">IOHK</div>
-              <div class="token-info">Research-driven blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:avax.svg" alt="AVAX" class="token-icon" />
-                <div class="token-name">Avalanche</div>
-                <div class="token-price">$38.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $156M</div>
-                <div class="token-change negative">-0.67%</div>
-              </div>
-              <div class="token-company">Ava Labs</div>
-              <div class="token-info">Subnet architecture</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:matic.svg" alt="MATIC" class="token-icon" />
-                <div class="token-name">Polygon</div>
-                <div class="token-price">$0.8234</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $123M</div>
-                <div class="token-change positive">+4.12%</div>
-              </div>
-              <div class="token-company">Polygon Labs</div>
-              <div class="token-info">Ethereum scaling solution</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:dot.svg" alt="DOT" class="token-icon" />
-                <div class="token-name">Polkadot</div>
-                <div class="token-price">$7.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change positive">+2.78%</div>
-              </div>
-              <div class="token-company">Parity Technologies</div>
-              <div class="token-info">Multi-chain protocol</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:link.svg" alt="LINK" class="token-icon" />
-                <div class="token-name">Chainlink</div>
-                <div class="token-price">$14.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change negative">-1.45%</div>
-              </div>
-              <div class="token-company">Chainlink Labs</div>
-              <div class="token-info">Oracle network</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ltc.svg" alt="LTC" class="token-icon" />
-                <div class="token-name">Litecoin</div>
-                <div class="token-price">$98.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+1.23%</div>
-              </div>
-              <div class="token-company">Charlie Lee</div>
-              <div class="token-info">Digital silver</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:shib.svg" alt="SHIB" class="token-icon" />
-                <div class="token-name">Shiba Inu</div>
-                <div class="token-price">$0.000023</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+8.45%</div>
-              </div>
-              <div class="token-company">Shiba Inu Team</div>
-              <div class="token-info">Meme token ecosystem</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-          
-          <div class="token-column" data-filter="ai" style="display: none;">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:fet.svg" alt="FET" class="token-icon" />
-                <div class="token-name">Fetch.ai</div>
-                <div class="token-price">$2.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $45M</div>
-                <div class="token-change positive">+12.5%</div>
-              </div>
-              <div class="token-company">Fetch.ai Foundation</div>
-              <div class="token-info">Autonomous AI agents</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:agix.svg" alt="AGIX" class="token-icon" />
-                <div class="token-name">SingularityNET</div>
-                <div class="token-price">$0.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $32M</div>
-                <div class="token-change positive">+8.3%</div>
-              </div>
-              <div class="token-company">SingularityNET Foundation</div>
-              <div class="token-info">Decentralized AI marketplace</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ocean.svg" alt="OCEAN" class="token-icon" />
-                <div class="token-name">Ocean Protocol</div>
-                <div class="token-price">$1.23</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $28M</div>
-                <div class="token-change positive">+15.7%</div>
-              </div>
-              <div class="token-company">Ocean Protocol Foundation</div>
-              <div class="token-info">Data monetization platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:rndr.svg" alt="RNDR" class="token-icon" />
-                <div class="token-name">Render Token</div>
-                <div class="token-price">$8.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $67M</div>
-                <div class="token-change positive">+22.1%</div>
-              </div>
-              <div class="token-company">OTOY Inc.</div>
-              <div class="token-info">GPU rendering network</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:grt.svg" alt="GRT" class="token-icon" />
-                <div class="token-name">The Graph</div>
-                <div class="token-price">$0.34</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $23M</div>
-                <div class="token-change positive">+6.8%</div>
-              </div>
-              <div class="token-company">The Graph Foundation</div>
-              <div class="token-info">Blockchain data indexing</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ark.svg" alt="ARK" class="token-icon" />
-                <div class="token-name">Ark</div>
-                <div class="token-price">$1.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $19M</div>
-                <div class="token-change positive">+9.2%</div>
-              </div>
-              <div class="token-company">Ark Ecosystem</div>
-              <div class="token-info">AI-powered blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:nmr.svg" alt="NMR" class="token-icon" />
-                <div class="token-name">Numeraire</div>
-                <div class="token-price">$18.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $15M</div>
-                <div class="token-change positive">+11.4%</div>
-              </div>
-              <div class="token-company">Numerai</div>
-              <div class="token-info">Hedge fund AI platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ctx.svg" alt="CTX" class="token-icon" />
-                <div class="token-name">Cryptex Finance</div>
-                <div class="token-price">$2.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $12M</div>
-                <div class="token-change positive">+7.6%</div>
-              </div>
-              <div class="token-company">Cryptex Labs</div>
-              <div class="token-info">AI trading algorithms</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ai.svg" alt="AI" class="token-icon" />
-                <div class="token-name">Sleepless AI</div>
-                <div class="token-price">$1.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $8M</div>
-                <div class="token-change positive">+5.2%</div>
-              </div>
-              <div class="token-company">Sleepless AI Labs</div>
-              <div class="token-info">AI gaming platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:tao.svg" alt="TAO" class="token-icon" />
-                <div class="token-name">Bittensor</div>
-                <div class="token-price">$456.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $34M</div>
-                <div class="token-change positive">+18.7%</div>
-              </div>
-              <div class="token-company">Bittensor Foundation</div>
-              <div class="token-info">Decentralized AI network</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:wld.svg" alt="WLD" class="token-icon" />
-                <div class="token-name">Worldcoin</div>
-                <div class="token-price">$3.21</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $56M</div>
-                <div class="token-change positive">+3.4%</div>
-              </div>
-              <div class="token-company">Tools for Humanity</div>
-              <div class="token-info">AI identity verification</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:near.svg" alt="NEAR" class="token-icon" />
-                <div class="token-name">NEAR Protocol</div>
-                <div class="token-price">$4.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $41M</div>
-                <div class="token-change positive">+6.3%</div>
-              </div>
-              <div class="token-company">NEAR Foundation</div>
-              <div class="token-info">AI-friendly blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-          
-          <div class="token-column" data-filter="defi" style="display: none;">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:uni.svg" alt="UNI" class="token-icon" />
-                <div class="token-name">Uniswap</div>
-                <div class="token-price">$12.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $234M</div>
-                <div class="token-change positive">+5.2%</div>
-              </div>
-              <div class="token-company">Uniswap Labs</div>
-              <div class="token-info">Decentralized exchange</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:aave.svg" alt="AAVE" class="token-icon" />
-                <div class="token-name">Aave</div>
-                <div class="token-price">$145.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $189M</div>
-                <div class="token-change positive">+3.8%</div>
-              </div>
-              <div class="token-company">Aave Companies</div>
-              <div class="token-info">Lending protocol</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:comp.svg" alt="COMP" class="token-icon" />
-                <div class="token-name">Compound</div>
-                <div class="token-price">$78.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $156M</div>
-                <div class="token-change positive">+2.1%</div>
-              </div>
-              <div class="token-company">Compound Labs</div>
-              <div class="token-info">Money market protocol</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:snx.svg" alt="SNX" class="token-icon" />
-                <div class="token-name">Synthetix</div>
-                <div class="token-price">$3.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $123M</div>
-                <div class="token-change positive">+7.3%</div>
-              </div>
-              <div class="token-company">Synthetix Foundation</div>
-              <div class="token-info">Synthetic assets</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:crv.svg" alt="CRV" class="token-icon" />
-                <div class="token-name">Curve DAO</div>
-                <div class="token-price">$0.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change positive">+4.6%</div>
-              </div>
-              <div class="token-company">Curve Finance</div>
-              <div class="token-info">Stablecoin exchange</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:yfi.svg" alt="YFI" class="token-icon" />
-                <div class="token-name">Yearn Finance</div>
-                <div class="token-price">$8,234</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change positive">+1.9%</div>
-              </div>
-              <div class="token-company">Yearn Finance</div>
-              <div class="token-info">Yield farming protocol</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:sushi.svg" alt="SUSHI" class="token-icon" />
-                <div class="token-name">SushiSwap</div>
-                <div class="token-price">$1.23</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+6.7%</div>
-              </div>
-              <div class="token-company">SushiSwap</div>
-              <div class="token-info">DEX with rewards</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:bal.svg" alt="BAL" class="token-icon" />
-                <div class="token-name">Balancer</div>
-                <div class="token-price">$4.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+3.2%</div>
-              </div>
-              <div class="token-company">Balancer Labs</div>
-              <div class="token-info">Automated market maker</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:1inch.svg" alt="1INCH" class="token-icon" />
-                <div class="token-name">1inch</div>
-                <div class="token-price">$0.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $54M</div>
-                <div class="token-change positive">+2.8%</div>
-              </div>
-              <div class="token-company">1inch Network</div>
-              <div class="token-info">DEX aggregator</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:maker.svg" alt="MKR" class="token-icon" />
-                <div class="token-name">Maker</div>
-                <div class="token-price">$2,456</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $43M</div>
-                <div class="token-change positive">+1.5%</div>
-              </div>
-              <div class="token-company">Maker Foundation</div>
-              <div class="token-info">DAI stablecoin</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:lido.svg" alt="LDO" class="token-icon" />
-                <div class="token-name">Lido DAO</div>
-                <div class="token-price">$3.21</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $38M</div>
-                <div class="token-change positive">+4.3%</div>
-              </div>
-              <div class="token-company">Lido Finance</div>
-              <div class="token-info">Liquid staking</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:frax.svg" alt="FRAX" class="token-icon" />
-                <div class="token-name">Frax</div>
-                <div class="token-price">$0.99</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $32M</div>
-                <div class="token-change positive">+0.1%</div>
-              </div>
-              <div class="token-company">Frax Finance</div>
-              <div class="token-info">Fractional stablecoin</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-          
-          <div class="token-column" data-filter="layer1" style="display: none;">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:eth.svg" alt="ETH" class="token-icon" />
-                <div class="token-name">Ethereum</div>
-                <div class="token-price">$3,245</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $1.8B</div>
-                <div class="token-change positive">+2.34%</div>
-              </div>
-              <div class="token-company">Vitalik Buterin</div>
-              <div class="token-info">Smart contracts platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:sol.svg" alt="SOL" class="token-icon" />
-                <div class="token-name">Solana</div>
-                <div class="token-price">$245.80</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $890M</div>
-                <div class="token-change positive">+5.67%</div>
-              </div>
-              <div class="token-company">Solana Labs</div>
-              <div class="token-info">High-speed blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:avax.svg" alt="AVAX" class="token-icon" />
-                <div class="token-name">Avalanche</div>
-                <div class="token-price">$38.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $156M</div>
-                <div class="token-change negative">-0.67%</div>
-              </div>
-              <div class="token-company">Ava Labs</div>
-              <div class="token-info">Subnet architecture</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ftm.svg" alt="FTM" class="token-icon" />
-                <div class="token-name">Fantom</div>
-                <div class="token-price">$0.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change positive">+4.2%</div>
-              </div>
-              <div class="token-company">Fantom Foundation</div>
-              <div class="token-info">Fast blockchain platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:algo.svg" alt="ALGO" class="token-icon" />
-                <div class="token-name">Algorand</div>
-                <div class="token-price">$0.23</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change positive">+1.8%</div>
-              </div>
-              <div class="token-company">Algorand Foundation</div>
-              <div class="token-info">Pure proof-of-stake</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:near.svg" alt="NEAR" class="token-icon" />
-                <div class="token-name">NEAR Protocol</div>
-                <div class="token-price">$4.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+6.3%</div>
-              </div>
-              <div class="token-company">NEAR Foundation</div>
-              <div class="token-info">Developer-friendly blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:atom.svg" alt="ATOM" class="token-icon" />
-                <div class="token-name">Cosmos</div>
-                <div class="token-price">$12.34</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+3.7%</div>
-              </div>
-              <div class="token-company">Interchain Foundation</div>
-              <div class="token-info">Internet of blockchains</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:icp.svg" alt="ICP" class="token-icon" />
-                <div class="token-name">Internet Computer</div>
-                <div class="token-price">$18.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $54M</div>
-                <div class="token-change positive">+2.9%</div>
-              </div>
-              <div class="token-company">DFINITY Foundation</div>
-              <div class="token-info">World computer blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:hbar.svg" alt="HBAR" class="token-icon" />
-                <div class="token-name">Hedera</div>
-                <div class="token-price">$0.12</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $43M</div>
-                <div class="token-change positive">+1.4%</div>
-              </div>
-              <div class="token-company">Hedera Hashgraph</div>
-              <div class="token-info">Enterprise-grade blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:flow.svg" alt="FLOW" class="token-icon" />
-                <div class="token-name">Flow</div>
-                <div class="token-price">$0.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $32M</div>
-                <div class="token-change positive">+2.1%</div>
-              </div>
-              <div class="token-company">Dapper Labs</div>
-              <div class="token-info">NFT-focused blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:egld.svg" alt="EGLD" class="token-icon" />
-                <div class="token-name">MultiversX</div>
-                <div class="token-price">$45.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $28M</div>
-                <div class="token-change positive">+3.8%</div>
-              </div>
-              <div class="token-company">MultiversX</div>
-              <div class="token-info">Metaverse blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:algo.svg" alt="ALGO" class="token-icon" />
-                <div class="token-name">Algorand</div>
-                <div class="token-price">$0.23</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $21M</div>
-                <div class="token-change positive">+0.9%</div>
-              </div>
-              <div class="token-company">Algorand Foundation</div>
-              <div class="token-info">Carbon-negative blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-          
-          <div class="token-column" data-filter="layer2" style="display: none;">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:matic.svg" alt="MATIC" class="token-icon" />
-                <div class="token-name">Polygon</div>
-                <div class="token-price">$0.8234</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $123M</div>
-                <div class="token-change positive">+4.12%</div>
-              </div>
-              <div class="token-company">Polygon Labs</div>
-              <div class="token-info">Ethereum scaling solution</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:arb.svg" alt="ARB" class="token-icon" />
-                <div class="token-name">Arbitrum</div>
-                <div class="token-price">$1.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change positive">+3.8%</div>
-              </div>
-              <div class="token-company">Offchain Labs</div>
-              <div class="token-info">Optimistic rollup</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:op.svg" alt="OP" class="token-icon" />
-                <div class="token-name">Optimism</div>
-                <div class="token-price">$2.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change positive">+5.2%</div>
-              </div>
-              <div class="token-company">OP Labs</div>
-              <div class="token-info">Optimistic rollup</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:imx.svg" alt="IMX" class="token-icon" />
-                <div class="token-name">Immutable X</div>
-                <div class="token-price">$1.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+7.1%</div>
-              </div>
-              <div class="token-company">Immutable</div>
-              <div class="token-info">NFT scaling solution</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:lrc.svg" alt="LRC" class="token-icon" />
-                <div class="token-name">Loopring</div>
-                <div class="token-price">$0.34</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+2.6%</div>
-              </div>
-              <div class="token-company">Loopring Foundation</div>
-              <div class="token-info">ZK-rollup DEX</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:zksync.svg" alt="ZK" class="token-icon" />
-                <div class="token-name">zkSync</div>
-                <div class="token-price">$0.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $54M</div>
-                <div class="token-change positive">+8.9%</div>
-              </div>
-              <div class="token-company">Matter Labs</div>
-              <div class="token-info">ZK-rollup scaling</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:starknet.svg" alt="STRK" class="token-icon" />
-                <div class="token-name">Starknet</div>
-                <div class="token-price">$1.23</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $43M</div>
-                <div class="token-change positive">+4.5%</div>
-              </div>
-              <div class="token-company">StarkWare</div>
-              <div class="token-info">ZK-rollup network</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:metis.svg" alt="METIS" class="token-icon" />
-                <div class="token-name">Metis DAO</div>
-                <div class="token-price">$45.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $32M</div>
-                <div class="token-change positive">+6.3%</div>
-              </div>
-              <div class="token-company">Metis Labs</div>
-              <div class="token-info">Hybrid rollup</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:polygon.svg" alt="POL" class="token-icon" />
-                <div class="token-name">Polygon 2.0</div>
-                <div class="token-price">$0.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $28M</div>
-                <div class="token-change positive">+3.2%</div>
-              </div>
-              <div class="token-company">Polygon Labs</div>
-              <div class="token-info">Value layer for internet</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:base.svg" alt="BASE" class="token-icon" />
-                <div class="token-name">Base</div>
-                <div class="token-price">$0.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $21M</div>
-                <div class="token-change positive">+1.8%</div>
-              </div>
-              <div class="token-company">Coinbase</div>
-              <div class="token-info">Coinbase L2</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:mantle.svg" alt="MNT" class="token-icon" />
-                <div class="token-name">Mantle</div>
-                <div class="token-price">$0.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $19M</div>
-                <div class="token-change positive">+2.4%</div>
-              </div>
-              <div class="token-company">Mantle Network</div>
-              <div class="token-info">Modular L2</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:linea.svg" alt="LINEA" class="token-icon" />
-                <div class="token-name">Linea</div>
-                <div class="token-price">$0.12</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $15M</div>
-                <div class="token-change positive">+1.2%</div>
-              </div>
-              <div class="token-company">ConsenSys</div>
-              <div class="token-info">ZK-rollup L2</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <!-- 4) TRENDING HIP-3 SECTION -->
-      <section class="trending-section">
-        <div class="section-header">
-          <h2>Trending HIP-3</h2>
-          <nav class="filter-tabs" role="tablist" aria-label="HIP-3 filters">
-            <button role="tab" aria-selected="true" data-filter="pre-ipo">Pre-IPO</button>
-            <button role="tab" data-filter="volume">Volume</button>
-            <button role="tab" data-filter="stocks">Stocks</button>
-            <button role="tab" data-filter="commodities">Commodities</button>
-          </nav>
-        </div>
-        
-        <div class="token-columns">
-          <div class="token-column" data-filter="pre-ipo">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:openai.svg" alt="OpenAI" class="token-icon" />
-                <div class="token-name">OpenAI</div>
-                <div class="token-price">$89.50</div>
+          <!-- Quick News / Insights -->
+          <section class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Quick Headlines</h2>
+              <a href="#" class="text-sm text-zinc-300 hover:text-white inline-flex items-center gap-1">
+                View all <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </a>
               </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $2.1B</div>
-                <div class="token-change positive">+15.2%</div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <article class="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-zinc-900/60">
+                <div class="aspect-[16/9] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1640340434855-5c96a156acf8?q=80&w=1600&auto=format&fit=crop" alt="Crypto chart" class="h-full w-full object-cover">
               </div>
-              <div class="token-company">OpenAI Inc.</div>
-              <div class="token-info">AI research company</div>
-              <div class="token-chart"></div>
+                <div class="p-4">
+                  <h3 class="font-semibold tracking-tight">Spot ETF flows turn positive as risk assets rally</h3>
+                  <p class="text-sm text-zinc-400 mt-1">Inflow streak resumes; BTC leads majors, AI basket outperforms.</p>
+                </div>
+              </article>
+              <article class="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-zinc-900/60">
+                <div class="aspect-[16/9] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop" alt="Server racks" class="h-full w-full object-cover">
+                </div>
+                <div class="p-4">
+                  <h3 class="font-semibold tracking-tight">DePIN names surge on network growth updates</h3>
+                  <p class="text-sm text-zinc-400 mt-1">HNT, AKT post strong usage metrics; routing fees hit new highs.</p>
+                </div>
+              </article>
+              <article class="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-zinc-900/60">
+                <div class="aspect-[16/9] overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop" alt="Minimal desk" class="h-full w-full object-cover">
+                </div>
+                <div class="p-4">
+                  <h3 class="font-semibold tracking-tight">Stablecoin share ticks up across DEX venues</h3>
+                  <p class="text-sm text-zinc-400 mt-1">On-chain liquidity rotates to majors; fees compress on L2s.</p>
+                </div>
+              </article>
+            </div>
+          </section>
             </div>
             
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:stripe.svg" alt="Stripe" class="token-icon" />
-                <div class="token-name">Stripe</div>
-                <div class="token-price">$156.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $1.8B</div>
-                <div class="token-change positive">+8.7%</div>
-              </div>
-              <div class="token-company">Stripe Inc.</div>
-              <div class="token-info">Payment processing</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:discord.svg" alt="Discord" class="token-icon" />
-                <div class="token-name">Discord</div>
-                <div class="token-price">$45.23</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $890M</div>
-                <div class="token-change positive">+12.4%</div>
-              </div>
-              <div class="token-company">Discord Inc.</div>
-              <div class="token-info">Communication platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:reddit.svg" alt="Reddit" class="token-icon" />
-                <div class="token-name">Reddit</div>
-                <div class="token-price">$23.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $456M</div>
-                <div class="token-change positive">+6.8%</div>
-              </div>
-              <div class="token-company">Reddit Inc.</div>
-              <div class="token-info">Social media platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:figma.svg" alt="Figma" class="token-icon" />
-                <div class="token-name">Figma</div>
-                <div class="token-price">$78.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $234M</div>
-                <div class="token-change positive">+9.3%</div>
-              </div>
-              <div class="token-company">Figma Inc.</div>
-              <div class="token-info">Design collaboration tool</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:notion.svg" alt="Notion" class="token-icon" />
-                <div class="token-name">Notion</div>
-                <div class="token-price">$34.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $189M</div>
-                <div class="token-change positive">+4.2%</div>
-              </div>
-              <div class="token-company">Notion Labs</div>
-              <div class="token-info">Productivity workspace</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:airbnb.svg" alt="Airbnb" class="token-icon" />
-                <div class="token-name">Airbnb</div>
-                <div class="token-price">$167.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $156M</div>
-                <div class="token-change positive">+7.1%</div>
-              </div>
-              <div class="token-company">Airbnb Inc.</div>
-              <div class="token-info">Home sharing platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:spacex.svg" alt="SpaceX" class="token-icon" />
-                <div class="token-name">SpaceX</div>
-                <div class="token-price">$234.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $123M</div>
-                <div class="token-change positive">+11.8%</div>
-              </div>
-              <div class="token-company">SpaceX</div>
-              <div class="token-info">Space exploration company</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:canva.svg" alt="Canva" class="token-icon" />
-                <div class="token-name">Canva</div>
-                <div class="token-price">$45.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change positive">+5.4%</div>
-              </div>
-              <div class="token-company">Canva Pty Ltd</div>
-              <div class="token-info">Design platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:zoom.svg" alt="Zoom" class="token-icon" />
-                <div class="token-name">Zoom</div>
-                <div class="token-price">$67.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change positive">+2.1%</div>
-              </div>
-              <div class="token-company">Zoom Video Communications</div>
-              <div class="token-info">Video conferencing</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:slack.svg" alt="Slack" class="token-icon" />
-                <div class="token-name">Slack</div>
-                <div class="token-price">$12.34</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+3.7%</div>
-              </div>
-              <div class="token-company">Slack Technologies</div>
-              <div class="token-info">Team communication</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:dropbox.svg" alt="Dropbox" class="token-icon" />
-                <div class="token-name">Dropbox</div>
-                <div class="token-price">$23.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+1.8%</div>
-              </div>
-              <div class="token-company">Dropbox Inc.</div>
-              <div class="token-info">Cloud storage</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-          
-          <div class="token-column" data-filter="volume" style="display: none;">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:btc.svg" alt="BTC" class="token-icon" />
-                <div class="token-name">Bitcoin</div>
-                <div class="token-price">$115,608</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $2.1B</div>
-                <div class="token-change negative">-0.19%</div>
-              </div>
-              <div class="token-company">Satoshi Nakamoto</div>
-              <div class="token-info">Digital gold, store of value</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:eth.svg" alt="ETH" class="token-icon" />
-                <div class="token-name">Ethereum</div>
-                <div class="token-price">$3,245</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $1.8B</div>
-                <div class="token-change positive">+2.34%</div>
-              </div>
-              <div class="token-company">Vitalik Buterin</div>
-              <div class="token-info">Smart contracts platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:sol.svg" alt="SOL" class="token-icon" />
-                <div class="token-name">Solana</div>
-                <div class="token-price">$245.80</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $890M</div>
-                <div class="token-change positive">+5.67%</div>
-              </div>
-              <div class="token-company">Solana Labs</div>
-              <div class="token-info">High-speed blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:bnb.svg" alt="BNB" class="token-icon" />
-                <div class="token-name">BNB</div>
-                <div class="token-price">$645.20</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $456M</div>
-                <div class="token-change negative">-1.23%</div>
-              </div>
-              <div class="token-company">Binance</div>
-              <div class="token-info">Exchange utility token</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:xrp.svg" alt="XRP" class="token-icon" />
-                <div class="token-name">XRP</div>
-                <div class="token-price">$0.5234</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $234M</div>
-                <div class="token-change positive">+3.45%</div>
-              </div>
-              <div class="token-company">Ripple Labs</div>
-              <div class="token-info">Cross-border payments</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ada.svg" alt="ADA" class="token-icon" />
-                <div class="token-name">Cardano</div>
-                <div class="token-price">$0.4567</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $189M</div>
-                <div class="token-change positive">+1.89%</div>
-              </div>
-              <div class="token-company">IOHK</div>
-              <div class="token-info">Research-driven blockchain</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:avax.svg" alt="AVAX" class="token-icon" />
-                <div class="token-name">Avalanche</div>
-                <div class="token-price">$38.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $156M</div>
-                <div class="token-change negative">-0.67%</div>
-              </div>
-              <div class="token-company">Ava Labs</div>
-              <div class="token-info">Subnet architecture</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:matic.svg" alt="MATIC" class="token-icon" />
-                <div class="token-name">Polygon</div>
-                <div class="token-price">$0.8234</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $123M</div>
-                <div class="token-change positive">+4.12%</div>
-              </div>
-              <div class="token-company">Polygon Labs</div>
-              <div class="token-info">Ethereum scaling solution</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:dot.svg" alt="DOT" class="token-icon" />
-                <div class="token-name">Polkadot</div>
-                <div class="token-price">$7.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change positive">+2.78%</div>
-              </div>
-              <div class="token-company">Parity Technologies</div>
-              <div class="token-info">Multi-chain protocol</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:link.svg" alt="LINK" class="token-icon" />
-                <div class="token-name">Chainlink</div>
-                <div class="token-price">$14.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change negative">-1.45%</div>
-              </div>
-              <div class="token-company">Chainlink Labs</div>
-              <div class="token-info">Oracle network</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:ltc.svg" alt="LTC" class="token-icon" />
-                <div class="token-name">Litecoin</div>
-                <div class="token-price">$98.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+1.23%</div>
-              </div>
-              <div class="token-company">Charlie Lee</div>
-              <div class="token-info">Digital silver</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/cryptocurrency:shib.svg" alt="SHIB" class="token-icon" />
-                <div class="token-name">Shiba Inu</div>
-                <div class="token-price">$0.000023</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+8.45%</div>
-              </div>
-              <div class="token-company">Shiba Inu Team</div>
-              <div class="token-info">Meme token ecosystem</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-          
-          <div class="token-column" data-filter="stocks" style="display: none;">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:apple.svg" alt="AAPL" class="token-icon" />
-                <div class="token-name">Apple Inc.</div>
-                <div class="token-price">$189.25</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $2.1B</div>
-                <div class="token-change positive">+2.1%</div>
-              </div>
-              <div class="token-company">Apple Inc.</div>
-              <div class="token-info">Technology company</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:google.svg" alt="GOOGL" class="token-icon" />
-                <div class="token-name">Alphabet Inc.</div>
-                <div class="token-price">$142.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $1.8B</div>
-                <div class="token-change positive">+1.8%</div>
-              </div>
-              <div class="token-company">Alphabet Inc.</div>
-              <div class="token-info">Search and cloud services</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:microsoft.svg" alt="MSFT" class="token-icon" />
-                <div class="token-name">Microsoft Corp.</div>
-                <div class="token-price">$378.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $890M</div>
-                <div class="token-change positive">+3.2%</div>
-              </div>
-              <div class="token-company">Microsoft Corporation</div>
-              <div class="token-info">Software and cloud computing</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:tesla.svg" alt="TSLA" class="token-icon" />
-                <div class="token-name">Tesla Inc.</div>
-                <div class="token-price">$245.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $456M</div>
-                <div class="token-change negative">-1.5%</div>
-              </div>
-              <div class="token-company">Tesla Inc.</div>
-              <div class="token-info">Electric vehicles and energy</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:amazon.svg" alt="AMZN" class="token-icon" />
-                <div class="token-name">Amazon.com Inc.</div>
-                <div class="token-price">$156.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $234M</div>
-                <div class="token-change positive">+2.7%</div>
-              </div>
-              <div class="token-company">Amazon.com Inc.</div>
-              <div class="token-info">E-commerce and cloud</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:meta.svg" alt="META" class="token-icon" />
-                <div class="token-name">Meta Platforms</div>
-                <div class="token-price">$345.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $189M</div>
-                <div class="token-change positive">+4.1%</div>
-              </div>
-              <div class="token-company">Meta Platforms Inc.</div>
-              <div class="token-info">Social media and metaverse</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:nvidia.svg" alt="NVDA" class="token-icon" />
-                <div class="token-name">NVIDIA Corp.</div>
-                <div class="token-price">$789.12</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $156M</div>
-                <div class="token-change positive">+5.8%</div>
-              </div>
-              <div class="token-company">NVIDIA Corporation</div>
-              <div class="token-info">Graphics and AI chips</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:netflix.svg" alt="NFLX" class="token-icon" />
-                <div class="token-name">Netflix Inc.</div>
-                <div class="token-price">$456.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $123M</div>
-                <div class="token-change positive">+1.9%</div>
-              </div>
-              <div class="token-company">Netflix Inc.</div>
-              <div class="token-info">Streaming entertainment</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:uber.svg" alt="UBER" class="token-icon" />
-                <div class="token-name">Uber Technologies</div>
-                <div class="token-price">$67.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change positive">+3.4%</div>
-              </div>
-              <div class="token-company">Uber Technologies Inc.</div>
-              <div class="token-info">Ride-sharing platform</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:spotify.svg" alt="SPOT" class="token-icon" />
-                <div class="token-name">Spotify Technology</div>
-                <div class="token-price">$234.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change positive">+2.3%</div>
-              </div>
-              <div class="token-company">Spotify Technology S.A.</div>
-              <div class="token-info">Music streaming service</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:paypal.svg" alt="PYPL" class="token-icon" />
-                <div class="token-name">PayPal Holdings</div>
-                <div class="token-price">$78.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+1.7%</div>
-              </div>
-              <div class="token-company">PayPal Holdings Inc.</div>
-              <div class="token-info">Digital payments</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/logos:shopify.svg" alt="SHOP" class="token-icon" />
-                <div class="token-name">Shopify Inc.</div>
-                <div class="token-price">$89.12</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+4.2%</div>
-              </div>
-              <div class="token-company">Shopify Inc.</div>
-              <div class="token-info">E-commerce platform</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-          
-          <div class="token-column" data-filter="commodities" style="display: none;">
-            <!-- Row 1 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:gold.svg" alt="Gold" class="token-icon" />
-                <div class="token-name">Gold</div>
-                <div class="token-price">$2,045.67</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $2.1B</div>
-                <div class="token-change positive">+1.2%</div>
-              </div>
-              <div class="token-company">COMEX</div>
-              <div class="token-info">Precious metal</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:silver.svg" alt="Silver" class="token-icon" />
-                <div class="token-name">Silver</div>
-                <div class="token-price">$24.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $890M</div>
-                <div class="token-change positive">+2.8%</div>
-              </div>
-              <div class="token-company">COMEX</div>
-              <div class="token-info">Industrial precious metal</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:oil-drum.svg" alt="Oil" class="token-icon" />
-                <div class="token-name">Crude Oil</div>
-                <div class="token-price">$78.90</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $456M</div>
-                <div class="token-change negative">-0.8%</div>
-              </div>
-              <div class="token-company">NYMEX</div>
-              <div class="token-info">Energy commodity</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:corn.svg" alt="Corn" class="token-icon" />
-                <div class="token-name">Corn</div>
-                <div class="token-price">$4.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $234M</div>
-                <div class="token-change positive">+3.4%</div>
-              </div>
-              <div class="token-company">CBOT</div>
-              <div class="token-info">Agricultural commodity</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 2 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:wheat.svg" alt="Wheat" class="token-icon" />
-                <div class="token-name">Wheat</div>
-                <div class="token-price">$6.78</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $189M</div>
-                <div class="token-change positive">+1.7%</div>
-              </div>
-              <div class="token-company">CBOT</div>
-              <div class="token-info">Grain commodity</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:coffee.svg" alt="Coffee" class="token-icon" />
-                <div class="token-name">Coffee</div>
-                <div class="token-price">$1.89</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $156M</div>
-                <div class="token-change positive">+4.2%</div>
-              </div>
-              <div class="token-company">ICE</div>
-              <div class="token-info">Soft commodity</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:copper.svg" alt="Copper" class="token-icon" />
-                <div class="token-name">Copper</div>
-                <div class="token-price">$3.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $123M</div>
-                <div class="token-change positive">+2.1%</div>
-              </div>
-              <div class="token-company">COMEX</div>
-              <div class="token-info">Industrial metal</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:natural-gas.svg" alt="Gas" class="token-icon" />
-                <div class="token-name">Natural Gas</div>
-                <div class="token-price">$2.34</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $98M</div>
-                <div class="token-change negative">-1.3%</div>
-              </div>
-              <div class="token-company">NYMEX</div>
-              <div class="token-info">Energy commodity</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <!-- Row 3 -->
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:platinum.svg" alt="Platinum" class="token-icon" />
-                <div class="token-name">Platinum</div>
-                <div class="token-price">$1,234.56</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $87M</div>
-                <div class="token-change positive">+0.8%</div>
-              </div>
-              <div class="token-company">NYMEX</div>
-              <div class="token-info">Precious metal</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:sugar.svg" alt="Sugar" class="token-icon" />
-                <div class="token-name">Sugar</div>
-                <div class="token-price">$0.23</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $76M</div>
-                <div class="token-change positive">+2.4%</div>
-              </div>
-              <div class="token-company">ICE</div>
-              <div class="token-info">Soft commodity</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:soybean.svg" alt="Soybean" class="token-icon" />
-                <div class="token-name">Soybean</div>
-                <div class="token-price">$12.34</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $65M</div>
-                <div class="token-change positive">+1.9%</div>
-              </div>
-              <div class="token-company">CBOT</div>
-              <div class="token-info">Agricultural commodity</div>
-              <div class="token-chart"></div>
-            </div>
-            
-            <div class="token-card">
-              <div class="token-card-header">
-                <img src="https://api.iconify.design/emojione:aluminum.svg" alt="Aluminum" class="token-icon" />
-                <div class="token-name">Aluminum</div>
-                <div class="token-price">$2.45</div>
-              </div>
-              <div class="token-metrics">
-                <div class="token-volume">Vol: $54M</div>
-                <div class="token-change positive">+0.6%</div>
-              </div>
-              <div class="token-company">LME</div>
-              <div class="token-info">Industrial metal</div>
-              <div class="token-chart"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </div>
-
         <!-- RIGHT COLUMN: Token List -->
         <div class="right-column">
           <div class="token-list border-l glass border-subtle">
@@ -1839,7 +444,7 @@
                   <button id="tab-spot" class="group relative z-10 text-center py-1.5 px-3 text-[12px] font-semibold tracking-tight">Spot</button>
                   <button id="tab-perp" class="group relative z-10 text-center py-1.5 px-3 text-[12px] font-semibold tracking-tight text-neutral-400">Perp</button>
                   <div id="tokenTabSlider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-md bg-white/10 backdrop-blur-md shadow-[inset_0_0_0_1px_rgba(255,255,255,0.10)] transition-all duration-200 ease-out"></div>
-                </div>
+              </div>
 
                 <!-- Search -->
                 <div class="relative flex-1">
@@ -1850,1095 +455,135 @@
                     </svg>
                   </span>
                   <input id="searchInput" placeholder="Search tokens" class="w-full pl-7 pr-3 py-1.5 text-[11px] rounded-md ring-1 ring-white/10 bg-white/5 text-neutral-200 placeholder-neutral-500 focus:ring-white/20 focus:bg-white/10 transition-all outline-none cursor-pointer" readonly onclick="openTokenSearchModal()" />
-                </div>
+              </div>
               </div>
             </div>
-
+            
             <!-- Column Headers -->
             <div id="sortBar" class="grid grid-cols-12 gap-1 px-3 pb-1 text-[10px] text-gray-500 font-medium border-b border-subtle">
               <div class="col-span-6 flex items-center gap-2">
                 <button data-sort="rank" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
                   <span>Rank</span>
-                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3 h-3 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M8 9l4-4 4 4"/>
-                    <path d="M16 15l-4 4-4-4"/>
-                  </svg>
-                </button>
-                <button data-sort="token" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
-                  <span>Token</span>
-                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M8 9l4-4 4 4"/>
-                    <path d="M16 15l-4 4-4-4"/>
+                    <path d="M8 15l4 4 4-4"/>
                   </svg>
                 </button>
               </div>
-              <div class="col-span-3 text-right">
-                <button data-sort="price" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
-                  <span>Price</span>
-                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M8 9l4-4 4 4"/>
-                    <path d="M16 15l-4 4-4-4"/>
-                  </svg>
-                </button>
-              </div>
-              <div class="col-span-3 text-right">
-                <button data-sort="change" class="inline-flex items-center gap-1 hover:text-gray-300 focus-ring">
-                  <span>24h</span>
-                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M8 9l4-4 4 4"/>
-                    <path d="M16 15l-4 4-4-4"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Token list -->
-            <div id="listContainer" class="flex-1 overflow-auto px-3">
-              <div id="emptyState" class="text-center text-gray-400 py-8 text-[12px]">
-                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4 mx-auto">
-                  <svg class="w-6 h-6 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="M21 21l-4.35-4.35"/>
-                  </svg>
-                </div>
-                <h3 class="text-[14px] font-medium text-neutral-300 mb-2">Loading tokens...</h3>
-                <p class="text-[12px] text-neutral-500 mb-4 max-w-[200px] mx-auto">
-                  Fetching real-time market data
-                </p>
+              <div class="col-span-2 text-center">Price</div>
+              <div class="col-span-2 text-center">24h</div>
+              <div class="col-span-2 text-center">Volume</div>
               </div>
 
-              <ul id="tokenList" class=""></ul>
-              <!-- Sentinel for infinite load -->
-              <div id="sentinel" class="h-4"></div>
+            <!-- Token List Content -->
+            <div class="flex-1 overflow-y-auto">
+              <div id="tokenList" class="space-y-1 p-1">
+                <!-- Token rows will be populated here -->
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- 9) STORY OVERLAY (full-width dialog that covers content) -->
-      <div role="dialog" aria-modal="true" hidden class="overlay story" id="story-overlay">
-        <header class="hero">
-          <img alt="" data-bind-src="selected.icon || selected.logo" />
-          <h2 data-bind="selected.name">Item Name</h2>
-          <div class="pills"><span data-bind="selected.type">HIP-3 Perp</span><span data-bind="selected.tags">Sentiment</span></div>
-          <button aria-label="Close" onclick="closeStory()">✕</button>
-        </header>
-        <section class="content">
-          <article aria-label="Story">
-            <h3>Story</h3>
-            <p data-bind="selected.story.summary">…</p>
-            <p data-bind="selected.story.method">…</p>
-            <p data-bind="selected.story.whyMatters">…</p>
-          </article>
-          <section aria-label="Key Metrics" class="kpi-fullrow">
-            <dl>
-              <dt>Mark</dt><dd data-bind="hl.markPx">--</dd>
-              <dt>Oracle</dt><dd data-bind="hl.oraclePx">--</dd>
-              <dt>Premium</dt><dd data-bind="hl.premium">--</dd>
-              <dt>Funding</dt><dd data-bind="hl.funding">--</dd>
-              <dt>Max Lev</dt><dd data-bind="hl.maxLeverage">--x</dd>
-            </dl>
-            <img alt="OHLC" data-bind-src="quickchartUrl(ohlc(selected.candles))" width="100%" height="200" />
-          </section>
-          <section class="actions-wide">
-            <button hidden data-bind-hidden="!selected.tradable">Open in Trade</button>
-            <button>Add to Watchlist</button>
-          </section>
-          <section aria-label="Related" class="related-wide">
-            <ul><li><button>Related HIP-3</button></li><li><button>Related Token</button></li><li><button>Related News</button></li></ul>
-          </section>
-          <footer class="provenance">
-            <small>Source: HL Testnet (metaAndAssetCtxs: vntls) · Indices from Alternative.me & CoinGecko</small>
-            <small>Last updated: <time data-bind="selected.lastUpdated">--</time></small>
-          </footer>
-        </section>
-      </div>
-
     </main>
-  </div>
+            </div>
 
   <script>
-    // Discovery Page JavaScript
-    let currentTab = 'spot';
+    // Initialize icons
+    lucide.createIcons();
 
-    // Sample news data for tokens
-    const tokenNews = {
-      'Bitcoin': [
-        { title: 'Bitcoin ETF sees record inflows', time: '2 hours ago' },
-        { title: 'Major bank announces BTC custody', time: '5 hours ago' },
-        { title: 'Institutional adoption continues', time: '8 hours ago' }
-      ],
-      'Ethereum': [
-        { title: 'Ethereum 2.0 upgrade successful', time: '1 hour ago' },
-        { title: 'DeFi TVL reaches new high', time: '4 hours ago' },
-        { title: 'Layer 2 solutions gain traction', time: '7 hours ago' }
-      ],
-      'Solana': [
-        { title: 'Solana breaks transaction records', time: '3 hours ago' },
-        { title: 'New DeFi protocols launch', time: '6 hours ago' },
-        { title: 'NFT marketplace sees growth', time: '9 hours ago' }
-      ],
-      'BNB': [
-        { title: 'Binance Smart Chain updates', time: '2 hours ago' },
-        { title: 'New token listings announced', time: '5 hours ago' },
-        { title: 'Exchange volume increases', time: '8 hours ago' }
-      ]
-    };
-
-    // Chart data for different trends
-    const chartPaths = {
-      positive: 'M0,25 Q25,20 50,15 T100,8',
-      negative: 'M0,8 Q25,15 50,18 T100,25',
-      neutral: 'M0,16 Q25,16 50,16 T100,16'
-    };
-
-    // Function to update all token cards with new structure
-    function updateTokenCards() {
-      const cards = document.querySelectorAll('.token-card');
-      
-      cards.forEach(card => {
-        // Skip if already updated
-        if (card.querySelector('.token-card-content')) return;
-        
-        const tokenName = card.querySelector('.token-name')?.textContent;
-        const tokenPrice = card.querySelector('.token-price')?.textContent;
-        const tokenChange = card.querySelector('.token-change')?.textContent;
-        const tokenVolume = card.querySelector('.token-volume')?.textContent;
-        const tokenCompany = card.querySelector('.token-company')?.textContent;
-        const tokenInfo = card.querySelector('.token-info')?.textContent;
-        const tokenIcon = card.querySelector('.token-icon')?.outerHTML;
-        
-        const changeElement = card.querySelector('.token-change');
-        const isPositive = changeElement?.classList.contains('positive');
-        const isNegative = changeElement?.classList.contains('negative');
-        
-        let chartClass = 'neutral';
-        let chartPath = chartPaths.neutral;
-        
-        if (isPositive) {
-          chartClass = 'positive';
-          chartPath = chartPaths.positive;
-        } else if (isNegative) {
-          chartClass = 'negative';
-          chartPath = chartPaths.negative;
-        }
-        
-        const news = tokenNews[tokenName] || [
-          { title: 'Market analysis update', time: '2 hours ago' },
-          { title: 'Trading volume increases', time: '5 hours ago' },
-          { title: 'Community growth continues', time: '8 hours ago' }
-        ];
-        
-        const frontContent = `
-          <div class="token-card-content">
-            <div class="token-card-left">
-              <div class="token-card-header">
-                ${tokenIcon}
-                <div class="token-name">${tokenName}</div>
-              </div>
-              <div class="token-company">${tokenCompany}</div>
-              <div class="token-info">${tokenInfo}</div>
-              <div class="token-volume">${tokenVolume}</div>
-            </div>
-            <div class="token-card-right">
-              <div class="token-price">${tokenPrice}</div>
-              <div class="token-change ${isPositive ? 'positive' : isNegative ? 'negative' : ''}">${tokenChange}</div>
-              <div class="token-chart">
-                <svg viewBox="0 0 100 40">
-                  <path class="token-chart-line ${chartClass}" d="${chartPath}" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        `;
-        
-        const backContent = `
-          <div class="token-card-back">
-            <div class="token-news">
-              ${news.map(item => `
-                <div class="news-item">
-                  <div class="news-title">${item.title}</div>
-                  <div class="news-time">${item.time}</div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-        
-        card.innerHTML = frontContent + backContent;
+    // Timeframe buttons (visual only)
+    document.querySelectorAll('.time-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.time-btn').forEach(b => {
+          b.classList.remove('bg-zinc-700','text-white','font-medium');
+          b.classList.add('text-zinc-300');
+        });
+        btn.classList.add('bg-zinc-700','text-white','font-medium');
+        btn.classList.remove('text-zinc-300');
       });
-    }
-    let discoveryData = {
-      fgi: { value: '--', delta24h: '--%', series: [] },
-      btcDom: { value: '--%', delta24h: '--%', series: [] },
-      altseason: { value: '--', label: '--', series: [] },
-      hl: {
-        universe: [],
-        marketCtxs: [],
-        candles: {},
-        maxLeverage: '10x',
-        symbol: 'vSTRIPE',
-        instrument: 'vntls:vSTRIPE',
-        markPx: '--',
-        openInterest: '--',
-        funding: '--',
-        dayNtlVlm: '--'
-      },
-      spot: [],
-      news: []
-    };
-
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-      initFilterTabs();
-      initFilterChips();
-      loadMarketData();
-      loadHLData();
-      updateTokenCards(); // Add the new card structure
-      initDashboardCharts(); // Initialize Chart.js charts
-      populateTokenList(); // Populate token list with real data
     });
 
-    // Initialize Dashboard Charts
-    function initDashboardCharts() {
-      // Fear & Greed Gauge Chart - Using D3.js
-      createFearGreedGauge();
-
-      // Initialize Market Cap Card
-      initMarketCapCard();
-    }
-
-    // Market Cap Card Functions
-    const up = '#2dd79f';
-    const down = '#ff6b6b';
-    const inkPrimary = '#e7eef8';
-
-    // Animate numbers
-    function countUp(el, target, { duration = 800, prefix = '', suffix = '', decimals = 0 } = {}) {
-      const start = performance.now();
-      const from = 0;
-      function frame(now) {
-        const p = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(1 - p, 3);
-        const val = from + (target - from) * eased;
-        el.textContent = prefix + val.toFixed(decimals) + suffix;
-        if (p < 1) requestAnimationFrame(frame);
+    // Chart helpers
+    function randomSeries(points = 24, base = 100, volatility = 2) {
+      const arr = [];
+      let v = base;
+      for (let i = 0; i < points; i++) {
+        v += (Math.random() - 0.5) * volatility;
+        arr.push(Math.max(0, Number(v.toFixed(2))));
       }
-      requestAnimationFrame(frame);
+      return arr;
     }
 
-    // Sparkline chart
-    function renderSparkline(ctx, values) {
-      const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-      gradient.addColorStop(0, 'rgba(45,215,159,0.28)');
-      gradient.addColorStop(1, 'rgba(45,215,159,0.02)');
-
+    function sparkline(ctx, color) {
       return new Chart(ctx, {
         type: 'line',
         data: {
-          labels: values.map((_, i) => i + 1),
+          labels: Array.from({length: 24}, (_, i) => i + 1),
           datasets: [{
-            data: values,
-            borderColor: up,
-            backgroundColor: gradient,
-            tension: 0.35,
+            data: randomSeries(24, 100, 4),
+            borderColor: color,
+            backgroundColor: Chart.helpers.color(color).alpha(0.2),
             borderWidth: 2,
+            fill: true,
             pointRadius: 0,
-            fill: true,
-          }],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              enabled: true,
-              backgroundColor: 'rgba(20,24,32,0.95)',
-              borderColor: 'rgba(255,255,255,0.08)',
-              borderWidth: 1,
-              padding: 10,
-              titleColor: inkPrimary,
-              bodyColor: inkPrimary,
-              displayColors: false,
-              callbacks: {
-                label: ctx => `$${ctx.raw.toFixed(2)}T`,
-              },
-            },
-          },
-          scales: { x: { display: false }, y: { display: false } },
-        },
-      });
-    }
-
-    // Init Market Cap card
-    function initMarketCapCard() {
-      const mcData = {
-        series: [3.72, 3.75, 3.84, 3.77, 3.80, 3.81, 3.74, 3.86, 3.83, 3.88, 3.79, 3.91],
-        current: 3.91,
-        deltaPct: 0.74,
-      };
-
-      // Value + delta
-      countUp(document.getElementById('capValue'), mcData.current, { duration: 900, prefix: '$', suffix: 'T', decimals: 2 });
-      const capDeltaEl = document.getElementById('capDelta');
-      const pos = mcData.deltaPct >= 0;
-      capDeltaEl.textContent = `${pos ? '▲' : '▼'} ${Math.abs(mcData.deltaPct).toFixed(2)}%`;
-      capDeltaEl.className =
-        'tabular-nums text-[13px] font-semibold px-2 py-1 rounded-full ring-1 transition-colors ' +
-        (pos
-          ? 'bg-[#2dd79f]/15 text-[#2dd79f] ring-[#2dd79f]/25'
-          : 'bg-[#ff6b6b]/15 text-[#ff6b6b] ring-[#ff6b6b]/25');
-
-      // Sparkline
-      const ctx = document.getElementById('sparkline').getContext('2d');
-      renderSparkline(ctx, mcData.series);
-    }
-
-    // Create Enhanced Fear & Greed Gauge with D3.js
-    function createFearGreedGauge() {
-      const container = d3.select('#fearGreedGauge');
-      container.selectAll('*').remove(); // Clear any existing content
-      
-      const width = 80;
-      const height = 60;
-      const radius = Math.min(width, height) / 2 - 3;
-      
-      const svg = container
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .append('g')
-        .attr('transform', `translate(${width/2}, ${height/2 + 5})`);
-      
-      // Define the gauge scale
-      const scale = d3.scaleLinear()
-        .domain([0, 100])
-        .range([-Math.PI/2, Math.PI/2]);
-      
-      // Create the arc generator
-      const arc = d3.arc()
-        .innerRadius(radius * 0.5)
-        .outerRadius(radius * 0.8)
-        .startAngle(-Math.PI/2)
-        .endAngle(Math.PI/2);
-      
-      // Define color segments with enhanced contrast
-      const segments = [
-        { start: 0, end: 20, color: '#ef4444', label: 'Extreme Fear' },
-        { start: 20, end: 40, color: '#f97316', label: 'Fear' },
-        { start: 40, end: 60, color: '#eab308', label: 'Neutral' },
-        { start: 60, end: 80, color: '#22c55e', label: 'Greed' },
-        { start: 80, end: 100, color: '#16a34a', label: 'Extreme Greed' }
-      ];
-      
-      // Create background arc with subtle styling
-      svg.append('path')
-        .datum({ endAngle: Math.PI/2 })
-        .style('fill', 'rgba(255, 255, 255, 0.05)')
-        .style('stroke', 'rgba(255, 255, 255, 0.1)')
-        .style('stroke-width', 0.5)
-        .attr('d', arc);
-      
-      // Create colored segments with enhanced visibility
-      segments.forEach(segment => {
-        const startAngle = scale(segment.start);
-        const endAngle = scale(segment.end);
-        
-        const segmentArc = d3.arc()
-          .innerRadius(radius * 0.5)
-          .outerRadius(radius * 0.8)
-          .startAngle(startAngle)
-          .endAngle(endAngle);
-        
-        svg.append('path')
-          .datum({ endAngle })
-          .style('fill', segment.color)
-          .style('opacity', 0.95)
-          .style('stroke', 'rgba(255, 255, 255, 0.1)')
-          .style('stroke-width', 0.5)
-          .attr('d', segmentArc);
-      });
-      
-      // Create enhanced needle with better visibility
-      const needleGroup = svg.append('g').attr('class', 'needle-group');
-      
-      // Needle line with enhanced styling
-      const needle = needleGroup.append('line')
-        .attr('x1', 0)
-        .attr('y1', 0)
-        .attr('x2', 0)
-        .attr('y2', -radius * 0.6)
-        .style('stroke', '#ffffff')
-        .style('stroke-width', 2.5)
-        .style('stroke-linecap', 'round')
-        .style('filter', 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4))');
-      
-      // Enhanced center dot
-      needleGroup.append('circle')
-        .attr('cx', 0)
-        .attr('cy', 0)
-        .attr('r', 4)
-        .style('fill', '#ffffff')
-        .style('stroke', 'rgba(0, 0, 0, 0.2)')
-        .style('stroke-width', 1)
-        .style('filter', 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))');
-      
-      // Add subtle tick marks for better readability
-      const ticks = [0, 25, 50, 75, 100];
-      ticks.forEach(tick => {
-        const angle = scale(tick);
-        const x1 = Math.cos(angle) * (radius * 0.9);
-        const y1 = Math.sin(angle) * (radius * 0.9);
-        const x2 = Math.cos(angle) * (radius * 0.95);
-        const y2 = Math.sin(angle) * (radius * 0.95);
-        
-        svg.append('line')
-          .attr('x1', x1)
-          .attr('y1', y1)
-          .attr('x2', x2)
-          .attr('y2', y2)
-          .style('stroke', 'rgba(255, 255, 255, 0.4)')
-          .style('stroke-width', 1);
-      });
-      
-      // Store references for updates
-      window.fearGreedNeedle = needleGroup;
-      window.fearGreedScale = scale;
-      
-      // Set initial value
-      updateFearGreedGauge(40);
-    }
-
-    // Function to update Fear & Greed gauge
-    function updateFearGreedGauge(value) {
-      if (window.fearGreedNeedle && window.fearGreedScale) {
-        const angle = window.fearGreedScale(value);
-        
-        window.fearGreedNeedle
-          .transition()
-          .duration(1000)
-          .ease(d3.easeElasticOut)
-          .attr('transform', `rotate(${angle * 180 / Math.PI})`);
-        
-        // Update the displayed value and label
-        const valueElement = document.querySelector('.gauge-value');
-        const labelElement = document.querySelector('.gauge-label');
-        
-        if (valueElement) valueElement.textContent = value;
-        
-        if (labelElement) {
-          if (value <= 20) labelElement.textContent = 'Extreme Fear';
-          else if (value <= 40) labelElement.textContent = 'Fear';
-          else if (value <= 60) labelElement.textContent = 'Neutral';
-          else if (value <= 80) labelElement.textContent = 'Greed';
-          else labelElement.textContent = 'Extreme Greed';
-        }
-      }
-    }
-
-    // Filter tab functionality
-    function initFilterTabs() {
-      // Initialize Trending Tokens filter tabs
-      const tokenTabs = document.querySelectorAll('[aria-label="Token filters"] button');
-      const tokenColumns = document.querySelectorAll('.trending-section:first-of-type .token-column');
-      
-      tokenTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const filterType = tab.dataset.filter;
-          
-          // Update tab states
-          tokenTabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-          tab.setAttribute('aria-selected', 'true');
-          
-          // Show/hide columns
-          tokenColumns.forEach(column => {
-            if (column.dataset.filter === filterType) {
-              column.style.display = 'contents';
-            } else {
-              column.style.display = 'none';
-            }
-          });
-        });
-      });
-      
-      // Initialize Trending HIP-3 filter tabs
-      const hip3Tabs = document.querySelectorAll('[aria-label="HIP-3 filters"] button');
-      const hip3Columns = document.querySelectorAll('.trending-section:last-of-type .token-column');
-      
-      hip3Tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const filterType = tab.dataset.filter;
-          
-          // Update tab states
-          hip3Tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-          tab.setAttribute('aria-selected', 'true');
-          
-          // Show/hide columns
-          hip3Columns.forEach(column => {
-            if (column.dataset.filter === filterType) {
-              column.style.display = 'contents';
-            } else {
-              column.style.display = 'none';
-            }
-          });
-        });
-      });
-    }
-
-    // Filter chip functionality
-    function initFilterChips() {
-      const filterChips = document.querySelectorAll('[aria-label="Content filters"] button');
-      
-      filterChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-          const chipType = chip.dataset.chip;
-          
-          // Reset all filter chips
-          filterChips.forEach(c => c.setAttribute('aria-pressed', 'false'));
-          chip.setAttribute('aria-pressed', 'true');
-          
-          // Switch to corresponding tab
-          const tabs = document.querySelectorAll('[role="tab"]');
-          const targetTab = Array.from(tabs).find(tab => tab.dataset.tab === chipType);
-          
-          if (targetTab) {
-            // Update tab states
-            tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-            targetTab.setAttribute('aria-selected', 'true');
-            
-            // Show/hide panels
-            const panels = document.querySelectorAll('[role="tabpanel"]');
-            panels.forEach(panel => {
-              panel.hidden = true;
-            });
-            
-            const targetPanel = document.getElementById(`${chipType}-panel`);
-            if (targetPanel) {
-              targetPanel.hidden = false;
-            }
-            
-            currentTab = chipType;
-          }
-        });
-      });
-    }
-
-    // Load market data from APIs
-    async function loadMarketData() {
-      try {
-        // Load Fear & Greed Index
-        const fgiResponse = await fetch('https://api.alternative.me/fng/?limit=30');
-        const fgiData = await fgiResponse.json();
-        if (fgiData.data && fgiData.data.length > 0) {
-          const latest = fgiData.data[0];
-          const previous = fgiData.data[1];
-          discoveryData.fgi.value = latest.value;
-          discoveryData.fgi.delta24h = previous ? 
-            ((parseInt(latest.value) - parseInt(previous.value)).toFixed(1) + '%') : '0%';
-          discoveryData.fgi.series = fgiData.data.map(d => parseInt(d.value));
-        }
-
-        // Load BTC Dominance from CoinGecko
-        const globalResponse = await fetch('https://api.coingecko.com/api/v3/global');
-        const globalData = await globalResponse.json();
-        if (globalData.data) {
-          discoveryData.btcDom.value = globalData.data.market_cap_percentage.btc.toFixed(1) + '%';
-          // Mock BTC dominance series (CoinGecko doesn't provide historical dominance)
-          discoveryData.btcDom.series = generateMockSeries(30, parseFloat(globalData.data.market_cap_percentage.btc));
-          discoveryData.btcDom.delta24h = '0.2%'; // Mock change
-        }
-
-        // Load spot market data with sparklines
-        const marketsResponse = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true');
-        const marketsData = await marketsResponse.json();
-        discoveryData.spot = marketsData;
-
-        // Load news data (mock for now - would need RSS parser)
-        discoveryData.news = [
-          {
-            title: "Bitcoin Reaches New All-Time High",
-            source: "CoinDesk",
-            published: "2 hours ago",
-            link: "https://coindesk.com",
-            thumb: "https://api.iconify.design/mdi/bitcoin.svg"
-          },
-          {
-            title: "Ethereum 2.0 Staking Rewards Increase",
-            source: "The Block",
-            published: "4 hours ago", 
-            link: "https://theblock.co",
-            thumb: "https://api.iconify.design/mdi/ethereum.svg"
-          }
-        ];
-
-        // Generate altcoin season data (mock - would come from real API)
-        discoveryData.altseason.value = '75';
-        discoveryData.altseason.label = 'Alt Season';
-        discoveryData.altseason.series = generateMockSeries(30, 75);
-        
-        console.log('Altcoin Season data:', discoveryData.altseason);
-
-        updateUI();
-      } catch (error) {
-        console.error('Error loading market data:', error);
-        showError();
-      }
-    }
-
-    // Load Hyperliquid Testnet data
-    async function loadHLData() {
-      try {
-        // Try to fetch real Hyperliquid Testnet data
-        try {
-          const universeResponse = await fetch('https://api.hyperliquid-testnet.xyz/info', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'perpDexs' })
-          });
-          
-          if (universeResponse.ok) {
-            const universeData = await universeResponse.json();
-            console.log('HL Universe data:', universeData);
-            
-            // Try to get market contexts
-            const ctxResponse = await fetch('https://api.hyperliquid-testnet.xyz/info', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ type: 'metaAndAssetCtxs', dex: 'vntls' })
-            });
-            
-            if (ctxResponse.ok) {
-              const ctxData = await ctxResponse.json();
-              console.log('HL Market contexts:', ctxData);
-              
-              // Process real data if available
-              if (universeData && ctxData) {
-                discoveryData.hl.universe = universeData.slice(0, 5); // Limit to first 5
-                discoveryData.hl.marketCtxs = ctxData.slice(0, 5);
-              }
-            }
-          }
-        } catch (apiError) {
-          console.log('HL API not available, using mock data:', apiError);
-        }
-        
-        // Fallback to mock data if API fails
-        if (!discoveryData.hl.universe.length) {
-          discoveryData.hl.universe = [
-            { name: 'vntls:vSTRIPE', symbol: 'vSTRIPE', maxLeverage: 10 },
-            { name: 'vntls:vCURSOR', symbol: 'vCURSOR', maxLeverage: 10 },
-            { name: 'vntls:vGOOGL', symbol: 'vGOOGL', maxLeverage: 10 },
-            { name: 'vntls:vTSLA', symbol: 'vTSLA', maxLeverage: 10 },
-            { name: 'vntls:vNVDA', symbol: 'vNVDA', maxLeverage: 10 }
-          ];
-          
-          discoveryData.hl.marketCtxs = [
-            { markPx: '0.95', oraclePx: '0.94', prevDayPx: '0.92', openInterest: '1.2M', dayNtlVlm: '500K', funding: '0.01%', premium: '1.06%' },
-            { markPx: '2.45', oraclePx: '2.44', prevDayPx: '2.40', openInterest: '800K', dayNtlVlm: '300K', funding: '0.02%', premium: '1.02%' },
-            { markPx: '145.20', oraclePx: '145.15', prevDayPx: '143.80', openInterest: '2.1M', dayNtlVlm: '800K', funding: '0.03%', premium: '1.03%' },
-            { markPx: '245.80', oraclePx: '245.70', prevDayPx: '242.50', openInterest: '1.5M', dayNtlVlm: '600K', funding: '0.04%', premium: '1.04%' },
-            { markPx: '485.20', oraclePx: '485.10', prevDayPx: '480.30', openInterest: '3.2M', dayNtlVlm: '1.2M', funding: '0.02%', premium: '1.02%' }
-          ];
-        }
-
-        // Generate candle data for all instruments
-        discoveryData.hl.universe.forEach((instrument, index) => {
-          const basePrice = parseFloat(discoveryData.hl.marketCtxs[index]?.markPx || '1.0');
-          discoveryData.hl.candles[instrument.name] = generateMockCandles(100, basePrice);
-        });
-
-        updateUI();
-      } catch (error) {
-        console.error('Error loading HL data:', error);
-        showError();
-      }
-    }
-
-    // Generate mock candle data
-    function generateMockCandles(count, basePrice = 1.0) {
-      const candles = [];
-      let price = basePrice;
-      const now = Date.now();
-      
-      for (let i = 0; i < count; i++) {
-        const change = (Math.random() - 0.5) * 0.02; // ±1% change
-        price *= (1 + change);
-        
-        candles.push({
-          t: now - (count - i) * 60000, // 1 minute intervals
-          o: price * 0.999,
-          h: price * 1.001,
-          l: price * 0.998,
-          c: price,
-          v: Math.random() * 1000
-        });
-      }
-      
-      return candles;
-    }
-
-    // Generate mock series data
-    function generateMockSeries(count, baseValue) {
-      const series = [];
-      let value = baseValue;
-      
-      for (let i = 0; i < count; i++) {
-        const change = (Math.random() - 0.5) * 0.1; // ±5% change
-        value *= (1 + change);
-        series.push(Math.max(0, value)); // Ensure non-negative
-      }
-      
-      return series;
-    }
-
-    // Update UI with loaded data
-    function updateUI() {
-      // Update stats tiles
-      document.querySelector('[data-bind="fgi.value"]').textContent = discoveryData.fgi.value;
-      document.querySelector('[data-bind="fgi.delta24h"]').textContent = discoveryData.fgi.delta24h;
-      
-      document.querySelector('[data-bind="btcDom.value"]').textContent = discoveryData.btcDom.value;
-      document.querySelector('[data-bind="btcDom.delta24h"]').textContent = discoveryData.btcDom.delta24h;
-
-      document.querySelector('[data-bind="altseason.value"]').textContent = discoveryData.altseason.value;
-      document.querySelector('[data-bind="altseason.label"]').textContent = discoveryData.altseason.label;
-
-      // Update chart URLs
-      updateChartUrls();
-      
-        // Populate trending cards with real data
-        populateTrendingCards();
-        
-        // Populate spot table with real data
-        populateSpotTable();
-        
-        // Populate token list with real data
-        populateTokenList();
-      
-      
-      // Hide loading state
-      document.getElementById('loading-state').style.display = 'none';
-    }
-
-    // Populate trending cards with real data
-    function populateTrendingCards() {
-      const trendingPanel = document.getElementById('trending-panel');
-      
-      // Clear existing cards except the first HIP-3 card
-      const existingCards = trendingPanel.querySelectorAll('.card');
-      for (let i = 1; i < existingCards.length; i++) {
-        existingCards[i].remove();
-      }
-      
-      // Add top cryptocurrencies as cards
-      discoveryData.spot.slice(0, 5).forEach((coin, index) => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <header class="badges">
-            <img alt="" src="https://api.iconify.design/mdi/chart-line-variant.svg" />
-            <span>Spot</span>
-            <span>#${coin.market_cap_rank || 'N/A'}</span>
-          </header>
-          <h3><img alt="" src="${coin.image}" width="24" height="24" /> ${coin.symbol.toUpperCase()}</h3>
-          <p>${coin.name}</p>
-          <div class="kpis">
-            <output>$${coin.current_price?.toFixed(2) || '--'}</output>
-            <small class="${coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}">${coin.price_change_percentage_24h?.toFixed(2) || '--'}%</small>
-            <small>Vol: $${(coin.total_volume / 1000000).toFixed(1)}M</small>
-            <small>Cap: $${(coin.market_cap / 1000000000).toFixed(1)}B</small>
-          </div>
-          <img alt="spark" src="${generateQuickChartUrl(coin.sparkline_in_7d?.price || [])}" width="100%" height="50" />
-          <footer class="actions">
-            <button aria-haspopup="dialog" onclick="openStory('spot-${coin.id}')">Story ▸</button>
-            <button>Watch</button>
-            <button>Trade</button>
-          </footer>
-        `;
-        trendingPanel.appendChild(card);
-      });
-      
-      // Add news cards
-      discoveryData.news.forEach(news => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <img class="thumb" alt="" src="${news.thumb}" width="100%" height="80" style="object-fit: cover;" />
-          <h3>${news.title}</h3>
-          <p><small>${news.source}</small> · <time>${news.published}</time></p>
-          <footer class="actions">
-            <button aria-haspopup="dialog" onclick="openStory('news-${news.source}')">Open Story ▸</button>
-            <a target="_blank" rel="noopener" href="${news.link}">Read</a>
-          </footer>
-        `;
-        trendingPanel.appendChild(card);
-      });
-    }
-
-    // Populate spot table with real data
-    function populateSpotTable() {
-      const spotTable = document.querySelector('#spot-panel tbody');
-      if (spotTable) {
-        spotTable.innerHTML = '';
-        
-        discoveryData.spot.forEach(coin => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>
-              <img alt="" src="${coin.image}" width="20" height="20" /> 
-              <strong>${coin.symbol.toUpperCase()}</strong> 
-              <small>${coin.name}</small>
-            </td>
-            <td>$${coin.current_price?.toFixed(2) || '--'}</td>
-            <td class="${coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}">${coin.price_change_percentage_24h?.toFixed(2) || '--'}%</td>
-            <td>$${(coin.market_cap / 1000000000).toFixed(1)}B</td>
-            <td>$${(coin.total_volume / 1000000).toFixed(1)}M</td>
-            <td><img alt="" src="${generateQuickChartUrl(coin.sparkline_in_7d?.price || [])}" width="80" height="30" /></td>
-            <td><button aria-haspopup="dialog" onclick="openStory('spot-${coin.id}')">Story ▸</button></td>
-          `;
-          spotTable.appendChild(row);
-        });
-      }
-    }
-
-    // Token list state and data
-    const tokenListState = {
-      allTokens: [],
-      filtered: [],
-      active: null,
-      renderCount: 60,
-      sortBy: 'rank',
-      sortDir: 'asc',
-      rowMap: new Map()
-    };
-
-    const tokenListEls = {
-      tokenList: document.getElementById('tokenList'),
-      emptyState: document.getElementById('emptyState'),
-      sentinel: document.getElementById('sentinel'),
-      tabSpot: document.getElementById('tab-spot'),
-      tabPerp: document.getElementById('tab-perp'),
-      search: document.getElementById('searchInput'),
-      listContainer: document.getElementById('listContainer'),
-      sortBar: document.getElementById('sortBar')
-    };
-
-    // Format price helper
-    const fmtPrice = (n) => {
-      if (n === null || n === undefined || isNaN(n)) return '—';
-      if (n >= 1000) return '$' + n.toLocaleString(undefined, {maximumFractionDigits: 0});
-      if (n >= 1) return '$' + n.toFixed(2);
-      if (n >= 0.01) return '$' + n.toFixed(4);
-      return '$' + n.toFixed(6);
-    };
-
-    // Format change helper
-    const fmtChange = (n) => {
-      if (n === null || n === undefined || isNaN(n)) return '—';
-      const sign = n >= 0 ? '+' : '';
-      return sign + n.toFixed(2) + '%';
-    };
-
-    // Populate token list with real data
-    function populateTokenList() {
-      if (!discoveryData.spot.length) return;
-      
-      // Transform API data to match index.html format
-      tokenListState.allTokens = discoveryData.spot.slice(0, 100).map((coin, index) => ({
-        symbol: coin.symbol.toUpperCase(),
-        name: coin.name,
-        image: coin.image,
-        price: coin.current_price,
-        change: coin.price_change_percentage_24h,
-        rank: index + 1,
-        pair: `${coin.symbol.toUpperCase()}USDT`
-      }));
-
-      tokenListState.filtered = [...tokenListState.allTokens];
-      renderTokenList();
-    }
-
-    // Render token list
-    function renderTokenList() {
-      const arr = tokenListState.filtered;
-      tokenListEls.tokenList.innerHTML = '';
-      tokenListState.rowMap.clear();
-
-      // Show empty state when no tokens
-      if (!arr.length) {
-        tokenListEls.emptyState.classList.remove('hidden');
-        return;
-      } else {
-        tokenListEls.emptyState.classList.add('hidden');
-      }
-
-      const take = arr.slice(0, tokenListState.renderCount);
-      for (const token of take) {
-        const isActive = tokenListState.active && tokenListState.active.symbol === token.symbol;
-        const li = document.createElement('li');
-        li.className = "";
-        li.innerHTML = `
-          <div class="group flex items-center gap-2 px-1 py-0.5 hover:bg-white/5 border-b border-gray-700/30 last:border-b-0 ${isActive ? 'bg-gray-700/50' : ''}">
-            <button class="flex-1 flex items-center gap-2 cursor-pointer" data-symbol="${token.symbol}">
-            <img src="${token.image}" alt="${token.symbol}" class="w-4 h-4 rounded-full object-cover border border-gray-700 bg-gray-800" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=80&q=60&auto=format&fit=crop'"/>
-            <div class="grid grid-cols-12 gap-1 w-full text-[10px] mono">
-              <div class="col-span-1 text-gray-500">${token.rank}</div>
-              <div class="col-span-5 text-left">
-                <div class="font-medium text-gray-200">${token.symbol}</div>
-                <div class="text-gray-500 truncate">${token.name}</div>
-              </div>
-              <div class="col-span-3 text-right font-medium text-gray-200" data-role="price">${fmtPrice(token.price)}</div>
-              <div class="col-span-3 text-right font-medium ${token.change >= 0 ? 'text-emerald-400' : 'text-red-400'}" data-role="change">${fmtChange(token.change)}</div>
-            </div>
-            </button>
-          </div>
-        `;
-        
-        const btn = li.querySelector('button');
-        btn.addEventListener('click', () => onTokenClick(token));
-        const priceEl = li.querySelector('[data-role="price"]');
-        const chgEl = li.querySelector('[data-role="change"]');
-        tokenListEls.tokenList.appendChild(li);
-        tokenListState.rowMap.set(token.pair, { priceEl, chgEl, root: btn });
-      }
-    }
-
-    // Token click handler
-    function onTokenClick(token) {
-      tokenListState.active = token;
-      renderTokenList();
-      console.log('Selected token:', token.symbol);
-    }
-
-
-    // Update chart URLs
-    function updateChartUrls() {
-      const chartElements = document.querySelectorAll('[data-bind-src]');
-      chartElements.forEach(el => {
-        const dataType = el.dataset.bindSrc;
-        if (dataType === 'fgi.series') {
-          el.src = generateQuickChartUrl(discoveryData.fgi.series);
-        } else if (dataType === 'btcDom.series') {
-          el.src = generateQuickChartUrl(discoveryData.btcDom.series);
-        } else if (dataType === 'altseason.series') {
-          el.src = generateQuickChartUrl(discoveryData.altseason.series);
-        } else if (dataType.includes('hl.candles')) {
-          const candles = discoveryData.hl.candles['vntls:vSTRIPE'] || [];
-          const closes = candles.map(c => c.c);
-          el.src = generateQuickChartUrl(closes);
-        }
-      });
-    }
-
-    // Generate QuickChart URL
-    function generateQuickChartUrl(data) {
-      const config = {
-        type: 'sparkline',
-        data: {
-          datasets: [{
-            data: data,
-            borderColor: '#6EE7B7',
-            backgroundColor: 'rgba(110, 231, 183, 0.2)',
-            borderWidth: 1,
-            fill: true,
-            tension: 0.4
+            tension: 0.35
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
           scales: {
             x: { display: false },
             y: { display: false }
-          },
-          elements: {
-            point: { radius: 0 },
-            line: { borderJoinStyle: 'round' }
-          },
-          plugins: {
-            legend: { display: false }
-          },
-          layout: {
-            padding: 0
           }
         }
-      };
-      
-      return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(config))}&width=200&height=12`;
+      });
     }
 
-    // Story overlay functions
-    function openStory(type) {
-      const overlay = document.getElementById('story-overlay');
-      overlay.hidden = false;
-      document.body.style.overflow = 'hidden';
-      
-      // Set story content based on type
-      const selected = {
-        name: type === 'hl' ? 'vSTRIPE' : type === 'perp' ? 'ETH-PERP' : 'News Story',
-        type: type === 'hl' ? 'HIP-3 Perp' : type === 'perp' ? 'Perp' : 'News',
-        icon: type === 'hl' ? 'https://api.iconify.design/mdi/alpha-h-circle.svg' : 
-              type === 'perp' ? 'https://api.iconify.design/mdi/chart-line-variant.svg' :
-              'https://api.iconify.design/mdi/newspaper.svg',
-        story: {
-          summary: 'This is a sample story summary...',
-          method: 'Trading methodology explanation...',
-          whyMatters: 'Why this matters for traders...'
+    function lineCard(ctx, color) {
+      return new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: 48}, (_, i) => i + 1),
+          datasets: [{
+            data: randomSeries(48, 100, 3.2),
+            borderColor: color,
+            backgroundColor: Chart.helpers.color(color).alpha(0.18),
+            borderWidth: 2,
+            fill: true,
+            pointRadius: 0,
+            tension: 0.35
+          }]
         },
-        lastUpdated: new Date().toLocaleString()
-      };
-      
-      // Update story content
-      document.querySelector('[data-bind="selected.name"]').textContent = selected.name;
-      document.querySelector('[data-bind="selected.type"]').textContent = selected.type;
-      document.querySelector('[data-bind="selected.icon"]').src = selected.icon;
-      document.querySelector('[data-bind="selected.story.summary"]').textContent = selected.story.summary;
-      document.querySelector('[data-bind="selected.story.method"]').textContent = selected.story.method;
-      document.querySelector('[data-bind="selected.story.whyMatters"]').textContent = selected.story.whyMatters;
-      document.querySelector('[data-bind="selected.lastUpdated"]').textContent = selected.lastUpdated;
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: { x: { display: false }, y: { display: false } }
+        }
+      });
     }
 
-    function closeStory() {
-      const overlay = document.getElementById('story-overlay');
-      overlay.hidden = true;
-      document.body.style.overflow = 'auto';
-    }
+    const charts = [];
+    // Major pair charts (green only for positives)
+    charts.push(lineCard(document.getElementById('chart-btc'), '#22c55e'));
+    charts.push(lineCard(document.getElementById('chart-eth'), '#22c55e'));
+    // Sparklines: green for +, red for -
+    charts.push(sparkline(document.getElementById('spark-btc'), '#22c55e'));
+    charts.push(sparkline(document.getElementById('spark-eth'), '#22c55e'));
+    charts.push(sparkline(document.getElementById('spark-sol'), '#22c55e'));
+    charts.push(sparkline(document.getElementById('spark-bnb'), '#ef4444'));
+    charts.push(sparkline(document.getElementById('spark-xrp'), '#22c55e'));
+    charts.push(sparkline(document.getElementById('spark-doge'), '#ef4444'));
 
-
-
-    // Close story on Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeStory();
-      }
+    // Refresh charts
+    document.getElementById('refresh').addEventListener('click', () => {
+      charts.forEach(c => {
+        c.data.datasets[0].data = c.data.labels.map(() => Math.max(0, (Math.random() * 20) + 90));
+        c.update();
+      });
     });
-
-    // Trade button functionality
-    function openTrade(type) {
-      console.log('Opening trade for:', type);
-      
-      // Map trade types to symbols
-      const tradeMap = {
-        'fgi': 'BTCUSDT', // Fear & Greed -> BTC
-        'btc': 'BTCUSDT', // BTC Dominance -> BTC
-        'alt': 'ETHUSDT'  // Altcoin Season -> ETH
-      };
-      
-      let symbol = tradeMap[type] || type.toUpperCase() + 'USDT';
-      
-      // If it's already a symbol (from token list), use it directly
-      if (type.length <= 5 && type.match(/^[A-Z]+$/)) {
-        symbol = type + 'USDT';
-      }
-      
-      // In a real app, this would open the trading interface
-      // For now, we'll show an alert or redirect to charts page
-      if (confirm(`Open trading for ${symbol}?`)) {
-        // Redirect to charts page with the symbol
-        window.location.href = `index.html?symbol=${symbol}`;
-      }
-    }
   </script>
 </body>
 </html>
