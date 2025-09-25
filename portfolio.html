@@ -159,7 +159,7 @@
 
                 <!-- Actions -->
                 <div class="flex items-center gap-3">
-                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
+                  <button class="portfolio-accent-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium">
                     <i data-lucide="arrow-down" class="w-4 h-4"></i>
                     Deposit
                   </button>
@@ -216,7 +216,7 @@
                       <td colspan="5" class="px-6 py-12 text-center text-zinc-400">
                         <div class="space-y-2">
                           <p>No balances found.</p>
-                          <button class="text-purple-400 hover:text-purple-300 text-sm">Go to Spot</button>
+                          <button class="text-teal-400 hover:text-teal-300 text-sm">Go to Spot</button>
                         </div>
                       </td>
                     </tr>
@@ -486,7 +486,7 @@
                   <div class="flex -space-x-2">
                         <div class="h-6 w-6 rounded-full overflow-hidden border border-zinc-700 bg-blue-500"></div>
                         <div class="h-6 w-6 rounded-full overflow-hidden border border-zinc-700 bg-orange-500"></div>
-                        <div class="h-6 w-6 rounded-full overflow-hidden border border-zinc-700 bg-purple-500"></div>
+                        <div class="h-6 w-6 rounded-full overflow-hidden border border-zinc-700 bg-teal-500"></div>
                   </div>
                 </div>
                 
@@ -555,7 +555,7 @@
 
           <!-- Tabs -->
               <div class="flex items-center gap-6 border-b border-zinc-800">
-                <button id="tabbtn-calendar" class="py-2 text-sm -mb-px border-b-2 border-purple-500 text-white">Trading Calendar</button>
+                <button id="tabbtn-calendar" class="py-2 text-sm -mb-px border-b-2 border-teal-500 text-white">Trading Calendar</button>
                 <button id="tabbtn-assets" class="py-2 text-sm text-zinc-400">Asset Profitability</button>
                 <button id="tabbtn-trades" class="py-2 text-sm text-zinc-400">Completed Trades</button>
                 <button id="tabbtn-fills" class="py-2 text-sm text-zinc-400">Fills History</button>
@@ -772,7 +772,7 @@
 
               <!-- Tabs -->
               <div class="flex items-center gap-6 border-b border-zinc-800">
-                <button class="tab-btn pb-2 border-b-2 border-purple-500 text-white">Open Orders</button>
+                <button class="tab-btn pb-2 border-b-2 border-teal-500 text-white">Open Orders</button>
                 <button class="tab-btn pb-2 text-zinc-400">Order History</button>
                 <button class="tab-btn pb-2 text-zinc-400">Active TWAP</button>
                 <button class="tab-btn pb-2 text-zinc-400">TWAP History</button>
@@ -802,7 +802,7 @@
                       <td colspan="6" class="px-6 py-12 text-center text-zinc-400">
                         <div class="space-y-2">
                           <p>No open orders.</p>
-                          <button class="text-purple-400 hover:text-purple-300 text-sm">Go to Trade</button>
+                          <button class="text-teal-400 hover:text-teal-300 text-sm">Go to Trade</button>
                         </div>
                       </td>
                     </tr>
@@ -818,7 +818,7 @@
               <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
                 <h2 class="text-xl font-semibold">Staking</h2>
                 <div class="flex items-center gap-3">
-                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
+                  <button class="portfolio-accent-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium">
                     <i data-lucide="layers" class="w-4 h-4"></i>
                     Stake
                   </button>
@@ -887,7 +887,7 @@
 
               <!-- Staking Tabs -->
               <div class="flex items-center gap-6 border-b border-zinc-800">
-                <button class="tab-btn pb-2 border-b-2 border-purple-500 text-white">Staking Rewards</button>
+                <button class="tab-btn pb-2 border-b-2 border-teal-500 text-white">Staking Rewards</button>
                 <button class="tab-btn pb-2 text-zinc-400">Staking Activity</button>
                 <button class="tab-btn pb-2 text-zinc-400">Validators</button>
               </div>
@@ -1169,8 +1169,8 @@
           datasets: [{
             label: 'Fees',
             data: Array.from({length: 30}, () => Math.random() * 20),
-              borderColor: '#8B5CF6',
-              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              borderColor: '#119C9A',
+              backgroundColor: 'rgba(17, 156, 154, 0.1)',
               borderWidth: 2,
               fill: true,
               tension: 0.4
@@ -1308,14 +1308,14 @@
               const content = document.getElementById(`tab-${t}`);
               if (btn && content) {
                 content.classList.add('hidden');
-                btn.classList.remove('border-b-2', 'border-purple-500', 'text-white');
+                btn.classList.remove('border-b-2', 'border-teal-500', 'text-white');
                 btn.classList.add('text-zinc-400');
               }
             });
             
             // Show selected tab
             tabContent.classList.remove('hidden');
-            tabBtn.classList.add('border-b-2', 'border-purple-500', 'text-white');
+            tabBtn.classList.add('border-b-2', 'border-teal-500', 'text-white');
             tabBtn.classList.remove('text-zinc-400');
           });
         }
@@ -1326,10 +1326,10 @@
       ordersTabs.forEach(tab => {
         tab.addEventListener('click', () => {
           ordersTabs.forEach(t => {
-            t.classList.remove('border-b-2', 'border-purple-500', 'text-white');
+            t.classList.remove('border-b-2', 'border-teal-500', 'text-white');
             t.classList.add('text-zinc-400');
           });
-          tab.classList.add('border-b-2', 'border-purple-500', 'text-white');
+          tab.classList.add('border-b-2', 'border-teal-500', 'text-white');
           tab.classList.remove('text-zinc-400');
         });
       });
@@ -1339,10 +1339,10 @@
       stakingTabs.forEach(tab => {
         tab.addEventListener('click', () => {
           stakingTabs.forEach(t => {
-            t.classList.remove('border-b-2', 'border-purple-500', 'text-white');
+            t.classList.remove('border-b-2', 'border-teal-500', 'text-white');
             t.classList.add('text-zinc-400');
           });
-          tab.classList.add('border-b-2', 'border-purple-500', 'text-white');
+          tab.classList.add('border-b-2', 'border-teal-500', 'text-white');
           tab.classList.remove('text-zinc-400');
         });
       });

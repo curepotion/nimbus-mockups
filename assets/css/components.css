@@ -274,8 +274,33 @@ th[class*="cursor-pointer"]:hover {
 }
 
 .calendar-day.today {
-  border-color: rgb(147, 51, 234);
-  background-color: rgba(147, 51, 234, 0.1);
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-glow);
+}
+
+/* Portfolio accent color buttons */
+.portfolio-accent-btn {
+  background-color: var(--color-accent) !important;
+  color: white !important;
+  transition: background-color 0.2s ease;
+}
+
+.portfolio-accent-btn:hover {
+  background-color: var(--color-accent-strong) !important;
+}
+
+/* Portfolio accent borders */
+.portfolio-accent-border {
+  border-color: var(--color-accent) !important;
+}
+
+/* Portfolio accent text */
+.portfolio-accent-text {
+  color: var(--color-accent-light) !important;
+}
+
+.portfolio-accent-text:hover {
+  color: var(--color-accent) !important;
 }
 
 /* Responsive adjustments */
