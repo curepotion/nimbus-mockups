@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full" style="background: var(--color-bg-main);">
+<html lang="en" class="h-full bg-zinc-950">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Profile - Nimbus Trading Platform</title>
+  <title>Portfolio - Nimbus Trading Platform</title>
 
-  <!-- Fonts: Geist + Geist Mono -->
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/400.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/500.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/600.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist/700.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/400.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/500.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono/600.css" rel="stylesheet">
+  <!-- Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="assets/css/components.css">
   <script src="assets/js/navbar.js"></script>
 
@@ -86,21 +82,331 @@
   </style>
 </head>
 
-<body class="h-full text-gray-200 antialiased bg-gradient-main">
+<body class="bg-zinc-950 text-zinc-100 antialiased [font-family:Inter,sans-serif]">
   <div class="min-h-screen flex flex-col">
     <!-- Navbar Container -->
     <div id="navbar-container"></div>
 
-    <!-- Main Content -->
-    <main id="portfolio-book" class="min-h-screen">
-      <!-- PAGE CONTAINER -->
-      <section class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-6 space-y-6">
-        <!-- ================= TRADING ANALYSIS ================= -->
-        <section id="trading-analysis" class="space-y-4">
+    <!-- Main Portfolio Layout -->
+    <div class="flex min-h-screen pt-16">
+      <!-- Left Side Navigation -->
+      <nav class="w-64 bg-zinc-900/50 border-r border-zinc-800 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
+        <div class="p-4 space-y-2">
+          <a href="#overview" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800 active" data-section="overview">
+            <i data-lucide="home" class="w-4 h-4"></i>
+            Overview
+          </a>
+          <a href="#analysis" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800" data-section="analysis">
+            <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+            Analysis
+          </a>
+          <a href="#orders" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800" data-section="orders">
+            <i data-lucide="list" class="w-4 h-4"></i>
+            Orders
+            <span class="ml-auto text-xs text-zinc-500">0</span>
+          </a>
+          <a href="#staking" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800" data-section="staking">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+            Staking
+          </a>
+        </div>
+      </nav>
+
+      <!-- Right Content Pane -->
+      <main class="flex-1 overflow-y-auto">
+        <div class="max-w-7xl mx-auto px-6 py-8 space-y-12">
+          <!-- ================= OVERVIEW SECTION ================= -->
+          <section id="overview" class="space-y-8">
+            <!-- Header Card -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
+              <!-- Mini Facts Row -->
+              <div class="flex flex-wrap items-center gap-6 text-sm">
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400">Wallet Address</span>
+                  <span class="font-mono">0xb05c...59C8</span>
+                  <button class="copy-btn" data-copy="0xb05c...59C8">
+                    <i data-lucide="copy" class="w-4 h-4 text-zinc-400 hover:text-white"></i>
+                  </button>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400">14D Volume</span>
+                  <span class="font-medium">$20,815.48</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400">Fee Tier</span>
+                  <span class="font-medium">0.020% / 0.025%</span>
+                  <button class="tooltip-trigger" data-tooltip="Maker / Taker rates">
+                    <i data-lucide="info" class="w-4 h-4 text-zinc-400"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Main Account Value Block -->
+              <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <div class="space-y-2">
+                  <h1 class="text-4xl lg:text-5xl font-semibold tracking-tight">$593.20</h1>
+                  <div class="flex items-center gap-4 text-sm">
+                    <div class="flex items-center gap-1">
+                      <span class="text-zinc-400">24h change</span>
+                      <span class="text-zinc-400">$0.00 (0.00%)</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <span class="text-emerald-400">Overall</span>
+                      <span class="text-emerald-400 font-medium">+$305.20 (105.97%)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3">
+                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    Deposit
+                  </button>
+                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                    Withdraw
+                  </button>
+                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
+                    Transfer
+                  </button>
+                </div>
+              </div>
+
+              <!-- Breakdown Row -->
+              <div class="flex flex-wrap items-center gap-6">
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400 text-sm">Perpetuals</span>
+                  <span class="font-medium">$593.20</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400 text-sm">Spot</span>
+                  <span class="font-medium">$0.00</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400 text-sm">Staked</span>
+                  <span class="font-medium">$0.00</span>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Spot Table -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
+              <div class="px-6 py-4 border-b border-zinc-800">
+                <h2 class="text-lg font-semibold">Spot</h2>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="border-b border-zinc-800">
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Total</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
+                        Value
+                        <i data-lucide="chevrons-up-down" class="w-3 h-3 inline ml-1"></i>
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Entry/Market Price</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">P&L</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="5" class="px-6 py-12 text-center text-zinc-400">
+                        <div class="space-y-2">
+                          <p>No balances found.</p>
+                          <button class="text-purple-400 hover:text-purple-300 text-sm">Go to Spot</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Perpetuals Table -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
+              <div class="px-6 py-4 border-b border-zinc-800">
+                <h2 class="text-lg font-semibold">Perpetuals</h2>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="border-b border-zinc-800">
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Size</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
+                        Value
+                        <i data-lucide="chevrons-up-down" class="w-3 h-3 inline ml-1"></i>
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Entry/Market Price</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
+                        Unrealized P&L
+                        <i data-lucide="chevrons-up-down" class="w-3 h-3 inline ml-1"></i>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span class="text-white text-xs font-medium">USDC</span>
+                          </div>
+                          <span class="font-medium">USDC</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="font-medium">593.2 USDC</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="font-medium">$593.20</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="font-medium">$1.00</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="text-zinc-400">—</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Transfers Table -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
+              <div class="px-6 py-4 border-b border-zinc-800">
+                <h2 class="text-lg font-semibold">Transfers</h2>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="border-b border-zinc-800">
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Type</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Value</th>
+                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Fee</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Account</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Status</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span class="text-white text-xs font-medium">USDC</span>
+                          </div>
+                          <span class="font-medium">USDC Withdraw</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="text-red-400 font-medium">-1 USDC</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="font-medium">1 USDC</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="font-medium">Perpetuals</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="text-zinc-400">Aug 27, 2025, 10:42 AM</span>
+                      </td>
+                    </tr>
+                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span class="text-white text-xs font-medium">USDC</span>
+                          </div>
+                          <span class="font-medium">USDC Withdraw</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="text-red-400 font-medium">-9 USDC</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="font-medium">1 USDC</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="font-medium">Perpetuals</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="text-zinc-400">Aug 27, 2025, 10:40 AM</span>
+                      </td>
+                    </tr>
+                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span class="text-white text-xs font-medium">USDC</span>
+                          </div>
+                          <span class="font-medium">USDC Deposit</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="text-emerald-400 font-medium">+100 USDC</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="text-zinc-400">—</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="font-medium">Perpetuals</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="text-zinc-400">Aug 27, 2025, 10:30 AM</span>
+                      </td>
+                    </tr>
+                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span class="text-white text-xs font-medium">USDC</span>
+                          </div>
+                          <span class="font-medium">USDC Deposit</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="text-emerald-400 font-medium">+200 USDC</span>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <span class="text-zinc-400">—</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="font-medium">Perpetuals</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="text-zinc-400">Aug 16, 2025, 6:15 PM</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= ANALYSIS SECTION ================= -->
+          <section id="analysis" class="space-y-8">
+            <!-- Trading Analysis -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
           <!-- Title + Segmented Controls -->
           <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div class="space-y-1">
-              <h1 class="text-2xl md:text-3xl font-semibold">Trading Analysis</h1>
+                  <h2 class="text-2xl md:text-3xl font-semibold">Trading Analysis</h2>
               <p class="text-sm">Detailed performance and bias across spot and derivatives.</p>
             </div>
 
@@ -109,11 +415,11 @@
               <fieldset class="flex flex-wrap items-center gap-2">
                 <legend class="text-xs uppercase tracking-wide">Metric</legend>
                 <div class="flex gap-1">
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="metric" value="pnl" checked />
-                    <span class="text-sm">P&amp;L</span>
+                        <span class="text-sm">P&L</span>
                   </label>
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="metric" value="roi" />
                     <span class="text-sm">ROI</span>
                   </label>
@@ -124,15 +430,15 @@
               <fieldset class="flex flex-wrap items-center gap-2">
                 <legend class="text-xs uppercase tracking-wide">Market</legend>
                 <div class="flex gap-1">
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="market" value="combined" checked />
                     <span class="text-sm">Combined</span>
                   </label>
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="market" value="perp" />
                     <span class="text-sm">Perp</span>
                   </label>
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="market" value="spot" />
                     <span class="text-sm">Spot</span>
                   </label>
@@ -143,19 +449,19 @@
               <fieldset class="flex flex-wrap items-center gap-2">
                 <legend class="text-xs uppercase tracking-wide">Timeframe</legend>
                 <div class="flex gap-1">
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="tf" value="24h" checked />
                     <span class="text-sm">24H</span>
                   </label>
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="tf" value="7d" />
                     <span class="text-sm">7D</span>
                   </label>
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="tf" value="30d" />
                     <span class="text-sm">30D</span>
                   </label>
-                  <label class="inline-flex items-center gap-2 px-3 h-9 rounded border">
+                      <label class="inline-flex items-center gap-2 px-3 h-9 rounded border border-zinc-700 hover:bg-zinc-800">
                     <input type="radio" name="tf" value="all" />
                     <span class="text-sm">All</span>
                   </label>
@@ -168,50 +474,50 @@
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <!-- Left -->
             <div class="space-y-4">
-              <article class="p-4 rounded border">
-                <p class="text-sm">Account Value</p>
+                  <article class="p-4 rounded border border-zinc-800">
+                    <p class="text-sm text-zinc-400">Account Value</p>
                 <p id="account-value-amount" class="text-3xl font-semibold tracking-tight">$87,607.37</p>
-                <div class="mt-2 text-sm">24H change: <span id="account-value-change">+3.59%</span></div>
+                    <div class="mt-2 text-sm">24H change: <span id="account-value-change" class="text-emerald-400">+3.59%</span></div>
               </article>
 
-              <article class="p-4 rounded border space-y-3">
+                  <article class="p-4 rounded border border-zinc-800 space-y-3">
                 <div class="flex items-center justify-between">
-                  <span class="text-sm">Recently Traded</span>
+                      <span class="text-sm text-zinc-400">Recently Traded</span>
                   <div class="flex -space-x-2">
-                    <div class="h-6 w-6 rounded overflow-hidden border"></div>
-                    <div class="h-6 w-6 rounded overflow-hidden border"></div>
-                    <div class="h-6 w-6 rounded overflow-hidden border"></div>
+                        <div class="h-6 w-6 rounded-full overflow-hidden border border-zinc-700 bg-blue-500"></div>
+                        <div class="h-6 w-6 rounded-full overflow-hidden border border-zinc-700 bg-orange-500"></div>
+                        <div class="h-6 w-6 rounded-full overflow-hidden border border-zinc-700 bg-purple-500"></div>
                   </div>
                 </div>
                 
                 <div class="flex items-center justify-between">
-                  <span class="text-sm">Directional Bias</span>
+                      <span class="text-sm text-zinc-400">Directional Bias</span>
                   <span class="text-sm font-medium">Mostly Long</span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
-                  <div class="p-3 rounded border">
-                    <p class="text-xs">Win Rate</p>
+                      <div class="p-3 rounded border border-zinc-800">
+                        <p class="text-xs text-zinc-400">Win Rate</p>
                     <p class="text-lg font-semibold tracking-tight">54.0%</p>
                   </div>
-                  <div class="p-3 rounded border">
-                    <p class="text-xs">Sharpe (30D)</p>
+                      <div class="p-3 rounded border border-zinc-800">
+                        <p class="text-xs text-zinc-400">Sharpe (30D)</p>
                     <p class="text-lg font-semibold tracking-tight">1.12</p>
                   </div>
                 </div>
 
                 <label class="flex items-center gap-2">
-                  <input id="feesToggle" type="checkbox" />
-                  <span class="text-xs">Include fees in P&amp;L</span>
+                      <input id="feesToggle" type="checkbox" class="rounded border-zinc-600" />
+                      <span class="text-xs text-zinc-400">Include fees in P&L</span>
                 </label>
               </article>
             </div>
 
             <!-- Right -->
             <div class="lg:col-span-2 space-y-4">
-              <article class="p-4 rounded border">
+                  <article class="p-4 rounded border border-zinc-800">
                 <div class="flex items-center justify-between">
-                  <div class="text-xs">P&amp;L vs Benchmark</div>
+                      <div class="text-xs text-zinc-400">P&L vs Benchmark</div>
                 </div>
                 <div class="mt-3 h-[300px]">
                   <canvas id="pnlChart" class="h-full w-full"></canvas>
@@ -219,41 +525,41 @@
               </article>
 
               <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div class="p-3 rounded border">
-                  <p class="text-xs">Total P&amp;L</p>
-                  <p id="kpiTotal" class="text-lg font-semibold tracking-tight">-$304.88</p>
+                    <div class="p-3 rounded border border-zinc-800">
+                      <p class="text-xs text-zinc-400">Total P&L</p>
+                      <p id="kpiTotal" class="text-lg font-semibold tracking-tight text-red-400">-$304.88</p>
                 </div>
-                <div class="p-3 rounded border">
-                  <p class="text-xs">Perpetual P&amp;L</p>
-                  <p id="kpiPerp" class="text-lg font-semibold tracking-tight">-$205.45</p>
+                    <div class="p-3 rounded border border-zinc-800">
+                      <p class="text-xs text-zinc-400">Perpetual P&L</p>
+                      <p id="kpiPerp" class="text-lg font-semibold tracking-tight text-red-400">-$205.45</p>
                 </div>
-                <div class="p-3 rounded border">
-                  <p class="text-xs">Spot P&amp;L</p>
-                  <p id="kpiSpot" class="text-lg font-semibold tracking-tight">-$99.43</p>
+                    <div class="p-3 rounded border border-zinc-800">
+                      <p class="text-xs text-zinc-400">Spot P&L</p>
+                      <p id="kpiSpot" class="text-lg font-semibold tracking-tight text-red-400">-$99.43</p>
               </div>
-                <div class="p-3 rounded border">
-                  <p class="text-xs">Avg Trade Duration</p>
+                    <div class="p-3 rounded border border-zinc-800">
+                      <p class="text-xs text-zinc-400">Avg Trade Duration</p>
                   <p class="text-lg font-semibold tracking-tight">6h 12m</p>
               </div>
               </div>
             </div>
           </div>
-        </section>
+            </div>
 
-        <!-- ================= HISTORICAL BREAKDOWN ================= -->
-        <section id="historical-breakdown" class="space-y-4">
+            <!-- Historical Breakdown -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
           <div>
             <h2 class="text-xl md:text-2xl font-semibold tracking-tight">Historical Breakdown</h2>
-            <p class="text-sm">Calendar returns, asset profitability, and trade history.</p>
+                <p class="text-sm text-zinc-400">Calendar returns, asset profitability, and trade history.</p>
           </div>
 
           <!-- Tabs -->
-          <div class="flex items-center gap-6 border-b">
-            <button id="tabbtn-calendar" class="py-2 text-sm -mb-px border-b-2">Trading Calendar</button>
-            <button id="tabbtn-assets"   class="py-2 text-sm">Asset Profitability</button>
-            <button id="tabbtn-trades"   class="py-2 text-sm">Completed Trades</button>
-            <button id="tabbtn-fills"    class="py-2 text-sm">Fills History</button>
-            <button id="tabbtn-funding"  class="py-2 text-sm">Funding History</button>
+              <div class="flex items-center gap-6 border-b border-zinc-800">
+                <button id="tabbtn-calendar" class="py-2 text-sm -mb-px border-b-2 border-purple-500 text-white">Trading Calendar</button>
+                <button id="tabbtn-assets" class="py-2 text-sm text-zinc-400">Asset Profitability</button>
+                <button id="tabbtn-trades" class="py-2 text-sm text-zinc-400">Completed Trades</button>
+                <button id="tabbtn-fills" class="py-2 text-sm text-zinc-400">Fills History</button>
+                <button id="tabbtn-funding" class="py-2 text-sm text-zinc-400">Funding History</button>
           </div>
 
           <!-- TAB: Calendar -->
@@ -261,11 +567,11 @@
             <!-- Calendar controls -->
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <button id="prevMonth" class="h-9 w-9 rounded border">&lt;</button>
-                <div id="monthLabel" class="px-3 h-9 rounded border grid place-items-center">August 2025</div>
-                <button id="nextMonth" class="h-9 w-9 rounded border">&gt;</button>
+                    <button id="prevMonth" class="h-9 w-9 rounded border border-zinc-700 hover:bg-zinc-800 flex items-center justify-center">&lt;</button>
+                    <div id="monthLabel" class="px-3 h-9 rounded border border-zinc-700 grid place-items-center text-sm">August 2025</div>
+                    <button id="nextMonth" class="h-9 w-9 rounded border border-zinc-700 hover:bg-zinc-800 flex items-center justify-center">&gt;</button>
                     </div>
-              <div class="flex items-center gap-3 text-xs">
+                  <div class="flex items-center gap-3 text-xs text-zinc-400">
                 <span>Legend</span>
                 <span class="inline-flex items-center gap-1">● Profit</span>
                 <span class="inline-flex items-center gap-1">● Loss</span>
@@ -274,27 +580,27 @@
 
             <!-- Month summary -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-              <div class="p-3 rounded border">
-                <p class="text-xs">P&amp;L (Month)</p>
-                <p id="calPnl" class="text-lg font-semibold tracking-tight">-$12,632.20</p>
+                  <div class="p-3 rounded border border-zinc-800">
+                    <p class="text-xs text-zinc-400">P&L (Month)</p>
+                    <p id="calPnl" class="text-lg font-semibold tracking-tight text-red-400">-$12,632.20</p>
                 </div>
-              <div class="p-3 rounded border">
-                <p class="text-xs">Volume</p>
+                  <div class="p-3 rounded border border-zinc-800">
+                    <p class="text-xs text-zinc-400">Volume</p>
                 <p id="calVol" class="text-lg font-semibold tracking-tight">$613,606.91</p>
               </div>
-              <div class="p-3 rounded border">
-                <p class="text-xs">Most Profitable</p>
-                <p id="calBest" class="text-lg font-semibold tracking-tight">ETH +$422.42</p>
+                  <div class="p-3 rounded border border-zinc-800">
+                    <p class="text-xs text-zinc-400">Most Profitable</p>
+                    <p id="calBest" class="text-lg font-semibold tracking-tight text-emerald-400">ETH +$422.42</p>
                     </div>
-              <div class="p-3 rounded border">
-                <p class="text-xs">Win Rate</p>
+                  <div class="p-3 rounded border border-zinc-800">
+                    <p class="text-xs text-zinc-400">Win Rate</p>
                 <p id="calWin" class="text-lg font-semibold tracking-tight">50%</p>
                     </div>
                   </div>
 
             <!-- Calendar grid -->
-            <div class="p-3 md:p-4 rounded border space-y-2">
-              <div class="grid grid-cols-7 gap-2 text-xs">
+                <div class="p-3 md:p-4 rounded border border-zinc-800 space-y-2">
+                  <div class="grid grid-cols-7 gap-2 text-xs text-zinc-400">
                 <div class="text-center">Sun</div>
                 <div class="text-center">Mon</div>
                 <div class="text-center">Tue</div>
@@ -310,32 +616,32 @@
           <!-- TAB: Assets -->
           <div id="tab-assets" class="hidden space-y-4">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <article class="p-4 rounded border">
+                  <article class="p-4 rounded border border-zinc-800">
                 <h3 class="text-lg font-semibold tracking-tight">Allocation</h3>
-                <p class="text-xs">Holdings distribution</p>
+                    <p class="text-xs text-zinc-400">Holdings distribution</p>
                 <div class="mt-3 h-[260px]">
                   <canvas id="allocChart" class="h-full w-full"></canvas>
                 </div>
               </article>
 
-              <article class="p-4 rounded border lg:col-span-2">
+                  <article class="p-4 rounded border border-zinc-800 lg:col-span-2">
                 <h3 class="text-lg font-semibold tracking-tight">Asset Profitability</h3>
-                <p class="text-xs">Top performers this month</p>
+                    <p class="text-xs text-zinc-400">Top performers this month</p>
                 <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <div class="p-3 rounded border">
-                    <div class="flex items-center justify-between text-xs"><span>BTC</span><span>+4.2%</span></div>
+                      <div class="p-3 rounded border border-zinc-800">
+                        <div class="flex items-center justify-between text-xs"><span class="text-zinc-400">BTC</span><span class="text-emerald-400">+4.2%</span></div>
                     <p class="mt-1 text-lg font-semibold tracking-tight">$42,106</p>
               </div>
-                  <div class="p-3 rounded border">
-                    <div class="flex items-center justify-between text-xs"><span>ETH</span><span>+6.8%</span></div>
+                      <div class="p-3 rounded border border-zinc-800">
+                        <div class="flex items-center justify-between text-xs"><span class="text-zinc-400">ETH</span><span class="text-emerald-400">+6.8%</span></div>
                     <p class="mt-1 text-lg font-semibold tracking-tight">$21,488</p>
                     </div>
-                  <div class="p-3 rounded border">
-                    <div class="flex items-center justify-between text-xs"><span>SOL</span><span>-1.3%</span></div>
+                      <div class="p-3 rounded border border-zinc-800">
+                        <div class="flex items-center justify-between text-xs"><span class="text-zinc-400">SOL</span><span class="text-red-400">-1.3%</span></div>
                     <p class="mt-1 text-lg font-semibold tracking-tight">$8,911</p>
                     </div>
-                  <div class="p-3 rounded border">
-                    <div class="flex items-center justify-between text-xs"><span>USDT</span><span>—</span></div>
+                      <div class="p-3 rounded border border-zinc-800">
+                        <div class="flex items-center justify-between text-xs"><span class="text-zinc-400">USDT</span><span class="text-zinc-400">—</span></div>
                     <p class="mt-1 text-lg font-semibold tracking-tight">$15,102</p>
                   </div>
                 </div>
@@ -345,35 +651,35 @@
 
           <!-- TAB: Trades -->
           <div id="tab-trades" class="hidden space-y-3">
-            <div class="rounded border overflow-hidden">
-              <div class="grid grid-cols-12 px-4 py-3 text-xs border-b">
+                <div class="rounded border border-zinc-800 overflow-hidden">
+                  <div class="grid grid-cols-12 px-4 py-3 text-xs border-b border-zinc-800 text-zinc-400">
                 <div class="col-span-3">Time</div>
                 <div class="col-span-2">Pair</div>
                 <div class="col-span-2">Side</div>
                 <div class="col-span-2">Size</div>
-                <div class="col-span-3 text-right">P&amp;L</div>
+                    <div class="col-span-3 text-right">P&L</div>
               </div>
-              <div class="divide-y">
+                  <div class="divide-y divide-zinc-800">
                 <div class="grid grid-cols-12 px-4 py-3 text-sm">
                   <div class="col-span-3">2025-08-14 10:22</div>
                   <div class="col-span-2">ETH/USDT</div>
                   <div class="col-span-2">Long</div>
                   <div class="col-span-2">$12,500</div>
-                  <div class="col-span-3 text-right">+$422.42</div>
+                      <div class="col-span-3 text-right text-emerald-400">+$422.42</div>
               </div>
                 <div class="grid grid-cols-12 px-4 py-3 text-sm">
                   <div class="col-span-3">2025-08-14 15:04</div>
                   <div class="col-span-2">BTC/USDT</div>
                   <div class="col-span-2">Short</div>
                   <div class="col-span-2">$35,000</div>
-                  <div class="col-span-3 text-right">-$356.22</div>
+                      <div class="col-span-3 text-right text-red-400">-$356.22</div>
               </div>
                 <div class="grid grid-cols-12 px-4 py-3 text-sm">
                   <div class="col-span-3">2025-08-12 08:40</div>
                   <div class="col-span-2">SOL/USDT</div>
                   <div class="col-span-2">Long</div>
                   <div class="col-span-2">$4,800</div>
-                  <div class="col-span-3 text-right">+$98.60</div>
+                      <div class="col-span-3 text-right text-emerald-400">+$98.60</div>
               </div>
               </div>
             </div>
@@ -381,25 +687,25 @@
 
           <!-- TAB: Fills -->
           <div id="tab-fills" class="hidden space-y-3">
-            <div class="rounded border overflow-hidden">
-              <div class="grid grid-cols-12 px-4 py-3 text-xs border-b">
+                <div class="rounded border border-zinc-800 overflow-hidden">
+                  <div class="grid grid-cols-12 px-4 py-3 text-xs border-b border-zinc-800 text-zinc-400">
                 <div class="col-span-3">Time</div>
                 <div class="col-span-3">Pair</div>
                 <div class="col-span-3">Price</div>
                 <div class="col-span-3 text-right">Fee</div>
               </div>
-              <div class="divide-y text-sm">
+                  <div class="divide-y divide-zinc-800 text-sm">
                 <div class="grid grid-cols-12 px-4 py-3">
                   <div class="col-span-3">2025-08-14 10:22:19</div>
                   <div class="col-span-3">ETH/USDT</div>
                   <div class="col-span-3">$2,498.12</div>
-                  <div class="col-span-3 text-right">$-1.12</div>
+                      <div class="col-span-3 text-right text-red-400">$-1.12</div>
                 </div>
                 <div class="grid grid-cols-12 px-4 py-3">
                   <div class="col-span-3">2025-08-14 15:04:02</div>
                   <div class="col-span-3">BTC/USDT</div>
                   <div class="col-span-3">$61,202.30</div>
-                  <div class="col-span-3 text-right">$-2.44</div>
+                      <div class="col-span-3 text-right text-red-400">$-2.44</div>
                 </div>
               </div>
             </div>
@@ -407,77 +713,287 @@
 
           <!-- TAB: Funding -->
           <div id="tab-funding" class="hidden space-y-3">
-            <div class="rounded border overflow-hidden">
-              <div class="grid grid-cols-12 px-4 py-3 text-xs border-b">
+                <div class="rounded border border-zinc-800 overflow-hidden">
+                  <div class="grid grid-cols-12 px-4 py-3 text-xs border-b border-zinc-800 text-zinc-400">
                 <div class="col-span-4">Time</div>
                 <div class="col-span-4">Market</div>
                 <div class="col-span-4 text-right">Funding</div>
               </div>
-              <div class="divide-y text-sm">
+                  <div class="divide-y divide-zinc-800 text-sm">
                 <div class="grid grid-cols-12 px-4 py-3">
                   <div class="col-span-4">2025-08-14 04:00</div>
                   <div class="col-span-4">BTC-PERP</div>
-                  <div class="col-span-4 text-right">+$6.20</div>
+                      <div class="col-span-4 text-right text-emerald-400">+$6.20</div>
               </div>
                 <div class="grid grid-cols-12 px-4 py-3">
                   <div class="col-span-4">2025-08-13 20:00</div>
                   <div class="col-span-4">ETH-PERP</div>
-                  <div class="col-span-4 text-right">-$3.42</div>
+                      <div class="col-span-4 text-right text-red-400">-$3.42</div>
               </div>
               </div>
             </div>
           </div>
-        </section>
+            </div>
+
         <!-- ================= SECONDARY CHARTS ================= -->
-        <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <article class="p-4 rounded border">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <article class="p-4 rounded border border-zinc-800">
             <h3 class="text-lg font-semibold tracking-tight">Drawdown (30D)</h3>
-            <p class="text-xs">Max vs current</p>
+                <p class="text-xs text-zinc-400">Max vs current</p>
             <div class="mt-3 h-[220px]">
               <canvas id="ddChart" class="h-full w-full"></canvas>
             </div>
           </article>
 
-          <article class="p-4 rounded border">
+              <article class="p-4 rounded border border-zinc-800">
             <h3 class="text-lg font-semibold tracking-tight">Win/Loss by Weekday</h3>
-            <p class="text-xs">Trade outcomes</p>
+                <p class="text-xs text-zinc-400">Trade outcomes</p>
             <div class="mt-3 h-[220px]">
               <canvas id="wlChart" class="h-full w-full"></canvas>
             </div>
           </article>
 
-          <article class="p-4 rounded border">
+              <article class="p-4 rounded border border-zinc-800">
             <h3 class="text-lg font-semibold tracking-tight">Fees (30D)</h3>
-            <p class="text-xs">Impact on net returns</p>
+                <p class="text-xs text-zinc-400">Impact on net returns</p>
             <div class="mt-3 h-[220px]">
               <canvas id="feeChart" class="h-full w-full"></canvas>
         </div>
           </article>
+            </div>
         </section>
+
+          <!-- ================= ORDERS SECTION ================= -->
+          <section id="orders" class="space-y-8">
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
+              <div class="flex items-center justify-between">
+                <h2 class="text-xl font-semibold">Orders</h2>
+              </div>
+
+              <!-- Tabs -->
+              <div class="flex items-center gap-6 border-b border-zinc-800">
+                <button class="tab-btn pb-2 border-b-2 border-purple-500 text-white">Open Orders</button>
+                <button class="tab-btn pb-2 text-zinc-400">Order History</button>
+                <button class="tab-btn pb-2 text-zinc-400">Active TWAP</button>
+                <button class="tab-btn pb-2 text-zinc-400">TWAP History</button>
+              </div>
+
+              <!-- Orders Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="border-b border-zinc-800">
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Type</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Size</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Order Value</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
+                        Trigger Price
+                        <i data-lucide="chevron-up" class="w-3 h-3 inline ml-1"></i>
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
+                        Time
+                        <i data-lucide="chevron-down" class="w-3 h-3 inline ml-1"></i>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="6" class="px-6 py-12 text-center text-zinc-400">
+                        <div class="space-y-2">
+                          <p>No open orders.</p>
+                          <button class="text-purple-400 hover:text-purple-300 text-sm">Go to Trade</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
       </section>
 
-      <!-- TOAST -->
-      <div id="toast" class="fixed bottom-4 right-4 hidden items-center gap-3 px-4 h-12 rounded border">
-        <span class="text-sm">Updated time range</span>
+          <!-- ================= STAKING SECTION ================= -->
+          <section id="staking" class="space-y-8">
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
+              <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <h2 class="text-xl font-semibold">Staking</h2>
+                <div class="flex items-center gap-3">
+                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    <i data-lucide="layers" class="w-4 h-4"></i>
+                    Stake
+                  </button>
+                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    <i data-lucide="unlock" class="w-4 h-4"></i>
+                    Unstake
+                  </button>
+                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
+                    Transfer Spot → Staking
+                  </button>
     </div>
   </div>
 
-  <script src="assets/js/components.js"></script>
+              <!-- Staking Stats -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-zinc-800/50 rounded-xl p-4">
+                  <div class="text-sm text-zinc-400 mb-2">Your Stake</div>
+                  <div class="text-2xl font-semibold">0 HYPE</div>
+                  <div class="text-sm text-zinc-500">($0.00)</div>
+                </div>
+                <div class="bg-zinc-800/50 rounded-xl p-4">
+                  <div class="text-sm text-zinc-400 mb-2">Global Stake</div>
+                  <div class="text-2xl font-semibold">429.38M HYPE</div>
+                  <div class="text-sm text-zinc-500">($19.54B)</div>
+                </div>
+                <div class="bg-zinc-800/50 rounded-xl p-4">
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-zinc-400">1 Day Rewards</span>
+                      <span class="text-sm font-medium text-emerald-400">+0 HYPE ($0.00)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-zinc-400">30 Day Rewards</span>
+                      <span class="text-sm font-medium text-emerald-400">+0 HYPE ($0.00)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-zinc-400">Lifetime Rewards</span>
+                      <span class="text-sm font-medium text-emerald-400">+0 HYPE ($0.00)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Wallet Staking Info -->
+              <div class="bg-zinc-800/30 rounded-xl p-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div class="text-center">
+                    <div class="text-sm text-zinc-400 mb-1">Available HYPE Balance</div>
+                    <div class="text-lg font-semibold">0 HYPE</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-zinc-400 mb-1">Available to Stake</div>
+                    <div class="text-lg font-semibold">0 HYPE</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-zinc-400 mb-1">Staked HYPE</div>
+                    <div class="text-lg font-semibold">0 HYPE</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-zinc-400 mb-1">Pending Unstake</div>
+                    <div class="text-lg font-semibold">0 HYPE</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Staking Tabs -->
+              <div class="flex items-center gap-6 border-b border-zinc-800">
+                <button class="tab-btn pb-2 border-b-2 border-purple-500 text-white">Staking Rewards</button>
+                <button class="tab-btn pb-2 text-zinc-400">Staking Activity</button>
+                <button class="tab-btn pb-2 text-zinc-400">Validators</button>
+              </div>
+
+              <!-- Staking Rewards Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="border-b border-zinc-800">
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Amount</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Source</th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4" class="px-6 py-12 text-center text-zinc-400">
+                        <p>No staking rewards found.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 hidden items-center gap-3 px-4 h-12 rounded-lg bg-zinc-900 border border-zinc-800 z-50">
+      <span class="text-sm">Copied to clipboard</span>
+    </div>
+  </div>
+
   <script>
-    // Initialize icons and charts
+    // Initialize everything when DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
-      if (window.lucide && lucide.createIcons) {
+      // Initialize Lucide icons
+      if (typeof lucide !== 'undefined') {
         lucide.createIcons();
       }
+
+      // Initialize portfolio functionality
+      initNavigation();
       initCharts();
-      initTabs();
       initCalendar();
+      initCopyToClipboard();
+      initTooltips();
+      initTabSwitching();
+      initFormControls();
     });
 
-    // Initialize all charts
+    // Navigation functionality
+    function initNavigation() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const sections = document.querySelectorAll('section[id]');
+
+      // Handle navigation clicks
+      navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = item.getAttribute('data-section');
+          
+          // Update active nav item
+          navItems.forEach(nav => nav.classList.remove('active', 'bg-zinc-800'));
+          item.classList.add('active', 'bg-zinc-800');
+          
+          // Scroll to section
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // Update active nav on scroll
+      const observerOptions = {
+        rootMargin: '-20% 0px -70% 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+            navItems.forEach(nav => {
+              nav.classList.remove('active', 'bg-zinc-800');
+              if (nav.getAttribute('data-section') === sectionId) {
+                nav.classList.add('active', 'bg-zinc-800');
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => observer.observe(section));
+    }
+
+    // Initialize charts
     function initCharts() {
+      if (typeof Chart === 'undefined') return;
+
       // P&L vs Benchmark Chart
-      const pnlCtx = document.getElementById('pnlChart').getContext('2d');
+      const pnlCtx = document.getElementById('pnlChart');
+      if (pnlCtx) {
       new Chart(pnlCtx, {
         type: 'line',
         data: {
@@ -486,35 +1002,75 @@
             label: 'P&L',
             data: Array.from({length: 30}, () => Math.random() * 100 - 50),
             borderColor: '#10B981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              borderWidth: 2,
+              fill: true,
             tension: 0.4
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } }
-        }
-      });
+            plugins: { 
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (context) => `P&L: $${context.parsed.y.toFixed(2)}`
+                }
+              }
+            },
+            scales: {
+              x: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { color: '#a1a1aa' }
+              },
+              y: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { 
+                  color: '#a1a1aa',
+                  callback: (value) => `$${value.toFixed(0)}`
+                }
+              }
+            }
+          }
+        });
+      }
 
       // Allocation Chart
-      const allocCtx = document.getElementById('allocChart').getContext('2d');
+      const allocCtx = document.getElementById('allocChart');
+      if (allocCtx) {
       new Chart(allocCtx, {
         type: 'doughnut',
         data: {
           labels: ['BTC', 'ETH', 'SOL', 'USDT'],
           datasets: [{
             data: [42, 21, 8, 15],
-            backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#6B7280']
+              backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#6B7280'],
+              borderWidth: 0
           }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false
-        }
-      });
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: '#a1a1aa',
+                  padding: 20,
+                  usePointStyle: true
+                }
+              }
+            }
+          }
+        });
+      }
 
       // Drawdown Chart
-      const ddCtx = document.getElementById('ddChart').getContext('2d');
+      const ddCtx = document.getElementById('ddChart');
+      if (ddCtx) {
       new Chart(ddCtx, {
         type: 'line',
         data: {
@@ -523,19 +1079,45 @@
             label: 'Drawdown',
             data: Array.from({length: 30}, () => Math.random() * -10),
             borderColor: '#EF4444',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              borderWidth: 2,
             fill: true,
-            backgroundColor: 'rgba(239, 68, 68, 0.1)'
+              tension: 0.4
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } }
-        }
-      });
+            plugins: { 
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (context) => `Drawdown: ${context.parsed.y.toFixed(2)}%`
+                }
+              }
+            },
+            scales: {
+              x: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { color: '#a1a1aa' }
+              },
+              y: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { 
+                  color: '#a1a1aa',
+                  callback: (value) => `${value.toFixed(1)}%`
+                }
+              }
+            }
+          }
+        });
+      }
 
       // Win/Loss Chart
-      const wlCtx = document.getElementById('wlChart').getContext('2d');
+      const wlCtx = document.getElementById('wlChart');
+      if (wlCtx) {
       new Chart(wlCtx, {
         type: 'bar',
         data: {
@@ -543,18 +1125,43 @@
           datasets: [{
             label: 'Win Rate',
             data: [65, 45, 73, 58, 62],
-            backgroundColor: '#10B981'
+              backgroundColor: '#10B981',
+              borderWidth: 0
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } }
-        }
-      });
+            plugins: { 
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (context) => `Win Rate: ${context.parsed.y}%`
+                }
+              }
+            },
+            scales: {
+              x: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { color: '#a1a1aa' }
+              },
+              y: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { 
+                  color: '#a1a1aa',
+                  callback: (value) => `${value}%`
+                }
+              }
+            }
+          }
+        });
+      }
 
       // Fees Chart
-      const feeCtx = document.getElementById('feeChart').getContext('2d');
+      const feeCtx = document.getElementById('feeChart');
+      if (feeCtx) {
       new Chart(feeCtx, {
         type: 'line',
         data: {
@@ -562,78 +1169,263 @@
           datasets: [{
             label: 'Fees',
             data: Array.from({length: 30}, () => Math.random() * 20),
-            borderColor: '#8B5CF6'
+              borderColor: '#8B5CF6',
+              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.4
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } }
-        }
-      });
+            plugins: { 
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (context) => `Fees: $${context.parsed.y.toFixed(2)}`
+                }
+              }
+            },
+            scales: {
+              x: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { color: '#a1a1aa' }
+              },
+              y: { 
+                display: true,
+                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                ticks: { 
+                  color: '#a1a1aa',
+                  callback: (value) => `$${value.toFixed(0)}`
+                }
+              }
+            }
+          }
+        });
+      }
     }
 
-    // Initialize tab switching
-    function initTabs() {
-      const tabs = ['calendar', 'assets', 'trades', 'fills', 'funding'];
-      tabs.forEach(tab => {
-        document.getElementById(`tabbtn-${tab}`).addEventListener('click', () => {
-          // Hide all tabs
-          tabs.forEach(t => {
-            document.getElementById(`tab-${t}`).classList.add('hidden');
-            document.getElementById(`tabbtn-${t}`).classList.remove('border-accent');
-          });
-          // Show selected tab
-          document.getElementById(`tab-${tab}`).classList.remove('hidden');
-          document.getElementById(`tabbtn-${tab}`).classList.add('border-accent');
+    // Initialize calendar with sample data
+    function initCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      if (!grid) return;
+
+      // Generate calendar days (35 days for full month grid)
+      const days = Array.from({length: 35}, (_, i) => {
+        const day = document.createElement('div');
+        day.className = 'calendar-day';
+        
+        if (i < 3 || i > 30) {
+          // Empty cells for days before/after month
+          day.classList.add('empty');
+        } else {
+          const dayNum = i - 2;
+          const isProfit = Math.random() > 0.5;
+          const pnlValue = (Math.random() * 1000 - 500).toFixed(2);
+          
+          day.innerHTML = `
+            <div class="text-right mb-2">${dayNum}</div>
+            <div class="text-xs text-right ${isProfit ? 'text-emerald-400' : 'text-red-400'}">
+              ${isProfit ? '+' : ''}$${pnlValue}
+            </div>
+          `;
+          
+          day.classList.add(isProfit ? 'profit' : 'loss');
+        }
+        
+        return day;
+      });
+      
+      grid.append(...days);
+    }
+
+    function getTokenColor(token) {
+      const colors = {
+        'HYPE': 'bg-yellow-400',
+        'IP': 'bg-blue-500',
+        'ETH': 'bg-indigo-500',
+        'BTC': 'bg-orange-400',
+        'CELO': 'bg-green-400'
+      };
+      return colors[token] || 'bg-zinc-500';
+    }
+
+    // Copy to clipboard functionality
+    function initCopyToClipboard() {
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-copy');
+          try {
+            await navigator.clipboard.writeText(text);
+            showToast('Copied to clipboard');
+          } catch (err) {
+            console.error('Failed to copy: ', err);
+          }
         });
       });
     }
 
-    // Initialize calendar
-    function initCalendar() {
-      const grid = document.getElementById('calendarGrid');
-      const days = Array.from({length: 35}, (_, i) => {
-        const day = document.createElement('div');
-        day.className = 'calendar-day';
-        if (i < 3 || i > 30) {
-          day.classList.add('empty');
-        } else {
-          day.innerHTML = `
-            <div class="text-right mb-2">${i - 2}</div>
-            <div class="text-xs text-right ${Math.random() > 0.5 ? 'text-emerald-400' : 'text-red-400'}">
-              ${(Math.random() * 1000 - 500).toFixed(2)}
-            </div>
-          `;
-          day.classList.add(Math.random() > 0.5 ? 'profit' : 'loss');
-        }
-        return day;
+    // Tooltip functionality
+    function initTooltips() {
+      document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+        trigger.addEventListener('mouseenter', (e) => {
+          const tooltip = document.createElement('div');
+          tooltip.className = 'absolute z-50 px-3 py-2 text-sm bg-zinc-800 border border-zinc-700 rounded-lg shadow-lg';
+          tooltip.textContent = trigger.getAttribute('data-tooltip');
+          
+          const rect = trigger.getBoundingClientRect();
+          tooltip.style.left = rect.left + 'px';
+          tooltip.style.top = (rect.bottom + 5) + 'px';
+          
+          document.body.appendChild(tooltip);
+          trigger.tooltipElement = tooltip;
+        });
+
+        trigger.addEventListener('mouseleave', () => {
+          if (trigger.tooltipElement) {
+            trigger.tooltipElement.remove();
+            trigger.tooltipElement = null;
+          }
+        });
       });
-      grid.append(...days);
     }
 
-    // Show toast message
+    // Tab switching functionality
+    function initTabSwitching() {
+      // Historical Breakdown tabs (main analysis tabs)
+      const tabs = ['calendar', 'assets', 'trades', 'fills', 'funding'];
+      tabs.forEach(tab => {
+        const tabBtn = document.getElementById(`tabbtn-${tab}`);
+        const tabContent = document.getElementById(`tab-${tab}`);
+        
+        if (tabBtn && tabContent) {
+          tabBtn.addEventListener('click', () => {
+            // Hide all tabs
+            tabs.forEach(t => {
+              const btn = document.getElementById(`tabbtn-${t}`);
+              const content = document.getElementById(`tab-${t}`);
+              if (btn && content) {
+                content.classList.add('hidden');
+                btn.classList.remove('border-b-2', 'border-purple-500', 'text-white');
+                btn.classList.add('text-zinc-400');
+              }
+            });
+            
+            // Show selected tab
+            tabContent.classList.remove('hidden');
+            tabBtn.classList.add('border-b-2', 'border-purple-500', 'text-white');
+            tabBtn.classList.remove('text-zinc-400');
+          });
+        }
+      });
+
+      // Orders tabs
+      const ordersTabs = document.querySelectorAll('#orders .tab-btn');
+      ordersTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          ordersTabs.forEach(t => {
+            t.classList.remove('border-b-2', 'border-purple-500', 'text-white');
+            t.classList.add('text-zinc-400');
+          });
+          tab.classList.add('border-b-2', 'border-purple-500', 'text-white');
+          tab.classList.remove('text-zinc-400');
+        });
+      });
+
+      // Staking tabs
+      const stakingTabs = document.querySelectorAll('#staking .tab-btn');
+      stakingTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          stakingTabs.forEach(t => {
+            t.classList.remove('border-b-2', 'border-purple-500', 'text-white');
+            t.classList.add('text-zinc-400');
+          });
+          tab.classList.add('border-b-2', 'border-purple-500', 'text-white');
+          tab.classList.remove('text-zinc-400');
+        });
+      });
+    }
+
+    // Toast notification
     function showToast(message) {
       const toast = document.getElementById('toast');
+      if (toast) {
       toast.querySelector('span').textContent = message;
       toast.classList.remove('hidden');
       toast.classList.add('flex');
+        
       setTimeout(() => {
         toast.classList.remove('flex');
         toast.classList.add('hidden');
       }, 3000);
     }
+    }
 
-    // Form controls
-    document.getElementById('ta-controls').addEventListener('change', (e) => {
+    // Table sorting functionality
+    document.querySelectorAll('th[class*="cursor-pointer"]').forEach(th => {
+      th.addEventListener('click', () => {
+        // Add sorting logic here if needed
+        console.log('Sorting column:', th.textContent.trim());
+      });
+    });
+
+    // Transfer row click handlers
+    document.querySelectorAll('table tbody tr[class*="cursor-pointer"]').forEach(row => {
+      row.addEventListener('click', () => {
+        // Add drawer/modal logic here
+        console.log('Opening transfer details');
+      });
+    });
+
+    // Form controls functionality
+    function initFormControls() {
+      // Trading Analysis controls
+      const taControls = document.getElementById('ta-controls');
+      if (taControls) {
+        taControls.addEventListener('change', (e) => {
       if (e.target.matches('input[type="radio"]')) {
         showToast('Updating time range...');
       }
     });
+      }
 
-    document.getElementById('feesToggle').addEventListener('change', (e) => {
+      // Fees toggle
+      const feesToggle = document.getElementById('feesToggle');
+      if (feesToggle) {
+        feesToggle.addEventListener('change', (e) => {
       showToast(e.target.checked ? 'Including fees in P&L' : 'Excluding fees from P&L');
     });
+      }
+
+      // Month navigation
+      const prevMonth = document.getElementById('prevMonth');
+      const nextMonth = document.getElementById('nextMonth');
+      const monthLabel = document.getElementById('monthLabel');
+      
+      if (prevMonth && nextMonth && monthLabel) {
+        let currentMonth = new Date();
+        
+        prevMonth.addEventListener('click', () => {
+          currentMonth.setMonth(currentMonth.getMonth() - 1);
+          updateMonthLabel();
+          showToast('Previous month');
+        });
+        
+        nextMonth.addEventListener('click', () => {
+          currentMonth.setMonth(currentMonth.getMonth() + 1);
+          updateMonthLabel();
+          showToast('Next month');
+        });
+        
+        function updateMonthLabel() {
+          const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                             'July', 'August', 'September', 'October', 'November', 'December'];
+          monthLabel.textContent = `${monthNames[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
+        }
+      }
+    }
   </script>
 </body>
 </html>
