@@ -274,33 +274,33 @@ th[class*="cursor-pointer"]:hover {
 }
 
 .calendar-day.today {
-  border-color: var(--color-accent);
-  background-color: var(--color-accent-glow);
+  border-color: #10b981;
+  background-color: rgba(16, 185, 129, 0.1);
 }
 
 /* Portfolio accent color buttons */
 .portfolio-accent-btn {
-  background-color: var(--color-accent) !important;
+  background-color: #10b981 !important;
   color: white !important;
   transition: background-color 0.2s ease;
 }
 
 .portfolio-accent-btn:hover {
-  background-color: var(--color-accent-strong) !important;
+  background-color: #059669 !important;
 }
 
 /* Portfolio accent borders */
 .portfolio-accent-border {
-  border-color: var(--color-accent) !important;
+  border-color: #10b981 !important;
 }
 
 /* Portfolio accent text */
 .portfolio-accent-text {
-  color: var(--color-accent-light) !important;
+  color: #34d399 !important;
 }
 
 .portfolio-accent-text:hover {
-  color: var(--color-accent) !important;
+  color: #10b981 !important;
 }
 
 /* Responsive adjustments */
