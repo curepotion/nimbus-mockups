@@ -87,10 +87,10 @@
     <!-- Navbar Container -->
     <div id="navbar-container"></div>
 
-    <!-- Main Portfolio Layout -->
-    <div class="flex min-h-screen pt-16">
-      <!-- Left Side Navigation -->
-      <nav class="w-64 bg-zinc-900/50 border-r border-zinc-800 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
+      <!-- Main Portfolio Layout -->
+      <div class="flex min-h-screen">
+        <!-- Left Side Navigation -->
+        <nav class="w-64 bg-zinc-900/50 border-r border-zinc-800 sticky top-0 h-screen overflow-y-auto">
         <div class="p-4 space-y-2">
           <a href="#overview" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800 active" data-section="overview">
             <i data-lucide="home" class="w-4 h-4"></i>
@@ -609,7 +609,7 @@
                 <div class="text-center">Fri</div>
                 <div class="text-center">Sat</div>
               </div>
-              <div id="calendarGrid" class="grid grid-cols-7 gap-2"></div>
+              <div id="calendarGrid" class="grid grid-cols-7 gap-1"></div>
                     </div>
                   </div>
 
@@ -1212,6 +1212,40 @@
       const grid = document.getElementById('calendarGrid');
       if (!grid) return;
 
+      // Sample calendar data matching the reference image
+      const calendarData = {
+        1: { pnl: 4.19, trades: 16, tokens: ['HYPE', 'IP'], isProfit: true },
+        2: { pnl: 3.77, trades: 6, tokens: ['HYPE', 'IP', 'ETH'], isProfit: true },
+        3: { pnl: 18.19, trades: 2, tokens: ['HYPE', 'IP'], isProfit: true },
+        4: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        5: { pnl: 32.02, trades: 1, tokens: ['IP'], isProfit: true },
+        6: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        7: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        8: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        9: { pnl: 65.33, trades: 2, tokens: ['ETH', 'CELO'], isProfit: true },
+        10: { pnl: -0.0878, trades: 1, tokens: ['BTC'], isProfit: false },
+        11: { pnl: -3.97, trades: 1, tokens: ['IP'], isProfit: false },
+        12: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        13: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        14: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        15: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        16: { pnl: -32.46, trades: 1, tokens: ['IP'], isProfit: false },
+        17: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        18: { pnl: 264.04, trades: 1, tokens: ['HYPE'], isProfit: true },
+        19: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        20: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        21: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        22: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        23: { pnl: 77.23, trades: 1, tokens: ['HYPE'], isProfit: true },
+        24: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        25: { pnl: null, trades: 0, tokens: [], isProfit: null, today: true },
+        26: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        27: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        28: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        29: { pnl: null, trades: 0, tokens: [], isProfit: null },
+        30: { pnl: null, trades: 0, tokens: [], isProfit: null }
+      };
+
       // Generate calendar days (35 days for full month grid)
       const days = Array.from({length: 35}, (_, i) => {
         const day = document.createElement('div');
@@ -1220,25 +1254,117 @@
         if (i < 3 || i > 30) {
           // Empty cells for days before/after month
           day.classList.add('empty');
+          day.innerHTML = `<div class="text-right text-sm font-medium text-zinc-600"></div>`;
         } else {
           const dayNum = i - 2;
-          const isProfit = Math.random() > 0.5;
-          const pnlValue = (Math.random() * 1000 - 500).toFixed(2);
+          const dayData = calendarData[dayNum];
           
-          day.innerHTML = `
-            <div class="text-right mb-2">${dayNum}</div>
-            <div class="text-xs text-right ${isProfit ? 'text-emerald-400' : 'text-red-400'}">
-              ${isProfit ? '+' : ''}$${pnlValue}
-            </div>
-          `;
+          if (dayData) {
+            if (dayData.today) {
+              // Today - no trades
+              day.innerHTML = `
+                <div class="text-right text-sm font-medium text-zinc-400">${dayNum}</div>
+              `;
+              day.classList.add('today');
+            } else if (dayData.pnl !== null) {
+              // Day with trades - compact design like the image
+              day.innerHTML = `
+                <div class="text-right text-sm font-medium text-zinc-400 mb-1">${dayNum}</div>
+                <div class="text-xs text-right ${dayData.isProfit ? 'text-emerald-400' : 'text-red-400'} font-medium">
+                  ${dayData.isProfit ? '+' : ''}$${dayData.pnl.toFixed(2)}
+                </div>
+                <div class="text-xs text-zinc-500 text-right mt-1">
+                  ${dayData.trades} trade${dayData.trades !== 1 ? 's' : ''}
+                </div>
+              `;
+              day.classList.add(dayData.isProfit ? 'profit' : 'loss');
+            } else {
+              // Day with no trades
+              day.innerHTML = `
+                <div class="text-right text-sm font-medium text-zinc-600">${dayNum}</div>
+              `;
+            }
+          } else {
+            // Day with no data (empty)
+            day.innerHTML = `
+              <div class="text-right text-sm font-medium text-zinc-600">${dayNum}</div>
+            `;
+          }
           
-          day.classList.add(isProfit ? 'profit' : 'loss');
+          // Add hover tooltip functionality
+          if (dayData && dayData.pnl !== null) {
+            day.addEventListener('mouseenter', (e) => {
+              showDayTooltip(e, dayData, dayNum);
+            });
+            
+            day.addEventListener('mouseleave', () => {
+              hideDayTooltip();
+            });
+          }
         }
         
         return day;
       });
       
       grid.append(...days);
+    }
+
+    // Show day tooltip with trade information
+    function showDayTooltip(event, dayData, dayNum) {
+      const tooltip = document.createElement('div');
+      tooltip.id = 'day-tooltip';
+      tooltip.className = 'fixed z-50 px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg shadow-lg text-sm';
+      
+      const tokenList = dayData.tokens.length > 0 ? dayData.tokens.join(', ') : 'No tokens';
+      
+      tooltip.innerHTML = `
+        <div class="font-medium mb-2">September ${dayNum}, 2025</div>
+        <div class="space-y-1">
+          <div class="flex justify-between">
+            <span class="text-zinc-400">P&L:</span>
+            <span class="${dayData.isProfit ? 'text-emerald-400' : 'text-red-400'}">
+              ${dayData.isProfit ? '+' : ''}$${dayData.pnl.toFixed(2)}
+            </span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-zinc-400">Trades:</span>
+            <span>${dayData.trades}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-zinc-400">Tokens:</span>
+            <span>${tokenList}</span>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(tooltip);
+      
+      // Position tooltip
+      const rect = event.target.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      
+      let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+      let top = rect.top - tooltipRect.height - 10;
+      
+      // Adjust if tooltip goes off screen
+      if (left < 10) left = 10;
+      if (left + tooltipRect.width > window.innerWidth - 10) {
+        left = window.innerWidth - tooltipRect.width - 10;
+      }
+      if (top < 10) {
+        top = rect.bottom + 10;
+      }
+      
+      tooltip.style.left = left + 'px';
+      tooltip.style.top = top + 'px';
+    }
+
+    // Hide day tooltip
+    function hideDayTooltip() {
+      const tooltip = document.getElementById('day-tooltip');
+      if (tooltip) {
+        tooltip.remove();
+      }
     }
 
     function getTokenColor(token) {
