@@ -87,326 +87,21 @@
     <!-- Navbar Container -->
     <div id="navbar-container"></div>
 
-      <!-- Main Portfolio Layout -->
-      <div class="flex min-h-screen">
-        <!-- Left Side Navigation -->
-        <nav class="w-64 bg-zinc-900/50 border-r border-zinc-800 sticky top-0 h-screen overflow-y-auto">
-        <div class="p-4 space-y-2">
-          <a href="#overview" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800 active" data-section="overview">
-            <i data-lucide="home" class="w-4 h-4"></i>
-            Overview
-          </a>
-          <a href="#analysis" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800" data-section="analysis">
-            <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
-            Analysis
-          </a>
-          <a href="#orders" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800" data-section="orders">
-            <i data-lucide="list" class="w-4 h-4"></i>
-            Orders
-            <span class="ml-auto text-xs text-zinc-500">0</span>
-          </a>
-          <a href="#staking" class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-zinc-800" data-section="staking">
-            <i data-lucide="layers" class="w-4 h-4"></i>
-            Staking
-          </a>
-        </div>
-      </nav>
+      <!-- Main Dashboard Layout -->
+      <main class="min-h-screen p-4">
+        <!-- Dashboard Grid Container -->
+        <div class="w-full space-y-6">
 
-      <!-- Right Content Pane -->
-      <main class="flex-1 overflow-y-auto">
-        <div class="max-w-7xl mx-auto px-6 py-8 space-y-12">
-          <!-- ================= OVERVIEW SECTION ================= -->
-          <section id="overview" class="space-y-8">
-            <!-- Header Card -->
-            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
-              <!-- Mini Facts Row -->
-              <div class="flex flex-wrap items-center gap-6 text-sm">
-                <div class="flex items-center gap-2">
-                  <span class="text-zinc-400">Wallet Address</span>
-                  <span class="font-mono">0xb05c...59C8</span>
-                  <button class="copy-btn" data-copy="0xb05c...59C8">
-                    <i data-lucide="copy" class="w-4 h-4 text-zinc-400 hover:text-white"></i>
-                  </button>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-zinc-400">14D Volume</span>
-                  <span class="font-medium">$20,815.48</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-zinc-400">Fee Tier</span>
-                  <span class="font-medium">0.020% / 0.025%</span>
-                  <button class="tooltip-trigger" data-tooltip="Maker / Taker rates">
-                    <i data-lucide="info" class="w-4 h-4 text-zinc-400"></i>
-                  </button>
-                </div>
-              </div>
 
-              <!-- Main Account Value Block -->
-              <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-                <div class="space-y-2">
-                  <h1 class="text-4xl lg:text-5xl font-semibold tracking-tight">$593.20</h1>
-                  <div class="flex items-center gap-4 text-sm">
-                    <div class="flex items-center gap-1">
-                      <span class="text-zinc-400">24h change</span>
-                      <span class="text-zinc-400">$0.00 (0.00%)</span>
-                    </div>
-                    <div class="flex items-center gap-1">
-                      <span class="text-emerald-400">Overall</span>
-                      <span class="text-emerald-400 font-medium">+$305.20 (105.97%)</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex items-center gap-3">
-                  <button class="portfolio-accent-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium">
-                    <i data-lucide="arrow-down" class="w-4 h-4"></i>
-                    Deposit
-                  </button>
-                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
-                    <i data-lucide="arrow-up" class="w-4 h-4"></i>
-                    Withdraw
-                  </button>
-                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
-                    <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
-                    Transfer
-                  </button>
-                </div>
-              </div>
-
-              <!-- Breakdown Row -->
-              <div class="flex flex-wrap items-center gap-6">
-                <div class="flex items-center gap-2">
-                  <span class="text-zinc-400 text-sm">Perpetuals</span>
-                  <span class="font-medium">$593.20</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-zinc-400 text-sm">Spot</span>
-                  <span class="font-medium">$0.00</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-zinc-400 text-sm">Staked</span>
-                  <span class="font-medium">$0.00</span>
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i>
-                </div>
-              </div>
-            </div>
-
-            <!-- Spot Table -->
-            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
-              <div class="px-6 py-4 border-b border-zinc-800">
-                <h2 class="text-lg font-semibold">Spot</h2>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full">
-                  <thead>
-                    <tr class="border-b border-zinc-800">
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Total</th>
-                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
-                        Value
-                        <i data-lucide="chevrons-up-down" class="w-3 h-3 inline ml-1"></i>
-                      </th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Entry/Market Price</th>
-                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">P&L</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colspan="5" class="px-6 py-12 text-center text-zinc-400">
-                        <div class="space-y-2">
-                          <p>No balances found.</p>
-                          <button class="text-emerald-400 hover:text-emerald-300 text-sm">Go to Spot</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Perpetuals Table -->
-            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
-              <div class="px-6 py-4 border-b border-zinc-800">
-                <h2 class="text-lg font-semibold">Perpetuals</h2>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full">
-                  <thead>
-                    <tr class="border-b border-zinc-800">
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Size</th>
-                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
-                        Value
-                        <i data-lucide="chevrons-up-down" class="w-3 h-3 inline ml-1"></i>
-                      </th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Entry/Market Price</th>
-                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
-                        Unrealized P&L
-                        <i data-lucide="chevrons-up-down" class="w-3 h-3 inline ml-1"></i>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-                      <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                            <span class="text-white text-xs font-medium">USDC</span>
-                          </div>
-                          <span class="font-medium">USDC</span>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="font-medium">593.2 USDC</span>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="font-medium">$593.20</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="font-medium">$1.00</span>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="text-zinc-400">—</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Transfers Table -->
-            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
-              <div class="px-6 py-4 border-b border-zinc-800">
-                <h2 class="text-lg font-semibold">Transfers</h2>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full">
-                  <thead>
-                    <tr class="border-b border-zinc-800">
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Type</th>
-                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Value</th>
-                      <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Fee</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Account</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Status</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
-                      <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                            <span class="text-white text-xs font-medium">USDC</span>
-                          </div>
-                          <span class="font-medium">USDC Withdraw</span>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="text-red-400 font-medium">-1 USDC</span>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="font-medium">1 USDC</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="font-medium">Perpetuals</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="text-zinc-400">Aug 27, 2025, 10:42 AM</span>
-                      </td>
-                    </tr>
-                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
-                      <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                            <span class="text-white text-xs font-medium">USDC</span>
-                          </div>
-                          <span class="font-medium">USDC Withdraw</span>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="text-red-400 font-medium">-9 USDC</span>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="font-medium">1 USDC</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="font-medium">Perpetuals</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="text-zinc-400">Aug 27, 2025, 10:40 AM</span>
-                      </td>
-                    </tr>
-                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
-                      <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                            <span class="text-white text-xs font-medium">USDC</span>
-                          </div>
-                          <span class="font-medium">USDC Deposit</span>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="text-emerald-400 font-medium">+100 USDC</span>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="text-zinc-400">—</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="font-medium">Perpetuals</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="text-zinc-400">Aug 27, 2025, 10:30 AM</span>
-                      </td>
-                    </tr>
-                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
-                      <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                            <span class="text-white text-xs font-medium">USDC</span>
-                          </div>
-                          <span class="font-medium">USDC Deposit</span>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="text-emerald-400 font-medium">+200 USDC</span>
-                      </td>
-                      <td class="px-6 py-4 text-right">
-                        <span class="text-zinc-400">—</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="font-medium">Perpetuals</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
-                      </td>
-                      <td class="px-6 py-4">
-                        <span class="text-zinc-400">Aug 16, 2025, 6:15 PM</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
 
           <!-- ================= ANALYSIS SECTION ================= -->
-          <section id="analysis" class="space-y-8">
-            <!-- Trading Analysis -->
+          <div class="grid grid-cols-1 xl:grid-cols-1 gap-6">
+            <!-- Trading Analysis Card -->
             <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
           <!-- Title + Segmented Controls -->
           <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div class="space-y-1">
-                  <h2 class="text-2xl md:text-3xl font-semibold">Trading Analysis</h2>
+                      <h2 class="text-2xl md:text-3xl font-semibold">Trading Analysis</h2>
               <p class="text-sm">Detailed performance and bias across spot and derivatives.</p>
             </div>
 
@@ -470,15 +165,69 @@
             </form>
           </div>
 
+          <!-- Account Overview -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div>
+              <div class="text-sm text-zinc-400 mb-1">Account Value</div>
+              <h1 class="text-3xl font-bold text-zinc-100 mb-2">$1,250.00</h1>
+              <div class="space-y-1 text-sm">
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400">24h:</span>
+                  <span class="text-zinc-300">+$25.00 (+2.04%)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-zinc-400">Overall:</span>
+                  <span class="text-emerald-400 font-semibold">+$250.00 (+25.00%)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <div class="text-sm text-zinc-400 mb-1">PNL</div>
+              <div class="text-2xl font-bold text-emerald-400">+$250.00</div>
+            </div>
+
+            <div class="text-center">
+              <div class="text-sm text-zinc-400 mb-1">Volume</div>
+              <div class="text-2xl font-bold text-zinc-100">$15.2K</div>
+            </div>
+
+            <div class="text-center">
+              <div class="text-sm text-zinc-400 mb-1">Max Drawdown</div>
+              <div class="text-2xl font-bold text-zinc-100">-8.5%</div>
+            </div>
+          </div>
+
+          <!-- Account Info -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 pt-6 border-t border-zinc-800">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-zinc-400">Wallet</span>
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs bg-zinc-800 px-2 py-1 rounded">0xb05c...59C8</span>
+                <button class="copy-btn p-1 hover:bg-zinc-700 rounded" data-copy="0xb05c...59C8">
+                  <i data-lucide="copy" class="w-4 h-4 text-zinc-400 hover:text-white"></i>
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-zinc-400">14D Volume</span>
+              <span class="text-sm font-semibold text-zinc-200">$15,200.00</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-zinc-400">Fee Tier</span>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold text-zinc-200">0.020% / 0.025%</span>
+                <button class="tooltip-trigger p-1 hover:bg-zinc-700 rounded" data-tooltip="Maker / Taker rates">
+                  <i data-lucide="info" class="w-4 h-4 text-zinc-400"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <!-- Left metrics + Right chart/KPIs -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <!-- Left -->
             <div class="space-y-4">
-                  <article class="p-4 rounded border border-zinc-800">
-                    <p class="text-sm text-zinc-400">Account Value</p>
-                <p id="account-value-amount" class="text-3xl font-semibold tracking-tight">$87,607.37</p>
-                    <div class="mt-2 text-sm">24H change: <span id="account-value-change" class="text-emerald-400">+3.59%</span></div>
-              </article>
 
                   <article class="p-4 rounded border border-zinc-800 space-y-3">
                 <div class="flex items-center justify-between">
@@ -736,185 +485,242 @@
             </div>
 
         <!-- ================= SECONDARY CHARTS ================= -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <article class="p-4 rounded border border-zinc-800">
-            <h3 class="text-lg font-semibold tracking-tight">Drawdown (30D)</h3>
-                <p class="text-xs text-zinc-400">Max vs current</p>
-            <div class="mt-3 h-[220px]">
+        <div class="flex flex-col lg:flex-row gap-6">
+          <div class="flex-1 bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6">
+            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Drawdown (30D)</h3>
+            <p class="text-sm text-zinc-400 mb-4">Max vs current</p>
+            <div class="h-[300px]">
               <canvas id="ddChart" class="h-full w-full"></canvas>
             </div>
-          </article>
+          </div>
 
-              <article class="p-4 rounded border border-zinc-800">
-            <h3 class="text-lg font-semibold tracking-tight">Win/Loss by Weekday</h3>
-                <p class="text-xs text-zinc-400">Trade outcomes</p>
-            <div class="mt-3 h-[220px]">
+          <div class="flex-1 bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6">
+            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Win/Loss by Weekday</h3>
+            <p class="text-sm text-zinc-400 mb-4">Trade outcomes</p>
+            <div class="h-[300px]">
               <canvas id="wlChart" class="h-full w-full"></canvas>
             </div>
-          </article>
+          </div>
 
-              <article class="p-4 rounded border border-zinc-800">
-            <h3 class="text-lg font-semibold tracking-tight">Fees (30D)</h3>
-                <p class="text-xs text-zinc-400">Impact on net returns</p>
-            <div class="mt-3 h-[220px]">
+          <div class="flex-1 bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6">
+            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Fees (30D)</h3>
+            <p class="text-sm text-zinc-400 mb-4">Impact on net returns</p>
+            <div class="h-[300px]">
               <canvas id="feeChart" class="h-full w-full"></canvas>
         </div>
-          </article>
-            </div>
-        </section>
+          </div>
+        </div>
+          </div>
 
-          <!-- ================= ORDERS SECTION ================= -->
-          <section id="orders" class="space-y-8">
-            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
-              <div class="flex items-center justify-between">
-                <h2 class="text-xl font-semibold">Orders</h2>
+          <!-- ================= TRADING & ORDERS ================= -->
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <!-- Spot Table -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
+              <div class="px-4 py-3 border-b border-zinc-800 bg-zinc-900/40">
+                <h2 class="text-lg font-semibold text-zinc-100">Spot</h2>
+                <p class="text-xs text-zinc-400">Available balances</p>
               </div>
-
-              <!-- Tabs -->
-              <div class="flex items-center gap-6 border-b border-zinc-800">
-                <button class="tab-btn pb-2 border-b-2 border-emerald-500 text-white">Open Orders</button>
-                <button class="tab-btn pb-2 text-zinc-400">Order History</button>
-                <button class="tab-btn pb-2 text-zinc-400">Active TWAP</button>
-                <button class="tab-btn pb-2 text-zinc-400">TWAP History</button>
-              </div>
-
-              <!-- Orders Table -->
               <div class="overflow-x-auto">
                 <table class="w-full">
                   <thead>
                     <tr class="border-b border-zinc-800">
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Type</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Size</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Order Value</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
-                        Trigger Price
-                        <i data-lucide="chevron-up" class="w-3 h-3 inline ml-1"></i>
-                      </th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide cursor-pointer hover:text-white">
-                        Time
-                        <i data-lucide="chevron-down" class="w-3 h-3 inline ml-1"></i>
-                      </th>
+                      <th class="px-4 py-2 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
+                      <th class="px-4 py-2 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Value</th>
+                      <th class="px-4 py-2 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">P&L</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td colspan="6" class="px-6 py-12 text-center text-zinc-400">
-                        <div class="space-y-2">
-                          <p>No open orders.</p>
-                          <button class="text-emerald-400 hover:text-emerald-300 text-sm">Go to Trade</button>
+                      <td colspan="3" class="px-4 py-8 text-center text-zinc-400">
+                        <div class="space-y-1">
+                          <p class="text-sm">No balances found.</p>
+                          <button class="text-emerald-400 hover:text-emerald-300 text-xs">Go to Spot</button>
                         </div>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-              </div>
-            </div>
-      </section>
-
-          <!-- ================= STAKING SECTION ================= -->
-          <section id="staking" class="space-y-8">
-            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 p-6 space-y-6">
-              <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-                <h2 class="text-xl font-semibold">Staking</h2>
-                <div class="flex items-center gap-3">
-                  <button class="portfolio-accent-btn inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium">
-                    <i data-lucide="layers" class="w-4 h-4"></i>
-                    Stake
-                  </button>
-                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
-                    <i data-lucide="unlock" class="w-4 h-4"></i>
-                    Unstake
-                  </button>
-                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-medium transition-colors">
-                    <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
-                    Transfer Spot → Staking
-                  </button>
     </div>
   </div>
 
-              <!-- Staking Stats -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-zinc-800/50 rounded-xl p-4">
-                  <div class="text-sm text-zinc-400 mb-2">Your Stake</div>
-                  <div class="text-2xl font-semibold">0 HYPE</div>
-                  <div class="text-sm text-zinc-500">($0.00)</div>
-                </div>
-                <div class="bg-zinc-800/50 rounded-xl p-4">
-                  <div class="text-sm text-zinc-400 mb-2">Global Stake</div>
-                  <div class="text-2xl font-semibold">429.38M HYPE</div>
-                  <div class="text-sm text-zinc-500">($19.54B)</div>
-                </div>
-                <div class="bg-zinc-800/50 rounded-xl p-4">
-                  <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-zinc-400">1 Day Rewards</span>
-                      <span class="text-sm font-medium text-emerald-400">+0 HYPE ($0.00)</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-zinc-400">30 Day Rewards</span>
-                      <span class="text-sm font-medium text-emerald-400">+0 HYPE ($0.00)</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-zinc-400">Lifetime Rewards</span>
-                      <span class="text-sm font-medium text-emerald-400">+0 HYPE ($0.00)</span>
-                    </div>
-                  </div>
-                </div>
+            <!-- Perpetuals Table -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
+              <div class="px-4 py-3 border-b border-zinc-800 bg-zinc-900/40">
+                <h2 class="text-lg font-semibold text-zinc-100">Perpetuals</h2>
+                <p class="text-xs text-zinc-400">Active positions</p>
               </div>
-
-              <!-- Wallet Staking Info -->
-              <div class="bg-zinc-800/30 rounded-xl p-4">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div class="text-center">
-                    <div class="text-sm text-zinc-400 mb-1">Available HYPE Balance</div>
-                    <div class="text-lg font-semibold">0 HYPE</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-sm text-zinc-400 mb-1">Available to Stake</div>
-                    <div class="text-lg font-semibold">0 HYPE</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-sm text-zinc-400 mb-1">Staked HYPE</div>
-                    <div class="text-lg font-semibold">0 HYPE</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-sm text-zinc-400 mb-1">Pending Unstake</div>
-                    <div class="text-lg font-semibold">0 HYPE</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Staking Tabs -->
-              <div class="flex items-center gap-6 border-b border-zinc-800">
-                <button class="tab-btn pb-2 border-b-2 border-emerald-500 text-white">Staking Rewards</button>
-                <button class="tab-btn pb-2 text-zinc-400">Staking Activity</button>
-                <button class="tab-btn pb-2 text-zinc-400">Validators</button>
-              </div>
-
-              <!-- Staking Rewards Table -->
               <div class="overflow-x-auto">
                 <table class="w-full">
                   <thead>
                     <tr class="border-b border-zinc-800">
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Amount</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Source</th>
-                      <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Time</th>
+                      <th class="px-4 py-2 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Coin</th>
+                      <th class="px-4 py-2 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Size</th>
+                      <th class="px-4 py-2 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">P&L</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td colspan="4" class="px-6 py-12 text-center text-zinc-400">
-                        <p>No staking rewards found.</p>
+                    <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center gap-2">
+                          <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span class="text-white text-xs font-medium">U</span>
+                          </div>
+                          <span class="font-medium text-sm">USDC</span>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-right">
+                        <span class="font-medium text-sm">1,000 USDC</span>
+                      </td>
+                      <td class="px-4 py-3 text-right">
+                        <span class="text-emerald-400 text-sm">+$250.00</span>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </section>
-        </div>
+
+            <!-- Orders Summary -->
+            <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
+              <div class="px-4 py-3 border-b border-zinc-800 bg-zinc-900/40">
+                <h2 class="text-lg font-semibold text-zinc-100">Orders</h2>
+                <p class="text-xs text-zinc-400">Open orders</p>
+              </div>
+              <div class="p-4">
+                <div class="text-center text-zinc-400 py-8">
+                  <div class="space-y-1">
+                    <p class="text-sm">No open orders.</p>
+                    <button class="text-emerald-400 hover:text-emerald-300 text-xs">Go to Trade</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= RECENT TRANSFERS ================= -->
+          <div class="bg-zinc-900/60 rounded-2xl border border-zinc-800 overflow-hidden">
+            <div class="px-6 py-5 border-b border-zinc-800 bg-zinc-900/40">
+              <h2 class="text-xl font-semibold text-zinc-100">Recent Transfers</h2>
+              <p class="text-sm text-zinc-400 mt-1">Deposit and withdrawal history</p>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b border-zinc-800">
+                    <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Type</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Value</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-zinc-400 uppercase tracking-wide">Fee</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Account</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wide">Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                          <span class="text-white text-xs font-medium">USDC</span>
+                        </div>
+                        <span class="font-medium">USDC Withdraw</span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="text-red-400 font-medium">-50 USDC</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="font-medium">2 USDC</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="font-medium">Perpetuals</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-zinc-400">Aug 27, 2025, 10:42 AM</span>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                          <span class="text-white text-xs font-medium">USDC</span>
+                        </div>
+                        <span class="font-medium">USDC Withdraw</span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="text-red-400 font-medium">-100 USDC</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="font-medium">3 USDC</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="font-medium">Perpetuals</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-zinc-400">Aug 27, 2025, 10:40 AM</span>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                          <span class="text-white text-xs font-medium">USDC</span>
+                        </div>
+                        <span class="font-medium">USDC Deposit</span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="text-emerald-400 font-medium">+500 USDC</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="text-zinc-400">—</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="font-medium">Perpetuals</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-zinc-400">Aug 27, 2025, 10:30 AM</span>
+                    </td>
+                  </tr>
+                  <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors cursor-pointer">
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                          <span class="text-white text-xs font-medium">USDC</span>
+                        </div>
+                        <span class="font-medium">USDC Deposit</span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="text-emerald-400 font-medium">+1,000 USDC</span>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <span class="text-zinc-400">—</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="font-medium">Perpetuals</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-900/30 text-emerald-400 border border-emerald-800/30">Complete</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-zinc-400">Aug 16, 2025, 6:15 PM</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+    </div>
+  </div>
+
       </main>
     </div>
 
@@ -944,47 +750,9 @@
 
     // Navigation functionality
     function initNavigation() {
-      const navItems = document.querySelectorAll('.nav-item');
-      const sections = document.querySelectorAll('section[id]');
-
-      // Handle navigation clicks
-      navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = item.getAttribute('data-section');
-          
-          // Update active nav item
-          navItems.forEach(nav => nav.classList.remove('active', 'bg-zinc-800'));
-          item.classList.add('active', 'bg-zinc-800');
-          
-          // Scroll to section
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
-
-      // Update active nav on scroll
-      const observerOptions = {
-        rootMargin: '-20% 0px -70% 0px'
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const sectionId = entry.target.id;
-            navItems.forEach(nav => {
-              nav.classList.remove('active', 'bg-zinc-800');
-              if (nav.getAttribute('data-section') === sectionId) {
-                nav.classList.add('active', 'bg-zinc-800');
-              }
-            });
-          }
-        });
-      }, observerOptions);
-
-      sections.forEach(section => observer.observe(section));
+      // Navigation is now handled by the top navbar
+      // This function is kept for compatibility but simplified
+      console.log('Dashboard navigation initialized');
     }
 
     // Initialize charts
@@ -1262,7 +1030,7 @@
           if (dayData) {
             if (dayData.today) {
               // Today - no trades
-              day.innerHTML = `
+          day.innerHTML = `
                 <div class="text-right text-sm font-medium text-zinc-400">${dayNum}</div>
               `;
               day.classList.add('today');
@@ -1275,8 +1043,8 @@
                 </div>
                 <div class="text-xs text-zinc-500 text-right mt-1">
                   ${dayData.trades} trade${dayData.trades !== 1 ? 's' : ''}
-                </div>
-              `;
+            </div>
+          `;
               day.classList.add(dayData.isProfit ? 'profit' : 'loss');
             } else {
               // Day with no trades

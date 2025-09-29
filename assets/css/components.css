@@ -181,32 +181,72 @@ canvas {
   min-height: 80px;
 }
 
-/* Portfolio Page Styles */
+/* Portfolio Dashboard Styles */
 .portfolio-main {
-  min-height: calc(100vh - 4rem);
+  min-height: 100vh;
+  padding: 1rem;
+  width: 100%;
 }
 
 .portfolio-layout {
+  width: 100%;
   display: flex;
-  min-height: calc(100vh - 4rem);
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.left-nav {
-  width: 16rem;
-  background-color: rgba(39, 39, 42, 0.5);
-  border-right: 1px solid rgb(63, 63, 70);
-  position: sticky;
-  top: 4rem;
-  height: calc(100vh - 4rem);
-  overflow-y: auto;
+/* Dashboard grid layouts */
+.dashboard-grid {
+  display: grid;
+  gap: 1.5rem;
 }
 
-.right-content {
-  flex: 1;
-  overflow-y: auto;
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
+.dashboard-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.dashboard-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Responsive adjustments */
+@media (min-width: 1024px) {
+  .dashboard-grid-2 {
+    grid-template-columns: 2fr 1fr;
+  }
+  
+  .dashboard-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Enhanced card styles */
+.bg-zinc-900\/60 {
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.bg-zinc-900\/60:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Improved button styles */
+.portfolio-accent-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
+}
+
+.portfolio-accent-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Table header improvements */
+.bg-zinc-900\/40 {
+  background: linear-gradient(135deg, rgba(24, 24, 27, 0.8) 0%, rgba(39, 39, 42, 0.6) 100%);
 }
 
 /* Navigation items */
